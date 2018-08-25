@@ -1,0 +1,12 @@
+[Unit]
+Description=Engineer Man Platform
+
+[Service]
+Type=simple
+User=root
+Environment=PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/node8/bin
+WorkingDirectory=/opt/engineerman/platform
+ExecStart=/opt/engineerman/platform/start_dev
+
+[Install]
+WantedBy=multi-user.target

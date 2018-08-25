@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "tierlabs",
+  "private_key_id": "7418f95992fd3152e548c3b7566269ddc73734d8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDTunNCT2znr0JM\nj0yOfwzLt9uPA1LBYVPdfydOAZW7YzrWi85ySrFVZ2qkzoe571HBhMscTI0D1pQ8\nvetDrWQecSb5IzlMrua0ialU7Tj14qBcL/HYk/Og6+IfP6ipWlxKEEcS56bKD0LN\nsL2AekujYzTviJSXR9mLdmk8gSsj8AKX8dX3m7ruu03+/gRlLfTWZlJMY5QhxRl0\nH6wlCk55hQquEK8wdOE1REAVvvsY/CNjTemNe9J6KqKt5X6pz4KsQt8GFs+0YqHM\nNche//IBQwqKFzwaIxI+KGHFUCtJWGQDDEn3JqrRtUieej7Rg1g9YiPy0p7gRiT7\nNQoHgsphAgMBAAECggEABtluXU1+RR51abTT2El1S5ygIZSNCrMQO5QF9i8oV15v\nhFcTr70JcJOLlSPjRL+tTuVxwD6C7B/DpHvMweAFlm1SdYo1eKAXcYa0iVblQIfh\nm5BBGO1sWuvWlFLPk3u+jMM318o4dvfrngWi+iZUQeEo0LwdealgePNn/LkwmpVC\nSZo3h10B1rVcJSQXHDI9PrZ02E0r6PhNVd3nyIgVr2l8sK8GFaYr2RZFolhrtoL7\nG3HtIMbUVYcuxB01+Ps0z8QFGfS3KWIbIfC5tYPIZQ7cdeZMR2o5V7Av3ABxtZpw\ntf2JuOu/onmp3lU6egpD5MIQLlutUSYdkRAdqW76uwKBgQD7SlfCa0YQmWUsO2S1\ngNyw9kcSSU2al6EDOraI6pYiOEWzUCJRbQwuN2n4NJdQzo5IsRw1yh6u6dXiG0rR\n/QJjoYTNVUIPc9QOOAEebNByryn6/qU5hbhwmdVmM0bBENlANd0woHoktnegOhK1\nzdJOQ+EBfPcNjP+g7y+GxvRI5wKBgQDXsks/ZQCY8Y/Lj6wpuhj9ueF0sBfSIlsQ\nLbFvokP98rEDnnIVR+yeKt2QBmMmtOTvR9iwdEpZXNRfYdYiCCyx6ZGjLyUCv7KO\nyqspNe09v8Fh8tXutwjwQpYZ8LEGeeyugJAVQyDPfqpyhsg0qbdl+4nJn2yv1d+o\n8DorGXQBdwKBgQDHUuDpxk19PS+TNklb7yse8zrMtnhn934wIZJIaEtOOXSQFzAh\nhm3y+uGDj7O21SDnaBUIVZqhA7oz75IZnqcWgDfm54nO2AGMhb/dclKlpWuXPAWy\n6u6x4lPzDRlCayroU9FvkNtR46pf3bCZpPj8O7tugsE0bnMWJKN+NLHwYQKBgQCv\nxvzLjOQPv8wPd+Y1mxMCspipH1hKRvUvGg2fi/0c1sqqyFTwQszxmL02wf3LbV+k\nIEjWg+6TJLNth62Zzk+eLVoiQilHNDGvbDpQO0I7MCnISL1O7Jq8MYdhXGTngjT/\ngIXqzenPLsp4yp4dTLHIylRfmyxXn1PFuP+uX+/JwQKBgAJXd6YMLnBR6XifrJuJ\nC9zcB20uF5tgvC2pkZxnFofxo3rHkiMBy3dAmfvrYdjK3Na3Ty6Nh74MzMdDrtue\nDJiqlV5Sh1X8LRPyxOqBvoUjIWOMOpHRhjVW9BVeCXHlWTA3gLipcZoy0bQhd9iT\nk4O4+53AsXliQL7MjlEg/7XT\n-----END PRIVATE KEY-----\n",
+  "client_email": "engineerman-static-assets@tierlabs.iam.gserviceaccount.com",
+  "client_id": "114766985192254282520",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/engineerman-static-assets%40tierlabs.iam.gserviceaccount.com"
+}

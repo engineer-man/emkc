@@ -1,0 +1,8 @@
+platform/config/local.js
+platform/config/config.json
+platform/migrations/config.json
+platform/assets/css/master.css
+node_modules
+package-lock.json
+*.pyc
+.DS_Store

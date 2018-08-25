@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+pm2 stop engineerman.js
+pm2 delete engineerman.js
+pm2 kill
+ps aux | grep 'node' | grep -v 'grep' | awk '{print $2}' | xargs kill -1
+ps aux | grep 'pm2' | grep -v 'grep' | awk '{print $2}' | xargs kill -1
+ps aux | grep 'grunt' | grep -v 'grep' | awk '{print $2}' | xargs kill -1
+sleep 2

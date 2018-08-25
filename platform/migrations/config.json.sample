@@ -1,0 +1,7 @@
+{
+    "host": "localhost",
+    "user": "root",
+    "pass": "root",
+    "db": "engineerman",
+    "migs": ""
+}

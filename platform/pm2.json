@@ -1,0 +1,12 @@
+{
+    "name": "engineerman",
+    "args": ["-i 0"],
+    "script": "engineerman.js",
+    "node_args": ["--max_old_space_size=4096"],
+    "error_file": "/var/log/engineerman.log",
+    "out_file": "/var/log/engineerman.log",
+    "instances": 0,
+    "merge_logs": true,
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "exec_mode": "cluster"
+}

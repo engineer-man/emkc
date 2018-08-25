@@ -1,0 +1,32 @@
+module.exports = {
+
+    port: 2525,
+    environment: 'development',
+    base_url: 'http://10.0.0.10:2525',
+    db: {
+        username: 'root',
+        password: 'root',
+        database: 'engineerman',
+        host: '127.0.0.1',
+        dialect: 'mysql',
+        logging: false,
+        timezone: '+00:00',
+        define: {
+            underscored: true,
+            timestamps: false
+        }
+    },
+    elasticsearch: {
+        host: '127.0.0.1'
+    },
+    dispenserd: {
+        host: '127.0.0.1'
+    },
+    session: {
+        host: '127.0.0.1'
+    },
+    sockets: {
+        host: '127.0.0.1'
+    }
+
+};
