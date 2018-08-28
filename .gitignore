@@ -1,7 +1,8 @@
 platform/config/local.js
 platform/config/config.json
 platform/migrations/config.json
-platform/assets/css/master.css
+platform/assets/css/dist/*.css
+platform/assets/js/dist/*.js
 node_modules
 package-lock.json
 *.pyc

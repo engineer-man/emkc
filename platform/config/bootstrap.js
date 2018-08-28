@@ -11,6 +11,8 @@ module.exports.bootstrap = cb => {
 
     sails.glob = {root_dir};
     sails.twig = require(root_dir + '/platform/api/services/twig.js');
+    sails.glob.constant = require(root_dir + '/platform/api/services/constant.js');
+    sails.glob.epoch = +new Date();
 
     cb();
 };

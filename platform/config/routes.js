@@ -7,6 +7,8 @@ module.exports.routes = {
     'GET /auth/discord_cb': 'AuthController.discord_cb',
     'GET /board': 'BoardController.home',
 
+    'GET /d:question_id/:name': 'QuestionsController.view',
+
     // catch all (404)
     'ALL r|^/(?:(?!css|images|js|lib|other|robots\.txt|google*).)*$|': 'HomeController.fourohfour'
 

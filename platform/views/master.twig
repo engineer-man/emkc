@@ -11,22 +11,50 @@
         <link href="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
         <link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
         <link href="//use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
-        <link href="/css/master.css?{{ sails.glob.epoch }}" rel="stylesheet" />
+        <link href="/css/dist/master.css?{{ sails.glob.epoch }}" rel="stylesheet" />
 
         <script src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="//unpkg.com/react@16/umd/react.production.min.js"></script>
+        <script src="//unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+        <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+        <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <script src="/js/dist/master_js.js?{{ sails.glob.epoch }}"></script>
+        <script src="/js/dist/master_jsx.js?{{ sails.glob.epoch }}"></script>
 
         <link rel="icon" type="image/x-icon" href="/images/icon_64.png" />
     </head>
-    <body style="text-align: center; background: #171716;">
-        <div style="display: inline-block; margin: auto; max-width: 1440px; width: 100%; text-align: left; background: #383838; min-height: 100vh;">
-            <div style="padding: 10px; background: #36B96E;">
-                <div class="em_menu" style="float: right;">
+    <body>
+        <div class="em_container">
+            <div class="em_menu">
+                <div class="brand_icon">
+                    <a href="/board">
+                        <img src="/images/icon_64.png" />
+                    </a>
+                </div>
+                <div class="main_links">
+                    <a href="/board">Answer</a>
+                    <a href="/questions/ask">Ask</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            Community
+                        </a>
+                        <div class="dropdown-menu">
+                            <h6 class="dropdown-header">Engagement</h6>
+                            <a class="dropdown-item" href="#">Leaderboards</a>
+                            <a class="dropdown-item" href="#">Awards</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="search">
+                    <input type="text" placeholder="Search..." />
+                </div>
+                <div class="user_meta">
                     <span>{{ req.glob.user.username }}</span>
                     <span class="f900">{{ req.glob.user.score }}</span>
+                    <img src="{{ sails.glob.constant.gcloud_base_url }}{{ req.glob.user.avatar_url }}" />
                 </div>
-                <img src="/images/icon_64.png" style="height: 36px; width: auto;" />
             </div>
 
             {% block content %}{% endblock %}

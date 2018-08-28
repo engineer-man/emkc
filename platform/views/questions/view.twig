@@ -1,0 +1,31 @@
+{% extends 'master.twig'%}
+{% block content %}
+    <div style="padding: 30px 20px 15px 15px;">
+        <div style="float: right; width: 260px;">
+            don't know what's gonna go here yetdon't know what's gonna go here yetdon't know what's gonna go here yet
+            don't know what's gonna go here yetdon't know what's gonna go here yetdon't know what's gonna go here yet
+        </div>
+        <div style="position: relative; padding-right: 290px;">
+            <div id="question"></div>
+            <script>
+                ReactDOM.render(React.createElement(Question, {
+                    score: 8
+                }), document.getElementById('question'));
+            </script>
+            <div class="input" style="padding-top: 30px; padding-left: 40px;">
+                <textarea rows="6" placeholder="placeholder for typings" class="form-control" style="background: #383838;"></textarea>
+            </div>
+
+            <div class="em_comments">
+                <div id="comments"></div>
+                <script>
+                    curren_comments = ReactDOM.render(React.createElement(Comments, {
+                        comments: {{ comments }}
+                    }), document.getElementById('comments'));
+                </script>
+            </div>
+
+            <button onclick="curren_comments.add()">asdf</button>
+        </div>
+    </div>
+{% endblock %}

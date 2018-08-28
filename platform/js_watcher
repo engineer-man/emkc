@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+node_modules/.bin/babel assets/js/master.js --watch --out-file assets/js/dist/master_js.js &
+node_modules/.bin/babel assets/js/master.jsx --watch --out-file assets/js/dist/master_jsx.js --presets react &
+
+sleep 999999999

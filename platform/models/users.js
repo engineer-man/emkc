@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
     return sequelize
         .define('users', {
             user_id: {
