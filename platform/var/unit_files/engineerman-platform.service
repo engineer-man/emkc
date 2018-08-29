@@ -5,8 +5,8 @@ Description=Engineer Man Platform
 Type=simple
 User=root
 Environment=PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/node8/bin
-WorkingDirectory=/opt/engineerman/platform
-ExecStart=/opt/engineerman/platform/start_dev
+WorkingDirectory=/net/engineerman/platform
+ExecStart=/net/engineerman/platform/start_prod
 
 [Install]
 WantedBy=multi-user.target
