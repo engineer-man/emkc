@@ -3,9 +3,46 @@ const q = require('q');
 
 module.exports = {
 
-    view(req, res) {
-        var question_id = req.params.question_id;
-        var name = req.params.name;
+    ask(req, res) {
+        if (req.method === 'POST') {
+            const {title, question} = req.body;
+
+            return Promise.resolve(null)
+                .then(() => {
+                    if (!title || !question) {
+                        throw new Error('Please fill out a title and question');
+                    }
+
+                    return db.questions
+                        .create({
+                            user_id: req.glob.user_id,
+                            title,
+                            question
+                        });
+                })
+                .then(question => {
+                    return res.send({
+                        status: 'ok',
+                        payload: {
+                            url: question.url
+                        }
+                    });
+                })
+                .catch(err => {
+                    return res.send({
+                        status: 'error',
+                        payload: {
+                            message: err.message
+                        }
+                    });
+                });
+        }
+
+        return res.view();
+    },
+
+    edit(req, res) {
+        const question_id = req.params.question_id;
 
         return db.questions
             .find_one({
@@ -14,7 +51,70 @@ module.exports = {
                 }
             })
             .then(question => {
+                if (!question ||
+                    question.user_id !== req.glob.user_id) throw new Error('Question not found');
+
+                if (req.method === 'POST') {
+                    const title = req.body.title;
+                    const questionn = req.body.question;
+
+                    if (!title || !questionn) {
+                        return res.send({
+                            status: 'error',
+                            payload: {
+                                message: 'Please fill out a title and question'
+                            }
+                        });
+                    }
+
+                    question.title = title;
+                    question.question = questionn;
+
+                    return question
+                        .save()
+                        .then(question => {
+                            return res.send({
+                                status: 'ok',
+                                payload: {
+                                    url: question.url
+                                }
+                            });
+                        });
+                }
+
+                return res.view({
+                    question
+                });
+            })
+            .catch(err => {
+                return res.redirect('/board');
+            })
+    },
+
+    view(req, res) {
+        var question_id = req.params.question_id;
+        var name = req.params.name;
+
+        var question;
+
+        return db.questions
+            .find_one({
+                where: {
+                    question_id
+                },
+                include: [
+                    {
+                        model: db.users,
+                        as: 'user'
+                    }
+                ]
+            })
+            .then(question_data => { question = question_data;
                 if (!question) throw new Error('Question not found');
+
+                question.user = {
+                    username: question.user.username
+                };
 
                 if (question.slug !== name) {
                     res.redirect(question.url);
@@ -85,6 +185,7 @@ module.exports = {
                 process_comments(comments, 1);
 
                 return res.view({
+                    question,
                     comments: JSON.stringify(comments)
                 });
             })

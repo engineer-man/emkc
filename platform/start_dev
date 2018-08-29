@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-if [[ $@ != *--no-min* ]]; then
+if [[ $@ == *--watch* ]]; then
+    node_modules/.bin/gulp watch &
+else
     node_modules/.bin/gulp
 fi
 
-supervisor --extensions 'js,twig' --ignore 'node_modules' engineerman.js
+supervisor --extensions 'js,twig' --ignore 'node_modules' --ignore 'assets' engineerman.js

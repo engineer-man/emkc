@@ -12,7 +12,9 @@ module.exports = {
             .toLowerCase()
             .trim()
             .replace(/[^a-z0-9 ]+/g, '')
-            .replace(/ +/g, '-');
+            .replace(/ +/g, '-')
+            .replace(/^[\s\-]+/gi, '')
+            .replace(/[\s\-]+$/gi, '');
     },
 
     time_diff(start_date, end_date) {

@@ -1,5 +1,3 @@
-// out: dist/master.css
-
 * {
     font-family: 'Lato', sans-serif;
     color: #fff;
@@ -40,6 +38,81 @@ a {
 
 .f900 {
     font-weight: 900;
+}
+
+/* quill overrides */
+.ql-toolbar {
+    background: #2b2b2b !important;
+    border: 0 !important;
+    svg {
+        * {
+            stroke: #fff !important;
+        }
+    }
+    .ql-strike,
+    .ql-header {
+        svg * {
+            fill: #fff !important;
+        }
+    }
+    .ql-picker-label {
+        &:hover {
+            color: #fff !important;
+        }
+    }
+    button {
+        &:hover {
+            background: #4AA571 !important;
+        }
+    }
+}
+
+.ql-container {
+    border: 0 !important;
+    border-bottom: #7b7b7b 1px solid !important;
+    font-size: 14px !important;
+    background: #353535 !important;
+}
+
+.ql-blank {
+    &:before {
+        color: #ddd !important;
+        font-style: normal !important;
+    }
+}
+
+.ql-editor {
+    font-size: 16px;
+    min-height: 200px;
+    .ql-syntax {
+        * {
+            font-family: monospace !important;
+        }
+    }
+}
+
+/* bs4 overrides */
+.btn-success {
+    background-color: #37B86E;
+    &:hover {
+        background-color: #289254;
+    }
+}
+
+.dropdown-menu {
+    a:visited,
+    a:link,
+    a:hover {
+        color: #333;
+    }
+    a:active {
+        color: #fff !important;
+    }
+    .dropdown-item {
+        &:active {
+            background-color: #36b96e;
+        }
+    }
 }
 
 .em_container {
@@ -144,6 +217,43 @@ a {
     }
 }
 
+.em_question_ask {
+    display: flex;
+    .contents {
+        flex: 1;
+        .title {
+            width: 100%;
+            padding: 10px 5px;
+            font-size: 18px;
+            border: 0;
+            outline: 0;
+            background: #353535;
+            border-bottom: #7b7b7b 1px solid;
+            margin-bottom: 30px;
+            &::-webkit-input-placeholder {
+                color:    #ddd;
+            }
+            &:-moz-placeholder {
+               color:    #ddd;
+               opacity:  1;
+            }
+            &::-moz-placeholder {
+               color:    #ddd;
+               opacity:  1;
+            }
+            &:-ms-input-placeholder {
+               color:    #ddd;
+            }
+            &::-ms-input-placeholder {
+               color:    #ddd;
+            }
+            &::placeholder {
+               color:    #ddd;
+            }
+        }
+    }
+}
+
 .em_question {
     .scores {
         position: absolute;
@@ -161,12 +271,28 @@ a {
     .content {
         position: relative;
         padding-left: 55px;
+        .dropdown {
+            float: right;
+            cursor: pointer;
+            .dropdown-toggle:after {
+                display: none;
+            }
+        }
         .posted {
             margin-bottom: 10px;
         }
         .user {
             color: #68e69e;
         }
+        .badge {
+            font-size: 16px;
+        }
+    }
+    .ql-editor {
+        background: #353535;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        min-height: auto;
     }
 }
 

@@ -9,7 +9,12 @@
             <div id="question"></div>
             <script>
                 ReactDOM.render(React.createElement(Question, {
-                    score: 8
+                    question_id: {{ question.question_id }},
+                    score: {{ question.score }},
+                    time_ago: {{ question.time_ago|json_encode }},
+                    title: {{ question.title|json_encode }},
+                    question: {{ question.question }},
+                    user: {{ question.user|json_encode }}
                 }), document.getElementById('question'));
             </script>
             <div class="input" style="padding-top: 30px; padding-left: 40px;">
@@ -24,8 +29,6 @@
                     }), document.getElementById('comments'));
                 </script>
             </div>
-
-            <button onclick="curren_comments.add()">asdf</button>
         </div>
     </div>
 {% endblock %}

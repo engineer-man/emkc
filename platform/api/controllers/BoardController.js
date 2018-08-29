@@ -4,7 +4,11 @@ module.exports = {
 
     home(req, res) {
         return db.questions
-            .find_all()
+            .find_all({
+                order: [
+                    ['question_id', 'desc']
+                ]
+            })
             .then(questions => {
                 return res.view({
                     questions

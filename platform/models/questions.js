@@ -1,3 +1,5 @@
+const QuillDeltaToHtmlConverter = require('quill-delta-to-html');
+
 module.exports = (sequelize, DataTypes) => {
     return sequelize
         .define('questions', {
@@ -29,6 +31,22 @@ module.exports = (sequelize, DataTypes) => {
 
                 slug() {
                     return util.slugify(this.title)
+                },
+
+                time_ago() {
+                    return util.time_ago(this.created_at);
+                },
+
+                question_html() {
+                    try {
+                        const json = JSON.parse(this.question);
+
+                        const converter = new QuillDeltaToHtmlConverter(json.ops, {});
+
+                        return converter.convert();
+                    } catch (e) {
+                        return '';
+                    }
                 }
             }
         }
