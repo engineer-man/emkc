@@ -12,9 +12,9 @@ class Snippet extends React.Component {
                 <div class="contents">
                     <div class="col1_padding">
                         <h5 class="f700">Contents</h5>
-                        <div class="highlightjs">
+                        <pre class="highlightjs">
                             {this.props.snip}
-                        </div>
+                        </pre>
                     </div>
                 </div>
                 <div class="notes">
