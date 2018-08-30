@@ -4,7 +4,7 @@ Description=Engineer Man Platform
 [Service]
 Type=simple
 User=root
-Environment=PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/node8/bin
+Environment=PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/deps/node8/bin
 WorkingDirectory=/net/engineerman/platform
 ExecStart=/net/engineerman/platform/start_prod
 

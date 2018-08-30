@@ -115,6 +115,11 @@ a {
     }
 }
 
+.bootbox-body {
+    text-align: left;
+    color: #000;
+}
+
 .em_container {
     display: inline-block;
     margin: auto;
@@ -250,6 +255,52 @@ a {
             &::placeholder {
                color:    #ddd;
             }
+        }
+    }
+}
+
+.em_snippet_create {
+    display: flex;
+    .col2_padding {
+        padding: 25px 15px;
+    }
+    .col1_padding {
+        padding: 25px 15px;
+    }
+    .contents {
+        flex: 1;
+    }
+    .notes {
+        width: 300px;
+    }
+    textarea {
+        width: 100%;
+        background: none;
+        border: #999 1px solid;
+        outline: none;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        &::-webkit-input-placeholder {
+            color:    #fff;
+        }
+        &:-moz-placeholder {
+           color:    #fff;
+           opacity:  1;
+        }
+        &::-moz-placeholder {
+           color:    #fff;
+           opacity:  1;
+        }
+        &:-ms-input-placeholder {
+           color:    #fff;
+        }
+        &::-ms-input-placeholder {
+           color:    #fff;
+        }
+        &::placeholder {
+           color:    #fff;
         }
     }
 }

@@ -34,6 +34,18 @@ create table questions (
 
 insert into questions values (1, 1, 'first q title', 'first q question', 0, 16, now());
 
+create table snippets (
+    snippet_id int unsigned not null auto_increment,
+    user_id int unsigned null,
+    hash varchar(40) not null,
+    snip mediumtext not null,
+    created_at datetime not null,
+    primary key (snippet_id),
+    key user_id (user_id),
+    key hash (hash),
+    key created_at (created_at)
+)engine=innodb default charset=utf8;
+
 create table comments (
     comment_id int unsigned not null auto_increment,
     question_id int unsigned not null,
@@ -729,3 +741,4 @@ drop table comments;
 drop table tags;
 drop table question_votes;
 drop table comment_votes;
+drop table snippets;

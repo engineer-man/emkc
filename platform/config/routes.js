@@ -13,6 +13,10 @@ module.exports.routes = {
     'POST /questions/edit/:question_id': 'QuestionsController.edit',
     'GET /d:question_id/:name': 'QuestionsController.view',
 
+    'GET /snippets': 'SnippetsController.create',
+    'POST /snippets': 'SnippetsController.create',
+    'GET /snippets/:hash': 'SnippetsController.view',
+
     // catch all (404)
     'ALL r|^/(?:(?!css|images|js|lib|other|robots\.txt|google*).)*$|': 'HomeController.fourohfour'
 

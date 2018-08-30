@@ -33,7 +33,7 @@ class em_question {
     save(url) {
         const title = $('#title').val();
         const question = JSON.stringify(this.quill.getContents());
-console.log(url)
+
         return axios
             .post(url, {
                 title,

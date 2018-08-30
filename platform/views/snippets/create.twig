@@ -1,0 +1,9 @@
+{% extends 'master.twig'%}
+{% block content %}
+    <div id="create_snippet"></div>
+    <script>
+        ReactDOM.render(
+            React.createElement(CreateSnippet),
+            document.getElementById('create_snippet'));
+    </script>
+{% endblock %}

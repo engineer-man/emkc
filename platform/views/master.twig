@@ -18,6 +18,7 @@
         <script src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="/lib/bootbox/bootbox.js"></script>
         <script src="//unpkg.com/react@16/umd/react.production.min.js"></script>
         <script src="//unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
         <script src="//unpkg.com/axios/dist/axios.min.js"></script>
@@ -36,13 +37,18 @@
                     </a>
                 </div>
                 <div class="main_links">
-                    <a href="/board">Answer</a>
-                    <a href="/questions/ask">Ask</a>
+                    <a href="/board">Questions</a>
+                    {% if req.glob.user_id %}
+                        <a href="/questions/ask">Ask</a>
+                    {% endif %}
                     <div class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             Community
                         </a>
                         <div class="dropdown-menu">
+                            <h6 class="dropdown-header">Tools</h6>
+                            <a class="dropdown-item" href="/snippets">Snippets</a>
+                            <div class="dropdown-divider"></div>
                             <h6 class="dropdown-header">Engagement</h6>
                             <a class="dropdown-item" href="#">Leaderboards</a>
                             <a class="dropdown-item" href="#">Awards</a>
@@ -52,11 +58,13 @@
                 <div class="search">
                     <input type="text" placeholder="Search..." />
                 </div>
-                <div class="user_meta">
-                    <span>{{ req.glob.user.username }}</span>
-                    <span class="f900">{{ req.glob.user.score }}</span>
-                    <img src="{{ sails.glob.constant.gcloud_base_url }}{{ req.glob.user.avatar_url }}" />
-                </div>
+                {% if req.glob.user_id %}
+                    <div class="user_meta">
+                        <span>{{ req.glob.user.username }}</span>
+                        <span class="f900">{{ req.glob.user.score }}</span>
+                        <img src="{{ sails.glob.constant.gcloud_base_url }}{{ req.glob.user.avatar_url }}" />
+                    </div>
+                {% endif %}
             </div>
 
             {% block content %}{% endblock %}
