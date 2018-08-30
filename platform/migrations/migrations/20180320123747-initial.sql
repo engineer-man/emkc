@@ -260,7 +260,6 @@ insert into tags values (default, 'declare');
 insert into tags values (default, 'decompiler');
 insert into tags values (default, 'decrement');
 insert into tags values (default, 'deductive-database');
-insert into tags values (default, 'delimiter');
 insert into tags values (default, 'dense-matrix');
 insert into tags values (default, 'dereference-operator');
 insert into tags values (default, 'dependent-variable');

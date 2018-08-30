@@ -229,6 +229,12 @@ a {
 
 .em_question_ask {
     display: flex;
+    .col_padding {
+        padding: 25px 15px;
+    }
+    .instructions {
+        width: 300px;
+    }
     .contents {
         flex: 1;
         .title {
@@ -274,6 +280,8 @@ a {
     }
     .contents {
         flex: 1;
+        min-weight: 0;
+        overflow: auto;
     }
     .notes {
         width: 300px;

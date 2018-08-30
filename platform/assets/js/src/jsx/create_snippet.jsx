@@ -26,7 +26,6 @@ class CreateSnippet extends React.Component {
             })
             .then(res => {
                 if (res.data.status === 'error') {
-                    // do bootbox stuff
                     return bootbox.alert('Please provide some code');
                 }
 

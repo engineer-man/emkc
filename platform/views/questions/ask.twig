@@ -1,4 +1,12 @@
 {% extends 'master.twig'%}
 {% block content %}
-    {% include 'questions/fragments/editor.twig' with {'mode': 'create'} %}
+    <div id="create_question"></div>
+    <script>
+        ReactDOM.render(
+            React.createElement(CreateQuestion, {
+                mode: 'create'
+            }),
+            document.getElementById('create_question')
+        );
+    </script>
 {% endblock %}
