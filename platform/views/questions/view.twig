@@ -17,9 +17,14 @@
                     user: {{ question.user|json_encode }}
                 }), document.getElementById('question'));
             </script>
-            <div class="input" style="padding-top: 30px; padding-left: 40px;">
-                <textarea rows="6" placeholder="placeholder for typings" class="form-control" style="background: #383838;"></textarea>
-            </div>
+
+            <div id="create_comment"></div>
+            <script>
+                ReactDOM.render(React.createElement(CreateComment, {
+                    question_id: {{ question.question_id }},
+                    parent_id: null
+                }), document.getElementById('create_comment'));
+            </script>
 
             <div class="em_comments">
                 <div id="comments"></div>

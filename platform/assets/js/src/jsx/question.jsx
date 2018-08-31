@@ -25,7 +25,7 @@ class Question extends React.Component {
                 <div class="scores">
                     <Score score={this.state.score} />
                 </div>
-                <div class="content ql-snow">
+                <div class="content">
                     <div class="dropdown">
                         <span class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-ellipsis-v"></i>
@@ -34,7 +34,7 @@ class Question extends React.Component {
                             <a class="dropdown-item" href={'/questions/edit/' + this.props.question_id}>Edit</a>
                         </div>
                     </div>
-                    <div class="posted">
+                    <div class="posted ql-snow">
                         posted by
                         {' '}
                         <a href={'/@' + this.props.user.username}>

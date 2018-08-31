@@ -128,22 +128,24 @@ module.exports = {
                             .toString()
                             .replace('__question_id__', question_id)
                             .replace('__limit__', 10)
-                        );
+                    );
             })
             .spread(rows => {
                 var comments = [];
+                var comment_ids = [];
 
                 // add base comments
                 var comment_id = null;
 
                 rows.for_each(row => {
-                    if (row.c1_comment_id === comment_id) return null;
+                    if (~comment_ids.index_of(row.c1_comment_id)) return null;
 
-                    comment_id = row.c1_comment_id;
+                    comment_ids.push(row.c1_comment_id);
 
                     comments.push({
                         depth: 0,
                         comment_id: row.c1_comment_id,
+                        question_id: row.c1_question_id,
                         comment: row.c1_comment,
                         score: row.c1_score,
                         created_at: row.c1_created_at,
@@ -166,6 +168,7 @@ module.exports = {
                                 return {
                                     depth: row.c2_depth,
                                     comment_id: row.c2_comment_id,
+                                    question_id: row.c2_question_id,
                                     parent_id: row.c2_parent_id,
                                     comment: row.c2_comment,
                                     score: row.c2_score,

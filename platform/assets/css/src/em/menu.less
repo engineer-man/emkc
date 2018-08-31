@@ -1,0 +1,91 @@
+.em_menu {
+    display: flex;
+    padding: 10px;
+    background: #36B96E;
+    .brand_icon {
+        display: inline;
+        img {
+            height: 36px;
+            width: auto;
+        }
+    }
+    .main_links {
+        display: inline-block;
+        >* {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        >a {
+            background: rgb(18, 101, 54);
+            color: #fff;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+            &:hover {
+                background: #349A60;
+            }
+        }
+        >.dropdown {
+            background: rgb(18, 101, 54);
+            color: #fff;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            >a {
+                padding: 5px 10px;
+                display: inline-block;
+            }
+            &:hover {
+                background: #349A60;
+            }
+        }
+    }
+    .search {
+        flex: 1;
+        margin-left: 10px;
+        margin-right: 10px;
+        input {
+            width: 100%;
+            border: none;
+            background: #4AA571;
+            outline: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            &::-webkit-input-placeholder {
+                color:    #fff;
+            }
+            &:-moz-placeholder {
+               color:    #fff;
+               opacity:  1;
+            }
+            &::-moz-placeholder {
+               color:    #fff;
+               opacity:  1;
+            }
+            &:-ms-input-placeholder {
+               color:    #fff;
+            }
+            &::-ms-input-placeholder {
+               color:    #fff;
+            }
+            &::placeholder {
+               color:    #fff;
+            }
+        }
+    }
+    .user_meta {
+        * {
+            vertical-align: middle;
+        }
+        img {
+            border-radius: 50%;
+            height: 36px;
+            width: auto;
+        }
+        span {
+            margin-right: 10px;
+        }
+    }
+}

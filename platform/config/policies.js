@@ -6,6 +6,10 @@ module.exports.policies = {
         '*': ['common', 'user_auth']
     },
 
+    'CommentsController': {
+        '*': ['common', 'user_auth']
+    },
+
     'SnippetsController': {
         '*': ['common']
     },

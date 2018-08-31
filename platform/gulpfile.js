@@ -9,8 +9,13 @@ const path = require('path');
 
 gulp.task('less', () => {
     return gulp
-        .src('./assets/css/master.less')
+        .src([
+            './assets/css/src/*.less',
+            './assets/css/src/**/*.less',
+            '!./dist'
+        ])
         .pipe(less())
+        .pipe(concat('master.css'))
         .pipe(gulp.dest('./assets/css/dist'))
         .pipe(clean_css())
         .pipe(gulp.dest('./assets/css/dist'));
@@ -52,7 +57,8 @@ gulp.task('default', ['less', 'js']);
 gulp.task('watch', () => {
     gulp.start('less');
     gulp.start('js');
-    gulp.watch('./assets/css/master.less', ['less']);
+    gulp.watch('./assets/css/src/*.less', ['less']);
+    gulp.watch('./assets/css/src/**/*.less', ['less']);
     gulp.watch('./assets/js/src/**/*.js', ['js']);
     gulp.watch('./assets/js/src/**/*.jsx', ['js']);
 });

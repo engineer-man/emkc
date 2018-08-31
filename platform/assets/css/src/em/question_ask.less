@@ -1,0 +1,42 @@
+.em_question_ask {
+    display: flex;
+    .col_padding {
+        padding: 25px 15px;
+    }
+    .instructions {
+        width: 300px;
+    }
+    .contents {
+        flex: 1;
+        .title {
+            width: 100%;
+            padding: 10px 5px;
+            font-size: 18px;
+            border: 0;
+            outline: 0;
+            background: #353535;
+            border-bottom: #7b7b7b 1px solid;
+            margin-bottom: 30px;
+            &::-webkit-input-placeholder {
+                color:    #ddd;
+            }
+            &:-moz-placeholder {
+               color:    #ddd;
+               opacity:  1;
+            }
+            &::-moz-placeholder {
+               color:    #ddd;
+               opacity:  1;
+            }
+            &:-ms-input-placeholder {
+               color:    #ddd;
+            }
+            &::-ms-input-placeholder {
+               color:    #ddd;
+            }
+            &::placeholder {
+               color:    #ddd;
+            }
+        }
+    }
+}

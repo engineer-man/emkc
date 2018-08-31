@@ -13,6 +13,8 @@ module.exports.routes = {
     'POST /questions/edit/:question_id': 'QuestionsController.edit',
     'GET /d:question_id/:name': 'QuestionsController.view',
 
+    'POST /comments/create': 'CommentsController.create',
+
     'GET /snippets': 'SnippetsController.create',
     'POST /snippets': 'SnippetsController.create',
     'GET /snippets/:hash': 'SnippetsController.view',

@@ -1,11 +1,13 @@
 select
     c1.comment_id as `c1_comment_id`,
+    c1.question_id as `c1_question_id`,
     c1.user_id as `c1_user_id`,
     c1.comment as `c1_comment`,
     c1.score as `c1_score`,
     c1.created_at as `c1_created_at`,
     c1.username as `c1_username`,
     c2.comment_id as `c2_comment_id`,
+    c2.question_id as `c2_question_id`,
     c2.base_id as `c2_base_id`,
     c2.parent_id as `c2_parent_id`,
     c2.user_id as `c2_user_id`,
@@ -17,6 +19,7 @@ select
 from (
     select
         c.comment_id as comment_id,
+        c.question_id as question_id,
         c.user_id as user_id,
         c.comment as comment,
         c.score as score,
