@@ -6,4 +6,4 @@ else
     node_modules/.bin/gulp
 fi
 
-supervisor --extensions 'js,twig' --ignore 'node_modules' --ignore 'assets' engineerman.js
+supervisor --extensions 'js,twig' --ignore 'node_modules,assets' engineerman.js
