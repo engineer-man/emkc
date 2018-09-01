@@ -41,6 +41,8 @@ class CreateComment extends React.Component {
                 if (res.data.status === 'error') {
                     return bootbox.alert(res.data.payload.message);
                 }
+
+                comments.insert(res.data.payload.comment);
             });
     }
 
@@ -51,7 +53,7 @@ class CreateComment extends React.Component {
                     <div id={'create_comment_editor_' + (this.props.parent_id || 'base')}></div>
                 </div>
 
-                <button type="button" class="btn btn-md btn-success" onClick={this.save}>Save</button>
+                <button type="button" class="btn btn-sm btn-success" onClick={this.save}>Post</button>
             </div>
         )
     }

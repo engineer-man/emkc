@@ -36,7 +36,7 @@ class Comment extends React.Component {
                     <div class="posted">
                         <a href={'/@' + this.state.comment.username}>
                             {this.state.comment.username}
-                        </a> {this.state.comment.time_ago} ago
+                        </a> {this.state.comment.time_ago === 'now' ? 'just now' : this.state.comment.time_ago + ' ago'}
                     </div>
                     <div
                         class="ql-editor"
@@ -53,7 +53,7 @@ class Comment extends React.Component {
                 <div class="nested_comments">
                     {
                         this.state.comment.comments &&
-                        this.state.comment.comments.map(comment => <Comment comment={comment} />)
+                        this.state.comment.comments.map(comment => <Comment key={comment.comment_id} comment={comment} />)
                     }
                 </div>
             </div>

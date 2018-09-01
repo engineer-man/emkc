@@ -37,6 +37,8 @@ Object.keys(db).for_each(model_name => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.comments.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
+
 db.questions.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 
 module.exports = db;

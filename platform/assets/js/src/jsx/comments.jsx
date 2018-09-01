@@ -1,4 +1,5 @@
 class Comments extends React.Component {
+
     constructor(props) {
         super(props);
 
@@ -7,16 +8,17 @@ class Comments extends React.Component {
         };
     }
 
-    add() {
+    insert(comment) {
         this.setState({
-            comments: this.state.comments.concat([{score:99}])
-        })
+            comments: [comment, ...this.state.comments]
+        });
     }
 
     render() {
         return (
             this.state.comments &&
-            this.state.comments.map(comment => <Comment comment={comment} />)
+            this.state.comments.map(comment => <Comment key={comment.comment_id} comment={comment} />)
         )
     }
+
 }
