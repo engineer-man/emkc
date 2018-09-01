@@ -17,18 +17,32 @@ module.exports = (sequelize, DataTypes) => {
             freezeTableName: true,
 
             hooks: {
-                beforeCreate(instance) {
+                async beforeCreate(instance) {
                     instance.created_at = util.now();
-                    instance.hash = crypto
-                        .createHash('sha1')
-                        .update('' + +new Date() + Math.random() + '-' + Math.random())
-                        .digest('hex');
+
+                    var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+                    for (;;) {
+                        instance.hash = '';
+                        for (var i = 0; i < 6; ++i) {
+                            instance.hash += letters[Math.floor(Math.random() * letters.length)];
+                        }
+
+                        var dupe = await db.snippets
+                            .find_one({
+                                where: {
+                                    hash: instance.hash
+                                }
+                            });
+
+                        if (!dupe) break;
+                    }
                 }
             },
 
             getterMethods: {
                 url() {
-                    return '/snippets/' + this.hash;
+                    return '/s/' + this.hash;
                 },
 
                 time_ago() {

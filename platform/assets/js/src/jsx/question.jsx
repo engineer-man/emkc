@@ -22,9 +22,11 @@ class Question extends React.Component {
     render() {
         return (
             <div class="em_question">
-                <div class="scores">
-                    <Score score={this.state.score} />
-                </div>
+                <Score
+                    mode={'question'}
+                    pk={this.props.question_id}
+                    score={this.props.score}
+                    value={this.props.value} />
                 <div class="content">
                     <div class="dropdown">
                         <span class="dropdown-toggle" data-toggle="dropdown">

@@ -5,11 +5,24 @@
         left: 0;
         width: 40px;
         text-align: center;
+        z-index: 1;
         i {
             font-size: 24px;
         }
+        .fa-chevron-up {
+            cursor: pointer;
+            &:hover,
+            &.active {
+                color: #36B96E;
+            }
+        }
         .fa-chevron-down {
+            cursor: pointer;
             margin-top: 4px;
+            &:hover,
+            &.active {
+                color: #B93641;
+            }
         }
     }
     .content {

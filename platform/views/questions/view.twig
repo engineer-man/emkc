@@ -11,6 +11,7 @@
                 ReactDOM.render(React.createElement(Question, {
                     question_id: {{ question.question_id }},
                     score: {{ question.score }},
+                    value: {{ question.vote != null ? question.vote.value : 'null' }},
                     time_ago: {{ question.time_ago|json_encode }},
                     title: {{ question.title|json_encode }},
                     question: {{ question.question }},
@@ -19,13 +20,7 @@
             </script>
 
             <div id="create_comment"></div>
-            <script>
-                ReactDOM.render(React.createElement(CreateComment, {
-                    question_id: {{ question.question_id }},
-                    parent_id: null
-                }), document.getElementById('create_comment'));
-            </script>
-
+            <h4 class="f700">{{ question.comments }} comments</h4>
             <div class="em_comments">
                 <div id="comments"></div>
                 <script>
@@ -34,6 +29,13 @@
                     }), document.getElementById('comments'));
                 </script>
             </div>
+            <script>
+                ReactDOM.render(React.createElement(CreateComment, {
+                    insert: comments.insert,
+                    question_id: {{ question.question_id }},
+                    parent_id: null
+                }), document.getElementById('create_comment'));
+            </script>
         </div>
     </div>
 {% endblock %}

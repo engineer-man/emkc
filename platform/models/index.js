@@ -40,5 +40,6 @@ db.Sequelize = Sequelize;
 db.comments.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 
 db.questions.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
+db.questions.has_one(db.question_votes, { as: 'vote', foreignKey: 'question_id' });
 
 module.exports = db;

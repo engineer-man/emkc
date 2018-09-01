@@ -15,9 +15,11 @@ module.exports.routes = {
 
     'POST /comments/create': 'CommentsController.create',
 
+    'POST /votes/handle/:type/:pk': 'VotesController.handle',
+
     'GET /snippets': 'SnippetsController.create',
     'POST /snippets': 'SnippetsController.create',
-    'GET /snippets/:hash': 'SnippetsController.view',
+    'GET /s/:hash': 'SnippetsController.view',
 
     // catch all (404)
     'ALL r|^/(?:(?!css|images|js|lib|other|robots\.txt|google*).)*$|': 'HomeController.fourohfour'

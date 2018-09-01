@@ -9,6 +9,7 @@ class Comment extends React.Component {
         };
 
         this.toggle_reply = this.toggle_reply.bind(this);
+        this.insert = this.insert.bind(this);
     }
 
     ops_to_html(ops) {
@@ -28,10 +29,26 @@ class Comment extends React.Component {
         });
     }
 
+    insert(comment) {
+        this.setState(prev => {
+            return {
+                reply_open: !prev.reply_open,
+                comment: {
+                    ...prev.comment,
+                    comments: [comment, ...prev.comment.comments]
+                }
+            }
+        });
+    }
+
     render() {
         return (
             <div class="comment">
-                <Score score={this.state.comment.score} />
+                <Score
+                    mode={'comment'}
+                    pk={this.state.comment.comment_id}
+                    score={this.state.comment.score}
+                    value={this.state.comment.value} />
                 <div class="content">
                     <div class="posted">
                         <a href={'/@' + this.state.comment.username}>
@@ -46,6 +63,7 @@ class Comment extends React.Component {
                 {
                     this.state.reply_open
                         ? <CreateComment
+                            insert={this.insert}
                             question_id={this.state.comment.question_id}
                             parent_id={this.state.comment.comment_id} />
                         : null

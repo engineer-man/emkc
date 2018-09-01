@@ -10,11 +10,15 @@ module.exports.policies = {
         '*': ['common', 'user_auth']
     },
 
+    'QuestionsController': {
+        '*': ['common', 'user_auth']
+    },
+
     'SnippetsController': {
         '*': ['common']
     },
 
-    'QuestionsController': {
+    'VotesController': {
         '*': ['common', 'user_auth']
     }
 

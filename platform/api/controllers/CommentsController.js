@@ -61,6 +61,7 @@ module.exports = {
                                 created_at: comment.created_at,
                                 time_ago: 'now',
                                 username: comment.user.username,
+                                value: null,
                                 comments: []
                             }
                         }

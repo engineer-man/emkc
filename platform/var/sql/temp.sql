@@ -6,6 +6,7 @@ select
     c1.score as `c1_score`,
     c1.created_at as `c1_created_at`,
     c1.username as `c1_username`,
+    c1.value as `c1_value`,
     c2.comment_id as `c2_comment_id`,
     c2.question_id as `c2_question_id`,
     c2.base_id as `c2_base_id`,
@@ -15,7 +16,8 @@ select
     c2.depth as `c2_depth`,
     c2.score as `c2_score`,
     c2.created_at as `c2_created_at`,
-    u.username as `c2_username`
+    u.username as `c2_username`,
+    cv.value as `c2_value`
 from (
     select
         c.comment_id as comment_id,
@@ -24,7 +26,8 @@ from (
         c.comment as comment,
         c.score as score,
         c.created_at as created_at,
-        u.username as username
+        u.username as username,
+        cv.value as value
     from comments c
     left join users u on c.user_id = u.user_id
     left join comment_votes cv on c.comment_id = cv.comment_id and c.user_id = cv.user_id

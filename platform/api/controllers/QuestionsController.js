@@ -106,6 +106,14 @@ module.exports = {
                     {
                         model: db.users,
                         as: 'user'
+                    },
+                    {
+                        required: false,
+                        model: db.question_votes,
+                        as: 'vote',
+                        where: {
+                            user_id: req.glob.user_id
+                        }
                     }
                 ]
             })
@@ -151,6 +159,7 @@ module.exports = {
                         created_at: row.c1_created_at,
                         time_ago: util.time_ago(row.c1_created_at),
                         username: row.c1_username,
+                        value: row.c1_value,
                         comments: []
                     });
                 });
@@ -175,6 +184,7 @@ module.exports = {
                                     created_at: row.c2_created_at,
                                     time_ago: util.time_ago(row.c2_created_at),
                                     username: row.c2_username,
+                                    value: row.c2_value,
                                     comments: []
                                 }
                             });
