@@ -3,6 +3,7 @@ class Snippet extends React.Component {
     componentDidMount() {
         $('.highlightjs').each((i, block) => {
             hljs.highlightBlock(block);
+            hljs.lineNumbersBlock(block);
         });
     }
 
