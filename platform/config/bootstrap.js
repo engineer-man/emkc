@@ -2,6 +2,8 @@ process.env.TZ = 'UTC';
 
 require('nocamel');
 
+Promise = require('bluebird');
+
 var path = require('path');
 
 module.exports.bootstrap = cb => {

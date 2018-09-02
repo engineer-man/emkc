@@ -28,14 +28,20 @@ class Question extends React.Component {
                     score={this.props.score}
                     value={this.props.value} />
                 <div class="content">
-                    <div class="dropdown">
-                        <span class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-ellipsis-v"></i>
-                        </span>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href={'/questions/edit/' + this.props.question_id}>Edit</a>
-                        </div>
-                    </div>
+                    {
+                        this.props.session_user_id === this.props.user_id
+                            ?
+                            <div class="dropdown">
+                                <span class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </span>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href={'/questions/edit/' + this.props.question_id}>Edit</a>
+                                </div>
+                            </div>
+                            :
+                            ''
+                    }
                     <div class="posted ql-snow">
                         posted by
                         {' '}

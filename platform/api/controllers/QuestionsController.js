@@ -135,6 +135,7 @@ module.exports = {
                             .read_file_sync(root_dir + '/platform/var/sql/temp.sql')
                             .toString()
                             .replace('__question_id__', question_id)
+                            .replace(/__user_id__/gi, req.glob.user_id || null)
                             .replace('__limit__', 10)
                     );
             })
@@ -203,6 +204,7 @@ module.exports = {
                 });
             })
             .catch(err => {
+                console.log(err)
                 if (err)
                     return res.redirect('/board');
             });

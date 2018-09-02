@@ -30,12 +30,12 @@ from (
         cv.value as value
     from comments c
     left join users u on c.user_id = u.user_id
-    left join comment_votes cv on c.comment_id = cv.comment_id and c.user_id = cv.user_id
+    left join comment_votes cv on c.comment_id = cv.comment_id and cv.user_id = __user_id__
     where c.question_id = __question_id__ and c.parent_id is null
     order by c.score desc
     limit __limit__
 ) c1
 left join comments c2 on c1.comment_id = c2.base_id
 left join users u on c2.user_id = u.user_id
-left join comment_votes cv on c2.comment_id = cv.comment_id and c2.user_id = cv.user_id
+left join comment_votes cv on c2.comment_id = cv.comment_id and cv.user_id = __user_id__
 order by c1.score desc, c2.depth, c2.score desc;

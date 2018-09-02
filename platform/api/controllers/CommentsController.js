@@ -10,7 +10,7 @@ module.exports = {
                         throw new Error('Please type a comment');
                     }
 
-                    return Promise.all([
+                    return [
                         db.comments
                             .resolve_base_id(parent_id),
                         db.comments
@@ -19,11 +19,9 @@ module.exports = {
                                     comment_id: parent_id
                                 }
                             })
-                    ]);
+                    ];
                 })
-                .then(results => {
-                    const [base_id, parent] = results;
-
+                .spread((base_id, parent) => {
                     return db.comments
                         .create({
                             question_id,

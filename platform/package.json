@@ -4,6 +4,7 @@
         "babel-plugin-transform-object-rest-spread": "6.26.0",
         "babel-preset-env": "1.7.0",
         "babel-preset-react": "6.24.1",
+        "bluebird": "3.5.1",
         "connect-redis": "3.3.0",
         "elasticsearch": "15.0.0",
         "gcloud": "0.24.0",

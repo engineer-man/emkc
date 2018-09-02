@@ -10,12 +10,14 @@
             <script>
                 ReactDOM.render(React.createElement(Question, {
                     question_id: {{ question.question_id }},
+                    user_id: {{ question.user_id }},
                     score: {{ question.score }},
                     value: {{ question.vote != null ? question.vote.value : 'null' }},
                     time_ago: {{ question.time_ago|json_encode }},
                     title: {{ question.title|json_encode }},
                     question: {{ question.question }},
-                    user: {{ question.user|json_encode }}
+                    user: {{ question.user|json_encode }},
+                    session_user_id: +'{{ req.glob.user_id }}'
                 }), document.getElementById('question'));
             </script>
 
