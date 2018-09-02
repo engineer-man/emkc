@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-cd /opt/plat/platform
+PATH=/root/deps/nod8/bin:$PATH
+
+cd /net/engineerman/platform
 
 git pull
 systemctl stop engineerman-platform
