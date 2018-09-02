@@ -12,6 +12,12 @@ class Comment extends React.Component {
         this.insert = this.insert.bind(this);
     }
 
+    componentDidMount() {
+        $('.ql-syntax').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    }
+
     ops_to_html(ops) {
         try {
             ops = JSON.parse(ops).ops;
