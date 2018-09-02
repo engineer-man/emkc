@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PATH=/root/deps/nod8/bin:$PATH
+PATH=/root/deps/node8/bin:$PATH
 
 cd /net/engineerman/platform
 
