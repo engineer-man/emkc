@@ -4,19 +4,6 @@ const q = require('q');
 module.exports = {
 
     home(req, res) {
-        // request
-        //     ({
-        //         method: 'post',
-        //         url: 'https://discordapp.com/api/v6/channels/482667860737654784/messages',
-        //         headers: {
-        //             Authorization: 'Bot NDc5ODczMjUzMDA0MDE3NjY0.Dlfk_Q.IVhb40EqoYBQju7NFTOcPZMJr9I'
-        //         },
-        //         form: {
-        //             content: 'test'
-        //         },
-        //         json: true
-        //     })
-
         return res.view();
     },
 

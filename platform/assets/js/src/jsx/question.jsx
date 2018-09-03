@@ -42,7 +42,7 @@ class Question extends React.Component {
                             :
                             ''
                     }
-                    <div class="posted ql-snow">
+                    <div class="posted">
                         <img src={this.props.user.avatar_url} />
                         {' '}
                         <a href={'/@' + this.props.user.username}>
@@ -53,7 +53,9 @@ class Question extends React.Component {
                         ago
                     </div>
                     <h3 class="f700">{this.props.title}</h3>
-                    <div class="ql-editor" dangerouslySetInnerHTML={{__html: this.ops_to_html(this.props.question)}}></div>
+                    <div class="ql-snow">
+                        <div class="ql-editor" dangerouslySetInnerHTML={{__html: this.ops_to_html(this.props.question)}}></div>
+                    </div>
                     <div class="tag_list">
                         <Tags tags={this.props.tags} />
                     </div>

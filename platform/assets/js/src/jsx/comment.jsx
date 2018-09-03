@@ -62,10 +62,12 @@ class Comment extends React.Component {
                             {this.state.comment.display_name}
                         </a> {this.state.comment.time_ago === 'now' ? 'just now' : this.state.comment.time_ago + ' ago'}
                     </div>
-                    <div
-                        class="ql-editor"
-                        dangerouslySetInnerHTML={{__html: this.ops_to_html(this.state.comment.comment)}}></div>
-                    <a onClick={this.toggle_reply}>reply</a>
+                    <div class="ql-snow">
+                        <div
+                            class="ql-editor"
+                            dangerouslySetInnerHTML={{__html: this.ops_to_html(this.state.comment.comment)}}></div>
+                    </div>
+                    <a onClick={this.toggle_reply}><i class="fa fa-reply"></i> reply</a>
                 </div>
                 {
                     this.state.reply_open

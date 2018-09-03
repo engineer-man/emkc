@@ -12,6 +12,8 @@ var constant = {
             this.gcloud = 'engineerman-dev';
         }
 
+        this.secrets = sails.config.secrets;
+
         this.base_url = sails.config.base_url;
         this.gcloud_base_url = 'https://storage.googleapis.com/' + this.gcloud;
     },
