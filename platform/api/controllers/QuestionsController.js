@@ -164,6 +164,8 @@ module.exports = {
                         created_at: row.c1_created_at,
                         time_ago: util.time_ago(row.c1_created_at),
                         username: row.c1_username,
+                        display_name: row.c1_display_name,
+                        avatar_url: constant.gcloud_base_url + row.c1_avatar_url,
                         value: row.c1_value,
                         comments: []
                     });
@@ -189,6 +191,8 @@ module.exports = {
                                     created_at: row.c2_created_at,
                                     time_ago: util.time_ago(row.c2_created_at),
                                     username: row.c2_username,
+                                    display_name: row.c2_display_name,
+                                    avatar_url: constant.gcloud_base_url + row.c2_avatar_url,
                                     value: row.c2_value,
                                     comments: []
                                 }

@@ -5,7 +5,9 @@ select
     c1.comment as `c1_comment`,
     c1.score as `c1_score`,
     c1.created_at as `c1_created_at`,
+    c1.display_name as `c1_display_name`,
     c1.username as `c1_username`,
+    c1.avatar_url as `c1_avatar_url`,
     c1.value as `c1_value`,
     c2.comment_id as `c2_comment_id`,
     c2.question_id as `c2_question_id`,
@@ -16,7 +18,9 @@ select
     c2.depth as `c2_depth`,
     c2.score as `c2_score`,
     c2.created_at as `c2_created_at`,
+    u.display_name as `c2_display_name`,
     u.username as `c2_username`,
+    u.avatar_url as `c2_avatar_url`,
     cv.value as `c2_value`
 from (
     select
@@ -26,7 +30,9 @@ from (
         c.comment as comment,
         c.score as score,
         c.created_at as created_at,
+        u.display_name as display_name,
         u.username as username,
+        u.avatar_url as avatar_url,
         cv.value as value
     from comments c
     left join users u on c.user_id = u.user_id
