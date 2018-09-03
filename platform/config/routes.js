@@ -1,6 +1,6 @@
 module.exports.routes = {
 
-    'GET /': 'HomeController.home',
+    'GET /': 'BoardController.home',
     'GET /logout': 'HomeController.logout',
     'GET /auth/discord': 'AuthController.discord',
     'GET /auth/discord_cb': 'AuthController.discord_cb',

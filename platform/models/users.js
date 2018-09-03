@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true
             },
             is_staff: DataTypes.INTEGER,
+            display_name: DataTypes.STRING,
             username: DataTypes.STRING,
             email: DataTypes.STRING,
             password: DataTypes.STRING,

@@ -2,8 +2,12 @@
 {% block content %}
     <div style="padding: 30px 20px 15px 15px;">
         <div style="float: right; width: 260px;">
-            don't know what's gonna go here yetdon't know what's gonna go here yetdon't know what's gonna go here yet
-            don't know what's gonna go here yetdon't know what's gonna go here yetdon't know what's gonna go here yet
+            <h5 class="f700">Metadata</h5>
+            <p>
+                Views: 0<br />
+                Participants: 0<br />
+                Last Activity: 0
+            </p>
         </div>
         <div style="position: relative; padding-right: 290px;">
             <div id="question"></div>
@@ -17,12 +21,13 @@
                     title: {{ question.title|json_encode }},
                     question: {{ question.question }},
                     user: {{ question.user|json_encode }},
+                    tags: {{ question.tags|json_encode }},
                     session_user_id: +'{{ req.glob.user_id }}'
                 }), document.getElementById('question'));
             </script>
 
             <div id="create_comment"></div>
-            <h4 class="f700">{{ question.comments }} comments</h4>
+            <h5 class="f700">{{ question.comments }} comments</h5>
             <div class="em_comments">
                 <div id="comments"></div>
                 <script>

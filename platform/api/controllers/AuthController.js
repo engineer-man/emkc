@@ -4,6 +4,12 @@ const request = require('request-promise');
 module.exports = {
 
     discord(req, res) {
+        if (req.query.r) {
+            req.session.redirect = req.query.r;
+        } else {
+            delete req.session.redirect;
+        }
+
         return res.redirect(
             'https://discordapp.com/api/oauth2/authorize'+
             '?client_id=482732253835689994'+
@@ -55,6 +61,7 @@ module.exports = {
                             discord_api: discord_user.id
                         },
                         defaults: {
+                            display_name: discord_user.username,
                             email: discord_user.email || null
                         }
                     });
@@ -62,6 +69,10 @@ module.exports = {
             .spread(async (user, created) => {
                 var username = discord_user.username;
                 var ext = null;
+
+                username = username.replace(/[^0-9A-Za-z_\-]+/gi);
+
+                if (username === '') username = 'new_guy';
 
                 if (created) {
                     // make sure username is unique
@@ -105,7 +116,12 @@ module.exports = {
 
                 req.session.user_id = user.user_id;
 
-                return res.redirect('/board');
+                if (req.session.redirect) {
+                    return res.redirect(req.session.redirect);
+                    delete req.session.redirect;
+                } else {
+                    return res.redirect('/board');
+                }
             })
             .catch(err => {
                 return res.redirect('/');

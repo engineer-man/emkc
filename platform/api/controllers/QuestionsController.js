@@ -108,6 +108,10 @@ module.exports = {
                         as: 'user'
                     },
                     {
+                        model: db.tags,
+                        as: 'tags'
+                    },
+                    {
                         required: false,
                         model: db.question_votes,
                         as: 'vote',
@@ -204,7 +208,6 @@ module.exports = {
                 });
             })
             .catch(err => {
-                console.log(err)
                 if (err)
                     return res.redirect('/board');
             });

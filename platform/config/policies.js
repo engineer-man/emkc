@@ -2,16 +2,22 @@ module.exports.policies = {
 
     '*': 'common',
 
+    'AuthController': {
+        '*': ['common']
+    },
+
     'BoardController': {
-        '*': ['common', 'user_auth']
+        '*': ['common']
     },
 
     'CommentsController': {
-        '*': ['common', 'user_auth']
+        '*': ['common', 'logged_in']
     },
 
     'QuestionsController': {
-        '*': ['common', 'user_auth']
+        '*': ['common'],
+        'ask': ['common', 'logged_in'],
+        'edit': ['common', 'logged_in']
     },
 
     'SnippetsController': {
@@ -19,7 +25,7 @@ module.exports.policies = {
     },
 
     'VotesController': {
-        '*': ['common', 'user_auth']
+        '*': ['common', 'logged_in']
     }
 
 };

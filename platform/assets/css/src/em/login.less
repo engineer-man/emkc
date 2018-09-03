@@ -1,0 +1,48 @@
+.em_login {
+    display: none;
+    &.open {
+        display: block;
+    }
+    .backdrop {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: rgba(0,0,0,.2);
+        text-align: center;
+    }
+    .close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        cursor: pointer;
+        i {
+            color: #fff;
+            &:hover {
+                color: #eee;
+            }
+        }
+    }
+    .box {
+        display: inline-block;
+        position: relative;
+        max-width: 450px;
+        width: 100%;
+        margin-top: 30px;
+        background: #222;
+        padding: 30px;
+        p {
+            color: #aaa;
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+        a {
+            color: #fff;
+            background: #7289DA;
+            &:hover {
+                background: #687BC0;
+            }
+        }
+    }
+}

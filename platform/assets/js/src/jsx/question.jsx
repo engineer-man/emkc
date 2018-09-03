@@ -55,11 +55,9 @@ class Question extends React.Component {
                     </div>
                     <h3 class="f700">{this.props.title}</h3>
                     <div class="ql-editor" dangerouslySetInnerHTML={{__html: this.ops_to_html(this.props.question)}}></div>
-                    <Tag name={'node.js'} />
-                    {' '}
-                    <Tag name={'mysql'} />
-                    {' '}
-                    <Tag name={'concurrent-programming'} />
+                    <div class="tag_list">
+                        <Tags tags={this.props.tags} />
+                    </div>
                 </div>
             </div>
         )

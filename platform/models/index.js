@@ -41,5 +41,11 @@ db.comments.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 
 db.questions.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 db.questions.has_one(db.question_votes, { as: 'vote', foreignKey: 'question_id' });
+db.questions.belongsToMany(db.tags, { as: 'tags', through: { model: db.question_tags }, foreignKey: 'question_id' });
+
+db.question_tags.belongsTo(db.questions, { as: 'question', foreignKey: 'question_id' });
+db.question_tags.belongsTo(db.tags, { as: 'tag', foreignKey: 'tag_id' });
+
+db.tags.belongsToMany(db.questions, { as: 'questions', through: { model: db.question_tags }, foreignKey: 'tag_id' });
 
 module.exports = db;

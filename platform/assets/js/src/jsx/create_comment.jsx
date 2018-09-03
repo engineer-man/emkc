@@ -42,6 +42,7 @@ class CreateComment extends React.Component {
                     return bootbox.alert(res.data.payload.message);
                 }
 
+                this.quill.setContents('');
                 this.props.insert(res.data.payload.comment);
             });
     }

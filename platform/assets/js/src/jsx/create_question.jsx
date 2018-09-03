@@ -4,7 +4,18 @@ class CreateQuestion extends React.Component {
         super(props);
 
         this.state = {
-            title: props.title || ''
+            title: props.title || '',
+            tags: [
+                {
+                    name: 'test'
+                },
+                {
+                    name: 'test 2'
+                },
+                {
+                    name: 'test 3'
+                },
+            ]
         };
 
         this.save = this.save.bind(this);
@@ -82,7 +93,15 @@ class CreateQuestion extends React.Component {
                             <div id="question"></div>
                         </div>
 
-                        <button type="button" class="btn btn-md btn-success" onClick={this.save}>Save</button>
+                        <h5 class="f700">Tags</h5>
+                        <div class="tag_list">
+                            {
+                                this.state.tags && this.state.tags.map(tag => <Tag tag={tag} />)
+                            }
+                            Enter a tag
+                        </div>
+
+                        <button type="button" class="btn btn-sm btn-success" onClick={this.save}>Save</button>
                     </div>
                 </div>
                 <div class="instructions">

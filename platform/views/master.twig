@@ -41,6 +41,8 @@
                     <a href="/board">Questions</a>
                     {% if req.glob.user_id %}
                         <a href="/questions/ask">Ask</a>
+                    {% else %}
+                        <a onclick="login.open('/questions/ask')">Ask</a>
                     {% endif %}
                     <div class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown">
@@ -63,12 +65,33 @@
                     <div class="user_meta">
                         <span>{{ req.glob.user.username }}</span>
                         <span class="f900">{{ req.glob.user.score }}</span>
-                        <img src="{{ sails.glob.constant.gcloud_base_url }}{{ req.glob.user.avatar_url }}" />
+                        <div class="dropdown">
+                            <img
+                                src="{{ sails.glob.constant.gcloud_base_url }}{{ req.glob.user.avatar_url }}"
+                                class="dropdown-toggle"
+                                data-toggle="dropdown" />
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <h6 class="dropdown-header">Account</h6>
+                                <a class="dropdown-item" href="/profile">Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="login">
+                        <a onclick="login.open()">Login</a>
                     </div>
                 {% endif %}
             </div>
 
             {% block content %}{% endblock %}
         </div>
+        {% if not req.glob.user_id %}
+            <div id="login"></div>
+            <script>
+                login = ReactDOM.render(React.createElement(Login), document.getElementById('login'));
+            </script>
+        {% endif %}
     </body>
 </html>
