@@ -70,7 +70,7 @@ module.exports = {
                 var username = discord_user.username;
                 var ext = null;
 
-                username = username.replace(/[^0-9A-Za-z_\-]+/gi);
+                username = username.replace(/[^0-9A-Za-z_\-]+/gi, '');
 
                 if (username === '') username = 'new_guy';
 

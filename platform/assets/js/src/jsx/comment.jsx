@@ -67,7 +67,10 @@ class Comment extends React.Component {
                             class="ql-editor"
                             dangerouslySetInnerHTML={{__html: this.ops_to_html(this.state.comment.comment)}}></div>
                     </div>
-                    <a onClick={this.toggle_reply}><i class="fa fa-reply"></i> reply</a>
+                    <div class="actions">
+                        <a class="reply" onClick={this.toggle_reply}><i class="fa fa-reply"></i> reply</a>
+                        <a class="edit"><i class="fa fa-edit"></i> edit</a>
+                    </div>
                 </div>
                 {
                     this.state.reply_open
