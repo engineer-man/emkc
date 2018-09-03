@@ -125,7 +125,9 @@ module.exports = {
                 if (!question) throw new Error('Question not found');
 
                 question.user = {
-                    username: question.user.username
+                    username: question.user.username,
+                    display_name: question.user.display_name,
+                    avatar_url: constant.gcloud_base_url + question.user.avatar_url,
                 };
 
                 if (question.slug !== name) {

@@ -43,12 +43,11 @@ class Question extends React.Component {
                             ''
                     }
                     <div class="posted ql-snow">
-                        posted by
+                        <img src={this.props.user.avatar_url} />
                         {' '}
                         <a href={'/@' + this.props.user.username}>
-                            {this.props.user.username}
+                            {this.props.user.display_name}
                         </a>
-                        {' '}
                         {this.props.time_ago}
                         {' '}
                         ago
