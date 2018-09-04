@@ -1,14 +1,19 @@
 {% extends 'master.twig'%}
 {% block content %}
-    <div style="padding: 30px 20px 15px 15px;">
-        <div style="float: right; width: 260px;">
-            don't know what's gonna go here yetdon't know what's gonna go here yetdon't know what's gonna go here yet
-            don't know what's gonna go here yetdon't know what's gonna go here yetdon't know what's gonna go here yet
+    <div style="display: flex; padding: 20px 15px;">
+        <div style="flex: 1;">
+            <div class="em_main_board">
+                <div id="questions"></div>
+                <script>
+                    ReactDOM.render(React.createElement(BoardQuestions, {
+                        questions: {{ questions|json_encode }}
+                    }), document.getElementById('questions'));
+                </script>
+            </div>
         </div>
-        <div style="position: relative; padding-right: 290px;">
-            {% for question in questions %}
-                <a href="{{ question.url }}">{{ question.url }}</a><br />
-            {% endfor %}
+        <div style="width: 260px;">
+            don't know what's gonna go here yetdon't know what's gonna go here yetdon't know what's gonna go here yet
+            don't know what's gonna go here yetdon't know what's gonna go here yetdon't know what's gonna go here yet
         </div>
     </div>
 {% endblock %}

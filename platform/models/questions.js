@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             title: DataTypes.STRING,
             question: DataTypes.TEXT('medium'),
             score: DataTypes.INTEGER,
+            views: DataTypes.INTEGER,
             comments: DataTypes.INTEGER,
             created_at: DataTypes.DATE
         },
@@ -48,7 +49,6 @@ module.exports = (sequelize, DataTypes) => {
                                         Authorization: 'Bot ' + constant.secrets.felix
                                     },
                                     body: {
-                                        title: 'some title here',
                                         embed: {
                                             title: instance.title,
                                             type: 'rich',
@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
                                             },
                                             footer: {
                                                 icon_url: constant.gcloud_base_url + question.user.avatar_url,
-                                                text: 'posted by ' + question.user.username
+                                                text: 'posted by ' + question.user.display_name
                                             }
                                         }
                                     },
