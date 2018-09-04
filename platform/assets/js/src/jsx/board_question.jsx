@@ -27,7 +27,7 @@ class BoardQuestion extends React.Component {
                                 {this.props.question.user.display_name}
                             </a> {this.props.question.time_ago === 'now' ? 'just now' : this.props.question.time_ago + ' ago'}
                         </div>
-                        <span class="title">{this.props.question.title} oiskflg lksjd lfkgj lskdjf glksjd lfgkjs ldkfj glksj dlfkgjsldkfgj</span>
+                        <span class="title">{this.props.question.title}</span>
                     </div>
                     <div class="tag_list">
                         <Tags tags={this.props.question.tags} />
