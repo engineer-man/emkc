@@ -2,6 +2,7 @@
 {% block content %}
     <div style="display: flex; padding: 20px 15px;">
         <div style="flex: 1;">
+            <h5 class="f700">Newest Questions</h5>
             <div class="em_main_board">
                 <div id="questions"></div>
                 <script>
@@ -11,9 +12,21 @@
                 </script>
             </div>
         </div>
-        <div style="width: 260px;">
-            don't know what's gonna go here yetdon't know what's gonna go here yetdon't know what's gonna go here yet
-            don't know what's gonna go here yetdon't know what's gonna go here yetdon't know what's gonna go here yet
+        <div style="width: 320px; padding: 0 15px;">
+            <h5 class="f700" style="margin-bottom: 15px;">Top 50 Contributors</h5>
+            <div class="em_top_contributors">
+                {% for user in users %}
+                    <div class="contributor">
+                        <img src="{{ req.glob.constant.gcloud_base_url ~ user.avatar_url }}" />
+                        <a href="/@{{ user.username}}">
+                            {{ user.display_name}}
+                        </a>
+                        <span>
+                            {{ user.score }}
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -1,26 +1,37 @@
-const q = require('q');
-
 module.exports = {
 
     home(req, res) {
-        return db.questions
-            .find_all({
-                include: [
-                    {
-                        model: db.users,
-                        as: 'user'
-                    },
-                    {
-                        model: db.tags,
-                        as: 'tags'
-                    }
-                ],
-                order: [
-                    ['question_id', 'desc']
-                ],
-                limit: 50
+        return Promise.resolve(null)
+            .then(() => {
+                return [
+                    db.questions
+                        .find_all({
+                            include: [
+                                {
+                                    model: db.users,
+                                    as: 'user'
+                                },
+                                {
+                                    model: db.tags,
+                                    as: 'tags'
+                                }
+                            ],
+                            order: [
+                                ['question_id', 'desc']
+                            ],
+                            limit: 50
+                        }),
+                    db.users
+                        .find_all({
+                            order: [
+                                ['score', 'desc'],
+                                ['user_id']
+                            ],
+                            limit: 50
+                        })
+                ];
             })
-            .then(questions => {
+            .spread((questions, users) => {
                 return res.view({
                     questions: questions.map(q => {
                         return {
@@ -37,7 +48,8 @@ module.exports = {
                             },
                             tags: q.tags
                         }
-                    })
+                    }),
+                    users
                 });
             });
     },

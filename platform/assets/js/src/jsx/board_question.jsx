@@ -15,20 +15,22 @@ class BoardQuestion extends React.Component {
                     </div>
                     {' '}
                     <div>
-                        Comments
+                        Replies
                         <div class="comments">{this.props.question.comments}</div>
                     </div>
                 </div>
                 <div class="content">
-                    <h5>{this.props.question.title}</h5>
+                    <div>
+                        <div class="posted">
+                            <img src={this.props.question.user.avatar_url} />
+                            <a href={'/@' + this.props.question.user.username}>
+                                {this.props.question.user.display_name}
+                            </a> {this.props.question.time_ago === 'now' ? 'just now' : this.props.question.time_ago + ' ago'}
+                        </div>
+                        <span class="title">{this.props.question.title} oiskflg lksjd lfkgj lskdjf glksjd lfgkjs ldkfj glksj dlfkgjsldkfgj</span>
+                    </div>
                     <div class="tag_list">
                         <Tags tags={this.props.question.tags} />
-                    </div>
-                    <div class="posted">
-                        <img src={this.props.question.user.avatar_url} />
-                        <a href={'/@' + this.props.question.user.username}>
-                            {this.props.question.user.display_name}
-                        </a> {this.props.question.time_ago === 'now' ? 'just now' : this.props.question.time_ago + ' ago'}
                     </div>
                 </div>
             </a>

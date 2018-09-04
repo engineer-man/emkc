@@ -26,6 +26,7 @@
         "pm2": "3.0.4",
         "q": "1.5.0",
         "quill-delta-to-html": "0.9.9",
+        "quill-delta-to-plaintext": "1.0.0",
         "redis": "2.8.0",
         "request-promise": "4.2.2",
         "sails": "0.12.14",

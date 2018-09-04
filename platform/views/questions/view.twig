@@ -1,4 +1,6 @@
 {% extends 'master.twig'%}
+{% block title %}{{ question.title|e }} - Engineer Man{% endblock %}
+{% block description %}{{ question.description|e }}{% endblock %}
 {% block content %}
     <div style="padding: 30px 20px 15px 15px;">
         <div style="float: right; width: 260px;">
@@ -9,6 +11,7 @@
                 Last Activity: 0
             </p>
         </div>
+        {{ question.question_plaintext }}
         <div style="position: relative; padding-right: 290px;">
             <div id="question"></div>
             <script>

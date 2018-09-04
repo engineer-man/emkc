@@ -1,6 +1,8 @@
 module.exports = function(req, res, next) {
     req.glob = req.glob || {};
 
+    req.glob.constant = constant;
+
     // get the logged in user
     return db.users
         .find_one({

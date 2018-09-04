@@ -1,4 +1,5 @@
-const QuillDeltaToHtmlConverter = require('quill-delta-to-html');
+const delta_to_html = require('quill-delta-to-html');
+const delta_to_plaintext = require('quill-delta-to-plaintext');
 const request = require('request-promise');
 
 module.exports = (sequelize, DataTypes) => {
@@ -86,9 +87,19 @@ module.exports = (sequelize, DataTypes) => {
                     try {
                         const json = JSON.parse(this.question);
 
-                        const converter = new QuillDeltaToHtmlConverter(json.ops, {});
+                        const converter = new delta_to_html(json.ops, {});
 
                         return converter.convert();
+                    } catch (e) {
+                        return '';
+                    }
+                },
+
+                description() {
+                    try {
+                        const json = JSON.parse(this.question);
+
+                        return delta_to_plaintext(json.ops).slice(0, 250);
                     } catch (e) {
                         return '';
                     }
