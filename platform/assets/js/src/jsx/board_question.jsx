@@ -16,18 +16,18 @@ class BoardQuestion extends React.Component {
                 <div class="content">
                     <div>
                         <span class="title">{this.props.question.title}</span>
+                        <div class="posted">
+                            by
+                            {' '}
+                            <a href={'/@' + this.props.question.user.username}>
+                                {this.props.question.user.display_name}
+                            </a> {this.props.question.time_ago === 'now' ? 'just now' : this.props.question.time_ago + ' ago'}
+                        </div>
                     </div>
                     <div class="tag_list">
                         <span class="badge badge-info">test</span>
                         <span class="badge badge-info">test 2</span>
                         <span class="badge badge-info">test 3</span>
-                    </div>
-                    <div class="posted">
-                        by
-                        {' '}
-                        <a href={'/@' + this.props.question.user.username}>
-                            {this.props.question.user.display_name}
-                        </a> {this.props.question.time_ago === 'now' ? 'just now' : this.props.question.time_ago + ' ago'}
                     </div>
                 </div>
             </a>
