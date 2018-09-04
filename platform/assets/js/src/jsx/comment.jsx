@@ -60,7 +60,11 @@ class Comment extends React.Component {
                         <img src={this.state.comment.avatar_url} />
                         <a href={'/@' + this.state.comment.username}>
                             {this.state.comment.display_name}
-                        </a> {this.state.comment.time_ago === 'now' ? 'just now' : this.state.comment.time_ago + ' ago'}
+                        </a>
+                        {' '}
+                        <span>
+                            {this.state.comment.time_ago === 'now' ? 'just now' : this.state.comment.time_ago + ' ago'}
+                        </span>
                     </div>
                     <div class="ql-snow">
                         <div

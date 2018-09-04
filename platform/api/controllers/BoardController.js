@@ -27,6 +27,7 @@ module.exports = {
                             title: q.title,
                             score: q.score,
                             views: q.views,
+                            comments: q.comments,
                             url: q.url,
                             time_ago: q.time_ago,
                             user: {

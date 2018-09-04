@@ -5,32 +5,28 @@
         background: #333232;
         margin-bottom: 10px;
     }
-    .score_box {
-        width: 70px;
+    .stat_box {
+        width: 130px;
         text-align: center;
         margin-right: 10px;
+        font-size: 12px;
         >div {
+            display: inline-block;
+            padding: 5px 10px;
             background: #444;
+            margin-bottom: 10px;
         }
-        .score {
-            font-size: 20px;
-            font-weight: 700;
+        >div:first-child {
+            margin-right: 10px;
         }
-    }
-    .views_box {
-        width: 70px;
-        text-align: center;
-        >div {
-            background: #444;
-        }
-        .views {
+        .score, .views, .comments {
             font-size: 20px;
             font-weight: 700;
         }
     }
     .content {
         flex: 1;
-        padding: 0 20px;
+        padding: 0 5px;
     }
     .posted {
         img {

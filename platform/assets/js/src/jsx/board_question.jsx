@@ -3,16 +3,20 @@ class BoardQuestion extends React.Component {
     render() {
         return (
             <a href={this.props.question.url} class="question">
-                <div class="score_box">
+                <div class="stat_box">
                     <div>
                         Score
                         <div class="score">{this.props.question.score}</div>
                     </div>
-                </div>
-                <div class="views_box">
+                    {' '}
                     <div>
                         Views
                         <div class="views">{this.props.question.views}</div>
+                    </div>
+                    {' '}
+                    <div>
+                        Comments
+                        <div class="comments">{this.props.question.comments}</div>
                     </div>
                 </div>
                 <div class="content">
