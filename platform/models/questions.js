@@ -99,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
                     try {
                         const json = JSON.parse(this.question);
 
-                        return delta_to_plaintext(json.ops).slice(0, 250);
+                        return delta_to_plaintext(json.ops).slice(0, 250).trim();
                     } catch (e) {
                         return '';
                     }
