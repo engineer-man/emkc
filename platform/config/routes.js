@@ -6,6 +6,7 @@ module.exports.routes = {
     'GET /auth/discord_cb': 'AuthController.discord_cb',
     'GET /auth/discord_cb': 'AuthController.discord_cb',
     'GET /board': 'BoardController.home',
+    'GET /community': 'CommunityController.home',
 
     'GET /questions/ask': 'QuestionsController.ask',
     'POST /questions/ask': 'QuestionsController.ask',

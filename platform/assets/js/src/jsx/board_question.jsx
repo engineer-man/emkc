@@ -14,7 +14,7 @@ class BoardQuestion extends React.Component {
                     </div>
                 </div>
                 <div class="content">
-                    <div>
+                    <div class="title_wrapper">
                         <span class="title">{this.props.question.title}</span>
                         <div class="posted">
                             by
@@ -25,9 +25,7 @@ class BoardQuestion extends React.Component {
                         </div>
                     </div>
                     <div class="tag_list">
-                        <span class="badge badge-info">test</span>
-                        <span class="badge badge-info">test 2</span>
-                        <span class="badge badge-info">test 3</span>
+                        <Tags tags={this.props.question.tags} />
                     </div>
                 </div>
             </a>
@@ -35,6 +33,3 @@ class BoardQuestion extends React.Component {
     }
 
 }
-// <div class="tag_list">
-//     <Tags tags={this.props.question.tags} />
-// </div>
