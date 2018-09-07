@@ -112,21 +112,12 @@ module.exports = {
                                 user.save();
                             });
                     })
-                    .catch(err => {});
+                    .catch(err => {console.log(err)});
 
                 req.session.user_id = user.user_id;
 
-                request
-                    ({
-                        method: 'put',
-                        url: 'https://discordapp.com/api/v6'+
-                            '/guilds/473161189120147456'+
-                            '/members/' + user.discord_api +
-                            '/roles/486562889046556682',
-                        headers: {
-                            Authorization: 'Bot ' + constant.secrets.felix
-                        }
-                    })
+                discord
+                    .api('put', '/guilds/473161189120147456/members/' + user.discord_api + '/roles/486562889046556682')
                     .catch(err => {});
 
                 if (req.session.redirect) {

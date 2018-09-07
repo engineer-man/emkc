@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>{% block title %}Engineer Man Community Knowledge Center{% endblock %}</title>
+        <title>{% block title %}Engineer Man Knowledge Center{% endblock %}</title>
 
         <meta name="KEYWORDS" content="" />
         <meta name="DESCRIPTION" content="{% block desc %}Engineer Man is an intelligent new platform for quality discussion, questions, challenges, and learning.{% endblock %}" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <meta property="og:title" content="{% block title %}Engineer Man Community Knowledge Center{% endblock %}"/>
+        <meta property="og:title" content="{% block title %}Engineer Man Knowledge Center{% endblock %}"/>
         <meta property="og:image" content="{{ sails.config.base_url ~ '/images/icon_square_642.jpg' }}"/>
         <meta property="og:description" content="{% block desc %}Engineer Man is an intelligent new platform for quality discussion, questions, challenges, and learning.{% endblock %}"/>
         <meta property="og:url" content="{{ sails.config.base_url ~ req.url }}" />
@@ -72,7 +72,7 @@
                 </div>
                 {% if req.glob.user_id %}
                     <div class="user_meta">
-                        <i class="fa fa-coins"></i>
+                        <i class="fa fa-bolt"></i>
                         <span class="f900">{{ req.glob.user.score }}</span>
                         <div class="dropdown">
                             <img

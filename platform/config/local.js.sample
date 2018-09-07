@@ -16,6 +16,16 @@ module.exports = {
             timestamps: false
         }
     },
+    felix: {
+        key: ''
+    },
+    gcp: {
+        project_id: ''
+    },
+    mailgun: {
+        key: '',
+        domain: ''
+    },
     elasticsearch: {
         host: '127.0.0.1'
     },

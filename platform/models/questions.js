@@ -42,31 +42,24 @@ module.exports = (sequelize, DataTypes) => {
                         .then(question => {
                             if (!question) return null;
 
-                            request
-                                ({
-                                    method: 'post',
-                                    url: 'https://discordapp.com/api/v6/channels/483979558249562112/messages',
-                                    headers: {
-                                        Authorization: 'Bot ' + constant.secrets.felix
-                                    },
-                                    body: {
-                                        embed: {
-                                            title: instance.title,
-                                            type: 'rich',
-                                            color: 0x2ecc71,
-                                            url: constant.base_url + instance.url,
-                                            author: {
-                                                name: 'New Question Posted'
-                                            },
-                                            footer: {
-                                                icon_url: constant.gcloud_base_url + question.user.avatar_url,
-                                                text: 'posted by ' + question.user.display_name
-                                            }
+                            discord
+                                .api('post', '/channels/483979558249562112/messages', {
+                                    embed: {
+                                        title: instance.title,
+                                        type: 'rich',
+                                        color: 0x2ecc71,
+                                        url: constant.base_url + instance.url,
+                                        author: {
+                                            name: 'New Question Posted'
+                                        },
+                                        footer: {
+                                            icon_url: constant.gcloud_base_url + question.user.avatar_url,
+                                            text: 'posted by ' + question.user.display_name
                                         }
-                                    },
-                                    json: true
-                                });
-                        })
+                                    }
+                                })
+                                .catch(err => {});
+                        });
                 }
             },
 

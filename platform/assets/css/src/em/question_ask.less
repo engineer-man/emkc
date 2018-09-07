@@ -49,5 +49,59 @@
             font-size: 16px;
             margin-right: 10px;
         }
+        i {
+            margin-left: 5px;
+            cursor: pointer;
+        }
+    }
+    .tag_input {
+        background: none;
+        border: 0;
+        outline: 0;
+        min-width: 80px;
+        &::-webkit-input-placeholder {
+            color:    #aaa;
+        }
+        &:-moz-placeholder {
+           color:    #aaa;
+           opacity:  1;
+        }
+        &::-moz-placeholder {
+           color:    #aaa;
+           opacity:  1;
+        }
+        &:-ms-input-placeholder {
+           color:    #aaa;
+        }
+        &::-ms-input-placeholder {
+           color:    #aaa;
+        }
+        &::placeholder {
+           color:    #aaa;
+        }
+    }
+    .tag_input_wrapper {
+        display: inline-block;
+        position: relative;
+        .results {
+            position: absolute;
+            left: 0px;
+            top: 30px;
+            display: inline-block;
+            background: #2B2B2B;
+            padding: 5px 0;
+            div {
+                padding: 1px 10px;
+                white-space: nowrap;
+                cursor: pointer;
+                &:hover {
+                    background: #2D9B5C;
+                    color: #fff;
+                }
+            }
+        }
+    }
+    .width_indicator {
+        display: none;
     }
 }

@@ -1,3 +1,5 @@
+const request = require('request-promise');
+
 module.exports = {
 
     home(req, res) {

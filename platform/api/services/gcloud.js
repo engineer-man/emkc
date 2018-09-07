@@ -1,19 +1,17 @@
 const constant = require('./constant');
 const fs = require('fs');
-const gcloud = require('gcloud');
+const gcloud = require('@google-cloud/storage');
 const mime = require('mime-types');
 const request = require('request');
 const q = require('q');
 const duplex = require('stream').Duplex;
 
-var gcs = gcloud.storage({
-    keyFilename: constant.is_prod()
-        ? __dirname + '/../../config/gcloud/storage.json'
-        : __dirname + '/../../config/gcloud/storage.json',
-    projectId: 'tierlabs'
+var gcs = new gcloud.Storage({
+    keyFilename: __dirname + '/../../config/secrets/google_cloud.json',
+    projectId: sails.config.gcp.project_id
 });
 
-var engineerman = gcs.bucket(constant.gcloud);
+var engineerman = gcs.bucket(constant.gcloud_bucket);
 
 module.exports = {
 

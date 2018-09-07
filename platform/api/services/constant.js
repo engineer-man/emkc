@@ -5,17 +5,24 @@ var constant = {
     no: 0,
     yes: 1,
 
+    notifications: {
+        type: {
+            new_comment: 1
+        },
+        entity_type: {
+            comments: 1
+        }
+    },
+
     devprod() {
         if (this.is_prod()) {
-            this.gcloud = 'engineerman';
+            this.gcloud_bucket = 'engineerman';
         } else {
-            this.gcloud = 'engineerman-dev';
+            this.gcloud_bucket = 'engineerman-dev';
         }
 
-        this.secrets = sails.config.secrets;
-
         this.base_url = sails.config.base_url;
-        this.gcloud_base_url = 'https://storage.googleapis.com/' + this.gcloud;
+        this.gcloud_base_url = 'https://storage.googleapis.com/' + this.gcloud_bucket;
     },
 
     is_prod() {

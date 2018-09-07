@@ -22,6 +22,8 @@ module.exports.routes = {
     'POST /snippets': 'SnippetsController.create',
     'GET /s/:hash': 'SnippetsController.view',
 
+    'GET /tags/search': 'TagsController.search',
+
     // catch all (404)
     'ALL r|^/(?:(?!css|images|js|lib|other|robots\.txt|google*).)*$|': 'HomeController.fourohfour'
 
