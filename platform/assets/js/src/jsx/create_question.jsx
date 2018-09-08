@@ -39,6 +39,45 @@ class CreateQuestion extends React.Component {
     }
 
     handle_tag_input(event) {
+        var code = event.which || event.keyCode;
+
+        var root = $('.tag_input_wrapper .results div');
+        var results_count = root.length;
+        var highlight_idx = null;
+
+        root.each((i, item) => {
+            if ($(item).hasClass('active')) highlight_idx = i;
+        });
+
+        switch (code) {
+            // up
+            case 38:
+                if (highlight_idx === null) return null;
+                root.removeClass('active');
+                if (highlight_idx === 0) {
+                    root.eq(0).removeClass('active');
+                } else {
+                    root.eq(highlight_idx-1).addClass('active');
+                }
+                return null;
+
+            // down
+            case 40:
+                if (results_count === highlight_idx + 1) return null;
+                root.removeClass('active');
+                if (highlight_idx === null) {
+                    root.eq(0).addClass('active');
+                } else {
+                    root.eq(highlight_idx+1).addClass('active');
+                }
+                return null;
+
+            // enter
+            case 13:
+                root.eq(highlight_idx).click();
+                return null;
+        }
+
         this.setState({
             tag_term: event.target.value
         }, () => {
@@ -119,7 +158,6 @@ class CreateQuestion extends React.Component {
         this.setState(prev => {
             return {
                 tags: prev.tags.filter(tag => {
-                    console.log(tag.tag_id)
                     return tag.tag_id !== tag_id;
                 })
             }

@@ -14,7 +14,7 @@ class Login extends React.Component {
     open(redirect) {
         this.setState({
             open: true,
-            redirect
+            redirect: redirect || location.pathname
         });
     }
 

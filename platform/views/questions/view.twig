@@ -30,7 +30,9 @@
             </script>
 
             <h5 class="f700" style="margin-top: 40px;">{{ question.comments }} comments</h5>
-            <div id="create_comment"></div>
+            {% if req.glob.user_id %}
+                <div id="create_comment"></div>
+            {% endif %}
             <div class="em_comments">
                 <div id="comments"></div>
                 <script>
@@ -39,13 +41,15 @@
                     }), document.getElementById('comments'));
                 </script>
             </div>
-            <script>
-                ReactDOM.render(React.createElement(CreateComment, {
-                    insert: comments.insert,
-                    question_id: {{ question.question_id }},
-                    parent_id: null
-                }), document.getElementById('create_comment'));
-            </script>
+            {% if req.glob.user_id %}
+                <script>
+                    ReactDOM.render(React.createElement(CreateComment, {
+                        insert: comments.insert,
+                        question_id: {{ question.question_id }},
+                        parent_id: null
+                    }), document.getElementById('create_comment'));
+                </script>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

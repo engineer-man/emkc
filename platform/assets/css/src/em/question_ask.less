@@ -1,5 +1,11 @@
 .em_question_ask {
     display: flex;
+    @media(max-width: 800px) {
+        display: block;
+        >div {
+            display: block;
+        }
+    }
     .col_padding {
         padding: 25px 15px;
     }
@@ -94,7 +100,7 @@
                 padding: 1px 10px;
                 white-space: nowrap;
                 cursor: pointer;
-                &:hover {
+                &:hover, &.active {
                     background: #2D9B5C;
                     color: #fff;
                 }

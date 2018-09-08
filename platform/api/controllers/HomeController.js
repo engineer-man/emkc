@@ -13,7 +13,7 @@ module.exports = {
 
     logout(req, res) {
         delete req.session.user_id;
-        return res.redirect('/');
+        return res.redirect('back');
     },
 
     fourohfour(req, res) {
