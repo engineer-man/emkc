@@ -29,7 +29,7 @@ class Question extends React.Component {
                     value={this.props.value} />
                 <div class="content">
                     {
-                        this.props.session_user_id === this.props.user_id
+                        this.props.session_user_id === this.props.user_id || this.props.is_staff
                             ?
                             <div class="dropdown">
                                 <span class="dropdown-toggle" data-toggle="dropdown">

@@ -25,7 +25,8 @@
                     question: {{ question.question }},
                     user: {{ question.user|json_encode }},
                     tags: {{ question.tags|json_encode }},
-                    session_user_id: +'{{ req.glob.user_id }}'
+                    session_user_id: +'{{ req.glob.user_id }}',
+                    is_staff: +'{{ req.glob.user.is_staff }}'
                 }), document.getElementById('question'));
             </script>
 

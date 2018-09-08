@@ -10,7 +10,7 @@ module.exports = {
             return Promise.resolve(null)
                 .then(() => {
                     if (!title || !question) {
-                        throw new Error('Please fill out a title and question');
+                        throw new Error('Please fill out a title, question, and choose some tags');
                     }
 
                     return db.questions
@@ -51,8 +51,11 @@ module.exports = {
                 }
             })
             .then(question => {
-                if (!question ||
-                    question.user_id !== req.glob.user_id) throw new Error('Question not found');
+                if ((!question || question.user_id !== req.glob.user_id) &&
+                    !req.glob.user.is_staff) {
+
+                    throw new Error('Question not found');
+                }
 
                 if (req.method === 'POST') {
                     const title = req.body.title;

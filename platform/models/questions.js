@@ -45,12 +45,12 @@ module.exports = (sequelize, DataTypes) => {
                             discord
                                 .api('post', '/channels/483979558249562112/messages', {
                                     embed: {
-                                        title: instance.title,
+                                        title: 'Click here to view',
                                         type: 'rich',
                                         color: 0x2ecc71,
                                         url: constant.base_url + instance.url,
                                         author: {
-                                            name: 'New Question Posted'
+                                            name: 'New Question: ' + instance.title
                                         },
                                         footer: {
                                             icon_url: constant.gcloud_base_url + question.user.avatar_url,

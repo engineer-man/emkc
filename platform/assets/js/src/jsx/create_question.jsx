@@ -63,11 +63,11 @@ class CreateQuestion extends React.Component {
 
             // down
             case 40:
-                if (results_count === highlight_idx + 1) return null;
-                root.removeClass('active');
                 if (highlight_idx === null) {
                     root.eq(0).addClass('active');
                 } else {
+                    if (results_count === highlight_idx + 1) return null;
+                    root.removeClass('active');
                     root.eq(highlight_idx+1).addClass('active');
                 }
                 return null;
