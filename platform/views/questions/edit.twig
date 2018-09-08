@@ -3,11 +3,12 @@
     <div id="create_question"></div>
     <script>
         ReactDOM.render(
-            React.createElement(CreateQuestion, {
+            React.createElement(ComposeQuestion, {
                 mode: 'edit',
                 question_id: {{ question.question_id }},
                 title: {{ question.title|json_encode }},
-                question: {{ question.question }}
+                question: {{ question.question }},
+                tags: {{ question.tags|json_encode }}
             }),
             document.getElementById('create_question')
         );

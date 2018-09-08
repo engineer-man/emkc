@@ -1,4 +1,4 @@
-class CreateQuestion extends React.Component {
+class ComposeQuestion extends React.Component {
 
     constructor(props) {
         super(props);
@@ -6,7 +6,7 @@ class CreateQuestion extends React.Component {
         this.state = {
             title: props.title || '',
             tag_term: '',
-            tags: [],
+            tags: props.tags || [],
             tag_suggestions: []
         };
 
@@ -124,6 +124,7 @@ class CreateQuestion extends React.Component {
     save(url) {
         const title = this.state.title;
         const question = JSON.stringify(this.quill.getContents());
+        const tags = this.state.tags;
 
         var url;
 
@@ -135,11 +136,12 @@ class CreateQuestion extends React.Component {
         return axios
             .post(url, {
                 title,
-                question
+                question,
+                tags
             })
             .then(res => {
                 if (res.data.status === 'error') {
-                    return bootbox.alert('Please provide a title and a question');
+                    return bootbox.alert(res.data.payload.message);
                 }
 
                 location = res.data.payload.url;
@@ -166,7 +168,7 @@ class CreateQuestion extends React.Component {
 
     render() {
         return (
-            <div class="em_question_ask">
+            <div class="em_compose_question">
                 <div class="contents">
                     <div class="col_padding">
                         <h5 class="f700">Title</h5>

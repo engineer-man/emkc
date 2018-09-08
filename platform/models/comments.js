@@ -84,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
                                             content:
                                                 'Howdy! ' +
                                                 author.display_name + ' replied to your comment on "' +
-                                                question.title + '".\n'+
+                                                question.title + '". '+
                                                 'View their reply here: <' + constant.base_url + question.url + '>'
                                         });
                                 })

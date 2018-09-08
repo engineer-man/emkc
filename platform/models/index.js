@@ -24,6 +24,7 @@ Object.keys(db).for_each(model_name => {
     }
 
     // non shitty camel case aliases
+    db[model_name].bulk_create = db[model_name].bulkCreate;
     db[model_name].find_one = db[model_name].findOne;
     db[model_name].find_all = db[model_name].findAll;
     db[model_name].find_or_create = db[model_name].findOrCreate;
@@ -41,6 +42,8 @@ db.comments.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 
 db.questions.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 db.questions.has_one(db.question_votes, { as: 'vote', foreignKey: 'question_id' });
+db.questions.has_many(db.question_votes, { as: 'votes', foreignKey: 'question_id' });
+db.questions.has_many(db.question_tags, { as: 'question_tags', foreignKey: 'question_id' });
 db.questions.belongsToMany(db.tags, { as: 'tags', through: { model: db.question_tags }, foreignKey: 'question_id' });
 
 db.question_tags.belongsTo(db.questions, { as: 'question', foreignKey: 'question_id' });

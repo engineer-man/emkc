@@ -5,11 +5,11 @@ module.exports = {
 
     ask(req, res) {
         if (req.method === 'POST') {
-            const {title, question} = req.body;
+            const {title, question, tags} = req.body;
 
             return Promise.resolve(null)
                 .then(() => {
-                    if (!title || !question) {
+                    if (!title || !question || tags.length === 0) {
                         throw new Error('Please fill out a title, question, and choose some tags');
                     }
 
@@ -17,7 +17,19 @@ module.exports = {
                         .create({
                             user_id: req.glob.user_id,
                             title,
-                            question
+                            question,
+                            question_tags: tags.map(tag => {
+                                return {
+                                    tag_id: tag.tag_id
+                                }
+                            })
+                        }, {
+                            include: [
+                                {
+                                    model: db.question_tags,
+                                    as: 'question_tags'
+                                }
+                            ]
                         });
                 })
                 .then(question => {
@@ -48,7 +60,13 @@ module.exports = {
             .find_one({
                 where: {
                     question_id
-                }
+                },
+                include: [
+                    {
+                        model: db.tags,
+                        as: 'tags'
+                    }
+                ]
             })
             .then(question => {
                 if ((!question || question.user_id !== req.glob.user_id) &&
@@ -60,12 +78,13 @@ module.exports = {
                 if (req.method === 'POST') {
                     const title = req.body.title;
                     const questionn = req.body.question;
+                    const tags = req.body.tags;
 
-                    if (!title || !questionn) {
+                    if (!title || !questionn || tags.length === 0) {
                         return res.send({
                             status: 'error',
                             payload: {
-                                message: 'Please fill out a title and question'
+                                message: 'Please fill out a title, question, and choose some tags'
                             }
                         });
                     }
@@ -76,12 +95,38 @@ module.exports = {
                     return question
                         .save()
                         .then(question => {
-                            return res.send({
-                                status: 'ok',
-                                payload: {
-                                    url: question.url
-                                }
-                            });
+                            var chain = Promise.resolve(null);
+
+                            chain = chain
+                                .then(() => {
+                                    return db.question_tags
+                                        .destroy({
+                                            where: {
+                                                question_id
+                                            }
+                                        });
+                                });
+
+                            chain = chain
+                                .then(() => {
+                                    return db.question_tags
+                                        .bulk_create(tags.map(tag => {
+                                            return {
+                                                question_id,
+                                                tag_id: tag.tag_id
+                                            }
+                                        }))
+                                });
+
+                            return chain
+                                .then(() => {
+                                    return res.send({
+                                        status: 'ok',
+                                        payload: {
+                                            url: question.url
+                                        }
+                                    });
+                                });
                         });
                 }
 
