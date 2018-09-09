@@ -5,7 +5,7 @@ if you plan to use this software.
 
 
 #### General Install Instructions
-- Clone repo
+- Clone this repo
 - Install Node.js 8.x.x https://nodejs.org/en/download/
 - Install MySQL 8.0 https://dev.mysql.com/downloads/mysql/
 - Install Redis https://redis.io/topics/quickstart
@@ -19,11 +19,11 @@ if you plan to use this software.
 - Run `./start_dev --watch` in platform/
 
 
-#### Build Pipeline
-- platform/assets/css/src/\*\*/\*.less compiled to platform/assets/css/dist/master.css
-- platform/assets/js/src/jsx/\*\*/\*.jsx compiled to platform/assets/js/dist/master_jsx.js
-- platform/assets/js/src/js/\*\*/\*.js compiled to platform/assets/js/dist/master_js.js
-- platform/assets/js/dist/\*.js combined and uglified to platform/assets/js/dist/master.js
+#### Asset Build Pipeline (platform/assets)
+- css/src/\*\*/\*.less compiled to css/dist/master.css
+- js/src/jsx/\*\*/\*.jsx compiled to js/dist/master_jsx.js
+- js/src/js/\*\*/\*.js compiled to js/dist/master_js.js
+- js/dist/\*.js combined and uglified to js/dist/master.js
 
 
 #### Contribution Guidelines
