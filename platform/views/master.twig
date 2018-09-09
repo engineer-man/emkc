@@ -32,6 +32,12 @@
         <script src="/lib/quill/quill.min.js"></script>
         <script src="/js/dist/master.js?{{ sails.glob.epoch }}"></script>
 
+        <script>
+            ctx = {
+                logged_in: !!{{ req.glob.user_id ? req.glob.user_id : 0 }}
+            };
+        </script>
+
         <link rel="icon" type="image/x-icon" href="/images/icon_64.png" />
     </head>
     <body>

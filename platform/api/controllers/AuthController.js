@@ -12,7 +12,7 @@ module.exports = {
 
         return res.redirect(
             'https://discordapp.com/api/oauth2/authorize'+
-            '?client_id=482732253835689994'+
+            '?client_id=' + sails.config.discord.client_id +
             '&redirect_uri=' + encode_uri_component(constant.base_url + '/auth/discord_cb') +
             '&response_type=code'+
             '&scope=identify%20email'
@@ -33,8 +33,8 @@ module.exports = {
                 },
                 form: {
                     code,
-                    client_id: '482732253835689994',
-                    client_secret: 'Q40OWJrxEy_kbKSdcfGz3rQxCtcuLOLY',
+                    client_id: sails.config.discord.client_id,
+                    client_secret: sails.config.discord.client_secret,
                     grant_type: 'authorization_code',
                     redirect_uri: constant.base_url + '/auth/discord_cb',
                     scope: 'identify email'

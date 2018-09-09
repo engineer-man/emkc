@@ -32,8 +32,6 @@ create table questions (
     key created_at (created_at)
 )engine=innodb default charset=utf8;
 
-insert into questions values (1, 1, 'first q title', 'first q question', 0, 16, now());
-
 create table snippets (
     snippet_id int unsigned not null auto_increment,
     user_id int unsigned null,
@@ -65,23 +63,6 @@ create table comments (
     key score (score),
     key created_at (created_at)
 )engine=innodb default charset=utf8;
-
-insert into comments values (1,  1, null, null, 1,    'c1',   0,  1, now());
-insert into comments values (2,  1, 1,    1,    1,    'c1b',  1,  5, now());
-insert into comments values (3,  1, 1,    2,    1,    'c1c',  2, -5, now());
-insert into comments values (4,  1, 1,    2,    1,    'c1cb', 2, 12, now());
-insert into comments values (5,  1, 1,    2,    1,    'c1cc', 2,  9, now());
-insert into comments values (6,  1, 1,    5,    1,    'c1d',  3,  9, now());
-insert into comments values (7,  1, 1,    6,    1,    'c1e',  4,  2, now());
-insert into comments values (8,  1, null, null, 1,    'c2',   0, 17, now());
-insert into comments values (9,  1, 8,    8,    1,    'c2b',  1, 10, now());
-insert into comments values (10, 1, 8,    9,    1,    'c2c',  2, 19, now());
-insert into comments values (11, 1, 8,    10,   1,    'c2d',  3,  2, now());
-insert into comments values (12, 1, 8,    11,   1,    'c2e',  4, -4, now());
-insert into comments values (13, 1, 8,    12,   1,    'c2f',  5, -4, now());
-insert into comments values (14, 1, 8,    13,   1,    'c2g',  6, -4, now());
-insert into comments values (15, 1, 8,    14,   1,    'c2h',  7, -4, now());
-insert into comments values (16, 1, 8,    15,   1,    'c2i',  8, -4, now());
 
 create table question_votes (
     question_vote_id int unsigned not null auto_increment,

@@ -1,11 +1,11 @@
 module.exports = {
 
-    port: 2525,
+    port: 2727,
     environment: 'development',
-    base_url: 'http://10.0.0.10:2525',
+    base_url: '',
     db: {
-        username: 'root',
-        password: 'root',
+        username: '',
+        password: '',
         database: 'engineerman',
         host: '127.0.0.1',
         dialect: 'mysql',
@@ -15,6 +15,10 @@ module.exports = {
             underscored: true,
             timestamps: false
         }
+    },
+    discord: {
+        client_id: '',
+        client_secret: ''
     },
     felix: {
         key: ''
@@ -33,7 +37,8 @@ module.exports = {
         host: '127.0.0.1'
     },
     session: {
-        host: '127.0.0.1'
+        host: '127.0.0.1',
+        secret: '11111111111111111111111111111111'
     },
     sockets: {
         host: '127.0.0.1'

@@ -72,8 +72,16 @@ class Comment extends React.Component {
                             dangerouslySetInnerHTML={{__html: this.ops_to_html(this.state.comment.comment)}}></div>
                     </div>
                     <div class="actions">
-                        <a class="reply" onClick={this.toggle_reply}><i class="fa fa-reply"></i> reply</a>
-                        <a class="edit"><i class="fa fa-edit"></i> edit</a>
+                        <a
+                            class="reply"
+                            onClick={ctx.logged_in ? this.toggle_reply : () => login.open()}>
+                            <i class="fa fa-reply"></i> reply
+                        </a>
+                        <a
+                            class="edit"
+                            onClick={ctx.logged_in ? null : () => login.open()}>
+                            <i class="fa fa-edit"></i> edit
+                        </a>
                     </div>
                 </div>
                 {

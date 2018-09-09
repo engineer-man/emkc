@@ -92,6 +92,9 @@ insert into tags values (default, 'spss');
 insert into tags values (default, 'tex');
 insert into tags values (default, 'typescript');
 insert into tags values (default, 'vhdl');
+insert into tags values (default, 'emkc');
+insert into tags values (default, 'linux');
+insert into tags values (default, 'ubuntu');
 
 down:
 truncate tags;

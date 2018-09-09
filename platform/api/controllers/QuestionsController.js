@@ -186,11 +186,11 @@ module.exports = {
                 return db.sequelize
                     .query(
                         require('fs')
-                            .read_file_sync(root_dir + '/platform/var/sql/temp.sql')
-                            .toString()
-                            .replace('__question_id__', question_id)
+                            .read_file_sync(root_dir + '/platform/models/sql/question.sql')
+                            .to_string()
+                            .replace(/__question_id__/gi, question_id)
                             .replace(/__user_id__/gi, req.glob.user_id || null)
-                            .replace('__limit__', 10)
+                            .replace(/__limit__/gi, 10)
                     );
             })
             .spread(rows => {
