@@ -1,6 +1,5 @@
 platform/config/local.js
-platform/config/secrets/*
-!platform/config/secrets/.gitkeep
+platform/config/secrets/google_cloud.json
 platform/migrations/config.json
 platform/assets/css/dist/*.css
 platform/assets/js/dist/*.js
