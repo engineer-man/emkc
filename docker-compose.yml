@@ -1,0 +1,26 @@
+version: '2'
+services:
+    emkc:
+        build: .
+        ports:
+            - "2727:2727"
+        volumes:
+            - ./:/opt/emkc
+        environment:
+            - PATH=$PATH:/opt/node8/bin
+        links:
+            - redis
+            - mysql
+    redis:
+        image: redis:3.2.12
+        volumes:
+            - ./var/data/redis:/data
+    mysql:
+        image: mysql:5.6
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: emkc
+        command: --init-file /var/lib/init/db.sql
+        volumes:
+            - ./var/data/mysql:/var/lib/mysql
+            - ./var/init:/var/lib/init

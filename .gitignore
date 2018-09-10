@@ -3,5 +3,11 @@ platform/config/secrets/google_cloud.json
 platform/migrations/config.json
 platform/assets/css/dist/*.css
 platform/assets/js/dist/*.js
+var/data/mysql/*
+!var/data/mysql/.gitkeep
+var/data/redis/*
+!var/data/redis/.gitkeep
+var/data/elasticsearch/*
+!var/data/elasticsearch/.gitkeep
 node_modules
 package-lock.json

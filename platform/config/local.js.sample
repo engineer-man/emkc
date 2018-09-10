@@ -6,8 +6,8 @@ module.exports = {
     db: {
         username: '',
         password: '',
-        database: 'engineerman',
-        host: '127.0.0.1',
+        database: 'emkc',
+        host: 'mysql',
         dialect: 'mysql',
         logging: false,
         timezone: '+00:00',
@@ -37,11 +37,11 @@ module.exports = {
         host: '127.0.0.1'
     },
     session: {
-        host: '127.0.0.1',
+        host: 'redis',
         secret: '11111111111111111111111111111111'
     },
     sockets: {
-        host: '127.0.0.1'
+        host: 'redis'
     }
 
 };
