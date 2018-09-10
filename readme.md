@@ -4,19 +4,37 @@ is located at https://emkc.org. Be sure to familiarize yourself with the contrib
 if you plan to use this software.
 
 
-#### General Install Instructions
+#### Docker Install Instructions
+- Clone this repo
+- Run `./docker_start` or `docker-compose up -d`
+- Enter container by running `./docker_shell`
+- `cd /opt/emkc/platform`
+- `cp config/local.js.sample config/local.js`
+- `cp migrations/config.json.sample migrations/config.json`
+- `cp config/secrets/google_cloud.json.sample config/secrets/google_cloud.json`
+- `npm install`
+- `cd ../migrations`
+- `bmig migrate`
+- `cd ..`
+- `./start_dev --watch` in platform/
+
+
+#### Manual Install Instructions
 - Clone this repo
 - Install Node.js 8.x.x https://nodejs.org/en/download/
-- Install MySQL 8.0 https://dev.mysql.com/downloads/mysql/
+- Install MySQL 5.6 https://dev.mysql.com/downloads/mysql/
 - Install Redis https://redis.io/topics/quickstart
 - Install bmig https://github.com/ebrian/bmig
 - Create database "engineerman"
-- Copy platform/config/local.js.sample -> platform/config/local.js and edit
-- Copy platform/migrations/config.json.sample -> platform/migrations/config.json
-- Copy platform/config/secrets/google_cloud.json.sample -> platform/config/secrets/google_cloud.json
-- Run `npm install` in platform/
-- RUn `bmig migrate` in platform/migrations
-- Run `./start_dev --watch` in platform/
+- `cd platform`
+- `cp config/local.js.sample config/local.js`
+- `cp migrations/config.json.sample migrations/config.json`
+- `cp config/secrets/google_cloud.json.sample config/secrets/google_cloud.json`
+- `npm install`
+- `cd ../migrations`
+- `bmig migrate`
+- `cd ..`
+- `./start_dev --watch` in platform/
 
 
 #### Asset Build Pipeline (platform/assets)
