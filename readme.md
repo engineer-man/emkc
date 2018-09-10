@@ -22,6 +22,7 @@ if you plan to use this software.
 
 #### Manual Install Instructions
 - `git clone https://github.com/engineer-man/emkc`
+- `cd emkc`
 - Install Node.js 8.x.x https://nodejs.org/en/download/
 - Install MySQL 5.6 https://dev.mysql.com/downloads/mysql/
 - Install Redis https://redis.io/topics/quickstart
@@ -38,11 +39,11 @@ if you plan to use this software.
 - `./start_dev --watch`
 
 
-#### Asset Build Pipeline (platform/assets)
-- css/src/\*\*/\*.less compiled to css/dist/master.css
-- js/src/jsx/\*\*/\*.jsx compiled to js/dist/master_jsx.js
-- js/src/js/\*\*/\*.js compiled to js/dist/master_js.js
-- js/dist/\*.js combined and uglified to js/dist/master.js
+#### Resource Build Pipeline
+- resources/css/\*\*/\*.less compiled to public/css/master.css
+- resources/js/jsx/\*\*/\*.jsx compiled to public/js/master_jsx.js
+- resources/js/js/\*\*/\*.js compiled to public/js/master_js.js
+- public/js/\*.js combined and uglified to public/js/master.js
 
 
 #### Contribution Guidelines
@@ -67,4 +68,6 @@ to master and deploy.
 
 #### License
 Engineer Man Knowledge Center is licensed under the AGPLv3. You have specific obligations under this license
-if you plan to modify this software in private and make it available to the public.
+if you plan to modify this software in private and make it available to the public. Specifically, you must
+make your copy open source along with your modifications. License details can be found in the `license` file
+in the root of the project.
