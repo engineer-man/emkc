@@ -24,6 +24,8 @@ module.exports.routes = {
 
     'GET /tags/search': 'TagsController.search',
 
+    'GET /@:username': 'ProfilesController.view',
+
     // catch all (404)
     'ALL r|^/(?:(?!css|images|js|lib|other|robots\.txt|google*).)*$|': 'HomeController.fourohfour'
 

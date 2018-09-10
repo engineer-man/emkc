@@ -18,6 +18,10 @@ module.exports.policies = {
         '*': ['common']
     },
 
+    'ProfilesController': {
+        '*': ['common']
+    },
+
     'QuestionsController': {
         '*': ['common'],
         'ask': ['common', 'logged_in'],
