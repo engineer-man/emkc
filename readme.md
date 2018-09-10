@@ -5,7 +5,7 @@ if you plan to use this software.
 
 
 #### Docker Install Instructions
-- Clone this repo
+- `git clone https://github.com/engineer-man/emkc`
 - `cd emkc`
 - Run `./docker_start` or `docker-compose up -d`
 - Enter container by running `./docker_shell`
@@ -21,7 +21,7 @@ if you plan to use this software.
 
 
 #### Manual Install Instructions
-- Clone this repo
+- `git clone https://github.com/engineer-man/emkc`
 - Install Node.js 8.x.x https://nodejs.org/en/download/
 - Install MySQL 5.6 https://dev.mysql.com/downloads/mysql/
 - Install Redis https://redis.io/topics/quickstart
