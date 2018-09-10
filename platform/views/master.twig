@@ -13,24 +13,24 @@
         <meta property="og:description" content="{% block desc %}Engineer Man is an intelligent new platform for quality discussion, questions, challenges, and learning.{% endblock %}"/>
         <meta property="og:url" content="{{ sails.config.base_url ~ req.url }}" />
 
-        <link href="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
         <link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
         <link href="//use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
+        <link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
         <link href="/lib/quill/quill.snow.css" rel="stylesheet">
         <link href="/lib/highlightjs/agate.css" rel="stylesheet">
-        <link href="/css/dist/master.css?{{ sails.glob.epoch }}" rel="stylesheet" />
+        <link href="/css/master.css?{{ sails.glob.epoch }}" rel="stylesheet" />
 
-        <script src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-        <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="/lib/jquery/jquery-3.0.0.min.js"></script>
+        <script src="/lib/popper/popper.min.js"></script>
+        <script src="/lib/bootstrap/bootstrap.min.js"></script>
         <script src="/lib/bootbox/bootbox.js"></script>
-        <script src="//unpkg.com/react@16/umd/react.production.min.js"></script>
-        <script src="//unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-        <script src="//unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="/lib/react/react.production.min.js"></script>
+        <script src="/lib/react/react-dom.production.min.js"></script>
+        <script src="/lib/axios/axios.min.js"></script>
         <script src="/lib/highlightjs/highlight.pack.js"></script>
         <script src="/lib/highlightjs/highlight-ln.js"></script>
         <script src="/lib/quill/quill.min.js"></script>
-        <script src="/js/dist/master.js?{{ sails.glob.epoch }}"></script>
+        <script src="/js/master.js?{{ sails.glob.epoch }}"></script>
 
         <script>
             ctx = {

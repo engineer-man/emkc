@@ -1,8 +1,8 @@
 platform/config/local.js
 platform/config/secrets/google_cloud.json
 platform/migrations/config.json
-platform/assets/css/dist/*.css
-platform/assets/js/dist/*.js
+platform/public/css/*.css
+platform/public/js/*.js
 var/data/mysql/*
 !var/data/mysql/.gitkeep
 var/data/redis/*
