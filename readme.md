@@ -6,6 +6,7 @@ if you plan to use this software.
 
 #### Docker Install Instructions
 - Clone this repo
+- `cd emkc`
 - Run `./docker_start` or `docker-compose up -d`
 - Enter container by running `./docker_shell`
 - `cd /opt/emkc/platform`
@@ -13,10 +14,10 @@ if you plan to use this software.
 - `cp migrations/config.json.sample migrations/config.json`
 - `cp config/secrets/google_cloud.json.sample config/secrets/google_cloud.json`
 - `npm install`
-- `cd ../migrations`
+- `cd migrations`
 - `bmig migrate`
 - `cd ..`
-- `./start_dev --watch` in platform/
+- `./start_dev --watch`
 
 
 #### Manual Install Instructions
@@ -31,10 +32,10 @@ if you plan to use this software.
 - `cp migrations/config.json.sample migrations/config.json`
 - `cp config/secrets/google_cloud.json.sample config/secrets/google_cloud.json`
 - `npm install`
-- `cd ../migrations`
+- `cd migrations`
 - `bmig migrate`
 - `cd ..`
-- `./start_dev --watch` in platform/
+- `./start_dev --watch`
 
 
 #### Asset Build Pipeline (platform/assets)
