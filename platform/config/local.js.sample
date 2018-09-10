@@ -2,10 +2,10 @@ module.exports = {
 
     port: 2727,
     environment: 'development',
-    base_url: '',
+    base_url: 'http://127.0.0.1:2727',
     db: {
-        username: '',
-        password: '',
+        username: 'root',
+        password: 'root',
         database: 'emkc',
         host: 'mysql',
         dialect: 'mysql',
@@ -17,18 +17,18 @@ module.exports = {
         }
     },
     discord: {
-        client_id: '',
-        client_secret: ''
+        client_id: 'client_id',
+        client_secret: 'client_secret'
     },
     felix: {
-        key: ''
+        key: 'key'
     },
     gcp: {
-        project_id: ''
+        project_id: 'project_id'
     },
     mailgun: {
-        key: '',
-        domain: ''
+        key: 'key',
+        domain: 'domain'
     },
     elasticsearch: {
         host: '127.0.0.1'

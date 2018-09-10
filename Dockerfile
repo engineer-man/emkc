@@ -1,6 +1,6 @@
 FROM centos:centos7
 
-WORKDIR /opt/emkc
+WORKDIR /opt/emkc/platform
 
 RUN yum -y install wget nano telnet gcc mysql-devel json-c-devel git make mysql
 
