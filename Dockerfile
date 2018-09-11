@@ -1,8 +1,7 @@
 FROM centos:centos7
 
-WORKDIR /opt/emkc/platform
-
-RUN yum -y install wget nano telnet gcc mysql-devel json-c-devel git make mysql
+RUN yum -y install epel-release
+RUN yum -y install wget nano telnet gcc mysql-devel json-c-devel git make mysql inotify-tools
 
 RUN cd /opt && \
     git clone https://github.com/ebrian/bmig && \
@@ -16,4 +15,10 @@ RUN cd /opt && \
     tar -xf node-v8.11.4-linux-x64.tar && \
     mv node-v8.11.4-linux-x64 node8
 
-CMD sleep infinity
+WORKDIR /opt/emkc/platform
+
+CMD npm install && \
+    cd migrations && \
+    bmig migrate && \
+    cd .. && \
+    ./start_dev --watch >> ../var/docker/logs/app.log 2>&1

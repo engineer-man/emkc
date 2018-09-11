@@ -1,0 +1,44 @@
+#!/usr/bin/bash
+
+case $* in
+    "rebuild" )
+        docker-compose build
+        ;;
+    "start" )
+        touch var/docker/logs/app.log
+        chmod 777 var/docker/logs/app.log
+        touch var/docker/logs/sql.log
+        chmod 777 var/docker/logs/sql.log
+        docker-compose up -d
+        ;;
+    "stop" )
+        docker-compose down
+        ;;
+    "shell" )
+        docker exec -it emkc /bin/bash
+        ;;
+    "npm" )
+        docker exec -it emkc bash -c 'cd /opt/emkc/platform; npm install'
+        ;;
+    "migrate" )
+        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; bmig migrate'
+        ;;
+    "rollback" )
+        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; bmig rollback'
+        ;;
+    "tail" )
+        tail -f ./var/docker/logs/*
+        ;;
+    * )
+        echo 'emkc control, usage: emkc [command]'
+        echo ''
+        echo 'rebuild    rebuild emkc from scratch'
+        echo 'start      start the emkc docker container'
+        echo 'stop       stop the emkc docker container'
+        echo 'shell      start a shell in the docker container'
+        echo 'npm        update node modules'
+        echo 'migrate    run the pending database migrations'
+        echo 'rollback   rollback one database migration'
+        echo 'tail       watch app and db logs'
+        exit 1
+esac

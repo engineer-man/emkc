@@ -7,36 +7,32 @@ if you plan to use this software.
 #### Docker Install Instructions
 - `git clone https://github.com/engineer-man/emkc`
 - `cd emkc`
-- Run `./docker_start` or `docker-compose up -d`
-- Enter container by running `./docker_shell`
-- `cd /opt/emkc/platform`
-- `cp config/local.js.sample config/local.js`
-- `cp migrations/config.json.sample migrations/config.json`
-- `cp config/secrets/google_cloud.json.sample config/secrets/google_cloud.json`
-- `npm install`
-- `cd migrations`
-- `bmig migrate`
-- `cd ..`
-- `./start_dev --watch`
+- `./emkc start`
+- Review Local Config Below
 
 
 #### Manual Install Instructions
-- `git clone https://github.com/engineer-man/emkc`
-- `cd emkc`
 - Install Node.js 8.x.x https://nodejs.org/en/download/
 - Install MySQL 5.6 https://dev.mysql.com/downloads/mysql/
 - Install Redis https://redis.io/topics/quickstart
 - Install bmig https://github.com/ebrian/bmig
-- Create database "engineerman"
+- Create database "emkc"
+- `git clone https://github.com/engineer-man/emkc`
+- `cd emkc`
 - `cd platform`
-- `cp config/local.js.sample config/local.js`
 - `cp migrations/config.json.sample migrations/config.json`
-- `cp config/secrets/google_cloud.json.sample config/secrets/google_cloud.json`
 - `npm install`
 - `cd migrations`
 - `bmig migrate`
 - `cd ..`
 - `./start_dev --watch`
+- Review Local Config Below
+
+
+#### Local Config
+- `cd /opt/emkc/platform`
+- `cp config/local.js.sample config/local.js`
+- `cp config/secrets/google_cloud.json.sample config/secrets/google_cloud.json`
 
 
 #### Resource Build Pipeline

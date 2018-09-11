@@ -1,6 +1,7 @@
 version: '2'
 services:
     emkc:
+        container_name: emkc
         build: .
         ports:
             - "2727:2727"
@@ -14,7 +15,8 @@ services:
     redis:
         image: redis:3.2.12
         volumes:
-            - ./var/data/redis:/data
+            - ./:/opt/emkc
+            - ./var/docker/redis:/data
     mysql:
         image: mysql:5.6
         environment:
@@ -22,5 +24,7 @@ services:
             MYSQL_DATABASE: emkc
         command: --init-file /var/lib/init/db.sql
         volumes:
-            - ./var/data/mysql:/var/lib/mysql
-            - ./var/init:/var/lib/init
+            - ./:/opt/emkc
+            - ./var/docker/mysql:/var/lib/mysql
+            - ./var/docker/init:/var/lib/init
+            - ./var/docker/config:/etc/mysql/conf.d
