@@ -7,8 +7,8 @@ if you plan to use this software.
 #### Docker Install Instructions
 - `git clone https://github.com/engineer-man/emkc`
 - `cd emkc`
+- `./emkc init`
 - `./emkc start`
-- Review Local Config Below
 
 
 #### Manual Install Instructions
@@ -19,6 +19,7 @@ if you plan to use this software.
 - Create database "emkc"
 - `git clone https://github.com/engineer-man/emkc`
 - `cd emkc`
+- `./emkc init`
 - `cd platform`
 - `cp migrations/config.json.sample migrations/config.json`
 - `npm install`
@@ -26,13 +27,14 @@ if you plan to use this software.
 - `bmig migrate`
 - `cd ..`
 - `./start_dev --watch`
-- Review Local Config Below
 
 
 #### Local Config
-- `cd /opt/emkc/platform`
-- `cp config/local.js.sample config/local.js`
-- `cp config/secrets/google_cloud.json.sample config/secrets/google_cloud.json`
+There are three files needed to configure the application. Make sure to modify these with your own values. If
+these files are not present, navigate to the project root and run `./emkc init`.
+- App: `platform/config/local.js`
+- DB Migrations: `platform/migrations/config.json`
+- Google Cloud: `platform/config/secrets/google_cloud.json`
 
 
 #### Resource Build Pipeline

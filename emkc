@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 case $* in
-    "rebuild" )
-        docker-compose build
+    "init" )
+        cp -n platform/config/local.js.sample platform/config/local.js
+        cp -n platform/migrations/config.json.sample platform/migrations/config.json
+        cp -n platform/config/secrets/google_cloud.json.sample platform/config/secrets/google_cloud.json
         ;;
     "start" )
         touch var/docker/logs/app.log
@@ -16,6 +18,9 @@ case $* in
         ;;
     "shell" )
         docker exec -it emkc /bin/bash
+        ;;
+    "rebuild" )
+        docker-compose build
         ;;
     "npm" )
         docker exec -it emkc bash -c 'cd /opt/emkc/platform; npm install'
@@ -32,10 +37,11 @@ case $* in
     * )
         echo 'emkc control, usage: emkc [command]'
         echo ''
-        echo 'rebuild    rebuild emkc from scratch'
+        echo 'init       initialize env specific config files'
         echo 'start      start the emkc docker container'
         echo 'stop       stop the emkc docker container'
         echo 'shell      start a shell in the docker container'
+        echo 'rebuild    rebuild emkc from scratch'
         echo 'npm        update node modules'
         echo 'migrate    run the pending database migrations'
         echo 'rollback   rollback one database migration'
