@@ -15,6 +15,8 @@ RUN cd /opt && \
     tar -xf node-v8.11.4-linux-x64.tar && \
     mv node-v8.11.4-linux-x64 node8
 
+ENV PATH="${PATH}:/opt/node8/bin"
+
 WORKDIR /opt/emkc/platform
 
 CMD npm install && \

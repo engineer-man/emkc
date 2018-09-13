@@ -7,8 +7,6 @@ services:
             - "2727:2727"
         volumes:
             - ./:/opt/emkc
-        environment:
-            - ADDITIONAL_PATH=/opt/node8/bin
         links:
             - redis
             - mysql
