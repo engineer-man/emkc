@@ -18,6 +18,10 @@ module.exports.policies = {
         '*': ['common']
     },
 
+    'CodeRoomsController': {
+        '*': ['common']
+    },
+
     'ProfilesController': {
         '*': ['common']
     },

@@ -22,6 +22,11 @@ module.exports.routes = {
     'POST /snippets': 'SnippetsController.create',
     'GET /s/:hash': 'SnippetsController.view',
 
+    'GET /coderoom/new': 'CodeRoomsController.create',
+    'POST /coderoom/sync': 'CodeRoomsController.sync',
+    'POST /coderoom/save': 'CodeRoomsController.save',
+    'GET /r/:hash': 'CodeRoomsController.view',
+
     'GET /tags/search': 'TagsController.search',
 
     'GET /@:username': 'ProfilesController.view',

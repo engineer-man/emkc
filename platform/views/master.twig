@@ -13,24 +13,28 @@
         <meta property="og:description" content="{% block desc %}Engineer Man is an intelligent new platform for quality discussion, questions, challenges, and learning.{% endblock %}"/>
         <meta property="og:url" content="{{ sails.config.base_url ~ req.url }}" />
 
-        <link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
-        <link href="//use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
-        <link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
-        <link href="/lib/quill/quill.snow.css" rel="stylesheet">
-        <link href="/lib/highlightjs/agate.css" rel="stylesheet">
-        <link href="/css/master.css?{{ sails.glob.epoch }}" rel="stylesheet" />
+        {% block css %}
+            <link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
+            <link href="//use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
+            <link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
+            <link href="/lib/quill/quill.snow.css" rel="stylesheet">
+            <link href="/lib/highlightjs/agate.css" rel="stylesheet">
+            <link href="/css/master.css?{{ sails.glob.epoch }}" rel="stylesheet" />
+        {% endblock %}
 
-        <script src="/lib/jquery/jquery-3.0.0.min.js"></script>
-        <script src="/lib/popper/popper.min.js"></script>
-        <script src="/lib/bootstrap/bootstrap.min.js"></script>
-        <script src="/lib/bootbox/bootbox.js"></script>
-        <script src="/lib/react/react.production.min.js"></script>
-        <script src="/lib/react/react-dom.production.min.js"></script>
-        <script src="/lib/axios/axios.min.js"></script>
-        <script src="/lib/highlightjs/highlight.pack.js"></script>
-        <script src="/lib/highlightjs/highlight-ln.js"></script>
-        <script src="/lib/quill/quill.min.js"></script>
-        <script src="/js/master.js?{{ sails.glob.epoch }}"></script>
+        {% block js %}
+            <script src="/lib/jquery/jquery-3.0.0.min.js"></script>
+            <script src="/lib/popper/popper.min.js"></script>
+            <script src="/lib/bootstrap/bootstrap.min.js"></script>
+            <script src="/lib/bootbox/bootbox.js"></script>
+            <script src="/lib/react/react.production.min.js"></script>
+            <script src="/lib/react/react-dom.production.min.js"></script>
+            <script src="/lib/axios/axios.min.js"></script>
+            <script src="/lib/highlightjs/highlight.pack.js"></script>
+            <script src="/lib/highlightjs/highlight-ln.js"></script>
+            <script src="/lib/quill/quill.min.js"></script>
+            <script src="/js/master.js?{{ sails.glob.epoch }}"></script>
+        {% endblock %}
 
         <script>
             ctx = {
@@ -69,6 +73,7 @@
                             Tools
                         </a>
                         <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/coderoom/new">Code Room</a>
                             <a class="dropdown-item" href="/snippets">Snippets</a>
                         </div>
                     </div>

@@ -1,0 +1,77 @@
+{% extends 'master.twig' %}
+{% block js %}
+    {{ parent() }}
+    <script src="/lib/ace/ace.js"></script>
+    <script src="/js/sails.io.js"></script>
+{% endblock %}
+{% block content %}
+    <div id="editor" style="position: absolute; top: 56px; left: 0; right: 0; bottom: 0;">{{ room.code|e }}</div>
+
+    <script>
+        var hash = '{{ req.params.hash }}';
+        var session = +new Date() + ' ' + Math.random();
+        var modifying = false;
+        var new_code = false;
+
+        var editor = ace.edit('editor');
+
+        editor.setTheme('ace/theme/monokai');
+        editor.setShowPrintMargin(false);
+        editor.setFontSize(18)
+        editor.container.style.lineHeight = 1.2
+        editor.session.setMode('ace/mode/javascript');
+
+        editor.session.on('change', function(delta) {
+            if (modifying) return null;
+
+            new_code = true;
+
+            io.socket.post(
+                '/coderoom/sync',
+                {
+                    hash: hash,
+                    session: session,
+                    delta: delta
+                }
+            );
+        });
+
+        setInterval(function() {
+            if (!new_code) return null;
+
+            axios
+                .post('/coderoom/save', {
+                    hash: hash,
+                    code: editor.session.getValue()
+                })
+                .then(function() {
+                    new_code = false;
+                });
+        }, 1000);
+
+        io.socket.on('coderoom_' + hash, function(data) {
+            if (data.session === session) return null;
+
+            modifying = true;
+            switch (data.delta.action) {
+                case 'insert':
+                    editor.session.insert(
+                        { row: data.delta.start.row, column: data.delta.start.column },
+                        data.delta.lines.join('\n')
+                    );
+                    break;
+                case 'remove':
+                    editor.session.remove(
+                        new ace.Range(
+                            data.delta.start.row,
+                            data.delta.start.column,
+                            data.delta.end.row,
+                            data.delta.end.column
+                        )
+                    )
+                    break;
+            }
+            modifying = false;
+        });
+    </script>
+{% endblock %}

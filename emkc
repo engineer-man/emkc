@@ -25,6 +25,9 @@ case $* in
     "npm" )
         docker exec -it emkc bash -c 'cd /opt/emkc/platform; npm install'
         ;;
+    "mysql" )
+        docker exec -it emkc bash -c 'mysql -hmysql -uroot -proot -Demkc'
+        ;;
     "migrate" )
         docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; bmig migrate'
         ;;
@@ -43,6 +46,7 @@ case $* in
         echo 'shell      start a shell in the docker container'
         echo 'rebuild    rebuild emkc from scratch'
         echo 'npm        update node modules'
+        echo 'mysql      login to mysql'
         echo 'migrate    run the pending database migrations'
         echo 'rollback   rollback one database migration'
         echo 'tail       watch app and db logs'
