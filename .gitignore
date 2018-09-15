@@ -2,7 +2,9 @@ platform/config/local.js
 platform/config/secrets/google_cloud.json
 platform/migrations/config.json
 platform/public/css/*.css
-platform/public/js/*.js
+platform/public/js/master.js
+platform/public/js/master_jsx.js
+platform/public/js/master_js.js
 var/docker/mysql/*
 !var/docker/mysql/.gitkeep
 var/docker/redis/*
