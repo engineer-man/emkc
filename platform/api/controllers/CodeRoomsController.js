@@ -32,10 +32,25 @@ module.exports = {
             });
     },
 
+    users(req, res) {
+        const { hash } = req.params;
+
+        code_rooms.redis.get('coderoom:' + hash, (err, data) => {
+            data = data ? JSON.parse(data) : [];
+
+            return res.send({
+                status: 'ok',
+                payload: {
+                    users: data
+                }
+            });
+        });
+    },
+
     sync(req, res) {
         const { hash, session, delta } = req.body;
 
-        sails.io.sockets.emit('coderoom_' + hash, { hash, session, delta });
+        sails.io.sockets.emit('coderoom_' + hash, { action: 'sync', hash, session, delta });
 
         return res.send();
     },

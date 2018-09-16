@@ -20,71 +20,16 @@
     <script src="/lib/monaco/min/vs/editor/editor.main.js"></script>
 {% endblock %}
 {% block content %}
-    <div id="editor" style="position: absolute; top: 66px; left: 0; right: 0; bottom: 0;"></div>
-
+    <div id="code_room"></div>
     <script>
-        var editor = monaco.editor.create(document.getElementById('editor'), {
-            theme: 'vs-dark',
-            value: {{ room.code|json_encode }},
-            language: 'javascript',
-            automaticLayout: true,
-            fontSize: 16
-        });
-
-        var hash = '{{ req.params.hash }}';
-        var session = +new Date() + ' ' + Math.random();
-        var modifying = false;
-        var new_code = false;
-
-        editor.onDidChangeModelContent(function(delta) {
-            if (modifying) return null;
-
-            new_code = true;
-
-            io.socket.post(
-                '/coderoom/sync',
-                {
-                    hash: hash,
-                    session: session,
-                    delta: delta
-                }
-            );
-        })
-
-        setInterval(function() {
-            if (!new_code) return null;
-
-            axios
-                .post('/coderoom/save', {
-                    hash: hash,
-                    code: editor.getValue()
-                })
-                .then(function() {
-                    new_code = false;
-                });
-        }, 1000);
-
-        io.socket.on('coderoom_' + hash, function(data) {
-            if (data.session === session) return null;
-
-            modifying = true;
-
-            data.delta.changes.forEach(function(change) {
-                console.log(change)
-                var range = new monaco.Range(
-                    change.range.startLineNumber,
-                    change.range.startColumn,
-                    change.range.endLineNumber,
-                    change.range.endColumn);
-
-                editor.executeEdits('/', [{
-                    range: range,
-                    text: change.text,
-                    forceMoveMarkers: change.forceMoveMarkers
-                }]);
-            });
-
-            modifying = false;
-        });
+        ReactDOM.render(
+            React.createElement(CodeRoom, {
+                hash: '{{ room.hash }}',
+                code: {{ room.code|json_encode }},
+                user_id: {{ req.glob.user_id ? req.glob.user_id : -1 }},
+                read_only: !{{ req.glob.user_id ? req.glob.user_id : 0 }}
+            }),
+            document.getElementById('code_room')
+        );
     </script>
 {% endblock %}

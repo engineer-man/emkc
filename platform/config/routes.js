@@ -25,6 +25,7 @@ module.exports.routes = {
     'GET /coderoom/new': 'CodeRoomsController.create',
     'POST /coderoom/sync': 'CodeRoomsController.sync',
     'POST /coderoom/save': 'CodeRoomsController.save',
+    'GET /coderoom/users/:hash': 'CodeRoomsController.users',
     'GET /r/:hash': 'CodeRoomsController.view',
 
     'GET /tags/search': 'TagsController.search',
