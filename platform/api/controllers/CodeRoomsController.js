@@ -23,7 +23,8 @@ module.exports = {
                 if (!room) throw null;
 
                 return res.view({
-                    room
+                    room,
+                    code: room.code.split('\n')
                 });
             })
             .catch(err => {

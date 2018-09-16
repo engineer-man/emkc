@@ -1,27 +1,42 @@
 {% extends 'master.twig' %}
+{% block css %}
+    {{ parent() }}
+    <link href="/lib/monaco/min/vs/editor/editor.main.css" rel="stylesheet" />
+    <style>
+        body {
+            overflow: hidden;
+        }
+        .em_container {
+            background: #1E1E1E;
+        }
+    </style>
+{% endblock %}
 {% block js %}
     {{ parent() }}
-    <script src="/lib/ace/ace.js"></script>
     <script src="/js/sails.io.js"></script>
+    <script>var require = { paths: { 'vs': '/lib/monaco/min/vs' } };</script>
+    <script src="/lib/monaco/min/vs/loader.js"></script>
+    <script src="/lib/monaco/min/vs/editor/editor.main.nls.js"></script>
+    <script src="/lib/monaco/min/vs/editor/editor.main.js"></script>
 {% endblock %}
 {% block content %}
-    <div id="editor" style="position: absolute; top: 56px; left: 0; right: 0; bottom: 0;">{{ room.code|e }}</div>
+    <div id="editor" style="position: absolute; top: 66px; left: 0; right: 0; bottom: 0;"></div>
 
     <script>
+        var editor = monaco.editor.create(document.getElementById('editor'), {
+            theme: 'vs-dark',
+            value: {{ room.code|json_encode }},
+            language: 'javascript',
+            automaticLayout: true,
+            fontSize: 16
+        });
+
         var hash = '{{ req.params.hash }}';
         var session = +new Date() + ' ' + Math.random();
         var modifying = false;
         var new_code = false;
 
-        var editor = ace.edit('editor');
-
-        editor.setTheme('ace/theme/monokai');
-        editor.setShowPrintMargin(false);
-        editor.setFontSize(18)
-        editor.container.style.lineHeight = 1.2
-        editor.session.setMode('ace/mode/javascript');
-
-        editor.session.on('change', function(delta) {
+        editor.onDidChangeModelContent(function(delta) {
             if (modifying) return null;
 
             new_code = true;
@@ -34,7 +49,7 @@
                     delta: delta
                 }
             );
-        });
+        })
 
         setInterval(function() {
             if (!new_code) return null;
@@ -42,7 +57,7 @@
             axios
                 .post('/coderoom/save', {
                     hash: hash,
-                    code: editor.session.getValue()
+                    code: editor.getValue()
                 })
                 .then(function() {
                     new_code = false;
@@ -53,24 +68,22 @@
             if (data.session === session) return null;
 
             modifying = true;
-            switch (data.delta.action) {
-                case 'insert':
-                    editor.session.insert(
-                        { row: data.delta.start.row, column: data.delta.start.column },
-                        data.delta.lines.join('\n')
-                    );
-                    break;
-                case 'remove':
-                    editor.session.remove(
-                        new ace.Range(
-                            data.delta.start.row,
-                            data.delta.start.column,
-                            data.delta.end.row,
-                            data.delta.end.column
-                        )
-                    )
-                    break;
-            }
+
+            data.delta.changes.forEach(function(change) {
+                console.log(change)
+                var range = new monaco.Range(
+                    change.range.startLineNumber,
+                    change.range.startColumn,
+                    change.range.endLineNumber,
+                    change.range.endColumn);
+
+                editor.executeEdits('/', [{
+                    range: range,
+                    text: change.text,
+                    forceMoveMarkers: change.forceMoveMarkers
+                }]);
+            });
+
             modifying = false;
         });
     </script>
