@@ -4,6 +4,7 @@ const request = require('request-promise');
 module.exports = {
 
     discord(req, res) {
+        // handle the redirect if one was passed with the login operation
         if (req.query.r) {
             req.session.redirect = req.query.r;
         } else {
@@ -24,6 +25,7 @@ module.exports = {
 
         var discord_user;
 
+        // get an access token from the code returned from the authorization phase
         return request
             ({
                 method: 'post',
@@ -43,6 +45,7 @@ module.exports = {
                 simple: true
             })
             .then(res => {
+                // use the returned token to get the data of the user who just logged in
                 return request
                     ({
                         method: 'get',
@@ -55,6 +58,7 @@ module.exports = {
                     });
             })
             .then(discord_user_data => { discord_user = discord_user_data;
+                // add a new user record if there is not already one matching the given api id
                 return db.users
                     .find_or_create({
                         where: {
@@ -67,14 +71,17 @@ module.exports = {
                     });
             })
             .spread(async (user, created) => {
-                var username = discord_user.username;
-                var ext = null;
-
-                username = username.replace(/[^0-9A-Za-z_\-]+/gi, '');
-
-                if (username === '') username = 'new_guy';
-
+                // if this is a new account, sort out what they're username should be
+                // usernames must be letter, numbers, underscores, and dashes only
+                // default username is new_guy and then a number which increases until one isn't used
                 if (created) {
+                    var username = discord_user.username;
+                    var ext = null;
+
+                    username = username.replace(/[^0-9A-Za-z_\-]+/gi, '');
+
+                    if (username === '') username = 'new_guy';
+
                     // make sure username is unique
                     for (;;) {
                         var dupe = await db.users
@@ -92,11 +99,12 @@ module.exports = {
                         ext = ext === null ? 0 : ++ext;
                     }
 
+                    // save the new username
                     user.username = username + (ext === null ? '' : ext);
                     await user.save();
                 }
 
-                // download image
+                // download discord avatar
                 request
                     ({
                         method: 'get',
@@ -105,21 +113,26 @@ module.exports = {
                         encoding: null
                     })
                     .then(res => {
+                        // save avatar to google cloud
                         gcloud
                             .stream_upload(res, 'avatars/' + user.user_id + '.png', false, true)
                             .then(() => {
+                                // update the record with the new url
                                 user.avatar_url = '/avatars/' + user.user_id + '.png';
                                 user.save();
                             });
                     })
-                    .catch(err => {console.log(err)});
+                    .catch(err => {});
 
+                // this logs the user in basically
                 req.session.user_id = user.user_id;
 
+                // add the emkc member role on discord
                 discord
                     .api('put', '/guilds/473161189120147456/members/' + user.discord_api + '/roles/486562889046556682')
                     .catch(err => {});
 
+                // according to whether or not the redirect was supplied, either go to that url or to board main
                 if (req.session.redirect) {
                     return res.redirect(req.session.redirect);
                     delete req.session.redirect;
@@ -128,6 +141,7 @@ module.exports = {
                 }
             })
             .catch(err => {
+                // redrect home in case of any error
                 return res.redirect('/');
             });
     },
