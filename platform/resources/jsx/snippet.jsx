@@ -1,23 +1,26 @@
 class Snippet extends React.Component {
 
     componentDidMount() {
-        $('.highlightjs').each((i, block) => {
-            hljs.highlightBlock(block);
-            hljs.lineNumbersBlock(block);
+        monaco.editor.create(document.getElementById('editor'), {
+            theme: 'vs-dark',
+            value: this.props.snip,
+            language: this.props.language,
+            automaticLayout: true,
+            fontSize: 16,
+            readOnly: true
         });
     }
 
     render() {
         return (
             <div class="em_snippet_view">
-                <div class="contents">
-                    <div class="col1_padding">
-                        <h5 class="f700">Contents</h5>
-                        <pre class="highlightjs">
-                            {this.props.snip}
-                        </pre>
+                <div class="menu">
+                    <div class="wrapper">
+                        <span class="language_label f700">Language:</span>
+                        {this.props.language}
                     </div>
                 </div>
+                <div id="editor"></div>
             </div>
         )
     }

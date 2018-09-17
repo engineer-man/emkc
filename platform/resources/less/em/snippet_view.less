@@ -1,14 +1,31 @@
 .em_snippet_view {
-    display: flex;
-    .col1_padding {
-        padding: 25px 15px;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    #editor {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
-    .contents {
-        flex: 1;
-        min-weight: 0;
-        overflow: auto;
-    }
-    .notes {
-        width: 300px;
+
+    .menu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        .wrapper {
+            display: flex;
+            background: #151515;
+            padding: 18px 18px 18px 74px;
+            .language_label {
+                margin-right: 10px;
+            }
+        }
     }
 }

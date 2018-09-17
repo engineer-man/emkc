@@ -26,7 +26,7 @@ module.exports = {
 
     create(req, res) {
         if (req.method === 'POST') {
-            const { snip } = req.body;
+            const { language, snip } = req.body;
 
             return Promise.resolve(null)
                 .then(() => {
@@ -37,6 +37,7 @@ module.exports = {
                     return db.snippets
                         .create({
                             user_id: req.glob.user_id || null,
+                            language,
                             snip
                         });
                 })

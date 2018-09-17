@@ -1,9 +1,29 @@
 {% extends 'master.twig'%}
+{% block css %}
+    {{ parent() }}
+    <link href="/lib/monaco/min/vs/editor/editor.main.css" rel="stylesheet" />
+    <style>
+        body {
+            overflow: hidden;
+        }
+        .em_container {
+            background: #1E1E1E;
+        }
+    </style>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    <script>var require = { paths: { 'vs': '/lib/monaco/min/vs' } };</script>
+    <script src="/lib/monaco/min/vs/loader.js"></script>
+    <script src="/lib/monaco/min/vs/editor/editor.main.nls.js"></script>
+    <script src="/lib/monaco/min/vs/editor/editor.main.js"></script>
+{% endblock %}
 {% block content %}
     <div id="snippet"></div>
     <script>
         ReactDOM.render(
             React.createElement(Snippet, {
+                language: {{ snippet.language|json_encode }},
                 snip: {{ snippet.snip|json_encode }}
             }),
             document.getElementById('snippet')

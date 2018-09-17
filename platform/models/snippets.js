@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             user_id: DataTypes.INTEGER,
             hash: DataTypes.STRING,
+            language: DataTypes.STRING,
             snip: DataTypes.TEXT('medium'),
             created_at: DataTypes.DATE
         },

@@ -1,47 +1,38 @@
-.em_snippet_create {
-    display: flex;
-    .col2_padding {
-        padding: 25px 15px;
+.em_create_snippet {
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    #editor {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
-    .col1_padding {
-        padding: 25px 15px;
-    }
-    .contents {
-        flex: 1;
-        min-weight: 0;
-        overflow: auto;
-    }
-    .notes {
-        width: 300px;
-    }
-    textarea {
-        width: 100%;
-        background: none;
-        border: #666 1px solid;
-        outline: none;
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        &::-webkit-input-placeholder {
-            color:    #fff;
-        }
-        &:-moz-placeholder {
-           color:    #fff;
-           opacity:  1;
-        }
-        &::-moz-placeholder {
-           color:    #fff;
-           opacity:  1;
-        }
-        &:-ms-input-placeholder {
-           color:    #fff;
-        }
-        &::-ms-input-placeholder {
-           color:    #fff;
-        }
-        &::placeholder {
-           color:    #fff;
+
+    .menu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        .wrapper {
+            display: flex;
+            background: #151515;
+            padding: 10px 10px 10px 75px;
+            >* {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .language {
+                flex: 1;
+                select {
+                    width: 200px;
+                }
+            }
         }
     }
 }
