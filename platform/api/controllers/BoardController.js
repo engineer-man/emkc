@@ -21,7 +21,7 @@ module.exports = {
                             order: [
                                 ['question_id', 'desc']
                             ],
-                            limit: 50
+                            limit: 25
                         }),
                     db.users
                         .find_all({
@@ -29,7 +29,7 @@ module.exports = {
                                 ['score', 'desc'],
                                 ['user_id']
                             ],
-                            limit: 50
+                            limit: 25
                         })
                 ];
             })
@@ -52,6 +52,7 @@ module.exports = {
                         }
                     }),
                     users
+
                 });
             });
     },
