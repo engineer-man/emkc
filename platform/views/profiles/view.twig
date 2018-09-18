@@ -2,8 +2,14 @@
 {% block title %}{{ user.display_name|e }} - Engineer Man{% endblock %}
 {% block content %}
     <div style="padding: 30px 20px 15px 15px; text-align: center;">
-        <img src="{{ sails.glob.constant.gcloud_base_url }}{{ user.avatar_url }}" style="width: 128px; height: auto;" />
+        <!--<img src="{{ sails.glob.constant.gcloud_base_url }}{{ user.avatar_url }}" style="width: 128px; height: auto;" />
         <h4 class="f700">{{ user.display_name }}</h4>
-        <h4 class="f900"><i class="fa fa-bolt"></i> {{ user.score }}</h4>
+        <h4 class="f900"><i class="fa fa-bolt"></i> {{ user.score }}</h4>-->
+        <div id="user_preferences"></div>
+        <script>
+            ReactDOM.render(React.createElement(UserPreferences, {
+                user: {{ user|json_encode  }}
+            }), document.getElementById('user_preferences'));
+        </script>
     </div>
 {% endblock %}

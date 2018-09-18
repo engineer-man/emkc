@@ -13,7 +13,7 @@ module.exports = {
                 if (!user) throw null;
 
                 return res.view({
-                    user
+                    user:user
                 });
             })
             .catch(err => {
