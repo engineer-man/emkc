@@ -56,11 +56,11 @@ class Score extends React.Component {
             <div class="scores">
                 <i class={'fa fa-chevron-up ' + (this.state.value === 1 ? 'active' : '')} onClick={() => this.vote('u')}></i>
                 <div class="f700">
-                    {this.state.score}
+                    {this.state.score > 0 ? this.state.score : 0}
                 </div>
+                <i class={'fa fa-chevron-down ' + (this.state.value === -1 ? 'active' : '')} onClick={() => this.vote('d')}></i>
             </div>
         )
     }
-    // <i class={'fa fa-chevron-down ' + (this.state.value === -1 ? 'active' : '')} onClick={() => this.vote('d')}></i>
 
 }

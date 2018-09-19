@@ -4,6 +4,14 @@ module.exports = {
         return res.view();
     },
 
+    about(req, res) {
+        return res.view();
+    },
+
+    power(req, res) {
+        return res.view();
+    },
+
     _config: {}
 
 };

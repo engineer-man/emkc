@@ -54,6 +54,7 @@ module.exports = {
                                 depth: comment.depth,
                                 comment_id: comment.comment_id,
                                 question_id: comment.question_id,
+                                user_id: comment.user_id,
                                 comment: comment.comment,
                                 score: comment.score,
                                 created_at: comment.created_at,
@@ -78,6 +79,47 @@ module.exports = {
         }
 
         return res.view();
+    },
+
+    save(req, res) {
+        const comment_id = req.body.comment_id;
+        const commentt = req.body.comment;
+
+        return db.comments
+            .find_one({
+                where: {
+                    comment_id
+                }
+            })
+            .then(comment => {
+                if ((!comment || comment.user_id !== req.glob.user_id) &&
+                    !req.glob.user.is_staff) {
+
+                    throw new Error('Question not found');
+                }
+
+                if (comment === '{"ops":[{"insert":"\\n"}]}') {
+                    throw new Error('Please type a comment');
+                }
+
+                comment.comment = commentt;
+
+                return comment
+                    .save();
+            })
+            .then(() => {
+                return res.send({
+                    status: 'ok'
+                });
+            })
+            .catch(err => {
+                return res.send({
+                    status: 'error',
+                    payload: {
+                        message: err.message
+                    }
+                });
+            });
     },
 
     _config: {}

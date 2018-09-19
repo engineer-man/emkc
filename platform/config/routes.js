@@ -9,14 +9,16 @@ module.exports.routes = {
 
     'GET /community': 'CommunityController.home',
     'GET /community/about': 'CommunityController.about',
+    'GET /community/power': 'CommunityController.power',
 
     'GET /questions/ask': 'QuestionsController.ask',
     'POST /questions/ask': 'QuestionsController.ask',
     'GET /questions/edit/:question_id': 'QuestionsController.edit',
     'POST /questions/edit/:question_id': 'QuestionsController.edit',
-    'GET /d:question_id/:name': 'QuestionsController.view',
+    'GET r|/d([0-9]+)/(.*)|question_id,name': 'QuestionsController.view',
 
     'POST /comments/create': 'CommentsController.create',
+    'POST /comments/save': 'CommentsController.save',
 
     'POST /votes/handle/:type/:pk': 'VotesController.handle',
 

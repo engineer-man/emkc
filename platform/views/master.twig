@@ -38,7 +38,7 @@
 
         <script>
             ctx = {
-                logged_in: !!{{ req.glob.user_id ? req.glob.user_id : 0 }}
+                user_id: +'{{ req.glob.user_id ? req.glob.user_id : 0 }}'
             };
         </script>
 

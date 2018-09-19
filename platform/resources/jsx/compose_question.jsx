@@ -25,7 +25,7 @@ class ComposeQuestion extends React.Component {
                 syntax: true,
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote', 'code-block'],
+                    ['blockquote', 'code-block', 'link'],
                     [{ 'header': 1 }, { 'header': 2 }],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                     ['clean']

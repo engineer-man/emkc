@@ -1,0 +1,60 @@
+.em_power_system {
+    .tier_circle {
+        border-radius: 50%;
+        width: 100%;
+        padding-top: 100%;
+        position: relative;
+        margin-bottom: 30px;
+        .wrapper {
+            position: absolute;
+            top: ~'calc(50% - 30px)';
+            left: 0;
+            right: 0;
+            text-align: center;
+            .tier {
+                font-size: 26px;
+                font-weight: 700;
+            }
+            .score {
+                font-size: 26px;
+                font-weight: 100;
+            }
+        }
+    }
+    .novice {
+        background: #79acbf;
+    }
+    .hero {
+        background: #7d9dc5;
+    }
+    .master {
+        background: #ACB2E4;
+    }
+    .legend {
+        background: #D2ACE4;
+    }
+    .power_list {
+        .item {
+            display: flex;
+            background: #303030;
+            margin-bottom: 4px;
+            padding: 6px 12px;
+            font-size: 18px;
+            div {
+                flex: 1;
+                color: #8fdcef;
+            }
+            span {
+                width: 80px;
+                padding-left: 30px;
+                font-weight: 700;
+            }
+        }
+        .heading:first-child {
+            margin-top: 0;
+        }
+        .heading {
+            margin-top: 30px;
+        }
+    }
+}

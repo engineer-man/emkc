@@ -44,7 +44,7 @@
             </div>
             {% if req.glob.user_id %}
                 <script>
-                    ReactDOM.render(React.createElement(CreateComment, {
+                    ReactDOM.render(React.createElement(CreateEditComment, {
                         insert: comments.insert,
                         question_id: {{ question.question_id }},
                         parent_id: null

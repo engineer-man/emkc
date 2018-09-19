@@ -5,11 +5,14 @@ class Comment extends React.Component {
 
         this.state = {
             reply_open: false,
+            edit_open: false,
             comment: props.comment
         };
 
         this.toggle_reply = this.toggle_reply.bind(this);
+        this.toggle_edit = this.toggle_edit.bind(this);
         this.insert = this.insert.bind(this);
+        this.update = this.update.bind(this);
     }
 
     componentDidMount() {
@@ -31,7 +34,15 @@ class Comment extends React.Component {
 
     toggle_reply() {
         this.setState({
-            reply_open: !this.state.reply_open
+            reply_open: !this.state.reply_open,
+            edit_open: false
+        });
+    }
+
+    toggle_edit() {
+        this.setState({
+            reply_open: false,
+            edit_open: !this.state.edit_open
         });
     }
 
@@ -42,6 +53,18 @@ class Comment extends React.Component {
                 comment: {
                     ...prev.comment,
                     comments: [comment, ...prev.comment.comments]
+                }
+            }
+        });
+    }
+
+    update(comment) {
+        this.setState(prev => {
+            return {
+                edit_open: !prev.edit_open,
+                comment: {
+                    ...prev.comment,
+                    comment: JSON.stringify(comment)
                 }
             }
         });
@@ -74,23 +97,45 @@ class Comment extends React.Component {
                     <div class="actions">
                         <a
                             class="reply"
-                            onClick={ctx.logged_in ? this.toggle_reply : () => login.open()}>
+                            onClick={ctx.user_id ? this.toggle_reply : () => login.open()}>
                             <i class="fa fa-reply"></i> reply
                         </a>
-                        <a
-                            class="edit"
-                            onClick={ctx.logged_in ? null : () => login.open()}>
-                            <i class="fa fa-edit"></i> edit
-                        </a>
+                        {
+                            ctx.user_id && ctx.user_id === this.state.comment.user_id
+                                ?
+                                <a
+                                    class="edit"
+                                    onClick={this.toggle_edit}>
+                                    <i class="fa fa-edit"></i> edit
+                                </a>
+                                :
+                                null
+                        }
                     </div>
                 </div>
                 {
                     this.state.reply_open
-                        ? <CreateComment
+                        ?
+                        <CreateEditComment
                             insert={this.insert}
+                            toggle_reply={this.toggle_reply}
                             question_id={this.state.comment.question_id}
-                            parent_id={this.state.comment.comment_id} />
-                        : null
+                            parent_id={this.state.comment.comment_id}
+                            can_cancel={true} />
+                        :
+                        null
+                }
+                {
+                    this.state.edit_open
+                        ?
+                        <CreateEditComment
+                            update={this.update}
+                            toggle_edit={this.toggle_edit}
+                            comment={this.state.comment.comment}
+                            comment_id={this.state.comment.comment_id}
+                            can_cancel={true} />
+                        :
+                        null
                 }
                 <div class="nested_comments">
                     {
