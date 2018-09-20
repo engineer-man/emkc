@@ -36,7 +36,10 @@ module.exports.routes = {
 
     'GET /@:username': 'ProfilesController.view',
 
+    // piston
+    'POST /api/v1/piston/execute': 'api/v1/PistonController.execute',
+
     // catch all (404)
-    'ALL r|^/(?:(?!css|images|js|lib|other|robots\.txt|google*).)*$|': 'HomeController.fourohfour'
+    'ALL r|^\/(?!css|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
 
 };

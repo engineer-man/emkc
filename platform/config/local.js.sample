@@ -30,6 +30,10 @@ module.exports = {
         key: 'key',
         domain: 'domain'
     },
+    piston: {
+        host: '127.0.0.1:1337',
+        key: ''
+    },
     elasticsearch: {
         host: '127.0.0.1'
     },
