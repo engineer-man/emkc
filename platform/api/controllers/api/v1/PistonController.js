@@ -37,11 +37,11 @@ module.exports = {
                     status: 'ok',
                     payload: {
                         ran: result.ran,
-                        output: result.output
+                        output: result.output ? result.output.slice(0, 1024) : ''
                     }
                 })
             })
-            .catch(err => {console.log(err)
+            .catch(err => {
                 return res.send({
                     status: 'error',
                     payload: {
