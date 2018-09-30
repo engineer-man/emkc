@@ -15,7 +15,8 @@ module.exports.policies = {
     },
 
     'CommunityController': {
-        '*': ['common']
+        '*': ['common'],
+        'add_request': ['common', 'logged_in']
     },
 
     'CodeRoomsController': {

@@ -1,0 +1,27 @@
+{% extends 'master.twig'%}
+{% block content %}
+    <div class="em_common_content container">
+        <div class="row marginbottom40">
+            <div class="col-12">
+                <h4 class="f300">
+                    Video Requests
+                </h4>
+
+                <p>
+                    Below is a list of pending YouTube video requests. Upvote the ones you like the best.
+                    You may vote once for each video.
+                </p>
+
+                <div id="add_video_request"></div>
+                <script>
+                    ReactDOM.render(
+                        React.createElement(AddVideoRequest, {
+                            requests: {{ requests|json_encode }}
+                        }),
+                        document.getElementById('add_video_request')
+                    );
+                </script>
+            </div>
+        </div>
+    </div>
+{% endblock %}

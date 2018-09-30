@@ -51,4 +51,7 @@ db.question_tags.belongsTo(db.tags, { as: 'tag', foreignKey: 'tag_id' });
 
 db.tags.belongsToMany(db.questions, { as: 'questions', through: { model: db.question_tags }, foreignKey: 'tag_id' });
 
+db.video_requests.has_one(db.video_request_votes, { as: 'vote', foreignKey: 'video_request_id' });
+db.video_requests.has_many(db.video_request_votes, { as: 'votes', foreignKey: 'video_request_id' });
+
 module.exports = db;
