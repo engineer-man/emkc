@@ -15,6 +15,7 @@
         <div style="position: relative; padding-right: 290px;">
             <div id="question"></div>
             <script>
+                <!--
                 ReactDOM.render(React.createElement(Question, {
                     question_id: {{ question.question_id }},
                     user_id: {{ question.user_id }},
@@ -28,6 +29,7 @@
                     session_user_id: +'{{ req.glob.user_id }}',
                     is_staff: +'{{ req.glob.user.is_staff }}'
                 }), document.getElementById('question'));
+                -->
             </script>
 
             <h5 class="f700" style="margin-top: 40px;">{{ question.comments }} comments</h5>
@@ -37,18 +39,22 @@
             <div class="em_comments">
                 <div id="comments"></div>
                 <script>
+                    <!--
                     comments = ReactDOM.render(React.createElement(Comments, {
                         comments: {{ comments }}
                     }), document.getElementById('comments'));
+                    -->
                 </script>
             </div>
             {% if req.glob.user_id %}
                 <script>
+                    <!--
                     ReactDOM.render(React.createElement(CreateEditComment, {
                         insert: comments.insert,
                         question_id: {{ question.question_id }},
                         parent_id: null
                     }), document.getElementById('create_comment'));
+                    -->
                 </script>
             {% endif %}
         </div>
