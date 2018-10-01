@@ -3,7 +3,7 @@
 cd /opt/plat/platform
 
 git pull
-systemctl stop engineerman-worker@{1..4}
 npm install
 rm -f package-lock.json
+systemctl stop engineerman-worker@{1..4}
 systemctl start engineerman-worker@{1..4}

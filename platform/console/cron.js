@@ -31,6 +31,9 @@ var cron = {
                             ];
                         })
                         .spread((score1, score2) => {
+                            score1 = score1 || 0;
+                            score2 = score2 || 0;
+
                             user.score = score1 + score2;
 
                             return user
