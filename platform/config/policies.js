@@ -16,7 +16,8 @@ module.exports.policies = {
 
     'CommunityController': {
         '*': ['common'],
-        'add_request': ['common', 'logged_in'],
+        'add_video_request': ['common', 'logged_in'],
+        'delete_video_request': ['common', 'logged_in'],
         'video_request_vote': ['common', 'logged_in']
     },
 

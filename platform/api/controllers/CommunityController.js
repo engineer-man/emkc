@@ -75,6 +75,36 @@ module.exports = {
             });
     },
 
+    delete_video_request(req, res) {
+        const { video_request_id } = req.body;
+
+        return db.video_requests
+            .find_one({
+                where: {
+                    video_request_id
+                }
+            })
+            .then(request => {
+                if (!request || !req.glob.user.is_staff) throw null;
+
+                return request
+                    .destroy();
+            })
+            .then(() => {
+                return res.send({
+                    status: 'ok'
+                });
+            })
+            .catch(err => {
+                return res.send({
+                    status: 'error',
+                    payload: {
+                        message: err.message
+                    }
+                });
+            });
+    },
+
     video_request_vote(req, res) {
         const { video_request_id } = req.body;
 

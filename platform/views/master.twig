@@ -38,7 +38,8 @@
 
         <script>
             ctx = {
-                user_id: +'{{ req.glob.user_id ? req.glob.user_id : 0 }}'
+                user_id: +'{{ req.glob.user_id ? req.glob.user_id : 0 }}',
+                is_staff: +'{{ req.glob.user and req.glob.user.is_staff ? 1 : 0 }}',
             };
         </script>
 

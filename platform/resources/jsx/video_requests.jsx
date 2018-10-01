@@ -1,4 +1,4 @@
-class AddVideoRequest extends React.Component {
+class VideoRequests extends React.Component {
 
     constructor(props) {
         super(props)
@@ -10,6 +10,7 @@ class AddVideoRequest extends React.Component {
 
         this.update_data = this.update_data.bind(this);
         this.add_request = this.add_request.bind(this);
+        this.delete_request = this.delete_request.bind(this);
         this.vote = this.vote.bind(this);
     }
 
@@ -33,11 +34,32 @@ class AddVideoRequest extends React.Component {
             });
     }
 
+    delete_request(request) {
+        return bootbox
+            .confirm('Are you sure you want to delete this video request?', yes => {
+                if (!yes) return null;
+
+                return axios
+                    .post('/community/delete_video_request', {
+                        video_request_id: request.video_request_id
+                    })
+                    .then(res => {
+                        if (res.data.status === 'error') {
+                            return bootbox.alert(res.data.payload.message);
+                        }
+
+                        location = location;
+                    });
+            });
+    }
+
     vote(request) {
         var requests = this.state.requests
             .map(r => {
                 if (r.video_request_id === request.video_request_id) {
-                    r.vote = r.vote ? null : { user_id: ctx.user_id }
+                    r.vote = r.vote
+                        ? null
+                        : { user_id: ctx.user_id }
                 }
 
                 return r;
@@ -87,6 +109,7 @@ class AddVideoRequest extends React.Component {
                             <th class="width-60"></th>
                             <th class="width-80 center">Votes</th>
                             <th>Video</th>
+                            <th class="width-60"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,11 +119,20 @@ class AddVideoRequest extends React.Component {
                                     <tr key={request.video_request_id}>
                                         <td
                                             class={'vote_cell center ' + (request.vote && request.vote.user_id === ctx.user_id ? 'active' : '') }
-                                            onClick={() => ctx.user_id ? this.vote(request) : login.open() }>
+                                            onClick={() => ctx.user_id ? this.vote(request) : login.open()}>
                                             <i class="fa fa-check"></i>
                                         </td>
                                         <td class="center">{request.votes.length}</td>
                                         <td>{request.name}</td>
+                                        <td>
+                                            {
+                                                ctx.is_staff
+                                                    ?
+                                                    <i class="fa fa-trash text-danger" onClick={() => this.delete_request(request)}></i>
+                                                    :
+                                                    null
+                                            }
+                                        </td>
                                     </tr>
                                 )
                             })

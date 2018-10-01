@@ -12,6 +12,7 @@ module.exports.routes = {
     'GET /community/power': 'CommunityController.power',
     'GET /community/video_requests': 'CommunityController.video_requests',
     'POST /community/add_video_request': 'CommunityController.add_video_request',
+    'POST /community/delete_video_request': 'CommunityController.delete_video_request',
     'POST /community/video_request_vote': 'CommunityController.video_request_vote',
 
     'GET /questions/ask': 'QuestionsController.ask',
