@@ -3,6 +3,8 @@ process.setMaxListeners(0);
 
 require('nocamel');
 
+Promise = require('bluebird');
+
 root_dir = require('path').resolve(__dirname + '/../../');
 
 sails = {

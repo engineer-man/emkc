@@ -120,7 +120,7 @@ class VideoRequests extends React.Component {
                                         <td
                                             class={'vote_cell center ' + (request.vote && request.vote.user_id === ctx.user_id ? 'active' : '') }
                                             onClick={() => ctx.user_id ? this.vote(request) : login.open()}>
-                                            <i class="fa fa-check"></i>
+                                            <i class="fa fa-arrow-alt-circle-up"></i>
                                         </td>
                                         <td class="center">{request.votes.length}</td>
                                         <td>{request.name}</td>
