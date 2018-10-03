@@ -1,6 +1,14 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-28939284-9"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-28939284-9');
+        </script>
+
         <title>{% block title %}Engineer Man Knowledge Center{% endblock %}</title>
 
         <meta name="KEYWORDS" content="" />
@@ -54,21 +62,9 @@
                     </a>
                 </div>
                 <div class="main_links">
-                    <a href="/board">
-                        Questions
-                    </a>
-                    {% if req.glob.user_id %}
-                        <a href="/questions/ask">
-                            Ask
-                        </a>
-                    {% else %}
-                        <a onclick="login.open('/questions/ask')">
-                            Ask
-                        </a>
-                    {% endif %}
-                    <a href="/community">
-                        Community
-                    </a>
+                    <a href="/board">Questions</a>
+                    <!--<a href="/challenges">Challenges</a>-->
+                    <a href="/community">Community</a>
                     <div class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             Tools

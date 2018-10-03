@@ -2,6 +2,15 @@
 {% block content %}
     <div style="display: flex; padding: 20px 15px;">
         <div style="flex: 1;">
+            {% if req.glob.user_id %}
+                <a href="/questions/ask" class="btn btn-success btn-sm" style="float: right; color: #fff;">
+                    Ask New Question
+                </a>
+            {% else %}
+                <a onclick="login.open('/questions/ask')" class="btn btn-success btn-sm" style="float: right; color: #fff;">
+                    Ask New Question
+                </a>
+            {% endif %}
             <h5 class="f700">Newest Questions</h5>
             <div class="em_main_board">
                 <div id="questions"></div>

@@ -1,6 +1,6 @@
 {% extends 'master.twig'%}
 {% block content %}
-    <div class="em_common_content container">
+    <div class="em_common_content">
         <div class="row marginbottom40">
             <div class="col-12">
                 <h4 class="f300">
@@ -12,16 +12,16 @@
                     You may vote once for each video.
                 </p>
 
-                <div id="add_video_request"></div>
+                <div id="video_requests"></div>
                 <script>
                     <!--
                     ReactDOM.render(
                         React.createElement(VideoRequests, {
                             requests: {{ requests|json_encode }}
                         }),
-                        document.getElementById('add_video_request')
+                        document.getElementById('video_requests')
                     );
-                    -->
+                    // -->
                 </script>
             </div>
         </div>
