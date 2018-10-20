@@ -1,11 +1,43 @@
 {% extends 'master.twig'%}
 {% block content %}
-    <div class="em_challenges_list">
+    <div class="em_common_content em_challenges_list">
+        <div class="row marginbottom20">
+            <div class="col-12">
+                <h4 class="f300">Challenges</h4>
+
+                <p>
+                    Welcome to Knowledge Center challenges, a place to test out your skills in one of ten languages
+                    of your choosing on a number of different practical tests. Points are awarded based on difficulty.
+                    You can complete the challenge up to ten times (one for each available language). New challenges are
+                    being added all the time.
+                </p>
+            </div>
+        </div>
+
         <div class="row">
-            <div class="col-12 col-sm-4">
-                <h3 class="f300">Novice</h3>
+            <div class="col-12 col-sm-4 easy">
+                <h5>Easy (+10 pts)</h5>
                 <div class="challenge_list">
-                    <a href="">Reverse a String</a>
+                    {% for challenge in easy %}
+                        <a href="/challenges/choose_language/{{ challenge.challenge_id }}" class="challenge">
+                            <div class="title">{{ challenge.name }}</div>
+                            <div class="description">
+                                {{ challenge.description }}
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 medium">
+                <h5>Medium (+30 pts)</h5>
+                <div class="challenge_list">
+                    Coming soon...
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 hard">
+                <h5>Hard (+50 pts)</h5>
+                <div class="challenge_list">
+                    Coming soon...
                 </div>
             </div>
         </div>

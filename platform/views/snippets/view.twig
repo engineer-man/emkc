@@ -21,14 +21,12 @@
 {% block content %}
     <div id="snippet"></div>
     <script>
-        <!--
         ReactDOM.render(
             React.createElement(Snippet, {
                 language: {{ snippet.language|json_encode }},
-                snip: {{ snippet.snip|json_encode }}
+                snip: {{ snippet.snip|json_encode|noscript }}
             }),
             document.getElementById('snippet')
         );
-        -->
     </script>
 {% endblock %}

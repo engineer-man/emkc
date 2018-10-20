@@ -16,7 +16,9 @@ module.exports.routes = {
     'POST /community/video_request_vote': 'CommunityController.video_request_vote',
 
     'GET /challenges': 'ChallengesController.home',
-    'GET /challenges/choose_language': 'ChallengesController.choose_language',
+    'GET /challenges/choose_language/:challenge_id': 'ChallengesController.choose_language',
+    'POST /challenges/execute/:challenge_id': 'ChallengesController.execute',
+    'GET /challenges/:challenge_id/:language': 'ChallengesController.challenge',
 
     'GET /questions/ask': 'QuestionsController.ask',
     'POST /questions/ask': 'QuestionsController.ask',

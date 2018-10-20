@@ -1,0 +1,14 @@
+[
+    {
+        "official": false,
+        "name": "Testing simple string",
+        "input": ["engineer man"],
+        "output": "nam reenigne"
+    },
+    {
+        "official": false,
+        "name": "Testing complex string",
+        "input": ["a,masd#$)(&*09&M0d7fn0s8$*&4876%*&7dnosydhf)"],
+        "output": ")fhdysond7&*%6784&*$8s0nf7d0M&90*&()$#dsam,a"
+    }
+]

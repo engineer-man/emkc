@@ -22,16 +22,14 @@
 {% block content %}
     <div id="code_room"></div>
     <script>
-        <!--
         ReactDOM.render(
             React.createElement(CodeRoom, {
                 hash: '{{ room.hash }}',
-                code: {{ room.code|json_encode }},
+                code: {{ room.code|json_encode|noscript }},
                 user_id: {{ req.glob.user_id ? req.glob.user_id : -1 }},
                 read_only: !{{ req.glob.user_id ? req.glob.user_id : 0 }}
             }),
             document.getElementById('code_room')
         );
-        -->
     </script>
 {% endblock %}

@@ -5,6 +5,15 @@ var constant = {
     no: 0,
     yes: 1,
 
+    challenges: {
+        supported_languages: ['js', 'python', 'go', 'c', 'ruby', 'cpp', 'cs', 'php', 'swift', 'java'],
+        difficulty: {
+            easy: 1,
+            medium: 2,
+            hard: 3
+        }
+    },
+
     notifications: {
         type: {
             new_comment: 1

@@ -10,8 +10,8 @@ services:
         links:
             - redis
             - mysql
-#        extra_hosts:
-#            vortex: 172.17.0.1
+        extra_hosts:
+            vortex: 172.17.0.1
     redis:
         image: redis:3.2.12
         volumes:

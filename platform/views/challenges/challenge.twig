@@ -1,0 +1,32 @@
+{% extends 'master.twig'%}
+{% block css %}
+    {{ parent() }}
+    <link href="/lib/monaco/min/vs/editor/editor.main.css" rel="stylesheet" />
+    <style>
+        body {
+            overflow: hidden;
+        }
+    </style>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    <script>var require = { paths: { 'vs': '/lib/monaco/min/vs' } };</script>
+    <script src="/lib/monaco/min/vs/loader.js"></script>
+    <script src="/lib/monaco/min/vs/editor/editor.main.nls.js"></script>
+    <script src="/lib/monaco/min/vs/editor/editor.main.js"></script>
+{% endblock %}
+{% block content %}
+    <div id="challenge"></div>
+    <script>
+        ReactDOM.render(
+            React.createElement(Challenge, {
+                challenge: {{ challenge|json_encode }},
+                language: '{{ language }}',
+                monaco_language: '{{ monaco_language }}',
+                abstract: {{ abstract|json_encode }},
+                template: {{ template|json_encode }}
+            }),
+            document.getElementById('challenge')
+        );
+    </script>
+{% endblock %}

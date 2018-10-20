@@ -1,51 +1,80 @@
 {% extends 'master.twig'%}
 {% block content %}
-    <div class="em_language_choice">
-        <div class="row marginbottom30">
+    <div class="em_common_content em_language_choice">
+        <div class="row marginbottom40">
             <div class="col-12 center">
-                <h2 class="f300">Choose your weapon</h2>
+                {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.easy %}
+                    <h2 class="easy">Easy: {{ challenge.name }}</h2>
+                {% endif %}
+                {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.medium %}
+                    <h2 class="medium">Medium: {{ challenge.name }}</h2>
+                {% endif %}
+                {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.hard %}
+                    <h2 class="hard">Hard: {{ challenge.name }}</h2>
+                {% endif %}
+                <h3 class="f300">How do you plan on crushing this challenge?</h3>
             </div>
         </div>
         <div class="row icons">
             <div class="col-4 col-sm-3 col-md-2 offset-md-1">
-                <img src="/images/lang_icons/js.svg" class="img-fluid" />
-                <h3>JavaScript</h3>
+                <a href="/challenges/{{ challenge.challenge_id }}/js">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/js.svg" class="img-fluid" />
+                </a>
+                <h4>JavaScript</h4>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
-                <img src="/images/lang_icons/python.svg" class="img-fluid" />
-                <h3>Python</h3>
+                <a href="/challenges/{{ challenge.challenge_id }}/python">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/python.svg" class="img-fluid" />
+                </a>
+                <h4>Python</h4>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
-                <img src="/images/lang_icons/ruby.svg" class="img-fluid" />
-                <h3>Ruby</h3>
+                <a href="/challenges/{{ challenge.challenge_id }}/go">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/go.svg" class="img-fluid" />
+                </a>
+                <h4>Go</h4>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
-                <img src="/images/lang_icons/go.svg" class="img-fluid" />
-                <h3>Go</h3>
+                <a href="/challenges/{{ challenge.challenge_id }}/c">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/c.svg" class="img-fluid" />
+                </a>
+                <h4>C</h4>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
-                <img src="/images/lang_icons/c.svg" class="img-fluid" />
-                <h3>C</h3>
+                <a href="/challenges/{{ challenge.challenge_id }}/ruby">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/ruby.svg" class="img-fluid" />
+                </a>
+                <h4>Ruby</h4>
             </div>
             <div class="col-4 col-sm-3 col-md-2 offset-md-1">
-                <img src="/images/lang_icons/cpp.svg" class="img-fluid" />
-                <h3>C++</h3>
+                <a href="/challenges/{{ challenge.challenge_id }}/cpp">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/cpp.svg" class="img-fluid" />
+                </a>
+                <h4>C++</h4>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
-                <img src="/images/lang_icons/cs.svg" class="img-fluid" />
-                <h3>C#</h3>
+                <a href="/challenges/{{ challenge.challenge_id }}/cs">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/cs.svg" class="img-fluid" />
+                </a>
+                <h4>C#</h4>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
-                <img src="/images/lang_icons/php.svg" class="img-fluid" />
-                <h3>PHP</h3>
+                <a href="/challenges/{{ challenge.challenge_id }}/php">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/php.svg" class="img-fluid" />
+                </a>
+                <h4>PHP</h4>
             </div>
-            <div class="col-4 col-sm-3 col-md-2 offset-sm-3 offset-md-0">
-                <img src="/images/lang_icons/swift.svg" class="img-fluid" />
-                <h3>Swift</h3>
+            <div class="col-4 col-sm-3 col-md-2 offset-sm-3 offset-md-0" style="display: none;">
+                <a href="/challenges/{{ challenge.challenge_id }}/swift">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/swift.svg" class="img-fluid" />
+                </a>
+                <h4>Swift</h4>
             </div>
             <div class="col-4 col-sm-3 col-md-2 offset-4 offset-sm-0">
-                <img src="/images/lang_icons/java.svg" class="img-fluid" />
-                <h3>Java</h3>
+                <a href="/challenges/{{ challenge.challenge_id }}/java">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/java.svg" class="img-fluid" />
+                </a>
+                <h4>Java</h4>
             </div>
         </div>
     </div>

@@ -1,0 +1,41 @@
+@import '../colors.less';
+
+.em_challenges_list {
+    .challenge_list {
+        margin-bottom: 20px;
+        .challenge {
+            display: block;
+            background: #21252B;
+            padding: 10px;
+            margin-bottom: 8px;
+            color: #fff;
+            &:last-child {
+                margin-bottom: 0;
+            }
+            .title {
+                font-size: 18px;
+            }
+            .description {
+                font-weight: 300;
+            }
+            &:hover {
+                background: #2F353E;
+            }
+        }
+    }
+    .easy {
+        .title {
+            color: @challenge_easy;
+        }
+    }
+    .medium {
+        .title {
+            color: @challenge_medium;
+        }
+    }
+    .hard {
+        .title {
+            color: @challenge_hard;
+        }
+    }
+}

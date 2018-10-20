@@ -2,17 +2,15 @@
 {% block content %}
     <div id="create_question"></div>
     <script>
-        <!--
         ReactDOM.render(
             React.createElement(ComposeQuestion, {
                 mode: 'edit',
                 question_id: {{ question.question_id }},
-                title: {{ question.title|json_encode }},
-                question: {{ question.question }},
+                title: {{ question.title|json_encode|noscript }},
+                question: {{ question.question|noscript }},
                 tags: {{ question.tags|json_encode }}
             }),
             document.getElementById('create_question')
         );
-        -->
     </script>
 {% endblock %}

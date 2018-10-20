@@ -14,14 +14,12 @@
 
                 <div id="video_requests"></div>
                 <script>
-                    <!--
                     ReactDOM.render(
                         React.createElement(VideoRequests, {
-                            requests: {{ requests|json_encode }}
+                            requests: {{ requests|json_encode|noscript }}
                         }),
                         document.getElementById('video_requests')
                     );
-                    // -->
                 </script>
             </div>
         </div>
