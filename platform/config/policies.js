@@ -41,6 +41,18 @@ module.exports.policies = {
 
     'VotesController': {
         '*': ['common', 'logged_in']
+    },
+
+    'api/internal/ChatsController': {
+        '*': ['common', 'api_internal_auth']
+    },
+
+    'api/internal/PistonController': {
+        '*': ['common', 'api_internal_auth']
+    },
+
+    'api/v1/stats/DiscordController': {
+        '*': ['common']
     }
 
 };

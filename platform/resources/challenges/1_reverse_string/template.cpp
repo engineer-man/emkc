@@ -1,8 +1,7 @@
-#include <stdio.h>
-#include <string.h>
+#include <iostream>
 
 int main(int argc, char **argv) {
-    char value1[32]; strcpy(value1, argv[1]);
+    std::string value1 = argv[1];
 
     // write your solution here
 }

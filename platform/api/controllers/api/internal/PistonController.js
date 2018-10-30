@@ -3,22 +3,6 @@ const request = require('request-promise');
 module.exports = {
 
     execute(req, res) {
-        var authorization;
-
-        Object.keys(req.headers)
-            .for_each(key => {
-                if (key.to_lower_case() === 'authorization') authorization = req.headers[key];
-            });
-
-        if (authorization !== sails.config.piston.key) {
-            return res.send({
-                status: 'error',
-                payload: {
-                    message: 'Invalid authorization'
-                }
-            });
-        }
-
         const {language, source} = req.body;
 
         return request

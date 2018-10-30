@@ -1,3 +1,5 @@
+using System;
+
 class MainClass {
     static void Main(string[] args) {
         string value1 = args[0];

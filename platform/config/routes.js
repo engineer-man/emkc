@@ -46,7 +46,14 @@ module.exports.routes = {
     'GET /@:username': 'ProfilesController.view',
 
     // piston
-    'POST /api/v1/piston/execute': 'api/v1/PistonController.execute',
+    'POST /api/internal/piston/execute': 'api/internal/PistonController.execute',
+
+    // service api
+    'GET /api/internal/chats/last': 'api/internal/ChatsController.last',
+    'POST /api/internal/chats': 'api/internal/ChatsController.create',
+
+    // public api endpoints
+    'GET /api/v1/stats/discord/messages': 'api/v1/stats/DiscordController.messages',
 
     // catch all (404)
     'ALL r|^\/(?!css|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
