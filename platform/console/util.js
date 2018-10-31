@@ -25,7 +25,6 @@ var cron = {
                 };
             });
 
-        console.log(messages);
         request
             ({
                 method: 'post',
@@ -36,8 +35,7 @@ var cron = {
                 body: messages,
                 json: true,
                 simple: true
-            })
-            .then(console.log)
+            });
     }
 
 };
