@@ -94,6 +94,7 @@ class Challenge extends React.Component {
                                         {result.passed ? 'passed' : 'failed'}
                                     </span>
                                     <br/>
+                                    Supplied: {result.input}<br/>
                                     Expected: {result.expected}<br/>
                                     Actual:   <span dangerouslySetInnerHTML={{__html: result.actual.split('\n').map(a => a + '<br/>').join('')}}></span>
                                 </div>

@@ -17,7 +17,7 @@ module.exports = {
 
     execute(language, source, args) {
         if (!Array.is_array(args)) args = [args];
-
+console.log('here', args)
         return request
             ({
                 method: 'post',

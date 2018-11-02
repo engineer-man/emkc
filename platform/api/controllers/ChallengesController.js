@@ -136,11 +136,13 @@ module.exports = {
                 var results = [];
 
                 tests.for_each(test => {
+                    var test_idx = Math.floor(Math.random() * test.input.length);
+
                     results.push({
                         name: test.name,
-                        input: test.input,
-                        expected: test.output,
-                        result: piston.execute(language, source, test.input)
+                        input: test.input[test_idx].join(','),
+                        expected: test.output[test_idx],
+                        result: piston.execute(language, source, test.input[test_idx])
                     });
                 });
 
@@ -154,6 +156,7 @@ module.exports = {
                     return {
                         name: result.name,
                         passed: result.result === result.expected,
+                        input: result.input,
                         expected: result.expected,
                         actual: result.result
                     };

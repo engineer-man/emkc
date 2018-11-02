@@ -60,12 +60,15 @@ module.exports = {
                                 channel: message.channel,
                                 user: message.user.replace(/[^\x00-\x7F]/g, ''),
                                 message: message.message.replace(/[^\x00-\x7F]/g, ''),
-                                created_at: moment(message.timestamp).format(),
-                                hash: crypto
-                                    .createHash('sha1')
-                                    .update(JSON.stringify(message))
-                                    .digest('hex')
+                                created_at: moment(message.timestamp).format()
                             };
+
+                            var hash = crypto
+                                .createHash('sha1')
+                                .update(JSON.stringify(new_message))
+                                .digest('hex');
+
+                            new_message.hash = hash;
 
                             return db.discord_chat_messages
                                 .create(new_message, { transaction: t });
@@ -77,8 +80,6 @@ module.exports = {
                             if (err.original.code && err.original.code === 'ER_DUP_ENTRY') {
                                 ++duplicate;
                             } else {
-                                console.log('eee')
-                                console.log(err)
                                 ++failed;
                             }
                         });

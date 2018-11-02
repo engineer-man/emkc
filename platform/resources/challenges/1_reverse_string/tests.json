@@ -2,13 +2,33 @@
     {
         "official": false,
         "name": "Testing simple string",
-        "input": ["engineer man"],
-        "output": "nam reenigne"
+        "input": [
+            ["engineer man"],
+            ["cat"],
+            ["reverse me :)"],
+            ["1234567890"]
+        ],
+        "output": [
+            "nam reenigne",
+            "tac",
+            "): em esrever",
+            "0987654321"
+        ]
     },
     {
         "official": false,
         "name": "Testing complex string",
-        "input": ["a,masd#$)(&*09&M0d7fn0s8$*&4876%*&7dnosydhf)"],
-        "output": ")fhdysond7&*%6784&*$8s0nf7d0M&90*&()$#dsam,a"
+        "input": [
+            ["a,masd#$)(&*09&M0d7fn0s8$*&4876%*&7dnosydhf)"],
+            ["===================****#$#$"],
+            ["sd9f6 9s8d6f9 8 s"],
+            ["78^*&^((((((((((((((()))))))))))))))"]
+        ],
+        "output": [
+            ")fhdysond7&*%6784&*$8s0nf7d0M&90*&()$#dsam,a",
+            "$#$#****===================",
+            "s 8 9f6d8s9 6f9ds",
+            ")))))))))))))))(((((((((((((((^&*^87"
+        ]
     }
 ]
