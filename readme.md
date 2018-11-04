@@ -46,7 +46,7 @@ these files are not present, navigate to the project root and run `./emkc init`.
 
 #### Contribution Guidelines
 All contributions are reviewed to make sure they work, fit well with the design, and fit well with
-the established code. BDFL is [ebrian](https://github.com/ebrian) who will do a final review and merge
+the established code. BDFL is [tipztek](https://github.com/tipztek) who will do a final review and merge
 to master and deploy.
 - Review the issues/board on GitHub and grab whichever you feel most comfortable doing
 - Place code on a branch other than master/develop (Fork for non-org developers)
