@@ -1,7 +1,7 @@
 {% extends 'master.twig'%}
 {% block content %}
-    <div style="display: flex; padding: 20px 15px;">
-        <div style="flex: 1;">
+    <div class="em_main_board_outer">
+        <div class="left" style="flex: 1;">
             {% if req.glob.user_id %}
                 <a href="/questions/ask" class="btn btn-success btn-sm" style="float: right; color: #fff;">
                     Ask New Question
@@ -21,7 +21,7 @@
                 </script>
             </div>
         </div>
-        <div style="width: 320px; padding: 0 15px;">
+        <div class="right">
             <h5 class="f700" style="margin-bottom: 15px;">Top {{ users.length }} Contributors</h5>
             <div class="em_top_contributors">
                 {% for user in users %}

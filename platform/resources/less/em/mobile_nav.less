@@ -1,0 +1,43 @@
+.em_mobile_nav {
+    display: none;
+    &.open {
+        display: inline;
+    }
+    .backdrop {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: rgba(0,0,0,.6);
+        text-align: center;
+    }
+    .close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        cursor: pointer;
+        i {
+            color: #fff;
+            &:hover {
+                color: #eee;
+            }
+        }
+    }
+    .menu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 75%;
+        background: #282C34;
+        color: #fff;
+        text-align: left;
+        .contents {
+            padding: 16px;
+        }
+    }
+    @media(min-width: 701px) {
+        display: none !important;
+    }
+}

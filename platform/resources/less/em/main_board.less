@@ -1,3 +1,18 @@
+.em_main_board_outer {
+    display: flex;
+    padding: 20px 15px;
+    .left {
+        flex: 1;
+    }
+    .right {
+        width: 320px;
+        padding: 0 15px;
+        @media(max-width: 800px) {
+            display: none;
+        }
+    }
+}
+
 .em_main_board {
     .question {
         display: flex;

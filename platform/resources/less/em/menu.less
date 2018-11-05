@@ -2,6 +2,19 @@
     display: flex;
     padding: 10px;
     background: #36B96E;
+    .mobile_expand {
+        display: none;
+        i {
+            color: #fff;
+            font-size: 20px;
+            margin: 8px;
+            cursor: pointer;
+            margin-right: 14px;
+        }
+        @media(max-width: 700px) {
+            display: inline;
+        }
+    }
     .brand_icon {
         display: inline;
         img {
@@ -40,6 +53,9 @@
             &:hover {
                 background: #349A60;
             }
+        }
+        @media(max-width: 700px) {
+            display: none;
         }
     }
     .search {
@@ -92,6 +108,9 @@
         }
         i {
             margin-right: 3px;
+        }
+        @media(max-width: 700px) {
+            display: none;
         }
     }
     .login {

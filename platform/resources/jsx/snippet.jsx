@@ -2,7 +2,7 @@ class Snippet extends React.Component {
 
     componentDidMount() {
         monaco.editor.create(document.getElementById('editor'), {
-            theme: 'vs-dark',
+            theme: 'em',
             value: this.props.snip,
             language: this.props.language,
             automaticLayout: true,

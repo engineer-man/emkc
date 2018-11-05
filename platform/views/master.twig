@@ -56,6 +56,9 @@
     <body>
         <div class="em_container">
             <div class="em_menu">
+                <div class="mobile_expand" onclick="mobile_nav.open()">
+                    <i class="fa fa-bars"></i>
+                </div>
                 <div class="brand_icon">
                     <a href="/board">
                         <img src="/images/icon_64.png" />
@@ -105,6 +108,10 @@
 
             {% block content %}{% endblock %}
         </div>
+        <div id="mobile_nav"></div>
+        <script>
+            mobile_nav = ReactDOM.render(React.createElement(MobileNav), document.getElementById('mobile_nav'));
+        </script>
         {% if not req.glob.user_id %}
             <div id="login"></div>
             <script>

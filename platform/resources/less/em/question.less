@@ -1,3 +1,20 @@
+.em_question_outer {
+    padding: 30px 20px 15px 15px;
+    .right {
+        float: right;
+        width: 260px;
+        @media(max-width: 800px) {
+            display: none;
+        }
+    }
+    .left {
+        position: relative;
+        padding-right: 290px;
+        @media(max-width: 800px) {
+            padding-right: 0;
+        }
+    }
+}
 .em_question {
     .scores {
         position: absolute;

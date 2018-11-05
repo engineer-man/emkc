@@ -14,7 +14,7 @@ class CreateSnippet extends React.Component {
 
     componentDidMount() {
         this.state.editor = monaco.editor.create(document.getElementById('editor'), {
-            theme: 'vs-dark',
+            theme: 'em',
             language: this.state.language,
             automaticLayout: true,
             fontSize: 16

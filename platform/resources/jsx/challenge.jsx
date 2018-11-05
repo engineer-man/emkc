@@ -21,14 +21,11 @@ class Challenge extends React.Component {
             .setCompilerOptions({ noLib: true, allowNonTsExtensions: true });
 
         this.editor = monaco.editor.create(document.getElementById('editor'), {
-            theme: 'vs-dark',
+            theme: 'em',
             language: this.state.monaco_language,
             value: this.state.template,
             automaticLayout: true,
-            fontSize: 16,
-            minimap: {
-                enabled: false
-            }
+            fontSize: 16
         });
     }
 

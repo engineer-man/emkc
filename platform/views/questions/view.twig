@@ -2,8 +2,8 @@
 {% block title %}{{ question.title|e }} - Engineer Man{% endblock %}
 {% block desc %}{{ question.description|e }}{% endblock %}
 {% block content %}
-    <div style="padding: 30px 20px 15px 15px;">
-        <div style="float: right; width: 260px;">
+    <div class="em_question_outer">
+        <div class="right">
             <h5 class="f700">Metadata</h5>
             <p>
                 Views: 0<br />
@@ -11,8 +11,7 @@
                 Last Activity: 0
             </p>
         </div>
-        {{ question.question_plaintext }}
-        <div style="position: relative; padding-right: 290px;">
+        <div class="left">
             <div id="question"></div>
             <script>
                 ReactDOM.render(React.createElement(Question, {
