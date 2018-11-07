@@ -23,7 +23,7 @@ module.exports = {
                         ran: result.ran,
                         output: result.output
                             ? result.output
-                                .replace(/\\r/gi, '')
+                                .replace(/\r/gi, '')
                                 .slice(0, 1024)
                             : ''
                     }
