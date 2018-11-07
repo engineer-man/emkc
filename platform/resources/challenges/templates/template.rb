@@ -1,3 +1,3 @@
-value1 = ARGV[0]
+%%_INSERTVALUES_%%
 
 # write your solution here

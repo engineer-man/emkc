@@ -11,7 +11,7 @@ create table challenges (
     key points (points)
 )engine=innodb default charset=utf8;
 
-insert into challenges values (default, 1, 10, '1_reverse_string', 'Reverse a string', 'Just take any given string and output it in reverse, pretty easy, right?');
+insert into challenges values (1, 1, 10, '1_reverse_string', 'Reverse a string', 'Just take any given string and output it in reverse, pretty easy, right?');
 
 create table user_challenges (
     user_challenge_id int unsigned not null auto_increment,

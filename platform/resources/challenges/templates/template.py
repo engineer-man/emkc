@@ -1,5 +1,5 @@
 import sys
 
-value1 = sys.argv[1]
+%%_INSERTVALUES_%%
 
 # write your solution here

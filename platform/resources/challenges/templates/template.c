@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int main(int argc, char **argv) {
-    char value1[128]; strcpy(value1, argv[1]);
+    %%_INSERTVALUES_%%
 
     // write your solution here
 }

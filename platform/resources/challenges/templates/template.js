@@ -1,5 +1,3 @@
-<?php
-
-$value1 = $argv[1];
+%%_INSERTVALUES_%%
 
 // write your solution here

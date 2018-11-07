@@ -97,13 +97,97 @@ module.exports = {
                 }[language];
 
                 const abstract = await read_file(base_dir + folder + '/abstract.html');
-                const template = await read_file(base_dir + folder + '/template.' + ext);
+                const tests = JSON.parse(await read_file(base_dir + folder + '/tests.json'));
+                const base_template = await read_file(base_dir + '/templates/template.' + ext);
+
+                var template = '';
+
+                base_template
+                    .to_string()
+                    .split('\n')
+                    .for_each(line => {
+                        // non processed line, add directly
+                        if (!line.match(/^\s*%%/gi)) {
+                            template += line + '\n';
+                            return;
+                        }
+
+                        var input = tests[0].input[0];
+
+                        if (line.match(/^\s*%%_IMPORTS_%%/gi)) {
+                            var has_string = input.some(input => typeof input === 'string');
+                            var has_int = input.some(input => typeof input === 'number');
+
+                            switch (language) {
+                                case 'go':
+                                    if (has_int)
+                                        template += '    "strconv"\n';
+                                    break;
+                            }
+
+                            return;
+                        }
+
+                        input.for_each((input, i) => {
+                            ++i;
+                            switch (language) {
+                                case 'c':
+                                    if (typeof input === 'string')
+                                        template += `    char value${i}[128]; strcpy(value${i}, argv[${i}]);`;
+                                    if (typeof input === 'number')
+                                        template += `    int value${i} = atoi(argv[${i}]);`;
+                                    break;
+                                case 'cpp':
+                                    if (typeof input === 'string')
+                                        template += `    string value${i} = argv[${i}];`;
+                                    if (typeof input === 'number')
+                                        template += `    int value${i} = atoi(argv[${i}]);`;
+                                    break;
+                                case 'cs':
+                                    if (typeof input === 'string')
+                                        template += `        string value${i} = args[${i-1}];`
+                                    if (typeof input === 'number')
+                                        template += `        int value${i} = Convert.ToInt32(args[${i-1}]);`
+                                    break;
+                                case 'go':
+                                    if (typeof input === 'string')
+                                        template += `    var value${i} string = os.Args[${i}]`
+                                    if (typeof input === 'number')
+                                        template += `    var value${i} int = strconv.Atoi(os.Args[${i}])`
+                                    break;
+                                case 'java':
+                                    if (typeof input === 'string')
+                                        template += `        String value${i} = args[${i-1}];`
+                                    if (typeof input === 'number')
+                                        template += `        Integer value${i} = Integer.parseInt(args[${i-1}]);`
+                                    break;
+                                case 'js':
+                                    template += `const value${i} = process.argv[${i+1}];`
+                                    break;
+                                case 'php':
+                                    template += `$value${i} = $argv[${i}];`;
+                                    break;
+                                case 'python':
+                                    template += `value${i} = sys.argv[${i}]`;
+                                    break;
+                                case 'ruby':
+                                    template += `value${i} = ARGV[${i-1}]`;
+                                    break;
+                                case 'swift':
+                                    template += `var value${i} = CommandLine.arguments[${i}]`;
+                                    break;
+                            }
+                            template += '\n';
+                        });
+                    });
+
+                template = template.trim() + '\n';
 
                 return res.view({
                     challenge,
                     language,
                     abstract: abstract.to_string(),
-                    template: template.to_string(),
+                    template,
                     monaco_language: {
                         js: 'javascript',
                         python: 'python',

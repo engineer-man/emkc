@@ -1,7 +1,10 @@
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 int main(int argc, char **argv) {
-    std::string value1 = argv[1];
+    %%_INSERTVALUES_%%
 
     // write your solution here
 }

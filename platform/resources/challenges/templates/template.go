@@ -3,10 +3,11 @@ package main
 import (
     "os"
     "fmt"
+    %%_IMPORTS_%%
 )
 
 func main() {
-    value1 := os.Args[1]
+    %%_INSERTVALUES_%%
 
     // write your solution here
 }
