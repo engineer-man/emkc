@@ -21,9 +21,13 @@ module.exports = {
                     status: 'ok',
                     payload: {
                         ran: result.ran,
-                        output: result.output ? result.output.slice(0, 1024) : ''
+                        output: result.output
+                            ? result.output
+                                .replace(/\\r/gi, '')
+                                .slice(0, 1024)
+                            : ''
                     }
-                })
+                });
             })
             .catch(err => {
                 return res.send({
