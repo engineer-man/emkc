@@ -89,7 +89,7 @@ module.exports = {
 
         if (user) {
             query.where.user = {
-                $like: '%' + user + '%'
+                $like: '%' + user.replace(/[^\x00-\x7F]/g, '') + '%'
             };
         }
 
