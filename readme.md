@@ -6,10 +6,14 @@ if you plan to use this software.
 
 #### Docker Install Instructions
 - `git clone https://github.com/engineer-man/emkc`
+
 - `cd emkc`
+
 - `./emkc init`
+
 - `./emkc start`
 
+  You can access the local version of the site at http://127.0.0.1:2727/
 
 #### Manual Install Instructions
 - Install Node.js 8.x.x https://nodejs.org/en/download/
