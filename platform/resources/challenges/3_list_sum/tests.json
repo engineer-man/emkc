@@ -1,0 +1,26 @@
+[
+    {
+        "official": false,
+        "name": "Testing short lists",
+        "input": [
+            ["2,5,1"],
+            ["1,4,5"]
+        ],
+        "output": [
+            8,
+            10
+        ]
+    },
+    {
+        "official": false,
+        "name": "Testing long lists",
+        "input": [
+            ["3,9,10,5,2,7,9,2"],
+            ["3,32,10,5,2,2,9,12,19,49,6,145"]
+        ],
+        "output": [
+            420,
+            294
+        ]
+    }
+]
