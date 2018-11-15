@@ -293,7 +293,7 @@ module.exports = {
 
                 var passed = results.filter(r => !r.passed).length === 0;
 
-                if (passed) {
+                if (passed && req.glob.user_id) {
                     db.user_challenges
                         .find_or_create({
                             where: {
