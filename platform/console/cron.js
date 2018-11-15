@@ -27,14 +27,30 @@ var cron = {
                                         where: {
                                             user_id: user.user_id
                                         }
+                                    }),
+                                db.user_challenges
+                                    .find_all({
+                                        where: {
+                                            user_id: user.user_id
+                                        },
+                                        include: [
+                                            {
+                                                model: db.challenges,
+                                                as: 'challenge'
+                                            }
+                                        ]
+                                    })
+                                    .then(challenges => {
+                                        return challenges.reduce((i, c) => i + c.challenge.points, 0);
                                     })
                             ];
                         })
-                        .spread((score1, score2) => {
+                        .spread((score1, score2, score3) => {
                             score1 = score1 || 0;
                             score2 = score2 || 0;
+                            score3 = score3 || 0;
 
-                            user.score = score1 + score2;
+                            user.score = score1 + score2 + score3;
 
                             return user
                                 .save();

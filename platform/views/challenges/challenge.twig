@@ -20,6 +20,7 @@
     <script>
         ReactDOM.render(
             React.createElement(Challenge, {
+                solved: {{ solved }},
                 challenge: {{ challenge|json_encode }},
                 language: '{{ language }}',
                 monaco_language: '{{ monaco_language }}',

@@ -38,6 +38,8 @@ Object.keys(db).for_each(model_name => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.challenges.has_one(db.user_challenges, { as: 'solution', foreignKey: 'challenge_id' });
+
 db.comments.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 
 db.questions.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
@@ -50,6 +52,8 @@ db.question_tags.belongsTo(db.questions, { as: 'question', foreignKey: 'question
 db.question_tags.belongsTo(db.tags, { as: 'tag', foreignKey: 'tag_id' });
 
 db.tags.belongsToMany(db.questions, { as: 'questions', through: { model: db.question_tags }, foreignKey: 'tag_id' });
+
+db.user_challenges.belongs_to(db.challenges, { as: 'challenge', foreignKey: 'challenge_id' });
 
 db.video_requests.has_one(db.video_request_votes, { as: 'vote', foreignKey: 'video_request_id' });
 db.video_requests.has_many(db.video_request_votes, { as: 'votes', foreignKey: 'video_request_id' });

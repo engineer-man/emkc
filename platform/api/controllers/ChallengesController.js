@@ -12,6 +12,16 @@ module.exports = {
                             where: {
                                 difficulty: constant.challenges.difficulty.easy
                             },
+                            include: [
+                                {
+                                    required: false,
+                                    model: db.user_challenges,
+                                    as: 'solution',
+                                    where: {
+                                        user_id: req.glob.user_id
+                                    }
+                                }
+                            ],
                             order: [
                                 ['challenge_id']
                             ]
@@ -21,6 +31,16 @@ module.exports = {
                             where: {
                                 difficulty: constant.challenges.difficulty.medium
                             },
+                            include: [
+                                {
+                                    required: false,
+                                    model: db.user_challenges,
+                                    as: 'solution',
+                                    where: {
+                                        user_id: req.glob.user_id
+                                    }
+                                }
+                            ],
                             order: [
                                 ['challenge_id']
                             ]
@@ -30,6 +50,16 @@ module.exports = {
                             where: {
                                 difficulty: constant.challenges.difficulty.hard
                             },
+                            include: [
+                                {
+                                    required: false,
+                                    model: db.user_challenges,
+                                    as: 'solution',
+                                    where: {
+                                        user_id: req.glob.user_id
+                                    }
+                                }
+                            ],
                             order: [
                                 ['challenge_id']
                             ]
@@ -74,7 +104,18 @@ module.exports = {
             .find_one({
                 where: {
                     challenge_id
-                }
+                },
+                include: [
+                    {
+                        required: false,
+                        model: db.user_challenges,
+                        as: 'solution',
+                        where: {
+                            user_id: req.glob.user_id,
+                            language
+                        }
+                    }
+                ]
             })
             .then(async challenge => {
                 if (!challenge) return res.redirect('back');
@@ -184,6 +225,7 @@ module.exports = {
                 template = template.trim() + '\n';
 
                 return res.view({
+                    solved: !!challenge.solution,
                     challenge,
                     language,
                     abstract: abstract.to_string(),
@@ -245,6 +287,22 @@ module.exports = {
                         actual: result.result
                     };
                 });
+
+                var passed = results.filter(r => !r.passed).length === 0;
+
+                if (passed) {
+                    db.user_challenges
+                        .find_or_create({
+                            where: {
+                                user_id: req.glob.user_id,
+                                challenge_id: challenge.challenge_id,
+                                language
+                            },
+                            defaults: {
+                                solution: source
+                            }
+                        });
+                }
 
                 return res.send({
                     status: 'ok',

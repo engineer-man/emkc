@@ -24,6 +24,11 @@
                             <div class="description">
                                 {{ challenge.description }}
                             </div>
+                            {% if challenge.solution %}
+                                <span class="badge badge-success">Solved</span>
+                            {% else %}
+                                <span class="badge badge-danger">Unsolved</span>
+                            {% endif %}
                         </a>
                     {% endfor %}
                 </div>

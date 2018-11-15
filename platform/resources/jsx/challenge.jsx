@@ -4,6 +4,7 @@ class Challenge extends React.Component {
         super(props);
 
         this.state = {
+            solved: props.solved,
             challenge: props.challenge,
             language: props.language,
             template: props.template,
@@ -41,6 +42,14 @@ class Challenge extends React.Component {
                 source: this.editor.getValue()
             })
             .then(res => {
+                var solved = res.data.payload.results.filter(r => !r.passed).length === 0;
+
+                if (solved) {
+                    this.setState({
+                        solved: true
+                    });
+                }
+
                 this.setState({
                     executing: false,
                     test_results: res.data.payload.results
@@ -68,6 +77,9 @@ class Challenge extends React.Component {
                 <div class="instructions">
                     <h3 class={text_color}>{this.state.challenge.name}</h3>
                     <p>{this.state.challenge.description}</p>
+                    <span class={'badge badge-' + (this.state.solved ? 'success' : 'danger')}>
+                        {this.state.solved ? 'Solved' : 'Unsolved'}
+                    </span>
                     <hr />
                     <button
                         class="btn btn-primary btn-block"
