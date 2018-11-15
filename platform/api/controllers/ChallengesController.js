@@ -24,7 +24,8 @@ module.exports = {
                             ],
                             order: [
                                 ['challenge_id']
-                            ]
+                            ],
+                            group: 'challenge_id'
                         }),
                     db.challenges
                         .find_all({
@@ -43,7 +44,8 @@ module.exports = {
                             ],
                             order: [
                                 ['challenge_id']
-                            ]
+                            ],
+                            group: 'challenge_id'
                         }),
                     db.challenges
                         .find_all({
@@ -62,7 +64,8 @@ module.exports = {
                             ],
                             order: [
                                 ['challenge_id']
-                            ]
+                            ],
+                            group: 'challenge_id'
                         })
                 ];
             })
