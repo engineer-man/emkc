@@ -7,13 +7,17 @@
             <h4 class="f700">{{ user.display_name }}</h4>
             <h4 class="f900"><i class="fa fa-bolt"></i> {{ user.score }}</h4>
         </div>
-        <div style="padding: 0px 20px; display: flex; justify-content: flex-start;">
-            <h4>Activity Feed</h4>
+        <div style="padding: 0px 20px; display: flex; flex-direction: column; align-items: flex-start">
+            <h4>Activity Feed</h4>    
+    
+            <div id="user_questions"></div>
+            <script>
+                ReactDOM.render(React.createElement(UserQuestions, {
+                    questions: {{ user.questions|json_encode|noscript }},
+                    username: {{ user.display_name|json_encode|noscript }},
+                }), document.getElementById('user_questions'));
+            </script>
 
-            {% for question in user.questions %}
-                {{ question.title }}
-            {% endfor %}
-        
         </div>
     </div>
 {% endblock %}
