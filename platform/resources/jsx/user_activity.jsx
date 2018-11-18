@@ -1,4 +1,4 @@
-class UserQuestion extends React.Component {
+class UserActivity extends React.Component {
 
     render() {
         return (

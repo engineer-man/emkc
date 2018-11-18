@@ -9,14 +9,16 @@
         </div>
         <div style="padding: 0px 20px; display: flex; flex-direction: column; align-items: flex-start">
             <h4>Activity Feed</h4>    
-    
-            <div id="user_questions"></div>
-            <script>
-                ReactDOM.render(React.createElement(UserQuestions, {
-                    questions: {{ user.questions|json_encode|noscript }},
-                    username: {{ user.display_name|json_encode|noscript }},
-                }), document.getElementById('user_questions'));
-            </script>
+            
+            <div class="em_user_activities">
+                <div id="user_activities"></div>
+                <script>
+                    ReactDOM.render(React.createElement(UserActivities, {
+                        questions: {{ user.questions|json_encode|noscript }},
+                        username: {{ user.display_name|json_encode|noscript }},
+                    }), document.getElementById('user_activities'));
+                </script>
+            </div>
 
         </div>
     </div>
