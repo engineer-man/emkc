@@ -1,0 +1,31 @@
+<div class="section">
+    <h4 class="f300">Instructions</h4>
+
+    Your input variable will contain a string of invalid JSON. However, each invalid JSON string received can be fixed
+    by making one or more single character changes. Only three possible things may be wrong with the JSON string:
+    1) missing leading or trailing brace, 2) unquoted JSON string value, 3) missing comma between properties.
+</div>
+
+<div class="section">
+    <h4 class="f300">Inputs</h4>
+
+    <div class="input">
+        <span class="badge badge-info">value1</span><br />
+        A string of invalid JSON
+    </div>
+</div>
+
+<div class="section">
+    <h4 class="f300">Sample Test Cases</h4>
+
+    <div class="test_case">
+        <span class="f700">Single Problem</span>
+        <div>Input:  {"name":"em"</div>
+        <div>Output: {"name":"em"}</div>
+    </div>
+    <div class="test_case">
+        <span class="f700">Multiple Problems</span>
+        <div>Input:  "name":"em</div>
+        <div>Output: {"name":"em"}</div>
+    </div>
+</div>
