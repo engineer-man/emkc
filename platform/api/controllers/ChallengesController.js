@@ -91,7 +91,10 @@ module.exports = {
                         required: false,
                         user_id: req.glob.user_id,
                         model: db.user_challenges,
-                        as: 'solutions'
+                        as: 'solutions',
+                        where: {
+                            user_id: req.glob.user_id
+                        }
                     }
                 ]
             })
