@@ -2,8 +2,24 @@
 {% block title %}{{ user.display_name|e }} - Engineer Man{% endblock %}
 {% block content %}
     <div style="padding: 30px 20px 15px 15px; text-align: center;">
-        <img src="{{ sails.glob.constant.gcloud_base_url }}{{ user.avatar_url }}" style="width: 128px; height: auto;" />
-        <h4 class="f700">{{ user.display_name }}</h4>
-        <h4 class="f900"><i class="fa fa-bolt"></i> {{ user.score }}</h4>
+        <div style="padding: 0px 50px; float: left; border-right: solid white 2px">
+            <img src="{{ sails.glob.constant.gcloud_base_url }}{{ user.avatar_url }}" style="width: 128px; height: auto;" />
+            <h4 class="f700">{{ user.display_name }}</h4>
+            <h4 class="f900"><i class="fa fa-bolt"></i> {{ user.score }}</h4>
+        </div>
+        <div style="padding: 0px 20px; display: flex; flex-direction: column; align-items: flex-start">
+            <h4 style="font-weight: bold; padding-left:15px">Activity Feed</h4>    
+            
+            <div class="em_user_activities">
+                <div id="user_activities"></div>
+                <script>
+                    ReactDOM.render(React.createElement(UserActivities, {
+                        questions: {{ user.questions|json_encode|noscript }},
+                        username: {{ user.display_name|json_encode|noscript }},
+                    }), document.getElementById('user_activities'));
+                </script>
+            </div>
+
+        </div>
     </div>
 {% endblock %}
