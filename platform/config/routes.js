@@ -4,7 +4,6 @@ module.exports.routes = {
     'GET /logout': 'HomeController.logout',
     'GET /auth/discord': 'AuthController.discord',
     'GET /auth/discord_cb': 'AuthController.discord_cb',
-    'GET /auth/discord_cb': 'AuthController.discord_cb',
     'GET /board': 'BoardController.home',
 
     'GET /community': 'CommunityController.home',

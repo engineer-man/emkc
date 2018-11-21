@@ -36,13 +36,37 @@
             <div class="col-12 col-sm-4 medium">
                 <h5>Medium (+30 pts)</h5>
                 <div class="challenge_list">
-                    Coming soon...
+                    {% for challenge in medium %}
+                        <a href="/challenges/choose_language/{{ challenge.challenge_id }}" class="challenge">
+                            <div class="title">{{ challenge.name }}</div>
+                            <div class="description">
+                                {{ challenge.description }}
+                            </div>
+                            {% if challenge.solution %}
+                                <span class="badge badge-success">Solved</span>
+                            {% else %}
+                                <span class="badge badge-danger">Unsolved</span>
+                            {% endif %}
+                        </a>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-12 col-sm-4 hard">
                 <h5>Hard (+50 pts)</h5>
                 <div class="challenge_list">
-                    Coming soon...
+                    {% for challenge in hard %}
+                        <a href="/challenges/choose_language/{{ challenge.challenge_id }}" class="challenge">
+                            <div class="title">{{ challenge.name }}</div>
+                            <div class="description">
+                                {{ challenge.description }}
+                            </div>
+                            {% if challenge.solution %}
+                                <span class="badge badge-success">Solved</span>
+                            {% else %}
+                                <span class="badge badge-danger">Unsolved</span>
+                            {% endif %}
+                        </a>
+                    {% endfor %}
                 </div>
             </div>
         </div>

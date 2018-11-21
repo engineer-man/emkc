@@ -1,0 +1,30 @@
+[
+    {
+        "official": false,
+        "name": "Single Problem",
+        "input": [
+            ["{\"name\":\"em\""],
+            ["\"name\":\"somebody\"}"],
+            ["{\"doggo\":\"chase}"],
+            ["{\"name\":\"em\" \"doggo\":\"chase\"}"]
+        ],
+        "output": [
+            "{\"name\":\"em\"}",
+            "{\"name\":\"somebody\"}",
+            "{\"doggo\":\"chase\"}",
+            "{\"name\":\"em\",\"doggo\":\"chase\"}"
+        ]
+    },
+    {
+        "official": false,
+        "name": "Multiple Problems",
+        "input": [
+            ["\"name\":\"em"],
+            ["\"doggo\":chase\"\"name\":\"em"]
+        ],
+        "output": [
+            "{\"name\":\"em\"}",
+            "{\"doggo\":\"chase\",\"name\":\"em\"}"
+        ]
+    }
+]
