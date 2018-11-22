@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             email: DataTypes.STRING,
             password: DataTypes.STRING,
             discord_api: DataTypes.STRING,
+            discord_rank: DataTypes.INTEGER,
             avatar_url: DataTypes.STRING,
             score: DataTypes.INTEGER,
             created_at: DataTypes.DATE

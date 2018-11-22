@@ -45,12 +45,56 @@ var cron = {
                                     })
                             ];
                         })
-                        .spread((score1, score2, score3) => {
+                        .spread(async (score1, score2, score3) => {
                             score1 = score1 || 0;
                             score2 = score2 || 0;
                             score3 = score3 || 0;
 
                             user.score = score1 + score2 + score3;
+
+                            // test for and assign novice role
+                            if (user.discord_api && user.discord_rank === null && user.score >= 40) {
+                                try {
+                                    await discord.api('put',
+                                        '/guilds/473161189120147456'+
+                                        '/members/'+user.discord_api+
+                                        '/roles/'+constant.roles.emkc_novice);
+                                    user.discord_rank = 1;
+                                } catch (e) {console.log(e)}
+                            }
+
+                            // test for and assign hero role
+                            if (user.discord_api && user.discord_rank === 1 && user.score >= 300) {
+                                try {
+                                    await discord.api('put',
+                                        '/guilds/473161189120147456'+
+                                        '/members/'+user.discord_api+
+                                        '/roles/'+constant.roles.emkc_hero);
+                                    user.discord_rank = 2;
+                                } catch (e) {}
+                            }
+
+                            // test for and assign master role
+                            if (user.discord_api && user.discord_rank === 2 && user.score >= 2000) {
+                                try {
+                                    await discord.api('put',
+                                        '/guilds/473161189120147456'+
+                                        '/members/'+user.discord_api+
+                                        '/roles/'+constant.roles.emkc_master);
+                                    user.discord_rank = 3;
+                                } catch (e) {}
+                            }
+
+                            // test for and assign legend role
+                            if (user.discord_api && user.discord_rank === 3 && user.score >= 10000) {
+                                try {
+                                    await discord.api('put',
+                                        '/guilds/473161189120147456'+
+                                        '/members/'+user.discord_api+
+                                        '/roles/'+constant.roles.emkc_legend);
+                                    user.discord_rank = 4;
+                                } catch (e) {}
+                            }
 
                             return user
                                 .save();

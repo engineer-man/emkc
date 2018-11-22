@@ -12,6 +12,7 @@ sails = {
 };
 
 constant = require('../api/services/constant.js');
+discord = require('../api/services/discord.js');
 dispenserd = require('../api/services/dispenserd.js');
 elasticsearch = require('../api/services/elasticsearch.js');
 twig = require('../api/services/twig.js');

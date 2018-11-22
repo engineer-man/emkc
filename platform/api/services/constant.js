@@ -23,6 +23,15 @@ var constant = {
         }
     },
 
+    roles: {
+        emkc_member: '486562889046556682',
+        emkc_novice: '489975146782785536',
+        emkc_hero: '489975618016903180',
+        emkc_master: '489975728822288384',
+        emkc_legend: '490314890779688963',
+        emkc_winner: '490324386675425281'
+    },
+
     devprod() {
         if (this.is_prod()) {
             this.gcloud_bucket = 'engineerman';
