@@ -1,7 +1,7 @@
 {% extends 'master.twig'%}
 {% block title %}{{ user.display_name|e }} - Engineer Man{% endblock %}
 {% block content %}
-    <div style="padding: 30px 20px 15px 15px; text-align: center; display: flex; justify-content: center; ">
+    <div style="padding: 30px 10px 0px 10px; text-align: center; display: flex; justify-content: center; ">
         <div class="col-12 col-md-3" style="padding: 0px 50px; float: left;">
             <img src="{{ sails.glob.constant.gcloud_base_url }}{{ user.avatar_url }}" style="width: 128px; height: auto;" />
             <h4 class="f700">{{ user.display_name }}</h4>
