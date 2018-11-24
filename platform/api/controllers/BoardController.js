@@ -50,6 +50,7 @@ module.exports = {
                             time_ago: q.time_ago,
                             user: {
                                 display_name: q.user.display_name,
+                                username: q.user.username,
                                 avatar_url: constant.gcloud_base_url + q.user.avatar_url,
                                 score: q.user.score
                             },
