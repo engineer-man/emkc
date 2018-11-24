@@ -1,5 +1,14 @@
 {% extends 'master.twig'%}
 {% block content %}
+    {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.easy %}
+        {% set diff = 'easy' %}
+    {% endif %}
+    {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.medium %}
+        {% set diff = 'medium' %}
+    {% endif %}
+    {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.hard %}
+        {% set diff = 'hard' %}
+    {% endif %}
     <div class="em_common_content em_language_choice">
         <div class="row marginbottom40">
             <div class="col-12 center">
@@ -21,60 +30,70 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/js.svg" class="img-fluid" />
                 </a>
                 <h4>JavaScript</h4>
+                <span class="badge badge-{{ ('js' in solved) ? diff : 'light' }}">{{ ('js' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
                 <a href="/challenges/{{ challenge.challenge_id }}/python">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/python.svg" class="img-fluid" />
                 </a>
                 <h4>Python</h4>
+                <span class="badge badge-{{ ('python' in solved) ? diff : 'light' }}">{{ ('python' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
                 <a href="/challenges/{{ challenge.challenge_id }}/go">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/go.svg" class="img-fluid" />
                 </a>
                 <h4>Go</h4>
+                <span class="badge badge-{{ ('go' in solved) ? diff : 'light' }}">{{ ('go' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
                 <a href="/challenges/{{ challenge.challenge_id }}/c">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/c.svg" class="img-fluid" />
                 </a>
                 <h4>C</h4>
+                <span class="badge badge-{{ ('c' in solved) ? diff : 'light' }}">{{ ('c' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
                 <a href="/challenges/{{ challenge.challenge_id }}/ruby">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/ruby.svg" class="img-fluid" />
                 </a>
                 <h4>Ruby</h4>
+                <span class="badge badge-{{ ('ruby' in solved) ? diff : 'light' }}">{{ ('ruby' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2 offset-md-1">
                 <a href="/challenges/{{ challenge.challenge_id }}/cpp">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/cpp.svg" class="img-fluid" />
                 </a>
                 <h4>C++</h4>
+                <span class="badge badge-{{ ('cpp' in solved) ? diff : 'light' }}">{{ ('cpp' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
                 <a href="/challenges/{{ challenge.challenge_id }}/cs">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/cs.svg" class="img-fluid" />
                 </a>
                 <h4>C#</h4>
+                <span class="badge badge-{{ ('cs' in solved) ? diff : 'light' }}">{{ ('cs' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
                 <a href="/challenges/{{ challenge.challenge_id }}/php">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/php.svg" class="img-fluid" />
                 </a>
                 <h4>PHP</h4>
+                <span class="badge badge-{{ ('php' in solved) ? diff : 'light' }}">{{ ('php' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2 offset-sm-3 offset-md-0">
                 <a href="/challenges/{{ challenge.challenge_id }}/swift">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/swift.svg" class="img-fluid" />
                 </a>
                 <h4>Swift</h4>
+                <span class="badge badge-{{ ('swift' in solved) ? diff : 'light' }}">{{ ('swift' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2 offset-4 offset-sm-0">
                 <a href="/challenges/{{ challenge.challenge_id }}/java">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/java.svg" class="img-fluid" />
                 </a>
                 <h4>Java</h4>
+                <span class="badge badge-{{ ('java' in solved) ? diff : 'light' }}">{{ ('java' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
         </div>
     </div>

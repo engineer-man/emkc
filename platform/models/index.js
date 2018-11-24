@@ -39,6 +39,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.challenges.has_one(db.user_challenges, { as: 'solution', foreignKey: 'challenge_id' });
+db.challenges.has_many(db.user_challenges, { as: 'solutions', foreignKey: 'challenge_id' });
 
 db.comments.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 

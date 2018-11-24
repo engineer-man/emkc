@@ -85,13 +85,25 @@ module.exports = {
             .find_one({
                 where: {
                     challenge_id
-                }
+                },
+                include: [
+                    {
+                        required: false,
+                        user_id: req.glob.user_id,
+                        model: db.user_challenges,
+                        as: 'solutions',
+                        where: {
+                            user_id: req.glob.user_id
+                        }
+                    }
+                ]
             })
             .then(challenge => {
                 if (!challenge) return res.redirect('back');
 
                 return res.view({
-                    challenge
+                    challenge,
+                    solved: challenge.solutions.map(s => s.language)
                 });
             });
     },
@@ -304,6 +316,12 @@ module.exports = {
                             defaults: {
                                 solution: source
                             }
+                        })
+                        .spread((challenge, created) => {
+                            if (created) return null;
+
+                            challenge.solution = source;
+                            challenge.save();
                         });
                 }
 

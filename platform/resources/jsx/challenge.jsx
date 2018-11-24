@@ -7,7 +7,7 @@ class Challenge extends React.Component {
             solved: props.solved,
             challenge: props.challenge,
             language: props.language,
-            template: props.template,
+            template: props.challenge.solution && props.challenge.solution.solution || props.template,
             abstract: props.abstract,
             monaco_language: props.monaco_language,
             executing: false,
@@ -77,7 +77,7 @@ class Challenge extends React.Component {
                 <div class="instructions">
                     <h3 class={text_color}>{this.state.challenge.name}</h3>
                     <p>{this.state.challenge.description}</p>
-                    <span class={'badge badge-' + (this.state.solved ? 'success' : 'danger')}>
+                    <span class={'badge badge-' + (this.state.solved ? text_color : 'light')}>
                         {this.state.solved ? 'Solved' : 'Unsolved'}
                     </span>
                     <hr />
