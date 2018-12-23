@@ -14,6 +14,7 @@
                 <div id="user_activities"></div>
                 <script>
                     ReactDOM.render(React.createElement(UserActivities, {
+                        comments: {{ user.comments|json_encode|noscript }},
                         questions: {{ user.questions|json_encode|noscript }},
                         username: {{ user.display_name|json_encode|noscript }},
                     }), document.getElementById('user_activities'));

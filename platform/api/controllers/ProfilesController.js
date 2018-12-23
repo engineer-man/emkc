@@ -12,6 +12,10 @@ module.exports = {
                     {
                         model: db.questions,
                         as: 'questions'
+                    },
+                    {
+                        model: db.comments,
+                        as: 'comments'
                     }
                 ]
             })
