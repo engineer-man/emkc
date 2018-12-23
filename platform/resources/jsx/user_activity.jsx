@@ -1,7 +1,7 @@
 class UserQuestion extends React.Component {
 
     render() {
-        console.log(this.props);
+        console.log(this.props.question);
         return (
             <a href={this.props.question.url} class="user_question">
                 <div class="user_question_box">
