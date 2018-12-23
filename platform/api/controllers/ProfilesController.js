@@ -28,6 +28,12 @@ module.exports = {
                             where: {
                                 user_id: req.glob.user_id
                             },
+                            include: [
+                                {
+                                    model: db.questions,
+                                    as: 'question'
+                                }
+                            ],
                             order: [
                                 ['created_at', 'desc']
                             ],
