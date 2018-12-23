@@ -42,7 +42,7 @@ db.challenges.has_one(db.user_challenges, { as: 'solution', foreignKey: 'challen
 db.challenges.has_many(db.user_challenges, { as: 'solutions', foreignKey: 'challenge_id' });
 
 db.comments.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
-db.comments.has_one(db.questions, { as: 'question', foreignKey: 'question_id' });
+db.comments.belongs_to(db.questions, { as: 'question', foreignKey: 'question_id' });
 
 db.questions.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 db.questions.has_one(db.question_votes, { as: 'vote', foreignKey: 'question_id' });
