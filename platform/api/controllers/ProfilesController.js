@@ -3,27 +3,37 @@ module.exports = {
     view(req, res) {
         const username = req.params.username;
 
-        return db.users
-            .find_one({
-                where: {
-                    username
-                },
-                include: [
-                    {
-                        model: db.questions,
-                        as: 'questions'
-                    },
-                    {
-                        model: db.comments,
-                        as: 'comments'
-                    }
-                ]
-            })
-            .then(user => {
-                if (!user) throw null;
+        return Promise.resolve(null)
+            .then(() => {
 
+                return [
+                    db.users
+                        .find_one({
+                            where: {
+                                username
+                            }
+                        }),
+                    db.questions
+                        .find_all({
+                            where: {
+                                user_id: req.glob.user_id
+                            },
+                            limit: 5
+                        }),
+                    db.comments
+                        .find_all({
+                            where: {
+                                user_id: req.glob.user_id
+                            },
+                            limit: 5
+                        })
+                    ];
+            })
+            .spread((user, questions, comments) => {
                 return res.view({
-                    user
+                    user,
+                    questions,
+                    comments
                 });
             })
             .catch(err => {
