@@ -18,6 +18,9 @@ module.exports = {
                             where: {
                                 user_id: req.glob.user_id
                             },
+                            order: [
+                                ['created_at', 'desc']
+                            ],
                             limit: 5
                         }),
                     db.comments
@@ -25,6 +28,9 @@ module.exports = {
                             where: {
                                 user_id: req.glob.user_id
                             },
+                            order: [
+                                ['created_at', 'desc']
+                            ],
                             limit: 5
                         })
                     ];
