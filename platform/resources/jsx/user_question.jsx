@@ -12,11 +12,11 @@ class UserQuestion extends React.Component {
                     </div>
                     <div class="user_question_row">
                         <span>Views:</span>
-                        <span class="user_activity_view">{this.props.question.views}</span>
+                        <span class="user_question_view">{this.props.question.views}</span>
                     </div>
                     <div class="user_question_row">
                         <span>Votes:</span>
-                        <span class="user_activity_score">{this.props.question.score}</span>
+                        <span class="user_question_score">{this.props.question.score}</span>
                     </div>
                     <div class="user_question_row">
                         Posted:
