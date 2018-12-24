@@ -25,7 +25,8 @@
             <div id="user_comments"></div>
                 <script>
                     ReactDOM.render(React.createElement(UserComments, {
-                        comments: {{ comments|json_encode|noscript }}
+                        comments: {{ comments|json_encode|noscript }},
+                        username: {{ user.username|json_encode|noscript }}
                     }), document.getElementById('user_comments'));
                 </script>
             </div>
