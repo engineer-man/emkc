@@ -1,11 +1,10 @@
 class UserQuestion extends React.Component {
 
     render() {
-        console.log(this.props.question);
         return (
             <a href={this.props.question.url} class="user_question">
                 <div class="user_question_box">
-                    <h4 class="title">{this.props.question.title}</h4>
+                    <h4>{this.props.question.title}</h4>
                     <div class="user_question_row">
                         <span>Reply Count:</span>
                         <span class="user_question_comments">{this.props.question.comments}</span>
