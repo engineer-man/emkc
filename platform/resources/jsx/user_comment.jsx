@@ -17,7 +17,7 @@ class UserComment extends React.Component {
             <a href={this.props.comment.question.url} class="user_comment">
                 <div class="user_comment_box">
                     <div class="user_question_title">
-                        <span>{ this.props.username } commented on {this.props.comment.question.title}</span>
+                        <span><span class="user_comment_username">{ this.props.username }</span> commented on <span class="user_comment_username_title">{this.props.comment.question.title}</span></span>
                     </div>
                     <div>
                         <div
