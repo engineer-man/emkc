@@ -1,0 +1,20 @@
+[
+    {
+        "official": false,
+        "name": "Permutation",
+        "input": [
+            ["engineer,gireneen"],
+            ["cat,act"],
+            ["14467,42641"],
+            ["qwerty,qeerty"],
+            ["e1m2k3c4,e2k3m14c"]
+        ],
+        "output": [
+            "Yes",
+            "Yes",
+            "No",
+            "No",
+            "Yes"
+        ]
+    }
+]
