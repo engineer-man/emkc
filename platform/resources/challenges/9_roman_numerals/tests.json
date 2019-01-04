@@ -1,0 +1,34 @@
+[
+    {
+        "official": false,
+        "name": "Testing small Roman Numerals",
+        "input": [
+            ["VI"],
+            ["XII"],
+            ["III"],
+            ["I"]
+        ],
+        "output": [
+            "6",
+            "12",
+            "3",
+            "1"
+        ]
+    },
+    {
+        "official": false,
+        "name": "Testing large Roman Numerals",
+        "input": [
+            ["CDVII"],
+            ["CMXCVII"],
+            ["DCXLIII"],
+            ["DCCCLXXVI"]
+        ],
+        "output": [
+            "407",
+            "997",
+            "643",
+            "876"
+        ]
+    }
+]
