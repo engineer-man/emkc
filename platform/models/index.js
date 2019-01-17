@@ -42,11 +42,13 @@ db.challenges.has_one(db.user_challenges, { as: 'solution', foreignKey: 'challen
 db.challenges.has_many(db.user_challenges, { as: 'solutions', foreignKey: 'challenge_id' });
 
 db.comments.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
+db.comments.belongs_to(db.questions, { as: 'question', foreignKey: 'question_id' });
 
 db.questions.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 db.questions.has_one(db.question_votes, { as: 'vote', foreignKey: 'question_id' });
 db.questions.has_many(db.question_votes, { as: 'votes', foreignKey: 'question_id' });
 db.questions.has_many(db.question_tags, { as: 'question_tags', foreignKey: 'question_id' });
+db.questions.has_many(db.comments, { as: 'comment', foreignKey: 'comment_id' });
 db.questions.belongsToMany(db.tags, { as: 'tags', through: { model: db.question_tags }, foreignKey: 'question_id' });
 
 db.question_tags.belongsTo(db.questions, { as: 'question', foreignKey: 'question_id' });
@@ -59,6 +61,5 @@ db.user_challenges.belongs_to(db.challenges, { as: 'challenge', foreignKey: 'cha
 db.video_requests.has_one(db.video_request_votes, { as: 'vote', foreignKey: 'video_request_id' });
 db.video_requests.has_many(db.video_request_votes, { as: 'votes', foreignKey: 'video_request_id' });
 
-db.users.has_many(db.questions, { as: 'questions', foreignKey: 'user_id' });
 
 module.exports = db;

@@ -9,14 +9,25 @@
         </div>
         <div class="col-12 col-md-9" style="padding: 0px 20px; display: flex; flex-direction: column; align-items: flex-start">
             <h4 style="font-weight: bold; padding-left:15px">Activity Feed</h4>    
+            <h5 style="padding-left:15px">Questions</h5>
             
-            <div class="em_user_activities col-12 col-md-12">
-                <div id="user_activities"></div>
+            <div class="em_user_questions col-12 col-md-12">
+            <div id="user_questions"></div>
                 <script>
-                    ReactDOM.render(React.createElement(UserActivities, {
-                        questions: {{ user.questions|json_encode|noscript }},
-                        username: {{ user.display_name|json_encode|noscript }},
-                    }), document.getElementById('user_activities'));
+                    ReactDOM.render(React.createElement(UserQuestions, {
+                        questions: {{ questions|json_encode|noscript }}
+                    }), document.getElementById('user_questions'));
+                </script>
+            </div>
+
+            <h5 style="padding-left:15px">Comments</h5>
+            <div class="em_user_comments col-12 col-md-12">
+            <div id="user_comments"></div>
+                <script>
+                    ReactDOM.render(React.createElement(UserComments, {
+                        comments: {{ comments|json_encode|noscript }},
+                        username: {{ user.username|json_encode|noscript }}
+                    }), document.getElementById('user_comments'));
                 </script>
             </div>
 
