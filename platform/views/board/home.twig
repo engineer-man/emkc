@@ -10,7 +10,20 @@
             <div class="col-12">
                 <div>
                     {% for user in users %}
-                        <a href="/@{{ user.username }}" class="contributor" style="position: relative; display: inline-block; width: 250px; height: 58px; background: #21252B;">
+                        {% set color = '#000' %}
+                        {% if user.score >= 40 %}
+                            {% set color = '#79ACBF' %}
+                        {% endif %}
+                        {% if user.score >= 300 %}
+                            {% set color = '#7D9DC5' %}
+                        {% endif %}
+                        {% if user.score >= 1000 %}
+                            {% set color = '#ACB2E4' %}
+                        {% endif %}
+                        {% if user.score >= 5000 %}
+                            {% set color = '#D2ACE4' %}
+                        {% endif %}
+                        <a href="/@{{ user.username }}" class="contributor" style="position: relative; display: inline-block; width: 250px; height: 58px; background: #21252B; border-bottom: {{ color }} 4px solid;">
                             <img src="{{ req.glob.constant.gcloud_base_url ~ user.avatar_url }}" style="position: absolute; top: 0; left: 0; width: 58px; height: 58px;" />
                             <div style="position: absolute; top: 2px; left: 68px; right: 0;">
                                 {{ user.display_name}}

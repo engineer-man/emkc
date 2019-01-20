@@ -79,7 +79,7 @@ var cron = {
                             }
 
                             // test for and assign master role
-                            if (user.discord_api && user.discord_rank === 2 && user.score >= 2000) {
+                            if (user.discord_api && user.discord_rank === 2 && user.score >= 1000) {
                                 try {
                                     await discord.api('put',
                                         '/guilds/473161189120147456'+
@@ -91,7 +91,7 @@ var cron = {
                             }
 
                             // test for and assign legend role
-                            if (user.discord_api && user.discord_rank === 3 && user.score >= 10000) {
+                            if (user.discord_api && user.discord_rank === 3 && user.score >= 5000) {
                                 try {
                                     await discord.api('put',
                                         '/guilds/473161189120147456'+
