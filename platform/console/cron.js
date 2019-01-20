@@ -103,8 +103,6 @@ var cron = {
                             }
 
                             await user.save();
-
-                            await timeout(1000);
                         });
                 });
 
