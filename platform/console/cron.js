@@ -62,8 +62,8 @@ var cron = {
                                         '/members/'+user.discord_api+
                                         '/roles/'+constant.roles.emkc_novice);
                                     user.discord_rank = 1;
-                                    await timeout(1000);
-                                } catch (e) {console.log(e)}
+                                } catch (e) {}
+                                await timeout(1000);
                             }
 
                             // test for and assign hero role
@@ -74,8 +74,8 @@ var cron = {
                                         '/members/'+user.discord_api+
                                         '/roles/'+constant.roles.emkc_hero);
                                     user.discord_rank = 2;
-                                    await timeout(1000);
                                 } catch (e) {}
+                                await timeout(1000);
                             }
 
                             // test for and assign master role
@@ -86,8 +86,8 @@ var cron = {
                                         '/members/'+user.discord_api+
                                         '/roles/'+constant.roles.emkc_master);
                                     user.discord_rank = 3;
-                                    await timeout(1000);
                                 } catch (e) {}
+                                await timeout(1000);
                             }
 
                             // test for and assign legend role
@@ -98,8 +98,8 @@ var cron = {
                                         '/members/'+user.discord_api+
                                         '/roles/'+constant.roles.emkc_legend);
                                     user.discord_rank = 4;
-                                    await timeout(1000);
                                 } catch (e) {}
+                                await timeout(1000);
                             }
 
                             await user.save();
