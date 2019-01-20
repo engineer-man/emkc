@@ -15,7 +15,7 @@ module.exports = {
                                 ['score', 'desc'],
                                 ['user_id']
                             ],
-                            limit: 25
+                            limit: 100
                         })
                 ];
             })
