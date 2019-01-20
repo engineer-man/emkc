@@ -23,6 +23,19 @@ var constant = {
         }
     },
 
+    channels: {
+        python: '483980259239264256', // python
+        js: '483977935225749504', // js-ts-node
+        go: '484027805605298197', // other-languages
+        c: '483978202092535809', // c-cpp-csharp
+        ruby: '484027805605298197', // other-languages
+        cpp: '483978202092535809', // c-cpp-csharp
+        cs: '483978202092535809', // c-cpp-csharp
+        php: '484027805605298197', // other-languages
+        swift: '484027805605298197', // other-languages
+        java: '483979599131312128' // java-kotlin
+    },
+
     roles: {
         emkc_member: '486562889046556682',
         emkc_novice: '489975146782785536',

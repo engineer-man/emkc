@@ -317,11 +317,33 @@ module.exports = {
                                 solution: source
                             }
                         })
-                        .spread((challenge, created) => {
+                        .spread((user_challenge, created) => {
                             if (created) return null;
 
-                            challenge.solution = source;
-                            challenge.save();
+                            discord
+                                .api('post', `/channels/${constant.channels[language]}/messages`, {
+                                    embed: {
+                                        title: 'Attempt Challenge',
+                                        type: 'rich',
+                                        color: {
+                                            1: 0x84e47f,
+                                            2: 0xe4e37f,
+                                            3: 0xe47f8d
+                                        }[challenge.difficulty],
+                                        url: `${constant.base_url}/challenges/${challenge.challenge_id}/${language}`,
+                                        author: {
+                                            name: `${user.display_name} completed a challenge "${challenge.name}"`
+                                        },
+                                        footer: {
+                                            icon_url: constant.gcloud_base_url + user.avatar_url,
+                                            text: 'completed by ' + user.display_name
+                                        }
+                                    }
+                                })
+                                .catch(err => {});
+
+                            user_challenge.solution = source;
+                            user_challenge.save();
                         });
                 }
 

@@ -7,6 +7,8 @@ const request = require('request-promise');
 var cron = {
 
     calculate_score() {
+        const timeout = ms => new Promise(res => setTimeout(res, ms));
+
         return db.users
             .find_all()
             .then(users => {
@@ -60,6 +62,7 @@ var cron = {
                                         '/members/'+user.discord_api+
                                         '/roles/'+constant.roles.emkc_novice);
                                     user.discord_rank = 1;
+                                    await timeout(1000);
                                 } catch (e) {console.log(e)}
                             }
 
@@ -71,6 +74,7 @@ var cron = {
                                         '/members/'+user.discord_api+
                                         '/roles/'+constant.roles.emkc_hero);
                                     user.discord_rank = 2;
+                                    await timeout(1000);
                                 } catch (e) {}
                             }
 
@@ -82,6 +86,7 @@ var cron = {
                                         '/members/'+user.discord_api+
                                         '/roles/'+constant.roles.emkc_master);
                                     user.discord_rank = 3;
+                                    await timeout(1000);
                                 } catch (e) {}
                             }
 
@@ -93,11 +98,13 @@ var cron = {
                                         '/members/'+user.discord_api+
                                         '/roles/'+constant.roles.emkc_legend);
                                     user.discord_rank = 4;
+                                    await timeout(1000);
                                 } catch (e) {}
                             }
 
-                            return user
-                                .save();
+                            await user.save();
+
+                            await timeout(1000);
                         });
                 });
 

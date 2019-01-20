@@ -10,17 +10,15 @@ services:
         links:
             - redis
             - mysql
-        extra_hosts:
-            vortex: 172.17.0.1
     redis:
+        container_name: emkc_redis
         image: redis:3.2.12
         volumes:
             - ./:/opt/emkc
             - ./var/docker/redis:/data
     mysql:
+        container_name: emkc_mysql
         image: mysql:5.6
-        ports:
-            - "33061:3306"
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: emkc

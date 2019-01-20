@@ -3,9 +3,9 @@
         "official": false,
         "name": "Testing small numbers",
         "input": [
-            [3,2],
-            [8,4],
-            [5,3]
+            [3, 2],
+            [8, 4],
+            [5, 3]
         ],
         "output": [
           "3,5,8",
@@ -17,8 +17,8 @@
         "official": false,
         "name": "Testing large numbers",
         "input": [
-            [34,9],
-            [233, 14]
+            [34, 9],
+            [233, 14],
             [377, 6]
         ],
         "output": [

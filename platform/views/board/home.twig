@@ -1,40 +1,27 @@
 {% extends 'master.twig'%}
 {% block content %}
-    <div class="em_main_board_outer">
-        <div class="left" style="flex: 1;">
-            {% if req.glob.user_id %}
-                <a href="/questions/ask" class="btn btn-success btn-sm" style="float: right; color: #fff;">
-                    Ask New Question
-                </a>
-            {% else %}
-                <a onclick="login.open('/questions/ask')" class="btn btn-success btn-sm" style="float: right; color: #fff;">
-                    Ask New Question
-                </a>
-            {% endif %}
-            <h5 class="f700 marginbottom20">Newest Questions</h5>
-            <div class="em_main_board">
-                <div id="questions"></div>
-                <script>
-                    ReactDOM.render(React.createElement(BoardQuestions, {
-                        questions: {{ questions|json_encode|noscript }}
-                    }), document.getElementById('questions'));
-                </script>
+    <div class="em_common_content container">
+        <div class="row marginbottom20">
+            <div class="col-12">
+                <h4 class="f300">Top EMKC Members</h4>
             </div>
         </div>
-        <div class="right">
-            <h5 class="f700" style="margin-bottom: 15px;">Top {{ users.length }} Contributors</h5>
-            <div class="em_top_contributors">
-                {% for user in users %}
-                    <div class="contributor">
-                        <img src="{{ req.glob.constant.gcloud_base_url ~ user.avatar_url }}" />
-                        <a href="/@{{ user.username }}">
-                            {{ user.display_name}}
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    {% for user in users %}
+                        <a href="/@{{ user.username }}" class="contributor" style="position: relative; display: inline-block; width: 250px; height: 58px; background: #21252B;">
+                            <img src="{{ req.glob.constant.gcloud_base_url ~ user.avatar_url }}" style="position: absolute; top: 0; left: 0; width: 58px; height: 58px;" />
+                            <div style="position: absolute; top: 2px; left: 68px; right: 0;">
+                                {{ user.display_name}}
+                            </div>
+                            <div style="position: absolute; top: 26px; left: 68px; right: 0;">
+                                <i class="fa fa-bolt"></i>
+                                {{ user.score }}
+                            </div>
                         </a>
-                        <span>
-                            {{ user.score }}
-                        </span>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
