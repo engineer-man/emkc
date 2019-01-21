@@ -332,11 +332,11 @@ module.exports = {
                                         }[challenge.difficulty],
                                         url: `${constant.base_url}/challenges/${challenge.challenge_id}/${language}`,
                                         author: {
-                                            name: `${user.display_name} completed a challenge "${challenge.name}"`
+                                            name: `${req.glob.user.display_name} completed a challenge "${challenge.name}"`
                                         },
                                         footer: {
-                                            icon_url: constant.gcloud_base_url + user.avatar_url,
-                                            text: 'completed by ' + user.display_name
+                                            icon_url: constant.gcloud_base_url + req.glob.user.avatar_url,
+                                            text: 'completed by ' + req.glob.user.display_name
                                         }
                                     }
                                 })
