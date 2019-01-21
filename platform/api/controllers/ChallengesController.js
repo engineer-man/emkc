@@ -209,7 +209,7 @@ module.exports = {
                                     if (typeof input === 'string')
                                         template += `    var value${i} string = os.Args[${i}]`
                                     if (typeof input === 'number')
-                                        template += `    var value${i} int = strconv.Atoi(os.Args[${i}])`
+                                        template += `    value${i}, _ := strconv.Atoi(os.Args[${i}])`
                                     break;
                                 case 'java':
                                     if (typeof input === 'string')
