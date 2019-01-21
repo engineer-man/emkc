@@ -318,29 +318,31 @@ module.exports = {
                             }
                         })
                         .spread((user_challenge, created) => {
-                            if (created) return null;
-
-                            discord
-                                .api('post', `/channels/${constant.channels[language]}/messages`, {
-                                    embed: {
-                                        title: 'Attempt Challenge',
-                                        type: 'rich',
-                                        color: {
-                                            1: 0x84e47f,
-                                            2: 0xe4e37f,
-                                            3: 0xe47f8d
-                                        }[challenge.difficulty],
-                                        url: `${constant.base_url}/challenges/${challenge.challenge_id}/${language}`,
-                                        author: {
-                                            name: `${req.glob.user.display_name} completed a challenge "${challenge.name}"`
-                                        },
-                                        footer: {
-                                            icon_url: constant.gcloud_base_url + req.glob.user.avatar_url,
-                                            text: 'completed by ' + req.glob.user.display_name
+                            if (created) {
+                                discord
+                                    .api('post', `/channels/${constant.channels[language]}/messages`, {
+                                        embed: {
+                                            title: 'Attempt Challenge',
+                                            type: 'rich',
+                                            color: {
+                                                1: 0x84e47f,
+                                                2: 0xe4e37f,
+                                                3: 0xe47f8d
+                                            }[challenge.difficulty],
+                                            url: `${constant.base_url}/challenges/${challenge.challenge_id}/${language}`,
+                                            author: {
+                                                name: `${req.glob.user.display_name} completed a challenge "${challenge.name}"`
+                                            },
+                                            footer: {
+                                                icon_url: constant.gcloud_base_url + req.glob.user.avatar_url,
+                                                text: 'completed by ' + req.glob.user.display_name
+                                            }
                                         }
-                                    }
-                                })
-                                .catch(err => {});
+                                    })
+                                    .catch(err => {});
+
+                                return null;
+                            }
 
                             user_challenge.solution = source;
                             user_challenge.save();
