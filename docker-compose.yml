@@ -4,7 +4,7 @@ services:
         container_name: emkc
         build: .
         ports:
-            - "2727:2727"
+            - "2005:2727"
         volumes:
             - ./:/opt/emkc
         links:
