@@ -46,14 +46,8 @@ var constant = {
     },
 
     devprod() {
-        if (this.is_prod()) {
-            this.gcloud_bucket = 'engineerman';
-        } else {
-            this.gcloud_bucket = 'engineerman-dev';
-        }
-
         this.base_url = sails.config.base_url;
-        this.gcloud_base_url = 'https://storage.googleapis.com/' + this.gcloud_bucket;
+        this.cdn_url = this.base_url + '/cdn';
     },
 
     is_prod() {

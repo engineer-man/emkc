@@ -61,7 +61,7 @@ module.exports = {
                                 time_ago: 'now',
                                 username: comment.user.username,
                                 display_name: comment.user.display_name,
-                                avatar_url: constant.gcloud_base_url + comment.user.avatar_url,
+                                avatar_url: constant.cdn_url + comment.user.avatar_url,
                                 value: null,
                                 comments: []
                             }

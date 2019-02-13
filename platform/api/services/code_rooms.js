@@ -42,7 +42,7 @@ module.exports = {
                             socket_id: socket.id,
                             user_id: user.user_id,
                             display_name: user.display_name,
-                            avatar_url: constant.gcloud_base_url + user.avatar_url
+                            avatar_url: constant.cdn_url + user.avatar_url
                         });
 
                         var final_data = [];
@@ -59,7 +59,7 @@ module.exports = {
                         action: 'join',
                         user_id: user.user_id,
                         display_name: user.display_name,
-                        avatar_url: constant.gcloud_base_url + user.avatar_url
+                        avatar_url: constant.cdn_url + user.avatar_url
                     });
                 });
         });

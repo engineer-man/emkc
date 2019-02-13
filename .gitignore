@@ -5,6 +5,8 @@ platform/public/css/*.css
 platform/public/js/master.js
 platform/public/js/master_jsx.js
 platform/public/js/master_js.js
+cdn/avatars/*
+!cdn/avatars/.gitkeep
 var/docker/mysql/*
 !var/docker/mysql/.gitkeep
 var/docker/redis/*

@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
                                             name: 'New Question: ' + instance.title
                                         },
                                         footer: {
-                                            icon_url: constant.gcloud_base_url + question.user.avatar_url,
+                                            icon_url: constant.cdn_url + question.user.avatar_url,
                                             text: 'posted by ' + question.user.display_name
                                         }
                                     }

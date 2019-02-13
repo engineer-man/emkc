@@ -1,3 +1,4 @@
+const fs = require('fs');
 const q = require('q');
 const request = require('request-promise');
 
@@ -113,14 +114,7 @@ module.exports = {
                         encoding: null
                     })
                     .then(res => {
-                        // save avatar to google cloud
-                        gcloud
-                            .stream_upload(res, 'avatars/' + user.user_id + '.png', false, true)
-                            .then(() => {
-                                // update the record with the new url
-                                user.avatar_url = '/avatars/' + user.user_id + '.png';
-                                user.save();
-                            });
+                        fs.write_file(root_dir + '/cdn/avatars/' + user.user_id + '.png', res);
                     })
                     .catch(err => {});
 

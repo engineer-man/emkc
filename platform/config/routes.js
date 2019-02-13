@@ -56,6 +56,6 @@ module.exports.routes = {
     'GET /api/v1/stats/discord/channels': 'api/v1/stats/DiscordController.channels',
 
     // catch all (404)
-    'ALL r|^\/(?!css|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
+    'ALL r|^\/(?!css|cdn|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
 
 };

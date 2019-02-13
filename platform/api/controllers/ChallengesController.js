@@ -334,7 +334,7 @@ module.exports = {
                                 //                 name: `${req.glob.user.display_name} completed a challenge "${challenge.name}" with ${language}`
                                 //             },
                                 //             footer: {
-                                //                 icon_url: constant.gcloud_base_url + req.glob.user.avatar_url,
+                                //                 icon_url: constant.cdn_url + req.glob.user.avatar_url,
                                 //                 text: 'completed by ' + req.glob.user.display_name
                                 //             }
                                 //         }
