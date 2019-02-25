@@ -54,7 +54,7 @@
         <link rel="icon" type="image/x-icon" href="/images/icon_64.png" />
     </head>
     <body>
-        <div class="em_container">
+        <div class="em_container" style="position: relative;">
             <div class="em_menu">
                 <div class="mobile_expand" onclick="mobile_nav.open()">
                     <i class="fa fa-bars"></i>
@@ -106,6 +106,10 @@
             </div>
 
             {% block content %}{% endblock %}
+
+            <div class="f700 footer" style="position: absolute; bottom: 0; left: 0; right: 0; background: #36B96E; font-size: 12px; padding: 0 10px; text-align: right;">
+                <a href="/privacy" style="color: #fff;">Privacy Policy</a>
+            </div>
         </div>
         <div id="mobile_nav"></div>
         <script>

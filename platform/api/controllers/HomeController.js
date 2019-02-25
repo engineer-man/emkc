@@ -7,6 +7,10 @@ module.exports = {
         return res.view();
     },
 
+    privacy(req, res) {
+        return res.view();
+    },
+
     login() {
         return res.view();
     },
