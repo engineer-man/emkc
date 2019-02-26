@@ -1,0 +1,32 @@
+[
+    {
+        "official": false,
+        "name": "Testing small numbers",
+        "input": [
+            ["igpay atinlay"],
+            ["engineeryay anmay"],
+            ["avehay unfay"],
+            ["iddenhay essagemay"]
+        ],
+        "output": [
+            "pig latin",
+            "engineer man",
+            "have fun",
+            "hidden message"
+        ]
+    },
+    {
+        "official": false,
+        "name": "Testing large numbers",
+        "input": [
+            ["isyay pphay ayay oodgay anguagelay"],
+            ["ucksday areyay ettypray oolcay"]
+            ["isthay isyay osay andomray atwhay amyay iyay oingday"]
+        ],
+        "output": [
+          "is php a good language",
+          "ducks are pretty cool",
+          "this is so random what am I doing"
+        ]
+    }
+]
