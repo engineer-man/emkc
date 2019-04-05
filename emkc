@@ -4,7 +4,6 @@ case $* in
     "init" )
         cp -n platform/config/local.js.sample platform/config/local.js
         cp -n platform/migrations/config.json.sample platform/migrations/config.json
-        cp -n platform/config/secrets/google_cloud.json.sample platform/config/secrets/google_cloud.json
         ;;
     "start" )
         touch var/docker/logs/app.log

@@ -1,7 +1,7 @@
 [
     {
         "official": false,
-        "name": "Testing small numbers",
+        "name": "Testing small phrases",
         "input": [
             ["igpay atinlay"],
             ["engineeryay anmay"],
@@ -17,10 +17,10 @@
     },
     {
         "official": false,
-        "name": "Testing large numbers",
+        "name": "Testing large phrases",
         "input": [
             ["isyay pphay ayay oodgay anguagelay"],
-            ["ucksday areyay ettypray oolcay"]
+            ["ucksday areyay ettypray oolcay"],
             ["isthay isyay osay andomray atwhay amyay iyay oingday"]
         ],
         "output": [

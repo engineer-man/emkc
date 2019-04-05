@@ -4,7 +4,7 @@ is located at https://emkc.org. Be sure to familiarize yourself with the contrib
 if you plan to use this software.
 
 
-#### Docker Install Instructions
+#### Install Instructions
 - `git clone https://github.com/engineer-man/emkc`
 - `cd emkc`
 - `./emkc init`
@@ -12,30 +12,12 @@ if you plan to use this software.
 
   You can access the local version of the site at http://127.0.0.1:2727/
 
-#### Manual Install Instructions
-- Install Node.js 8.x.x https://nodejs.org/en/download/
-- Install MySQL 5.6 https://dev.mysql.com/downloads/mysql/
-- Install Redis https://redis.io/topics/quickstart
-- Install bmig https://github.com/ebrian/bmig
-- Create database "emkc"
-- `git clone https://github.com/engineer-man/emkc`
-- `cd emkc`
-- `./emkc init`
-- `cd platform`
-- `cp migrations/config.json.sample migrations/config.json`
-- `npm install`
-- `cd migrations`
-- `bmig migrate`
-- `cd ..`
-- `./start_dev --watch`
-
 
 #### Local Config
 There are three files needed to configure the application. Make sure to modify these with your own values. If
 these files are not present, navigate to the project root and run `./emkc init`.
 - App: `platform/config/local.js`
 - DB Migrations: `platform/migrations/config.json`
-- Google Cloud: `platform/config/secrets/google_cloud.json`
 
 
 #### Resource Build Pipeline
@@ -47,7 +29,7 @@ these files are not present, navigate to the project root and run `./emkc init`.
 
 #### Contribution Guidelines
 All contributions are reviewed to make sure they work, fit well with the design, and fit well with
-the established code. BDFL is [tipztek](https://github.com/tipztek) who will do a final review and merge
+the established code. BDFL is [realtux](https://github.com/realtux) who will do a final review and merge
 to master and deploy.
 - Review the issues/board on GitHub and grab whichever you feel most comfortable doing
 - Place code on a branch other than master/develop (Fork for non-org developers)
