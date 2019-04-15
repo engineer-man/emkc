@@ -3,30 +3,36 @@
         "official": false,
         "name": "Testing small phrases",
         "input": [
-            ["igpay atinlay"],
-            ["engineeryay anmay"],
-            ["avehay unfay"],
-            ["iddenhay essagemay"]
+            ["ig-pay atin-lay"],
+            ["engineer-yay an-may"],
+            ["ave-hay un-fay"],
+            ["idden-hay essage-may"],
+            ["illy-say anguage-lay"]
         ],
         "output": [
             "pig latin",
             "engineer man",
             "have fun",
-            "hidden message"
+            "hidden message",
+            "silly language"
         ]
     },
     {
         "official": false,
         "name": "Testing large phrases",
         "input": [
-            ["isyay pphay ayay oodgay anguagelay"],
-            ["ucksday areyay ettypray oolcay"],
-            ["isthay isyay osay andomray atwhay amyay iyay oingday"]
+            ["is-yay ift-sway a-yay ood-gay anguage-lay"],
+            ["ucks-day are-yay etty-pray ool-cay"],
+            ["is-thay is-yay o-say andom-ray at-whay am-yay i-yay oing-day"],
+            ["ig-pay atin-lay is-yay used-yay in-yay ools-schay o-tay each-tay anguage-lay onstructs-cay"],
+            ["it-yay is-yay illy-say ut-bay ort-say of-yay un-fay or-fay ildren-chay"]
         ],
         "output": [
-          "is php a good language",
+          "is swift a good language",
           "ducks are pretty cool",
-          "this is so random what am I doing"
+          "this is so random what am i doing",
+          "pig latin is used in schools to teach language constructs",
+          "it is silly but sort of fun for children"
         ]
     }
 ]
