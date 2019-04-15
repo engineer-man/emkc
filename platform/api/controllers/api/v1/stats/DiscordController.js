@@ -3,7 +3,11 @@ const moment = require('moment');
 module.exports = {
 
     messages(req, res) {
-        var { term, start, end, limit } = req.query;
+        var { user, term, start, end, limit } = req.query;
+
+        if (!Array.is_array(user) && typeof user !== 'undefined') {
+            user = [user];
+        }
 
         var query = {
             where: {
@@ -23,6 +27,10 @@ module.exports = {
         };
 
         var dates = [];
+
+        if (user) {
+            query.where.user = user;
+        }
 
         if (term) {
             query.where.message = {
