@@ -4,7 +4,7 @@
         "name": "Testing small phrases",
         "input": [
             ["ig-pay atin-lay"],
-            ["engineer-yay an-may"],
+            ["engineeryay an-may"],
             ["ave-hay un-fay"],
             ["idden-hay essage-may"],
             ["illy-say anguage-lay"]
@@ -21,11 +21,11 @@
         "official": false,
         "name": "Testing large phrases",
         "input": [
-            ["is-yay ift-sway a-yay ood-gay anguage-lay"],
-            ["ucks-day are-yay etty-pray ool-cay"],
-            ["is-thay is-yay o-say andom-ray at-whay am-yay i-yay oing-day"],
-            ["ig-pay atin-lay is-yay used-yay in-yay ools-schay o-tay each-tay anguage-lay onstructs-cay"],
-            ["it-yay is-yay illy-say ut-bay ort-say of-yay un-fay or-fay ildren-chay"]
+            ["isyay ift-sway ayay ood-gay anguage-lay"],
+            ["ucks-day areyay etty-pray ool-cay"],
+            ["is-thay isyay o-say andom-ray at-whay amyay iyay oing-day"],
+            ["ig-pay atin-lay isyay usedyay inyay ools-schay o-tay each-tay anguage-lay onstructs-cay"],
+            ["ityay isyay illy-say ut-bay ort-say ofyay un-fay or-fay ildren-chay"]
         ],
         "output": [
           "is swift a good language",
