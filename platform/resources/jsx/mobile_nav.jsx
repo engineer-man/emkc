@@ -29,7 +29,15 @@ class MobileNav extends React.Component {
                 <div class="backdrop" onClick={this.close}></div>
                 <div class="menu">
                     <div class="contents">
-                        Hope you weren't expecting an actual mobile menu
+                        <h5 class="f300">Main Menu</h5>
+                        <a href="/">Home</a>
+                        <a href="/challenges">Challenges</a>
+                        <a href="/community">Community</a>
+                        <a href="/snippets">Tools - Snippets</a>
+                        <div class="spacer"></div>
+                        <h5 class="f300">You</h5>
+                        <a href="/">Profile</a>
+                        <a href="/logout">Logout</a>
                     </div>
                 </div>
             </div>

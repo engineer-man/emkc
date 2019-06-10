@@ -1,0 +1,37 @@
+@import '../colors.less';
+
+.em_profile {
+    .content {
+        display: flex;
+        .left {
+            width: 220px;
+            text-align: center;
+        }
+        .right {
+            flex: 1;
+        }
+    }
+    .avatar {
+        width: 128px;
+        height: auto;
+        margin-bottom: 10px;
+    }
+    .challenge {
+        display: block;
+        background: rgba(0,0,0,.3);
+        padding: 10px;
+        margin-bottom: 10px;
+        &.easy {
+            border-left: @challenge_easy 5px solid;
+        }
+        &.medium {
+            border-left: @challenge_medium 5px solid;
+        }
+        &.hard {
+            border-left: @challenge_hard 5px solid;
+        }
+        p {
+            margin-bottom: 8px;
+        }
+    }
+}
