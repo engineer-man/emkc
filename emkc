@@ -5,6 +5,15 @@ case $* in
         cp -n platform/config/local.js.sample platform/config/local.js
         cp -n platform/migrations/config.json.sample platform/migrations/config.json
         ;;
+    "deploy" )
+        git pull
+        docker-compose down
+        touch var/docker/logs/app.log
+        chmod 777 var/docker/logs/app.log
+        touch var/docker/logs/sql.log
+        chmod 777 var/docker/logs/sql.log
+        docker-compose up -d
+        ;;
     "start" )
         touch var/docker/logs/app.log
         chmod 777 var/docker/logs/app.log
