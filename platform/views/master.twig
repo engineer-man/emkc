@@ -75,7 +75,10 @@
                         <div class="dropdown-menu">
                             <!--<a class="dropdown-item" href="/coderoom/new">Code Room</a>-->
                             <h6 class="dropdown-header">Development</h6>
-                            <a class="dropdown-item" href="/snippets">Snippets</a>
+                            <a class="dropdown-item" href="/snippets">New Snippet</a>
+                            {% if req.glob.user_id %}
+                                <a class="dropdown-item" href="/snippets/mine">My Snippets</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

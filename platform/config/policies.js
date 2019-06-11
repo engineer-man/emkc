@@ -36,7 +36,8 @@ module.exports.policies = {
     },
 
     'SnippetsController': {
-        '*': ['common']
+        '*': ['common'],
+        'mine': ['common', 'logged_in']
     },
 
     'VotesController': {

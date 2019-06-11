@@ -33,6 +33,7 @@ module.exports.routes = {
 
     'GET /snippets': 'SnippetsController.create',
     'POST /snippets': 'SnippetsController.create',
+    'GET /snippets/mine': 'SnippetsController.mine',
     'GET /s/:hash': 'SnippetsController.view',
 
     'GET /coderoom/new': 'CodeRoomsController.create',
