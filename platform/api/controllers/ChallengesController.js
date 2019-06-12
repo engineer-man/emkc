@@ -281,7 +281,7 @@ module.exports = {
 
                     results.push({
                         name: test.name,
-                        input: test.input[test_idx].join(','),
+                        input: test.input[test_idx].join(' - '),
                         expected: test.output[test_idx],
                         result: piston.execute(language, source, test.input[test_idx])
                     });
