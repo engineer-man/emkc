@@ -54,6 +54,10 @@ module.exports.policies = {
 
     'api/v1/stats/DiscordController': {
         '*': ['common']
+    },
+    
+    'api/v1/UserController': {
+        '*': ['common']
     }
 
 };
