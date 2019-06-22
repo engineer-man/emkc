@@ -9,6 +9,10 @@ module.exports = {
             user = [user];
         }
 
+        if (!Array.is_array(discord_id) && typeof discord_id !== 'undefined') {
+            discord_id = [discord_id];
+        }
+
         var query = {
             where: {
                 $and: []
