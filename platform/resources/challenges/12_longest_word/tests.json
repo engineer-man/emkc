@@ -3,50 +3,26 @@
         "official": false,
         "name": "Regular",
         "input": [
-            ["run,barn,yellow,barracuda,shark,fish,swim"]
+            ["run,barn,yellow,barracuda,shark,fish,swim"],
+            ["america,united,kingdom,mexico,canada,AUSTRalia"],
+            ["Meatballs,Noodles,Pizza,Porter,Reuben,Toast,Wine,walnuts,lamb,kale,jerky"]
         ],
         "output": [
-          "barracuda"
+          "barracuda",
+          "australia",
+          "meatballs"
         ]
     },
     {
         "official": false,
         "name": "Same Size",
         "input": [
-            ["fishes,sam,gollum,sauron,frodo,balrog"]
-        ],
-        "output": [
-          "fishes,gollum,sauron,balrog"
-        ]
-    },
-    {
-        "official": false,
-        "name": "Test Case",
-        "input": [
-            ["america,united,kingdom,mexico,canada,AUSTRalia"]
-        ],
-        "output": [
-            "australia"
-        ]
-    },
-    {
-        "official": false,
-        "name": "Test words are trimmed",
-        "input": [
+            ["fishes,sam,gollum,sauron,frodo,balrog"],
             ["rUnNiNg   ,swimming,    eating,biking,   climbing"]
         ],
         "output": [
-            "swimming,climbing"
-        ]
-    },
-    {
-        "official": false,
-        "name": "Test Case",
-        "input": [
-            ["Meatballs,Noodles,Pizza,Porter,Reuben,Toast,Wine,walnuts,lamb,kale,jerky"]
-        ],
-        "output": [
-            "meatballs"
+          "fishes,gollum,sauron,balrog",
+          "swimming,climbing"
         ]
     }
 ]
