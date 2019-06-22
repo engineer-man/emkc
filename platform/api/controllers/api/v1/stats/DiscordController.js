@@ -19,13 +19,14 @@ module.exports = {
             },
             attributes: [
                 'user',
+                'discord_id',
                 [db.sequelize.literal('count(*)'), 'messages'],
             ],
             order: [
                 [db.sequelize.col('messages'), 'desc']
             ],
             group: [
-                'user'
+                'discord_id'
             ],
             limit: 1000
         };
