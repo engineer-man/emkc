@@ -1,0 +1,22 @@
+[
+    {
+        "official": false,
+        "name": "Regular",
+        "input": [
+            ["run barn yellow barracuda shark fish swim"]
+        ],
+        "output": [
+          "barracuda"
+        ]
+    },
+    {
+        "official": false,
+        "name": "Same Size",
+        "input": [
+            ["fishes sam gollum sauron frodo balrog"]
+        ],
+        "output": [
+          "fishes gollum sauron balrog"
+        ]
+    }
+]
