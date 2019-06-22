@@ -18,5 +18,35 @@
         "output": [
           "fishes,gollum,sauron,balrog"
         ]
+    },
+    {
+        "official": false,
+        "name": "Test Case",
+        "input": [
+            ["america,united,kingdom,mexico,canada,AUSTRalia"]
+        ],
+        "output": [
+            "australia"
+        ]
+    },
+    {
+        "official": false,
+        "name": "Test words are trimmed",
+        "input": [
+            ["rUnNiNg   ,swimming,    eating,biking,   climbing"]
+        ],
+        "output": [
+            "swimming,climbing"
+        ]
+    },
+    {
+        "official": false,
+        "name": "Test Case",
+        "input": [
+            ["Meatballs,Noodles,Pizza,Porter,Reuben,Toast,Wine,walnuts,lamb,kale,jerky"]
+        ],
+        "output": [
+            "meatballs"
+        ]
     }
 ]
