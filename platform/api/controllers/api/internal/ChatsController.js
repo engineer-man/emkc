@@ -39,6 +39,7 @@ module.exports = {
             .filter(m => {
                 var valid = m.channel &&
                     m.user &&
+                    m.discord_id &&
                     m.message &&
                     m.timestamp &&
                     moment(m.timestamp).isValid();
@@ -59,6 +60,7 @@ module.exports = {
                             var new_message = {
                                 channel: message.channel,
                                 user: message.user.replace(/[^\x00-\x7F]/g, ''),
+                                discord_id: message.discord_id,
                                 message: message.message.replace(/[^\x00-\x7F]/g, ''),
                                 created_at: moment(message.timestamp).format()
                             };

@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             hash: DataTypes.STRING,
             channel: DataTypes.STRING,
             user: DataTypes.STRING,
+            discord_id: DataTypes.BIGINT,
             message: DataTypes.STRING,
             created_at: DataTypes.DATE
         },

@@ -3,7 +3,7 @@ const moment = require('moment');
 module.exports = {
 
     messages(req, res) {
-        var { user, term, start, end, limit } = req.query;
+        var { user, discord_id, term, start, end, limit } = req.query;
 
         if (!Array.is_array(user) && typeof user !== 'undefined') {
             user = [user];
@@ -30,6 +30,10 @@ module.exports = {
 
         if (user) {
             query.where.user = user;
+        }
+
+        if (discord_id) {
+            query.where.discord_id = discord_id;
         }
 
         if (term) {
@@ -74,7 +78,7 @@ module.exports = {
     },
 
     channels(req, res) {
-        var { user, start, end, limit } = req.query;
+        var { user, discord_id, start, end, limit } = req.query;
 
         var query = {
             where: {
@@ -99,6 +103,10 @@ module.exports = {
             query.where.user = {
                 $like: '%' + user.replace(/[^\x00-\x7F]/g, '') + '%'
             };
+        }
+
+        if (discord_id) {
+            query.where.discord_id = discord_id;
         }
 
         if (start) {
