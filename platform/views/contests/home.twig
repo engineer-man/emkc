@@ -25,7 +25,8 @@
                         You can update your solution as many times as you want during the contest period.
                     </li>
                     <li>
-                        Points are awarded to the shortest three solutions per language that meet the objective.
+                        Points are awarded to the shortest three solutions per language that meet the objective. If there
+                        are solutions that are the same length, the solution submitted the earliest will take precedent.
                     </li>
                     <li>
                         Submitted solutions must pass automated code execution before they are recorded as a contest submission.
@@ -37,9 +38,37 @@
 
                 <hr />
 
-                <h4 class="f300">Active Contests</h4>
+                <div class="active">
+                    <h4 class="f300">Active Contests</h4>
+                    {% for contest in active_contests %}
+                        <a href="{{ contest.url }}" class="contest">
+                            <div class="name">{{ contest.name }}</div>
+                            <p>
+                                Code Golf style contest. Click for more info or to submit solutions.
+                            </p>
+                            <div class="time_left">
+                                Run Time: {{ contest.start_date|date('m/d/Y') }} - {{ contest.end_date|date('m/d/Y') }}
+                            </div>
+                            <div class="time_left">
+                                Time Left: {{ contest.time_left }}
+                            </div>
+                            <div class="solutions">
+                                Total Solutions: {{ contest.solutions|length }}
+                            </div>
+                        </a>
+                    {% else %}
+                        There are no active contests at this time.
+                    {% endif %}
+                </div>
 
-                <h4 class="f300">Past Contests</h4>
+                <div class="past">
+                    <h4 class="f300">Past Contests</h4>
+                    {% for contest in past_contests %}
+                        {{ contest.name }}
+                    {% else %}
+                        There are no pasts contests at this time.
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

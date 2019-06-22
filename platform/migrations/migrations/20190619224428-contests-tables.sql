@@ -17,6 +17,7 @@ create table user_contests (
     contest_id int unsigned not null,
     language varchar(8) not null,
     solution mediumtext not null,
+    length int unsigned not null,
     points int unsigned not null,
     created_at datetime not null,
     primary key (user_contest_id),

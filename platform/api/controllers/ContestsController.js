@@ -5,18 +5,22 @@ module.exports = {
     async home(req, res) {
         let past_contests = await db.contests
             .find_all({
-                end_date: {
-                    $lt: util.now()
+                where: {
+                    end_date: {
+                        $lt: util.now()
+                    }
                 }
             });
 
         let active_contests = await db.contests
             .find_all({
-                start_date: {
-                    $gte: util.now()
-                },
-                end_date: {
-                    $lte: util.now()
+                where: {
+                    start_date: {
+                        $lte: util.now()
+                    },
+                    end_date: {
+                        $gte: util.now()
+                    }
                 }
             });
 

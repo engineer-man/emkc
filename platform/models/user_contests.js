@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             contest_id: DataTypes.INTEGER,
             language: DataTypes.STRING,
             solution: DataTypes.TEXT('medium'),
+            length: DataTypes.INTEGER,
             points: DataTypes.INTEGER,
             created_at: DataTypes.DATE
         },
