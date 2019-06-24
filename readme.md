@@ -48,7 +48,5 @@ to master and deploy.
 
 
 #### License
-Engineer Man Knowledge Center is licensed under the AGPLv3. You have specific obligations under this license
-if you plan to modify this software in private and make it available to the public. Specifically, you must
-make your copy open source along with your modifications. License details can be found in the `license` file
-in the root of the project.
+Engineer Man Knowledge Center is licensed under the permissive MIT license. License details can be found
+in the `license` file in the root of the project.
