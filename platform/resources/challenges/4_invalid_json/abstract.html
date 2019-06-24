@@ -1,31 +1,33 @@
-<div class="section">
-    <h4 class="f300">Instructions</h4>
+<div class="em_challenge_abstract">
+    <div class="section">
+        <h4 class="f300">Instructions</h4>
 
-    Your input variable will contain a string of invalid JSON. However, each invalid JSON string received can be fixed
-    by making one or more single character changes. Only three possible things may be wrong with the JSON string:
-    1) missing leading or trailing brace, 2) unquoted JSON string value, 3) missing comma between properties.
-</div>
-
-<div class="section">
-    <h4 class="f300">Inputs</h4>
-
-    <div class="input">
-        <span class="badge badge-info">value1</span><br />
-        A string of invalid JSON
+        Your input variable will contain a string of invalid JSON. However, each invalid JSON string received can be fixed
+        by making one or more single character changes. Only three possible things may be wrong with the JSON string:
+        1) missing leading or trailing brace, 2) unquoted JSON string value, 3) missing comma between properties.
     </div>
-</div>
 
-<div class="section">
-    <h4 class="f300">Sample Test Cases</h4>
+    <div class="section">
+        <h4 class="f300">Inputs</h4>
 
-    <div class="test_case">
-        <span class="f700">Single Problem</span>
-        <div>Value 1:  {"name":"em"</div>
-        <div>Output: {"name":"em"}</div>
+        <div class="input">
+            <span class="badge badge-info">value1</span><br />
+            A string of invalid JSON
+        </div>
     </div>
-    <div class="test_case">
-        <span class="f700">Multiple Problems</span>
-        <div>Value 1:  "name":"em</div>
-        <div>Output: {"name":"em"}</div>
+
+    <div class="section">
+        <h4 class="f300">Sample Test Cases</h4>
+
+        <div class="test_case">
+            <div class="f700">Single Problem</div>
+            <div class="wrap"><span class="badge badge-info">value1</span>: {"name":"em"</div>
+            <div class="wrap"><span class="badge badge-dark">output</span>: {"name":"em"}</div>
+        </div>
+        <div class="test_case">
+            <div class="f700">Multiple Problems</div>
+            <div class="wrap"><span class="badge badge-info">value1</span>: "name":"em</div>
+            <div class="wrap"><span class="badge badge-dark">output</span>: {"name":"em"}</div>
+        </div>
     </div>
 </div>
