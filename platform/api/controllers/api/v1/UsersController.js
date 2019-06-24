@@ -1,25 +1,13 @@
 module.exports = {
 
     async read_all(req, res) {
-        let users = await db.users
-            .find_all({
-                attributes: [
-                    'user_id',
-                    'username',
-                    'display_name',
-                    'score'
-                ]
-            });
-
-        return res.send(users);
-    },
-
-    async read(req, res) {
         const { discord_id } = req.query;
 
         let query = {
+            where: {},
             attributes: [
                 'user_id',
+                'discord_api',
                 'username',
                 'display_name',
                 'score'
@@ -27,11 +15,30 @@ module.exports = {
         };
 
         if (discord_id) {
-            where.discord_api = discord_id;
+            query.where.discord_api = discord_id;
         }
 
         let users = await db.users
-            .find_one(query);
+            .find_all(query);
+
+        return res.send(users);
+    },
+
+    async read(req, res) {
+        const user_id = req.params.user_id;
+
+        let user = await db.users
+            .find_one({
+                where: {
+                    user_id
+                },
+                attributes: [
+                    'user_id',
+                    'username',
+                    'display_name',
+                    'score'
+                ]
+            });
 
         if (!user) {
             return res
