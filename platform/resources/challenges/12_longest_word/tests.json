@@ -1,0 +1,28 @@
+[
+    {
+        "official": false,
+        "name": "Regular",
+        "input": [
+            ["run,barn,yellow,barracuda,shark,fish,swim"],
+            ["america,united,kingdom,mexico,canada,AUSTRalia"],
+            ["Meatballs,Noodles,Pizza,Porter,Reuben,Toast,Wine,walnuts,lamb,kale,jerky"]
+        ],
+        "output": [
+          "barracuda",
+          "australia",
+          "meatballs"
+        ]
+    },
+    {
+        "official": false,
+        "name": "Same Size",
+        "input": [
+            ["fishes,sam,gollum,sauron,frodo,balrog"],
+            ["rUnNiNg   ,swimming,    eating,biking,   climbing"]
+        ],
+        "output": [
+          "fishes,gollum,sauron,balrog",
+          "swimming,climbing"
+        ]
+    }
+]

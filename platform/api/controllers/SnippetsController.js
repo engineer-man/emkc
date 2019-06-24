@@ -3,25 +3,41 @@ const q = require('q');
 
 module.exports = {
 
-    view(req, res) {
+    async view(req, res) {
         const { hash } = req.params;
 
-        return db.snippets
+        let snippet = await db.snippets
             .find_one({
                 where: {
                     hash
                 }
-            })
-            .then(snippet => {
-                if (!snippet) throw null;
-
-                return res.view({
-                    snippet
-                });
-            })
-            .catch(err => {
-                return res.redirect('/snippets');
             });
+
+        try {
+            if (!snippet) throw null;
+
+            return res.view({
+                snippet
+            });
+        } catch(e) {
+            return res.redirect('/snippets');
+        }
+    },
+
+    async mine(req, res) {
+        let snippets = await db.snippets
+            .find_all({
+                where: {
+                    user_id: req.glob.user_id
+                },
+                order: [
+                    ['snippet_id', 'desc']
+                ]
+            });
+
+        return res.view({
+            snippets
+        });
     },
 
     create(req, res) {

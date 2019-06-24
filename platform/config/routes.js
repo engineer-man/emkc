@@ -33,7 +33,12 @@ module.exports.routes = {
 
     'GET /snippets': 'SnippetsController.create',
     'POST /snippets': 'SnippetsController.create',
+    'GET /snippets/mine': 'SnippetsController.mine',
     'GET /s/:hash': 'SnippetsController.view',
+
+    'GET /scripts': 'ScriptsController.home',
+    'GET /scripts/:cli_script_id/:slug': 'ScriptsController.view',
+    'GET /exec/:cli_script_id': 'ScriptsController.exec',
 
     'GET /coderoom/new': 'CodeRoomsController.create',
     'POST /coderoom/sync': 'CodeRoomsController.sync',
@@ -55,6 +60,8 @@ module.exports.routes = {
     // public api endpoints
     'GET /api/v1/stats/discord/messages': 'api/v1/stats/DiscordController.messages',
     'GET /api/v1/stats/discord/channels': 'api/v1/stats/DiscordController.channels',
+    'GET /api/v1/users': 'api/v1/UsersController.read_all',
+    'GET /api/v1/users/:user_id': 'api/v1/UsersController.read',
 
     // catch all (404)
     'ALL r|^\/(?!css|cdn|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',

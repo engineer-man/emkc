@@ -1,36 +1,28 @@
 {% extends 'master.twig'%}
 {% block title %}{{ user.display_name|e }} - Engineer Man{% endblock %}
 {% block content %}
-    <div style="padding: 30px 10px 0px 10px; text-align: center; display: flex; justify-content: center; ">
-        <div class="col-12 col-md-3" style="padding: 0px 50px; float: left;">
-            <img src="{{ sails.glob.constant.cdn_url }}{{ user.avatar_url }}" style="width: 128px; height: auto;" />
-            <h4 class="f700">{{ user.display_name }}</h4>
-            <h4 class="f900"><i class="fa fa-bolt"></i> {{ user.score }}</h4>
-        </div>
-        <div class="col-12 col-md-9" style="padding: 0px 20px; display: flex; flex-direction: column; align-items: flex-start">
-            <h4 style="font-weight: bold; padding-left:15px">Activity Feed</h4>    
-            <h5 style="padding-left:15px">Questions</h5>
-            
-            <div class="em_user_questions col-12 col-md-12">
-            <div id="user_questions"></div>
-                <script>
-                    ReactDOM.render(React.createElement(UserQuestions, {
-                        questions: {{ questions|json_encode|noscript }}
-                    }), document.getElementById('user_questions'));
-                </script>
+    <div class="em_common_content em_profile container">
+        <div class="content">
+            <div class="left">
+                <img src="{{ sails.glob.constant.cdn_url }}{{ user.avatar_url }}" class="avatar" />
+                <h4 class="f700">{{ user.display_name }}</h4>
+                <h4 class="f900"><i class="fa fa-bolt"></i> {{ user.score }}</h4>
             </div>
+            <div class="right">
+                <h4 class="f300">Solved Challenges</h4>
 
-            <h5 style="padding-left:15px">Comments</h5>
-            <div class="em_user_comments col-12 col-md-12">
-            <div id="user_comments"></div>
-                <script>
-                    ReactDOM.render(React.createElement(UserComments, {
-                        comments: {{ comments|json_encode|noscript }},
-                        username: {{ user.username|json_encode|noscript }}
-                    }), document.getElementById('user_comments'));
-                </script>
+                {% for challenge in challenges %}
+                    <a href="/challenges/{{ challenge.challenge_id}}/{{ challenge.language }}" class="challenge {{ challenge.challenge.difficulty_name }}">
+                        <p>
+                            {{ challenge.challenge.description }}
+                        </p>
+                        <span class="badge badge-light">{{ challenge.language }}</span>
+                        <span class="badge badge-primary">Solved on: {{ challenge.created_at|date('m/d/Y') }}</span>
+                    </a>
+                {% else %}
+                    This user has not solved any challenges.
+                {% endif %}
             </div>
-
         </div>
     </div>
 {% endblock %}

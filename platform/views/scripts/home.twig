@@ -1,0 +1,31 @@
+{% extends 'master.twig'%}
+{% block content %}
+    <div class="em_wide_content">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="f300">CLI Script Database</h4>
+
+                <table class="table table-sm table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="center" style="width: 80px;">View</th>
+                            <th scope="col">Title</th>
+                            <th scope="col" style="width: 180px;">Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for script in scripts %}
+                            <tr>
+                                <td class="center">
+                                    <a href="{{ script.view_url }}">View</a>
+                                </td>
+                                <td>{{ script.title }}</td>
+                                <td>{{ script.created_at|date('m/d/Y g:i a') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

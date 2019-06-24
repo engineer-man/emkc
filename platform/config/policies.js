@@ -36,6 +36,11 @@ module.exports.policies = {
     },
 
     'SnippetsController': {
+        '*': ['common'],
+        'mine': ['common', 'logged_in']
+    },
+
+    'ScriptsController': {
         '*': ['common']
     },
 
@@ -52,6 +57,10 @@ module.exports.policies = {
     },
 
     'api/v1/stats/DiscordController': {
+        '*': ['common']
+    },
+    
+    'api/v1/UserController': {
         '*': ['common']
     }
 

@@ -1,56 +1,41 @@
 module.exports = {
 
-    view(req, res) {
-        const username = req.params.username;
+    async view(req, res) {
+        try {
+            const username = req.params.username;
 
-        return Promise.resolve(null)
-            .then(() => {
-
-                return [
-                    db.users
-                        .find_one({
-                            where: {
-                                username
-                            }
-                        }),
-                    db.questions
-                        .find_all({
-                            where: {
-                                user_id: req.glob.user_id
-                            },
-                            order: [
-                                ['created_at', 'desc']
-                            ],
-                            limit: 5
-                        }),
-                    db.comments
-                        .find_all({
-                            where: {
-                                user_id: req.glob.user_id
-                            },
-                            include: [
-                                {
-                                    model: db.questions,
-                                    as: 'question'
-                                }
-                            ],
-                            order: [
-                                ['created_at', 'desc']
-                            ],
-                            limit: 5
-                        })
-                    ];
-            })
-            .spread((user, questions, comments) => {
-                return res.view({
-                    user,
-                    questions,
-                    comments
+            let user = await db.users
+                .find_one({
+                    where: {
+                        username
+                    }
                 });
-            })
-            .catch(err => {
-                return res.redirect('/');
+
+            if (!user) throw null;
+
+            let challenges = await db.user_challenges
+                .find_all({
+                    where: {
+                        user_id: user.user_id
+                    },
+                    include: [
+                        {
+                            model: db.challenges,
+                            as: 'challenge'
+                        }
+                    ],
+                    order: [
+                        ['created_at', 'desc']
+                    ]
+                });
+
+            return res.view({
+                user,
+                challenges
             });
+        } catch(e) {
+            return res.redirect('/');
+        }
     },
 
     _config: {}
