@@ -103,9 +103,15 @@ class Challenge extends React.Component {
                                         {result.passed ? 'passed' : 'failed'}
                                     </span>
                                     <br/>
-                                    Supplied: {result.input}<br/>
-                                    Expected: {result.expected}<br/>
-                                    Actual:   <span dangerouslySetInnerHTML={{__html: result.actual.split('\n').map(a => a + '<br/>').join('')}}></span>
+                                    {result.input.split('@@!@!@!@@').map((input, i) => {
+                                        return (
+                                            <React.Fragment>
+                                                <span class="badge badge-info">value{i+1}</span> {input}<br/>
+                                            </React.Fragment>
+                                        )
+                                    })}
+                                    <span class="badge badge-dark">expected output</span> {result.expected}<br/>
+                                    <span class="badge badge-dark">actual output</span> <span dangerouslySetInnerHTML={{__html: result.actual.split('\n').map(a => a + '<br/>').join('')}}></span>
                                 </div>
                             )
                         })
