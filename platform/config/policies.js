@@ -40,6 +40,10 @@ module.exports.policies = {
         'mine': ['common', 'logged_in']
     },
 
+    'ScriptsController': {
+        '*': ['common']
+    },
+
     'VotesController': {
         '*': ['common', 'logged_in']
     },

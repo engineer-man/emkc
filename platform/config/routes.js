@@ -36,6 +36,10 @@ module.exports.routes = {
     'GET /snippets/mine': 'SnippetsController.mine',
     'GET /s/:hash': 'SnippetsController.view',
 
+    'GET /scripts': 'ScriptsController.home',
+    'GET /scripts/:cli_script_id/:slug': 'ScriptsController.view',
+    'GET /exec/:cli_script_id': 'ScriptsController.exec',
+
     'GET /coderoom/new': 'CodeRoomsController.create',
     'POST /coderoom/sync': 'CodeRoomsController.sync',
     'POST /coderoom/save': 'CodeRoomsController.save',
