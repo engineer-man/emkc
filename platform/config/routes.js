@@ -60,7 +60,8 @@ module.exports.routes = {
     // public api endpoints
     'GET /api/v1/stats/discord/messages': 'api/v1/stats/DiscordController.messages',
     'GET /api/v1/stats/discord/channels': 'api/v1/stats/DiscordController.channels',
-    'GET /api/v1/users/:discord_id': 'api/v1/UserController.information',
+    'GET /api/v1/users': 'api/v1/UserController.read_all',
+    'GET /api/v1/users/:user_id': 'api/v1/UserController.read',
 
     // catch all (404)
     'ALL r|^\/(?!css|cdn|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
