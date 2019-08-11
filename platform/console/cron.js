@@ -111,6 +111,8 @@ var cron = {
     },
 
     async repair_roles() {
+        const timeout = ms => new Promise(res => setTimeout(res, ms));
+
         let users = await db.users
             .find_all();
 
@@ -125,9 +127,13 @@ var cron = {
                         '/members/'+user.discord_api+
                         '/roles/'+constant.roles.emkc_member);
 
-                    console.log(res);
+                    console.log(res.body);
                 } catch (e) {
-                    console.log(e);
+                    if (e.statusCode === 429) {
+                        let retry_after = e.error.retry_after;
+                        console.log('waiting: ' + retry_after);
+                        await timeout(retry_after);
+                    }
                 }
             }
 
@@ -141,9 +147,13 @@ var cron = {
                         '/members/'+user.discord_api+
                         '/roles/'+constant.roles.emkc_novice);
 
-                    console.log(res);
+                    console.log(res.body);
                 } catch (e) {
-                    console.log(e);
+                    if (e.statusCode === 429) {
+                        let retry_after = e.error.retry_after;
+                        console.log('waiting: ' + retry_after);
+                        await timeout(retry_after);
+                    }
                 }
             }
 
@@ -157,9 +167,13 @@ var cron = {
                         '/members/'+user.discord_api+
                         '/roles/'+constant.roles.emkc_hero);
 
-                    console.log(res);
+                    console.log(res.body);
                 } catch (e) {
-                    console.log(e);
+                    if (e.statusCode === 429) {
+                        let retry_after = e.error.retry_after;
+                        console.log('waiting: ' + retry_after);
+                        await timeout(retry_after);
+                    }
                 }
             }
 
@@ -173,9 +187,13 @@ var cron = {
                         '/members/'+user.discord_api+
                         '/roles/'+constant.roles.emkc_master);
 
-                    console.log(res);
+                    console.log(res.body);
                 } catch (e) {
-                    console.log(e);
+                    if (e.statusCode === 429) {
+                        let retry_after = e.error.retry_after;
+                        console.log('waiting: ' + retry_after);
+                        await timeout(retry_after);
+                    }
                 }
             }
 
@@ -189,9 +207,13 @@ var cron = {
                         '/members/'+user.discord_api+
                         '/roles/'+constant.roles.emkc_legend);
 
-                    console.log(res);
+                    console.log(res.body);
                 } catch (e) {
-                    console.log(e);
+                    if (e.statusCode === 429) {
+                        let retry_after = e.error.retry_after;
+                        console.log('waiting: ' + retry_after);
+                        await timeout(retry_after);
+                    }
                 }
             }
         }
