@@ -113,108 +113,55 @@ var cron = {
     async repair_roles() {
         const timeout = ms => new Promise(res => setTimeout(res, ms));
 
+        const update_role = async (discord_api, role) => {
+            console.log('assigning ' + discord_api + ' ' + role);
+
+            try {
+                let res = await discord.api('put',
+                    '/guilds/'+constant.server_id+
+                    '/members/'+discord_api+
+                    '/roles/'+role);
+
+                console.log(res.body);
+            } catch (e) {
+                if (e.statusCode === 429) {
+                    let retry_after = e.error.retry_after;
+
+                    console.log('rate limited, waiting: ' + retry_after);
+
+                    await timeout(retry_after);
+                    await update_role(discord_api, role);
+                }
+            }
+        };
+
         let users = await db.users
             .find_all();
 
         for (const user of users) {
-            // basic member role
+            // member role
             if (user.discord_api) {
-                try {
-                    console.log('assigning ' + user.username + ' member');
-
-                    let res = await discord.api('put',
-                        '/guilds/'+constant.server_id+
-                        '/members/'+user.discord_api+
-                        '/roles/'+constant.roles.emkc_member);
-
-                    console.log(res.body);
-                } catch (e) {
-                    if (e.statusCode === 429) {
-                        let retry_after = e.error.retry_after;
-                        console.log('waiting: ' + retry_after);
-                        await timeout(retry_after);
-                    }
-                }
+                await update_role(user.discord_api, constant.roles.emkc_member);
             }
 
-            // test for and assign novice role
+            // novice role
             if (user.discord_api && user.discord_rank === 1) {
-                try {
-                    console.log('assigning ' + user.username + ' novice');
-
-                    let res = await discord.api('put',
-                        '/guilds/'+constant.server_id+
-                        '/members/'+user.discord_api+
-                        '/roles/'+constant.roles.emkc_novice);
-
-                    console.log(res.body);
-                } catch (e) {
-                    if (e.statusCode === 429) {
-                        let retry_after = e.error.retry_after;
-                        console.log('waiting: ' + retry_after);
-                        await timeout(retry_after);
-                    }
-                }
+                await update_role(user.discord_api, constant.roles.emkc_novice);
             }
 
-            // test for and assign hero role
+            // hero role
             if (user.discord_api && user.discord_rank === 2) {
-                try {
-                    console.log('assigning ' + user.username + ' hero');
-
-                    let res = await discord.api('put',
-                        '/guilds/'+constant.server_id+
-                        '/members/'+user.discord_api+
-                        '/roles/'+constant.roles.emkc_hero);
-
-                    console.log(res.body);
-                } catch (e) {
-                    if (e.statusCode === 429) {
-                        let retry_after = e.error.retry_after;
-                        console.log('waiting: ' + retry_after);
-                        await timeout(retry_after);
-                    }
-                }
+                await update_role(user.discord_api, constant.roles.emkc_hero);
             }
 
-            // test for and assign master role
+            // master role
             if (user.discord_api && user.discord_rank === 3) {
-                try {
-                    console.log('assigning ' + user.username + ' master');
-
-                    let res = await discord.api('put',
-                        '/guilds/'+constant.server_id+
-                        '/members/'+user.discord_api+
-                        '/roles/'+constant.roles.emkc_master);
-
-                    console.log(res.body);
-                } catch (e) {
-                    if (e.statusCode === 429) {
-                        let retry_after = e.error.retry_after;
-                        console.log('waiting: ' + retry_after);
-                        await timeout(retry_after);
-                    }
-                }
+                await update_role(user.discord_api, constant.roles.emkc_master);
             }
 
-            // test for and assign legend role
+            // legend role
             if (user.discord_api && user.discord_rank === 4) {
-                try {
-                    console.log('assigning ' + user.username + ' legend');
-
-                    let res = await discord.api('put',
-                        '/guilds/'+constant.server_id+
-                        '/members/'+user.discord_api+
-                        '/roles/'+constant.roles.emkc_legend);
-
-                    console.log(res.body);
-                } catch (e) {
-                    if (e.statusCode === 429) {
-                        let retry_after = e.error.retry_after;
-                        console.log('waiting: ' + retry_after);
-                        await timeout(retry_after);
-                    }
-                }
+                await update_role(user.discord_api, constant.roles.emkc_legend);
             }
         }
     }
