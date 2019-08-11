@@ -45,6 +45,8 @@ var constant = {
         emkc_winner: '490324386675425281'
     },
 
+    server_id: '473161189120147456',
+
     devprod() {
         this.base_url = sails.config.base_url;
         this.cdn_url = this.base_url + '/cdn';

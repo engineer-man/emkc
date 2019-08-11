@@ -108,6 +108,93 @@ var cron = {
 
                 return chain;
             });
+    },
+
+    async repair_roles() {
+        let users = await db.users
+            .find_all();
+
+        for (const user of users) {
+            // basic member role
+            if (user.discord_api) {
+                try {
+                    console.log('assigning ' + user.username + ' member');
+
+                    let res = await discord.api('put',
+                        '/guilds/'+constant.server_id+
+                        '/members/'+user.discord_api+
+                        '/roles/'+constant.roles.emkc_member);
+
+                    console.log(res);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+            // test for and assign novice role
+            if (user.discord_api && user.discord_rank === 1) {
+                try {
+                    console.log('assigning ' + user.username + ' novice');
+
+                    let res = await discord.api('put',
+                        '/guilds/'+constant.server_id+
+                        '/members/'+user.discord_api+
+                        '/roles/'+constant.roles.emkc_novice);
+
+                    console.log(res);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+            // test for and assign hero role
+            if (user.discord_api && user.discord_rank === 2) {
+                try {
+                    console.log('assigning ' + user.username + ' hero');
+
+                    let res = await discord.api('put',
+                        '/guilds/'+constant.server_id+
+                        '/members/'+user.discord_api+
+                        '/roles/'+constant.roles.emkc_hero);
+
+                    console.log(res);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+            // test for and assign master role
+            if (user.discord_api && user.discord_rank === 3) {
+                try {
+                    console.log('assigning ' + user.username + ' master');
+
+                    let res = await discord.api('put',
+                        '/guilds/'+constant.server_id+
+                        '/members/'+user.discord_api+
+                        '/roles/'+constant.roles.emkc_master);
+
+                    console.log(res);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+            // test for and assign legend role
+            if (user.discord_api && user.discord_rank === 4) {
+                try {
+                    console.log('assigning ' + user.username + ' legend');
+
+                    let res = await discord.api('put',
+                        '/guilds/'+constant.server_id+
+                        '/members/'+user.discord_api+
+                        '/roles/'+constant.roles.emkc_legend);
+
+                    console.log(res);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        }
     }
 
 };
