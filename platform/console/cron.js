@@ -113,25 +113,24 @@ var cron = {
     async repair_roles() {
         const timeout = ms => new Promise(res => setTimeout(res, ms));
 
-        const update_role = async (discord_api, role) => {
-            console.log('assigning ' + discord_api + ' ' + role);
+        const update_role = async (user, role) => {
+            console.log('assigning ' + user.username + ' ' + role);
 
-            try {
-                let res = await discord.api('put',
-                    '/guilds/'+constant.server_id+
-                    '/members/'+discord_api+
-                    '/roles/'+role);
+            let res = await discord.api('put',
+                '/guilds/'+constant.server_id+
+                '/members/'+user.discord_api+
+                '/roles/'+role);
 
-                console.log(res.body);
-            } catch (e) {
-                if (e.statusCode === 429) {
-                    let retry_after = e.error.retry_after;
+            console.log(res.statusCode);
+            //console.log(res.body);
 
-                    console.log('rate limited, waiting: ' + retry_after);
+            if (res.statusCode === 429) {
+                let retry_after = res.body.retry_after;
 
-                    await timeout(retry_after);
-                    await update_role(discord_api, role);
-                }
+                console.log('rate limited, waiting: ' + retry_after);
+
+                await timeout(retry_after);
+                await update_role(user, role);
             }
         };
 
@@ -141,27 +140,27 @@ var cron = {
         for (const user of users) {
             // member role
             if (user.discord_api) {
-                await update_role(user.discord_api, constant.roles.emkc_member);
+                await update_role(user, constant.roles.emkc_member);
             }
 
             // novice role
             if (user.discord_api && user.discord_rank === 1) {
-                await update_role(user.discord_api, constant.roles.emkc_novice);
+                await update_role(user, constant.roles.emkc_novice);
             }
 
             // hero role
             if (user.discord_api && user.discord_rank === 2) {
-                await update_role(user.discord_api, constant.roles.emkc_hero);
+                await update_role(user, constant.roles.emkc_hero);
             }
 
             // master role
             if (user.discord_api && user.discord_rank === 3) {
-                await update_role(user.discord_api, constant.roles.emkc_master);
+                await update_role(user, constant.roles.emkc_master);
             }
 
             // legend role
             if (user.discord_api && user.discord_rank === 4) {
-                await update_role(user.discord_api, constant.roles.emkc_legend);
+                await update_role(user, constant.roles.emkc_legend);
             }
         }
     }

@@ -11,7 +11,9 @@ module.exports = {
                     Authorization: 'Bot ' + sails.config.felix.key
                 },
                 body,
-                json: true
+                json: true,
+                simple: false,
+                resolveWithFullResponse: true
             });
     }
 
