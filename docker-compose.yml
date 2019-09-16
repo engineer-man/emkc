@@ -10,12 +10,14 @@ services:
         links:
             - redis
             - mysql
+        restart: always
     redis:
         container_name: emkc_redis
         image: redis:3.2.12
         volumes:
             - ./:/opt/emkc
             - ./var/docker/redis:/data
+        restart: always
     mysql:
         container_name: emkc_mysql
         image: mysql:5.6
@@ -28,3 +30,4 @@ services:
             - ./var/docker/mysql:/var/lib/mysql
             - ./var/docker/init:/var/lib/init
             - ./var/docker/config:/etc/mysql/conf.d
+        restart: always
