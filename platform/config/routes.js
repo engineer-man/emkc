@@ -62,6 +62,7 @@ module.exports.routes = {
     'GET /api/v1/stats/discord/channels': 'api/v1/stats/DiscordController.channels',
     'GET /api/v1/users': 'api/v1/UsersController.read_all',
     'GET /api/v1/users/:user_id': 'api/v1/UsersController.read',
+    'POST /api/v1/snippets': 'SnippetsController.create',
 
     // catch all (404)
     'ALL r|^\/(?!css|cdn|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
