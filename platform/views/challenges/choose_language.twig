@@ -81,19 +81,26 @@
                 <h4>PHP</h4>
                 <span class="badge badge-{{ ('php' in solved) ? diff : 'light' }}">{{ ('php' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
-            <div class="col-4 col-sm-3 col-md-2 offset-sm-3 offset-md-0">
+            <div class="col-4 col-sm-3 col-md-2 offset-sm-0 offset-md-0">
                 <a href="/challenges/{{ challenge.challenge_id }}/swift">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/swift.svg" class="img-fluid" />
                 </a>
                 <h4>Swift</h4>
                 <span class="badge badge-{{ ('swift' in solved) ? diff : 'light' }}">{{ ('swift' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
-            <div class="col-4 col-sm-3 col-md-2 offset-4 offset-sm-0">
+            <div class="col-4 col-sm-3 col-md-2 offset-0 offset-sm-0">
                 <a href="/challenges/{{ challenge.challenge_id }}/java">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/java.svg" class="img-fluid" />
                 </a>
                 <h4>Java</h4>
                 <span class="badge badge-{{ ('java' in solved) ? diff : 'light' }}">{{ ('java' in solved) ? 'Solved' : 'Unsolved' }}</span>
+            </div>
+            <div class="col-4 col-sm-3 col-md-2 offset-md-1">
+                <a href="/challenges/{{ challenge.challenge_id }}/rust">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/rust.svg" class="img-fluid" />
+                </a>
+                <h4>Rust</h4>
+                <span class="badge badge-{{ ('rust' in solved) ? diff : 'light' }}">{{ ('rust' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
         </div>
     </div>

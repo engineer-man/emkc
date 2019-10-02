@@ -150,6 +150,7 @@ module.exports = {
                     php: 'php',
                     swift: 'swift',
                     java: 'java',
+                    rust: 'rs',
                 }[language];
 
                 const abstract = await read_file(base_dir + folder + '/abstract.html');
@@ -217,6 +218,12 @@ module.exports = {
                                     if (typeof input === 'number')
                                         template += `        Integer value${i} = Integer.parseInt(args[${i-1}]);`
                                     break;
+                                case 'rust':
+                                    if (typeof input === 'string')
+                                        template += `    let value${i}: String = &args[${i}];`
+                                    if (typeof input === 'number')
+                                        template += `    let value${i}: i32 = args[${i}].parse().unwrap();`
+                                    break;
                                 case 'js':
                                     template += `const value${i} = process.argv[${i+1}];`
                                     break;
@@ -256,6 +263,7 @@ module.exports = {
                         php: 'php',
                         swift: 'swift',
                         java: 'java',
+                        rust: 'rust',
                     }[language]
                 });
             });

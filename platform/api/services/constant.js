@@ -6,7 +6,7 @@ var constant = {
     yes: 1,
 
     challenges: {
-        supported_languages: ['js', 'python', 'go', 'c', 'ruby', 'cpp', 'cs', 'php', 'swift', 'java'],
+        supported_languages: ['js', 'python', 'go', 'c', 'ruby', 'cpp', 'cs', 'php', 'swift', 'java', 'rust'],
         difficulty: {
             easy: 1,
             medium: 2,
