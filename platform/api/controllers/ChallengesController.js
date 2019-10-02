@@ -220,7 +220,7 @@ module.exports = {
                                     break;
                                 case 'rust':
                                     if (typeof input === 'string')
-                                        template += `    let value${i}: String = &args[${i}];`
+                                        template += `    let value${i}: &String = &args[${i}];`
                                     if (typeof input === 'number')
                                         template += `    let value${i}: i32 = args[${i}].parse().unwrap();`
                                     break;
