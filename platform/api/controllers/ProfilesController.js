@@ -29,9 +29,26 @@ module.exports = {
                     ]
                 });
 
+            let user_challenge_ids = (await db.user_challenges
+                .find_all({
+                    where: {
+                        user_id: req.glob.user_id
+                    },
+                    include: [
+                        {
+                            model: db.challenges,
+                            as: 'challenge'
+                        }
+                    ],
+                    order: [
+                        ['created_at', 'desc']
+                    ]
+                })).map(challenge => challenge.challenge_id);
+
             return res.view({
                 user,
-                challenges
+                challenges,
+                user_challenge_ids
             });
         } catch(e) {
             return res.redirect('/');

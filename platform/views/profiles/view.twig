@@ -12,13 +12,21 @@
                 <h4 class="f300">Solved Challenges</h4>
 
                 {% for challenge in challenges %}
-                    <a href="/challenges/{{ challenge.challenge_id}}/{{ challenge.language }}" class="challenge {{ challenge.challenge.difficulty_name }}">
-                        <p>
-                            {{ challenge.challenge.description }}
-                        </p>
-                        <span class="badge badge-light">{{ challenge.language }}</span>
-                        <span class="badge badge-primary">Solved on: {{ challenge.created_at|date('m/d/Y') }}</span>
-                    </a>
+                    <div class="d-flex challenge">
+                        <a href="/challenges/{{ challenge.challenge_id}}/{{ challenge.language }}" class="flex-grow-1 {{ challenge.challenge.difficulty_name }}">
+                            <p>
+                                {{ challenge.challenge.description }}
+                            </p>
+                            <span class="badge badge-light">{{ challenge.language }}</span>
+                            <span class="badge badge-primary">Solved on: {{ challenge.created_at|date('m/d/Y') }}</span>
+                        </a>
+                        {% if challenge.challenge_id in user_challenge_ids %}
+                            <a href="/@{{ user.username }}/challenges/{{ challenge.challenge_id}}/{{ challenge.language }}" class="view_solution d-flex flex-column justify-content-center align-items-center">
+                                <p>View</p>
+                                <p>Solution</p>
+                            </a>
+                        {% endif %}
+                    </div>
                 {% else %}
                     This user has not solved any challenges.
                 {% endif %}
