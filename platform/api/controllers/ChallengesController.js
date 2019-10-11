@@ -366,6 +366,59 @@ module.exports = {
             });
     },
 
+    async view_other(req, res) {
+        const { username, challenge_id, language } = req.params;
+
+        let user = await db.users
+            .find_one({
+                where: {
+                    username
+                }
+            });
+        if(!user) throw null;
+
+        let user_solution = await db.user_challenges
+            .find_one({
+                where: {
+                    user_id: req.glob.user_id,
+                    challenge_id,
+                    language
+                }
+            });
+        if(!user_solution) return res.status(403).send('');
+
+        let challenge = await db.user_challenges
+            .find_one({
+                where: {
+                    user_id: user.user_id,
+                    challenge_id,
+                    language
+                },
+                include: [
+                    {
+                        model: db.challenges,
+                        as: 'challenge'
+                    }
+                ],
+                order: [
+                    ['created_at', 'desc']
+                ]
+            });
+
+        try {
+            if (!challenge) throw null;
+
+            return res.view('snippets/view', {
+                snippet: {
+                    language,
+                    snip: challenge.solution
+                }
+            });
+        } catch(e) {
+            return res.redirect('/snippets');
+        }
+    },
+
     _config: {}
 
 };

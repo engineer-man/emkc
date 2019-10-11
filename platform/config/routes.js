@@ -49,6 +49,7 @@ module.exports.routes = {
     'GET /tags/search': 'TagsController.search',
 
     'GET /@:username': 'ProfilesController.view',
+    'GET /@:username/challenges/:challenge_id/:language': 'ChallengesController.view_other',
 
     // piston
     'POST /api/internal/piston/execute': 'api/internal/PistonController.execute',
