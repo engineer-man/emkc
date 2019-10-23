@@ -53,8 +53,6 @@ module.exports = {
         } catch(e) {
             return res.redirect('/');
         }
-    },
-
-    _config: {}
+    }
 
 };

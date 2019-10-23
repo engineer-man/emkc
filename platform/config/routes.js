@@ -10,10 +10,6 @@ module.exports.routes = {
     'GET /community': 'CommunityController.home',
     'GET /community/about': 'CommunityController.about',
     'GET /community/power': 'CommunityController.power',
-    'GET /community/video_requests': 'CommunityController.video_requests',
-    'POST /community/add_video_request': 'CommunityController.add_video_request',
-    'POST /community/delete_video_request': 'CommunityController.delete_video_request',
-    'POST /community/video_request_vote': 'CommunityController.video_request_vote',
 
     'GET /challenges': 'ChallengesController.home',
     'GET /challenges/choose_language/:challenge_id': 'ChallengesController.choose_language',
@@ -39,12 +35,6 @@ module.exports.routes = {
     'GET /scripts': 'ScriptsController.home',
     'GET /scripts/:cli_script_id/:slug': 'ScriptsController.view',
     'GET /exec/:cli_script_id': 'ScriptsController.exec',
-
-    'GET /coderoom/new': 'CodeRoomsController.create',
-    'POST /coderoom/sync': 'CodeRoomsController.sync',
-    'POST /coderoom/save': 'CodeRoomsController.save',
-    'GET /coderoom/users/:hash': 'CodeRoomsController.users',
-    'GET /r/:hash': 'CodeRoomsController.view',
 
     'GET /tags/search': 'TagsController.search',
 

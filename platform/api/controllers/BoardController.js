@@ -1,31 +1,23 @@
 module.exports = {
 
-    home(req, res) {
-        return Promise.resolve(null)
-            .then(() => {
-                return [
-                    db.users
-                        .find_all({
-                            where: {
-                                is_staff: {
-                                    $ne: 1
-                                }
-                            },
-                            order: [
-                                ['score', 'desc'],
-                                ['user_id']
-                            ],
-                            limit: 100
-                        })
-                ];
-            })
-            .spread((users) => {
-                return res.view({
-                    users
-                });
+    async home(req, res) {
+        let users = await db.users
+            .find_all({
+                where: {
+                    is_staff: {
+                        $ne: 1
+                    }
+                },
+                order: [
+                    ['score', 'desc'],
+                    ['user_id']
+                ],
+                limit: 100
             });
-    },
 
-    _config: {}
+        return res.view({
+            users
+        });
+    }
 
 };

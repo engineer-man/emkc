@@ -1,6 +1,3 @@
-const request = require('request-promise');
-const q = require('q');
-
 module.exports = {
 
     home(req, res) {
@@ -23,8 +20,6 @@ module.exports = {
     fourohfour(req, res) {
         res.status(404);
         return res.view('home/fourohfour');
-    },
-
-    _config: {}
+    }
 
 };
