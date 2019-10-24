@@ -1,0 +1,19 @@
+{% extends 'master.twig'%}
+{% block content %}
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <div class="em_common_content em_stickers">
+        <div class="row marginbottom40">
+            <div class="col-12 col-sm-6 offset-sm-3">
+                <div id="stickers"></div>
+                <script>
+                    ReactDOM.render(
+                        React.createElement(Stickers, {
+                            paypal_id: {{ sails.config.paypal.id|json_encode }}
+                        }),
+                        document.getElementById('stickers')
+                    );
+                </script>
+            </div>
+        </div>
+    </div>
+{% endblock %}

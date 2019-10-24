@@ -16,6 +16,9 @@ module.exports = {
             timestamps: false
         }
     },
+    api: {
+        internal_key: ''
+    },
     discord: {
         client_id: '496807648289882112',
         client_secret: 'IqJEUGdYR2UxHKrVmVTha__3aLhIC68l'
@@ -29,6 +32,10 @@ module.exports = {
     mailgun: {
         key: 'key',
         domain: 'domain'
+    },
+    paypal: {
+        id: '',
+        secret: ''
     },
     piston: {
         host: '127.0.0.1:2000',

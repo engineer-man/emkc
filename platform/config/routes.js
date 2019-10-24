@@ -6,6 +6,7 @@ module.exports.routes = {
     'GET /auth/discord_cb': 'AuthController.discord_cb',
     'GET /privacy': 'HomeController.privacy',
     //'GET /board': 'BoardController.home',
+    'GET /stickers': 'MerchController.stickers',
 
     'GET /community': 'CommunityController.home',
     'GET /community/about': 'CommunityController.about',
