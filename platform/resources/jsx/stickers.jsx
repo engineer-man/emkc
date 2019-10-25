@@ -52,10 +52,10 @@ class Stickers extends React.Component {
                 onAuthorize: (data, actions) => {
                     return actions.payment
                         .execute()
-                        .then(() => {
+                        .then(details => {
                             axios
                                 .post('/stickers/order', {
-                                    tx: data.orderID,
+                                    tx: details.transactions[0].related_resources[0].sale.id,
                                     quantity: this.state.quantity,
                                     name: this.state.name,
                                     email: this.state.email,
