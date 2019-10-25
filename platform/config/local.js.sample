@@ -35,7 +35,8 @@ module.exports = {
     },
     paypal: {
         id: '',
-        secret: ''
+        secret: '',
+        coupon: ''
     },
     piston: {
         host: '127.0.0.1:2000',

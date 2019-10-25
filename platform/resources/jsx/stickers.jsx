@@ -5,12 +5,21 @@ class Stickers extends React.Component {
 
         this.state = {
             done: false,
-            env: props.mode || 'sandbox',
-            quantity: 3,
+            valid: false,
+            discounted: false,
+            env: props.env || 'sandbox',
+            quantity: props.options[1].quantity,
             name: '',
             email: '',
-            address: ''
+            address: '',
+            coupon: ''
         };
+
+        this.handle_update = this.handle_update.bind(this);
+        this.check_coupon = this.check_coupon.bind(this);
+        this.submit = this.submit.bind(this);
+
+        this.check_coupon_timer = null;
     }
 
     componentDidMount() {
@@ -29,28 +38,99 @@ class Stickers extends React.Component {
                     tagline: false
                 },
                 commit: true,
-                payment: function(data, actions) {
+                payment: (data, actions) => {
                     return actions.payment.create({
                         transactions: [{
                             amount: {
-                                total: {
-                                    3: '2.40',
-                                    5: '3.50',
-                                    10: '6.00'
-                                }[this.state.quantity],
+                                total: this.props.options.find(option => option.quantity === this.state.quantity).cost,
                                 currency: 'USD'
                             },
                             description: this.state.quantity + ' 2" x 2" Engineer Man Stickers'
                         }]
                     });
                 },
-                onAuthorize: function(data, actions) {
-                    console.log(data)
-                    return actions.payment.execute().then(function() {
-                        console.log('done');
-                    });
+                onAuthorize: (data, actions) => {
+                    return actions.payment
+                        .execute()
+                        .then(() => {
+                            axios
+                                .post('/stickers/order', {
+                                    tx: data.orderID,
+                                    quantity: this.state.quantity,
+                                    name: this.state.name,
+                                    email: this.state.email,
+                                    address: this.state.address,
+                                    coupon: null
+                                })
+                                .then(res => {
+                                    return bootbox
+                                        .alert(
+                                            'Your order was placed successfully, thanks. Please '+
+                                            'reference Order ID #' + res.data.order_id + ' if necessary.',
+                                            () => { location = location }
+                                        );
+                                });
+                        });
                 }
             }, '#paypal-button');
+    }
+
+    handle_update(e) {
+        e.persist();
+
+        this.setState({
+            [e.target.id]: e.target.value
+        }, () => {
+            if (e.target.id === 'coupon') {
+                this.check_coupon();
+            }
+
+            this.setState({
+                valid: this.state.name && this.state.email && this.state.address
+            });
+        });
+    }
+
+    check_coupon() {
+        clearInterval(this.check_coupon_timer);
+        this.check_coupon_timer = setTimeout(() => {
+            return axios
+                .get('/stickers/check_code/' + this.state.coupon)
+                .then(res => {
+                    let valid = res.data.valid;
+
+                    if (valid) {
+                        this.setState({
+                            discounted: valid,
+                            quantity: 2
+                        });
+                    }
+                });
+        }, 300);
+    }
+
+    submit(e) {
+        return axios
+            .post('/stickers/order', {
+                tx: null,
+                quantity: this.state.quantity,
+                name: this.state.name,
+                email: this.state.email,
+                address: this.state.address,
+                coupon: this.state.valid ? this.state.coupon : null
+            })
+            .then(res => {
+                if (res.status >= 300) {
+                    return bootbox.alert('There was a problem submitting your order');
+                }
+
+                return bootbox
+                    .alert(
+                        'Your order was placed successfully, thanks. Please '+
+                        'reference Order ID #' + res.data.order_id + ' if necessary.',
+                        () => { location = location }
+                    );
+            });
     }
 
     render() {
@@ -67,32 +147,24 @@ class Stickers extends React.Component {
                     scratching and fading. Stickers cannot be removed and reapplied.
                 </p>
 
-                <p>
-                    First batch of stickers is 300 in total and are being sold at cost (possibly even a loss).
-                    If you are already an Engineer Man supporter,
-                    have donated during stream, have Nitro boosted our Discord server, have been granted
-                    the role of Discord Hero, or attained the level of
-                    EMKC Master, please message EngineerMan#0001 on Discord for free stickers.
-                </p>
-
-                <p>
-                    <span class="f700">Privacy Notes:</span>
-                    <ul>
-                        <li>No payment information is received or stored by EMKC. Payment is handled entirely by PayPal.</li>
-                        <li>Name and address is only stored until your stickers have shipped and then it is deleted.</li>
-                        <li>Your email is used only to contact you if for some reason there is a problem processing your order.</li>
-                    </ul>
-                </p>
-
                 <form>
                     <div class="form-group">
                         <label class="f700">Quantity</label>
                         <br />
-                        <div class="quantity_option active">3 for $2.40</div>
-                        {' '}
-                        <div class="quantity_option">5 for $3.50</div>
-                        {' '}
-                        <div class="quantity_option">10 for $6.00</div>
+                        {this.state.discounted && (
+                            <div class="quantity_option active">2 for FREE</div>
+                        ) || (
+                            this.props.options.filter(option => option.cost !== 'FREE').map(option => {
+                                return (
+                                    <React.Fragment>
+                                        <div
+                                            class={'quantity_option ' + (this.state.quantity === option.quantity && 'active')}
+                                            onClick={() => this.setState({ quantity: option.quantity })}>{option.quantity} for ${option.cost}</div>
+                                        {' '}
+                                    </React.Fragment>
+                                )
+                            })
+                        )}
                     </div>
                     <div class="form-group">
                         <label class="f700">Name</label>
@@ -141,11 +213,24 @@ class Stickers extends React.Component {
                             class="form-control"
                             placeholder="If you have a coupon, enter it here"
                             autocomplete="off"
-                            onChange={this.check_coupon} />
+                            disabled={this.state.discounted}
+                            onChange={this.handle_update} />
+                        {this.state.coupon && (
+                            this.state.discounted && (
+                                <small class="text-success">Coupon valid</small>
+                            )
+                        )}
                     </div>
                 </form>
-
-                <div id="paypal-button"></div>
+                {this.state.discounted && (
+                    <button
+                        type="button"
+                        class="btn btn-success"
+                        disabled={!this.state.valid}
+                        onClick={this.submit}>Submit</button>
+                ) || (
+                    <div id="paypal-button" style={{ visibility: !this.state.discounted && this.state.valid ? 'visible' : 'hidden' }}></div>
+                )}
             </React.Fragment>
         )
     }

@@ -7,6 +7,8 @@ module.exports.routes = {
     'GET /privacy': 'HomeController.privacy',
     //'GET /board': 'BoardController.home',
     'GET /stickers': 'MerchController.stickers',
+    'POST /stickers/order': 'MerchController.order_stickers',
+    'GET /stickers/check_code/:code': 'MerchController.check_code',
 
     'GET /community': 'CommunityController.home',
     'GET /community/about': 'CommunityController.about',

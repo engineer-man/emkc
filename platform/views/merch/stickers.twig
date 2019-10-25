@@ -3,16 +3,58 @@
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
     <div class="em_common_content em_stickers">
         <div class="row marginbottom40">
-            <div class="col-12 col-sm-6 offset-sm-3">
+            <div class="col-12 col-sm-7 col-md-6 offset-md-1">
                 <div id="stickers"></div>
                 <script>
                     ReactDOM.render(
                         React.createElement(Stickers, {
-                            paypal_id: {{ sails.config.paypal.id|json_encode }}
+                            env: '{{ sails.config.environment == 'production' ? 'production' : 'sandbox' }}',
+                            paypal_id: {{ sails.config.paypal.id|json_encode }},
+                            options: {{ options|json_encode }}
                         }),
                         document.getElementById('stickers')
                     );
                 </script>
+            </div>
+            <div class="col-12 col-sm-5 col-md-4">
+                <p>
+                    <span class="f700">Batch Notes:</span>
+                    <ul>
+                        <li>
+                            First batch of stickers is 300 in total and are being sold at cost (possibly even a loss).
+                            If you're able to see this page, stickers are still available.
+                        </li>
+                        <li>
+                            If you are already an Engineer Man supporter,
+                            have donated during stream, have Nitro boosted our Discord server, have been granted
+                            the role of Discord Hero, or attained the level of
+                            EMKC Master, and have not yet received a sticker, please message EngineerMan#0001 on Discord for
+                            a coupon code good for two stickers.
+                        </li>
+                    </ul>
+                </p>
+
+                <p>
+                    <span class="f700">Order Notes:</span>
+                    <ul>
+                        <li>Make sure your address is accurate and exactly as it should appear on an envelope.</li>
+                        <li>Checkout button will appear once the form is filled out.</li>
+                        <li>
+                            Stickers are shipped from Florida, USA. Please allow 3 days for processing, 2-3 days for
+                            domestic delivery, 7-14 days for international delivery.
+                        </li>
+                        <li>After order submission, you'll receive an Order ID. Please record this in case you need to reference this order.</li>
+                    </ul>
+                </p>
+
+                <p>
+                    <span class="f700">Privacy Notes:</span>
+                    <ul>
+                        <li>No payment information is received or stored by EMKC. Payment is handled entirely by PayPal.</li>
+                        <li>Name and address is only stored until your stickers have shipped and then it is deleted.</li>
+                        <li>Your email is used only to contact you if for some reason there is a problem processing your order.</li>
+                    </ul>
+                </p>
             </div>
         </div>
     </div>
