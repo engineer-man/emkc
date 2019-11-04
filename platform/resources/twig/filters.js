@@ -1,19 +1,22 @@
-const contains = function(array, value) {
-    if(value === undefined || value === null){
+const contains = (array, value) => {
+    if (value === undefined || value === null) {
         return false;
     }
 
-    for(let checking of array) {
+    for (let checking of array) {
         let found = true;
-        for(let entry of Object.entries(checking)) {
-            if(value[0][entry[0]] !== entry[1]) {
+
+        for (let entry of Object.entries(checking)) {
+            if (value[0][entry[0]] !== entry[1]) {
                 found = false;
             }
         }
-        if(found) {
+
+        if (found) {
             return true;
         }
     }
+
     return false;
 };
 

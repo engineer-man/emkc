@@ -1,6 +1,7 @@
 const twig = require('twig');
-for(let filter of require('../resources/twig/filters')) {
-    twig.extendFilter(filter.name, filter.filter)
+
+for (let filter of require('../resources/twig/filters')) {
+    twig.extendFilter(filter.name, filter.filter);
 }
 
 module.exports.views = {
