@@ -1,40 +1,24 @@
 {% extends 'master.twig'%}
 {% block content %}
-    <div class="em_common_content container">
-        <div class="row marginbottom20">
-            <div class="col-12">
-                <h4 class="f300">Top EMKC Members</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="d-inline-flex" style="flex-wrap: wrap; justify-content: space-evenly; width: 100%;">
-                    {% for user in users %}
-                        {% set color = '#000' %}
-                        {% if user.score >= 40 %}
-                            {% set color = '#79ACBF' %}
-                        {% endif %}
-                        {% if user.score >= 300 %}
-                            {% set color = '#7D9DC5' %}
-                        {% endif %}
-                        {% if user.score >= 1000 %}
-                            {% set color = '#ACB2E4' %}
-                        {% endif %}
-                        {% if user.score >= 5000 %}
-                            {% set color = '#D2ACE4' %}
-                        {% endif %}
-                        <a href="/@{{ user.username }}" class="contributor" style="position: relative; display: inline-block; width: 250px; height: 58px; background: #21252B; border-bottom: {{ color }} 4px solid; margin: 0 0 20px 0;">
-                            <img src="{{ req.glob.constant.cdn_url ~ user.avatar_url }}" style="position: absolute; top: 0; left: 0; width: 58px; height: 58px;" />
-                            <div style="position: absolute; top: 2px; left: 68px; right: 0;">
-                                {{ user.display_name|e }}
-                            </div>
-                            <div style="position: absolute; top: 26px; left: 68px; right: 0;">
-                                <i class="fa fa-bolt"></i>
-                                {{ user.score }}
-                            </div>
-                        </a>
-                    {% endfor %}
-                </div>
+    <div class="em_main_board_outer">
+        <div class="left" style="flex: 1;">
+            {% if req.glob.user_id %}
+                <a href="/questions/ask" class="btn btn-success btn-sm" style="float: right; color: #fff;">
+                    Ask New Question
+                </a>
+            {% else %}
+                <a onclick="login.open('/questions/ask')" class="btn btn-success btn-sm" style="float: right; color: #fff;">
+                    Ask New Question
+                </a>
+            {% endif %}
+            <h5 class="f700 marginbottom20">Newest Questions</h5>
+            <div class="em_main_board">
+                <div id="questions"></div>
+                <script>
+                    ReactDOM.render(React.createElement(BoardQuestions, {
+                        questions: {{ questions|json_encode|noscript }}
+                    }), document.getElementById('questions'));
+                </script>
             </div>
         </div>
     </div>
