@@ -3,11 +3,11 @@
         "official": false,
         "name": "Testing short strings",
         "input": [
-            "Engineer man",
-            "Chocolate bar",
-            "Weetabix"
+            ["Engineer man"],
+            ["Chocolate bar"],
+            ["Weetabix"]
         ],
-        "output":[
+        "output": [
             "e",
             "o,a",
             "e"
@@ -17,11 +17,11 @@
         "official": false,
         "name": "Testing long strings",
         "input": [
-            "tttt;;;;;;tt;;t;;t;;;t;t;",
-            "lllasllsllslsllsllslslslal",
-            "llllttttnabcefghigklmnop"
+            ["tttt;;;;;;tt;;t;;t;;;t;t;"],
+            ["lllasllsllslsllsllslslslal"],
+            ["llllttttnabcefghigklmnop"]
         ],
-        "output":[
+        "output": [
             ";",
             "l",
             "l,t"
