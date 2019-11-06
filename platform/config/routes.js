@@ -1,11 +1,11 @@
 module.exports.routes = {
 
-    'GET /': 'BoardController.home',
+    'GET /': 'HomeController.home',
     'GET /logout': 'HomeController.logout',
     'GET /auth/discord': 'AuthController.discord',
     'GET /auth/discord_cb': 'AuthController.discord_cb',
     'GET /privacy': 'HomeController.privacy',
-    //'GET /board': 'BoardController.home',
+    'GET /board': 'BoardController.home',
     'GET /stickers': 'MerchController.stickers',
     'POST /stickers/order': 'MerchController.order_stickers',
     'GET /stickers/check_code/:code': 'MerchController.check_code',

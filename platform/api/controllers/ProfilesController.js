@@ -27,9 +27,10 @@ module.exports = {
                     order: [
                         ['created_at', 'desc']
                     ]
-                });
+                })
+                .map(challenge => challenge.toJSON());
 
-            let user_challenge_ids = (await db.user_challenges
+            let user_solved_challenges = await db.user_challenges
                 .find_all({
                     where: {
                         user_id: req.glob.user_id
@@ -43,18 +44,22 @@ module.exports = {
                     order: [
                         ['created_at', 'desc']
                     ]
-                })).map(challenge => challenge.challenge_id);
+                })
+                .map(challenge => {
+                    return {
+                        challenge_id: challenge.challenge_id,
+                        language: challenge.language
+                    };
+                });
 
             return res.view({
                 user,
                 challenges,
-                user_challenge_ids
+                user_solved_challenges
             });
         } catch(e) {
             return res.redirect('/');
         }
-    },
-
-    _config: {}
+    }
 
 };

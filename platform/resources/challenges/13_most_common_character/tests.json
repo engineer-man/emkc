@@ -7,8 +7,9 @@
             ["Chocolate bar"],
             ["Weetabix"]
         ],
+
         "output":[
-            "e,n",
+            "n",
             "o,a",
             "e"
         ]
@@ -21,7 +22,7 @@
             ["lllasllsllslsllsllslslslal"],
             ["llllttttnabcefghigklmnop"]
         ],
-        "output":[
+        "output": [
             ";",
             "l",
             "l"
