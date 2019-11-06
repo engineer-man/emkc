@@ -7,8 +7,9 @@
             ["Chocolate bar"],
             ["Weetabix"]
         ],
-        "output": [
-            "e",
+
+        "output":[
+            "n",
             "o,a",
             "e"
         ]
@@ -24,7 +25,7 @@
         "output": [
             ";",
             "l",
-            "l,t"
+            "l"
         ]
     }
 ]
