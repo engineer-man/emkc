@@ -196,9 +196,9 @@ module.exports = {
                                     break;
                                 case 'cpp':
                                     if (typeof input === 'string')
-                                        template += `    string value${i} = argv[${i}];`;
+                                        template += `    std::string value${i} = argv[${i}];`;
                                     if (typeof input === 'number')
-                                        template += `    int value${i} = atoi(argv[${i}]);`;
+                                        template += `    int value${i} = std::atoi(argv[${i}]);`;
                                     break;
                                 case 'cs':
                                     if (typeof input === 'string')
