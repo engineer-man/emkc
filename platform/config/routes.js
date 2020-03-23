@@ -5,7 +5,6 @@ module.exports.routes = {
     'GET /auth/discord': 'AuthController.discord',
     'GET /auth/discord_cb': 'AuthController.discord_cb',
     'GET /privacy': 'HomeController.privacy',
-    //'GET /board': 'BoardController.home',
 
     'GET /community': 'CommunityController.home',
     'GET /community/about': 'CommunityController.about',
@@ -16,17 +15,6 @@ module.exports.routes = {
     'POST /challenges/execute/:challenge_id': 'ChallengesController.execute',
     'GET /challenges/:challenge_id/:language': 'ChallengesController.challenge',
 
-    'GET /questions/ask': 'QuestionsController.ask',
-    'POST /questions/ask': 'QuestionsController.ask',
-    'GET /questions/edit/:question_id': 'QuestionsController.edit',
-    'POST /questions/edit/:question_id': 'QuestionsController.edit',
-    'GET r|/d([0-9]+)/(.*)|question_id,name': 'QuestionsController.view',
-
-    'POST /comments/create': 'CommentsController.create',
-    'POST /comments/save': 'CommentsController.save',
-
-    'POST /votes/handle/:type/:pk': 'VotesController.handle',
-
     'GET /snippets': 'SnippetsController.create',
     'POST /snippets': 'SnippetsController.create',
     'GET /snippets/mine': 'SnippetsController.mine',
@@ -35,8 +23,6 @@ module.exports.routes = {
     'GET /scripts': 'ScriptsController.home',
     'GET /scripts/:cli_script_id/:slug': 'ScriptsController.view',
     'GET /exec/:cli_script_id': 'ScriptsController.exec',
-
-    'GET /tags/search': 'TagsController.search',
 
     'GET /@:username': 'ProfilesController.view',
     'GET /@:username/challenges/:challenge_id/:language': 'ChallengesController.view_other',

@@ -11,14 +11,9 @@
     </style>
 {% endblock %}
 {% block content %}
-    <div id="snippet"></div>
-    <script>
-        ReactDOM.render(
-            React.createElement(Snippet, {
-                language: {{ snippet.language|json_encode }},
-                snip: {{ snippet.snip|json_encode|noscript }}
-            }),
-            document.getElementById('snippet')
-        );
-    </script>
+    <div
+        id="react_snippet"
+        data-language="{{ snippet.language|json_encode|e }}"
+        data-snip="{{ snippet.snip|json_encode|noscript|e }}"
+    ></div>
 {% endblock %}

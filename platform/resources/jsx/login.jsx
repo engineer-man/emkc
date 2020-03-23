@@ -1,3 +1,7 @@
+import React from 'react';
+
+import Util from 'js/util';
+
 class Login extends React.Component {
 
     constructor(props) {
@@ -46,3 +50,7 @@ class Login extends React.Component {
     }
 
 }
+
+window.login = Util.try_render('react_login', Login);
+
+export default Login;

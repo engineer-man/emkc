@@ -1,3 +1,7 @@
+import React from 'react';
+
+import Util from 'js/util';
+
 class CreateSnippet extends React.Component {
 
     constructor(props) {
@@ -29,19 +33,18 @@ class CreateSnippet extends React.Component {
         monaco.editor.setModelLanguage(this.state.editor.getModel(), event.target.value);
     }
 
-    save() {
-        return axios
+    async save() {
+        let res = await axios
             .post('/snippets', {
                 language: this.state.language,
                 snip: this.state.editor.getValue()
-            })
-            .then(res => {
-                if (res.data.status === 'error') {
-                    return bootbox.alert('Please provide some code');
-                }
-
-                location = res.data.payload.url;
             });
+
+        if (res.data.status === 'error') {
+            return bootbox.alert('Please provide some code');
+        }
+
+        location = res.data.payload.url;
     }
 
     render() {
@@ -116,3 +119,7 @@ class CreateSnippet extends React.Component {
     }
 
 }
+
+Util.try_render('react_create_snippet', CreateSnippet);
+
+export default CreateSnippet;

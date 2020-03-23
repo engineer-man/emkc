@@ -4,10 +4,10 @@ require('./common');
 const moment = require('moment');
 const request = require('request-promise');
 
-var cron = {
+let cron = {
 
     ingest_chats() {
-        var messages = require('fs')
+        let messages = require('fs')
             .read_file_sync('chats.log')
             .to_string()
             .split('\n')
@@ -40,7 +40,7 @@ var cron = {
 
 };
 
-var method = process.argv[2]
+let method = process.argv[2]
     .replace(/-/gi, '_')
     .replace(/^_+/gi, '');
 

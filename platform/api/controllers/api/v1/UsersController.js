@@ -47,8 +47,6 @@ module.exports = {
         }
 
         return res.send(user);
-    },
-
-    _config: {}
+    }
 
 };

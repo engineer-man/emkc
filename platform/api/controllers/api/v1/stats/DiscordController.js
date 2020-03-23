@@ -2,8 +2,8 @@ const moment = require('moment');
 
 module.exports = {
 
-    messages(req, res) {
-        var { user, discord_id, term, start, end, limit } = req.query;
+    async messages(req, res) {
+        let { user, discord_id, term, start, end, limit } = req.query;
 
         if (!Array.is_array(user) && typeof user !== 'undefined') {
             user = [user];
@@ -13,7 +13,7 @@ module.exports = {
             discord_id = [discord_id];
         }
 
-        var query = {
+        let query = {
             where: {
                 $and: []
             },
@@ -31,7 +31,7 @@ module.exports = {
             limit: 1000
         };
 
-        var dates = [];
+        let dates = [];
 
         if (user) {
             query.where.user = user;
@@ -75,17 +75,16 @@ module.exports = {
             query.limit = +limit;
         }
 
-        return db.discord_chat_messages
-            .find_all(query)
-            .then(stats => {
-                return res.send(stats);
-            });
+        let stats = await db.discord_chat_messages
+            .find_all(query);
+
+        return res.send(stats);
     },
 
-    channels(req, res) {
-        var { user, discord_id, start, end, limit } = req.query;
+    async channels(req, res) {
+        let { user, discord_id, start, end, limit } = req.query;
 
-        var query = {
+        let query = {
             where: {
                 $and: []
             },
@@ -102,7 +101,7 @@ module.exports = {
             limit: 1000
         };
 
-        var dates = [];
+        let dates = [];
 
         if (user) {
             query.where.user = {
@@ -142,13 +141,10 @@ module.exports = {
             query.limit = +limit;
         }
 
-        return db.discord_chat_messages
-            .find_all(query)
-            .then(stats => {
-                return res.send(stats);
-            });
-    },
+        let stats = await db.discord_chat_messages
+            .find_all(query);
 
-    _config: {}
+        return res.send(stats);
+    }
 
 };

@@ -8,18 +8,13 @@
     </style>
 {% endblock %}
 {% block content %}
-    <div id="challenge"></div>
-    <script>
-        ReactDOM.render(
-            React.createElement(Challenge, {
-                solved: {{ solved }},
-                challenge: {{ challenge|json_encode }},
-                language: '{{ language }}',
-                monaco_language: '{{ monaco_language }}',
-                abstract: {{ abstract|json_encode }},
-                template: {{ template|json_encode }}
-            }),
-            document.getElementById('challenge')
-        );
-    </script>
+    <div
+        id="react_challenge"
+        data-solved="{{ solved|json_encode|e }}",
+        data-challenge="{{ challenge|json_encode|e }}",
+        data-language="{{ language|json_encode|e }}",
+        data-monaco_language="{{ monaco_language|json_encode|e }}",
+        data-abstract="{{ abstract|json_encode|e }}",
+        data-template="{{ template|json_encode|e }}"
+    ></div>
 {% endblock %}

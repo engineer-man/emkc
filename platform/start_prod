@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# mini
-node_modules/.bin/gulp
-
-# start
-node_modules/.bin/pm2 start --no-daemon pm2.json

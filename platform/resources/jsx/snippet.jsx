@@ -1,3 +1,7 @@
+import React from 'react';
+
+import Util from 'js/util';
+
 class Snippet extends React.Component {
 
     componentDidMount() {
@@ -26,3 +30,7 @@ class Snippet extends React.Component {
     }
 
 }
+
+Util.try_render('react_snippet', Snippet);
+
+export default Snippet;
