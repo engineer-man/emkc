@@ -1,5 +1,5 @@
-module.exports = function(req, res, next) {
-    var authorization;
+module.exports = (req, res, next) => {
+    let authorization;
 
     Object.keys(req.headers)
         .for_each(key => {

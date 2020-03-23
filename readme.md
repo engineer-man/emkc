@@ -10,7 +10,7 @@ if you plan to use this software.
 - `./emkc init`
 - `./emkc start`
 
-  You can access the local version of the site at http://127.0.0.1:2005/
+You can access the local version of the site at http://127.0.0.1:2005/
 
 
 #### Local Config
@@ -18,13 +18,6 @@ There are three files needed to configure the application. Make sure to modify t
 these files are not present, navigate to the project root and run `./emkc init`.
 - App: `platform/config/local.js`
 - DB Migrations: `platform/migrations/config.json`
-
-
-#### Resource Build Pipeline
-- resources/css/\*\*/\*.less compiled to public/css/master.css
-- resources/js/jsx/\*\*/\*.jsx compiled to public/js/master_jsx.js
-- resources/js/js/\*\*/\*.js compiled to public/js/master_js.js
-- public/js/\*.js combined and uglified to public/js/master.js
 
 
 #### Contribution Guidelines

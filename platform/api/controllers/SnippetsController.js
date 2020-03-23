@@ -1,6 +1,3 @@
-const fs = require('fs');
-const q = require('q');
-
 module.exports = {
 
     async view(req, res) {
@@ -40,43 +37,39 @@ module.exports = {
         });
     },
 
-    create(req, res) {
+    async create(req, res) {
         if (req.method === 'POST') {
             const { language, snip } = req.body;
 
-            return Promise.resolve(null)
-                .then(() => {
-                    if (!snip) {
-                        throw new Error('Please supply some code');
+            try {
+                if (!snip) {
+                    throw new Error('Please supply some code');
+                }
+
+                let snippet = await db.snippets
+                    .create({
+                        user_id: req.glob.user_id || null,
+                        language,
+                        snip
+                    });
+
+                return res.send({
+                    status: 'ok',
+                    payload: {
+                        url: snippet.url
                     }
-
-                    return db.snippets
-                        .create({
-                            user_id: req.glob.user_id || null,
-                            language,
-                            snip
-                        });
-                })
-                .then(snippet => {
-                    return res.send({
-                        status: 'ok',
-                        payload: {
-                            url: snippet.url
-                        }
-                    });
-                })
-                .catch(err => {
-                    return res.send({
-                        status: 'error',
-                        payload: {
-                            message: err.message
-                        }
-                    });
                 });
+            } catch(e) {
+                return res.send({
+                    status: 'error',
+                    payload: {
+                        message: e.message
+                    }
+                });
+            }
         }
-        return res.view();
-    },
 
-    _config: {}
+        return res.view();
+    }
 
 };

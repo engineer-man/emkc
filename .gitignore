@@ -1,10 +1,8 @@
 platform/config/local.js
-platform/config/secrets/google_cloud.json
 platform/migrations/config.json
 platform/public/css/*.css
-platform/public/js/master.js
-platform/public/js/master_jsx.js
-platform/public/js/master_js.js
+platform/public/lib/bundle.js
+platform/public/lib/bundle.css
 cdn/avatars/*
 !cdn/avatars/.gitkeep
 var/docker/mysql/*
@@ -17,4 +15,5 @@ var/docker/logs/*
 !var/docker/logs/.gitkeep
 node_modules
 package-lock.json
+.env
 .DS_STORE

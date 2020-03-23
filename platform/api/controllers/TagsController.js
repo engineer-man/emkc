@@ -1,9 +1,9 @@
 module.exports = {
 
-    search(req, res) {
+    async search(req, res) {
         const name = req.query.name;
 
-        return db.tags
+        let tags = await db.tags
             .find_all({
                 where: {
                     name: {
@@ -14,17 +14,14 @@ module.exports = {
                     ['name']
                 ],
                 limit: 10
-            })
-            .then(tags => {
-                return res.send({
-                    status: 'ok',
-                    payload: {
-                        tags: name ? tags : []
-                    }
-                });
             });
-    },
 
-    _config: {}
+        return res.send({
+            status: 'ok',
+            payload: {
+                tags: name ? tags : []
+            }
+        });
+    }
 
 };

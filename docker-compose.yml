@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
     emkc:
         container_name: emkc
@@ -7,9 +7,8 @@ services:
             - "2005:2727"
         volumes:
             - ./:/opt/emkc
-        links:
-            - redis
-            - mysql
+        environment:
+            APPENV: "${APPENV}"
         restart: always
     redis:
         container_name: emkc_redis

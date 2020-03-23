@@ -7,8 +7,6 @@ root_dir = path.resolve(__dirname + '/../../');
 
 Promise = require('bluebird');
 
-const code_rooms = require(root_dir + '/platform/api/services/code_rooms.js');
-
 module.exports.bootstrap = cb => {
     db = require(root_dir + '/platform/models/index.js');
 

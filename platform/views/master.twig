@@ -25,10 +25,9 @@
             <link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
             <link href="//use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
             <link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
-            <link href="/lib/quill/quill.snow.css" rel="stylesheet">
             <link href="/lib/highlightjs/agate.css" rel="stylesheet">
             <link href="/lib/monaco/min/vs/editor/editor.main.css" rel="stylesheet" />
-            <link href="/css/master.css?{{ sails.glob.epoch }}" rel="stylesheet" />
+            <link href="/lib/bundle.css?{{ sails.glob.epoch }}" rel="stylesheet" />
         {% endblock %}
 
         {% block js %}
@@ -37,16 +36,11 @@
             <script src="/lib/popper/popper.min.js"></script>
             <script src="/lib/bootstrap/bootstrap.min.js"></script>
             <script src="/lib/bootbox/bootbox.js"></script>
-            <script src="/lib/react/react.production.min.js"></script>
-            <script src="/lib/react/react-dom.production.min.js"></script>
-            <script src="/lib/axios/axios.min.js"></script>
             <script src="/lib/highlightjs/highlight.pack.js"></script>
             <script src="/lib/highlightjs/highlight-ln.js"></script>
-            <script src="/lib/quill/quill.min.js"></script>
             <script src="/lib/monaco/min/vs/loader.js"></script>
             <script src="/lib/monaco/min/vs/editor/editor.main.nls.js"></script>
             <script src="/lib/monaco/min/vs/editor/editor.main.js"></script>
-            <script src="/js/master.js?{{ sails.glob.epoch }}"></script>
         {% endblock %}
 
         <script>
@@ -79,7 +73,6 @@
                             Tools
                         </a>
                         <div class="dropdown-menu">
-                            <!--<a class="dropdown-item" href="/coderoom/new">Code Room</a>-->
                             <a class="dropdown-item" href="/scripts">CLI Scripts</a>
                             <a class="dropdown-item" href="/snippets">New Snippet</a>
                             {% if req.glob.user_id %}
@@ -121,15 +114,10 @@
                 <a href="/privacy" style="color: #fff;">Privacy Policy</a>
             </div>
         </div>
-        <div id="mobile_nav"></div>
-        <script>
-            mobile_nav = ReactDOM.render(React.createElement(MobileNav), document.getElementById('mobile_nav'));
-        </script>
+        <div id="react_mobile_nav"></div>
         {% if not req.glob.user_id %}
-            <div id="login"></div>
-            <script>
-                login = ReactDOM.render(React.createElement(Login), document.getElementById('login'));
-            </script>
+            <div id="react_login"></div>
         {% endif %}
+        <script src="/lib/bundle.js?{{ sails.glob.epoch }}"></script>
     </body>
 </html>

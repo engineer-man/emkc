@@ -15,31 +15,31 @@ module.exports = {
         java: 'java'
     },
 
-    execute(language, source, args) {
+    async execute(language, source, args) {
         if (!Array.is_array(args)) args = [args];
 
         args = args.map(arg => '' + arg);
 
-        return request
-            ({
-                method: 'post',
-                url: 'http://' + sails.config.piston.host + '/execute',
-                body: {
-                    language,
-                    source,
-                    args
-                },
-                json: true,
-                simple: true
-            })
-            .then(result => {
-                return typeof result.output === 'string'
-                    ? result.output.slice(0, 1024)
-                    : '';
-            })
-            .catch(err => {
-                return '';
-            });
+        try {
+            let result = await request
+                ({
+                    method: 'post',
+                    url: 'http://' + sails.config.piston.host + '/execute',
+                    body: {
+                        language,
+                        source,
+                        args
+                    },
+                    json: true,
+                    simple: true
+                });
+
+            return typeof result.output === 'string'
+                ? result.output.slice(0, 1024)
+                : '';
+        } catch(e) {
+            return '';
+        }
     }
 
 };

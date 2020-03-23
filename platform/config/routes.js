@@ -5,7 +5,6 @@ module.exports.routes = {
     'GET /auth/discord': 'AuthController.discord',
     'GET /auth/discord_cb': 'AuthController.discord_cb',
     'GET /privacy': 'HomeController.privacy',
-    'GET /board': 'BoardController.home',
     'GET /stickers': 'MerchController.stickers',
     'POST /stickers/order': 'MerchController.order_stickers',
     'GET /stickers/check_code/:code': 'MerchController.check_code',
@@ -13,26 +12,11 @@ module.exports.routes = {
     'GET /community': 'CommunityController.home',
     'GET /community/about': 'CommunityController.about',
     'GET /community/power': 'CommunityController.power',
-    'GET /community/video_requests': 'CommunityController.video_requests',
-    'POST /community/add_video_request': 'CommunityController.add_video_request',
-    'POST /community/delete_video_request': 'CommunityController.delete_video_request',
-    'POST /community/video_request_vote': 'CommunityController.video_request_vote',
 
     'GET /challenges': 'ChallengesController.home',
     'GET /challenges/choose_language/:challenge_id': 'ChallengesController.choose_language',
     'POST /challenges/execute/:challenge_id': 'ChallengesController.execute',
     'GET /challenges/:challenge_id/:language': 'ChallengesController.challenge',
-
-    'GET /questions/ask': 'QuestionsController.ask',
-    'POST /questions/ask': 'QuestionsController.ask',
-    'GET /questions/edit/:question_id': 'QuestionsController.edit',
-    'POST /questions/edit/:question_id': 'QuestionsController.edit',
-    'GET r|/d([0-9]+)/(.*)|question_id,name': 'QuestionsController.view',
-
-    'POST /comments/create': 'CommentsController.create',
-    'POST /comments/save': 'CommentsController.save',
-
-    'POST /votes/handle/:type/:pk': 'VotesController.handle',
 
     'GET /snippets': 'SnippetsController.create',
     'POST /snippets': 'SnippetsController.create',
@@ -42,14 +26,6 @@ module.exports.routes = {
     'GET /scripts': 'ScriptsController.home',
     'GET /scripts/:cli_script_id/:slug': 'ScriptsController.view',
     'GET /exec/:cli_script_id': 'ScriptsController.exec',
-
-    'GET /coderoom/new': 'CodeRoomsController.create',
-    'POST /coderoom/sync': 'CodeRoomsController.sync',
-    'POST /coderoom/save': 'CodeRoomsController.save',
-    'GET /coderoom/users/:hash': 'CodeRoomsController.users',
-    'GET /r/:hash': 'CodeRoomsController.view',
-
-    'GET /tags/search': 'TagsController.search',
 
     'GET /@:username': 'ProfilesController.view',
     'GET /@:username/challenges/:challenge_id/:language': 'ChallengesController.view_other',

@@ -31,7 +31,7 @@ case $* in
         docker-compose build
         ;;
     "npm" )
-        docker exec -it emkc bash -c 'cd /opt/emkc/platform; npm install'
+        docker-compose run --rm --no-deps emkc bash -c 'cd /opt/emkc/platform; npm install'
         ;;
     "mysql" )
         docker exec -it emkc bash -c 'mysql -hmysql -uroot -proot -Demkc'

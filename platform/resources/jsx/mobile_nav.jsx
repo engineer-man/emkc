@@ -1,3 +1,7 @@
+import React from 'react';
+
+import Util from 'js/util';
+
 class MobileNav extends React.Component {
 
     constructor(props) {
@@ -49,3 +53,7 @@ class MobileNav extends React.Component {
     }
 
 }
+
+window.mobile_nav = Util.try_render('react_mobile_nav', MobileNav);
+
+export default MobileNav;

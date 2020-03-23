@@ -121,9 +121,6 @@ var cron = {
                 '/members/'+user.discord_api+
                 '/roles/'+role);
 
-            console.log(res.statusCode);
-            //console.log(res.body);
-
             if (res.statusCode === 429) {
                 let retry_after = res.body.retry_after;
 

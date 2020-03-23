@@ -24,14 +24,19 @@ module.exports = {
         client_secret: 'IqJEUGdYR2UxHKrVmVTha__3aLhIC68l'
     },
     felix: {
-        key: 'key'
+        key: ''
     },
     gcp: {
-        project_id: 'project_id'
+        project_id: ''
     },
     mailgun: {
-        key: 'key',
-        domain: 'domain'
+        key: '',
+        domain: ''
+    },
+    paypal: {
+        id: '',
+        secret: '',
+        coupon: ''
     },
     paypal: {
         id: '',
@@ -50,7 +55,7 @@ module.exports = {
     },
     session: {
         host: 'redis',
-        secret: '11111111111111111111111111111111'
+        secret: ''
     },
     sockets: {
         host: 'redis'

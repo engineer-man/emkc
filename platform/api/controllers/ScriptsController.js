@@ -41,8 +41,6 @@ module.exports = {
         res.set('content-type', 'text/plain');
 
         return res.send(script.content);
-    },
-
-    _config: {}
+    }
 
 };

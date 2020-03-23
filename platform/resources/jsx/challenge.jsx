@@ -1,3 +1,9 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import axios from 'axios';
+
+import Util from 'js/util';
+
 class Challenge extends React.Component {
 
     constructor(props) {
@@ -122,3 +128,7 @@ class Challenge extends React.Component {
     }
 
 }
+
+Util.try_render('react_challenge', Challenge);
+
+export default Challenge;
