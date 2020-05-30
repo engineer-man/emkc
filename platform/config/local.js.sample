@@ -47,9 +47,6 @@ module.exports = {
         host: '127.0.0.1:2000',
         key: ''
     },
-    elasticsearch: {
-        host: '127.0.0.1'
-    },
     dispenserd: {
         host: '127.0.0.1'
     },

@@ -1,4 +1,3 @@
-rm -rf ./elasticsearch/*
 rm -rf ./logs/*
 rm -rf ./mysql/*
 rm -rf ./redis/*

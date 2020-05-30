@@ -39,12 +39,12 @@ class MobileNav extends React.Component {
                         <a href="/community">Community</a>
                         <a href="/snippets">Tools - Snippets</a>
                         {ctx.user_id && (
-                            <React.Fragment>
+                            <>
                                 <div class="spacer"></div>
                                 <h5 class="f300">You</h5>
                                 <a href={'/@' + ctx.username}>Profile</a>
                                 <a href="/logout">Logout</a>
-                            </React.Fragment>
+                            </>
                         ) || null}
                     </div>
                 </div>

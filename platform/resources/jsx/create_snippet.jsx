@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import * as monaco from 'monaco-editor';
 
 import Util from 'js/util';
 

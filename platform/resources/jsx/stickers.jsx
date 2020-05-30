@@ -1,3 +1,9 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import axios from 'axios';
+
+import Util from 'js/util';
+
 class Stickers extends React.Component {
 
     constructor(props) {
@@ -135,7 +141,7 @@ class Stickers extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <>
                 <h4 class="f300">
                     Engineer Man Stickers 2" x 2"
                 </h4>
@@ -156,12 +162,12 @@ class Stickers extends React.Component {
                         ) || (
                             this.props.options.filter(option => option.cost !== 'FREE').map(option => {
                                 return (
-                                    <React.Fragment>
+                                    <>
                                         <div
                                             class={'quantity_option ' + (this.state.quantity === option.quantity && 'active')}
                                             onClick={() => this.setState({ quantity: option.quantity })}>{option.quantity} for ${option.cost}</div>
                                         {' '}
-                                    </React.Fragment>
+                                    </>
                                 )
                             })
                         )}
@@ -231,8 +237,12 @@ class Stickers extends React.Component {
                 ) || (
                     <div id="paypal-button" style={{ visibility: !this.state.discounted && this.state.valid ? 'visible' : 'hidden' }}></div>
                 )}
-            </React.Fragment>
+            </>
         )
     }
 
 }
+
+Util.try_render('react_stickers', Stickers);
+
+export default Stickers;

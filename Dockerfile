@@ -1,4 +1,4 @@
-FROM node:10.19.0-jessie
+FROM node:14.3.0-stretch
 
 RUN apt update && apt install -y inotify-tools libjson-c-dev
 
@@ -9,6 +9,7 @@ RUN cd /opt && \
     make install
 
 WORKDIR /opt/emkc/platform
+ENV TERM xterm-256color
 
 CMD cd migrations && \
     bmig migrate && \

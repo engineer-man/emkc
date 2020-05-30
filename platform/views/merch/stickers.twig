@@ -4,17 +4,12 @@
     <div class="em_common_content em_stickers">
         <div class="row marginbottom40">
             <div class="col-12 col-sm-7 col-md-6 offset-md-1">
-                <div id="stickers"></div>
-                <script>
-                    ReactDOM.render(
-                        React.createElement(Stickers, {
-                            env: '{{ sails.config.environment == 'production' ? 'production' : 'sandbox' }}',
-                            paypal_id: {{ sails.config.paypal.id|json_encode }},
-                            options: {{ options|json_encode }}
-                        }),
-                        document.getElementById('stickers')
-                    );
-                </script>
+                <div
+                    id="react_stickers"
+                    data-env="{{ (sails.config.environment == 'production' ? 'production' : 'sandbox')|json_encode|e }}"
+                    data-paypal_id="{{ sails.config.paypal.id|json_encode|e }}"
+                    data-options="{{ options|json_encode|e }}"
+                ></div>
             </div>
             <div class="col-12 col-sm-5 col-md-4">
                 <p>

@@ -26,21 +26,16 @@
             <link href="//use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
             <link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
             <link href="/lib/highlightjs/agate.css" rel="stylesheet">
-            <link href="/lib/monaco/min/vs/editor/editor.main.css" rel="stylesheet" />
-            <link href="/lib/bundle.css?{{ sails.glob.epoch }}" rel="stylesheet" />
+            <link href="/lib/webpack/bundle.css?{{ sails.glob.epoch }}" rel="stylesheet" />
         {% endblock %}
 
         {% block js %}
-            <script>var require = { paths: { 'vs': '/lib/monaco/min/vs' } };</script>
             <script src="/lib/jquery/jquery-3.0.0.min.js"></script>
             <script src="/lib/popper/popper.min.js"></script>
             <script src="/lib/bootstrap/bootstrap.min.js"></script>
             <script src="/lib/bootbox/bootbox.js"></script>
             <script src="/lib/highlightjs/highlight.pack.js"></script>
             <script src="/lib/highlightjs/highlight-ln.js"></script>
-            <script src="/lib/monaco/min/vs/loader.js"></script>
-            <script src="/lib/monaco/min/vs/editor/editor.main.nls.js"></script>
-            <script src="/lib/monaco/min/vs/editor/editor.main.js"></script>
         {% endblock %}
 
         <script>
@@ -66,7 +61,6 @@
                 </div>
                 <div class="main_links">
                     <a href="/challenges">Challenges</a>
-                    <a href="/board">Q&A</a>
                     <a href="/community">Community</a>
                     <div class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown">
@@ -118,6 +112,6 @@
         {% if not req.glob.user_id %}
             <div id="react_login"></div>
         {% endif %}
-        <script src="/lib/bundle.js?{{ sails.glob.epoch }}"></script>
+        <script src="/lib/webpack/bundle.js?{{ sails.glob.epoch }}"></script>
     </body>
 </html>

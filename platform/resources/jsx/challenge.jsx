@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 import Util from 'js/util';
@@ -111,9 +110,9 @@ class Challenge extends React.Component {
                                     <br/>
                                     {result.input.split('@@!@!@!@@').map((input, i) => {
                                         return (
-                                            <React.Fragment>
+                                            <>
                                                 <span class="badge badge-info">value{i+1}</span> {input}<br/>
-                                            </React.Fragment>
+                                            </>
                                         )
                                     })}
                                     <span class="badge badge-dark">expected output</span> {result.expected}<br/>

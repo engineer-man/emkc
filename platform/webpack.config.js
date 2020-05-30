@@ -1,5 +1,6 @@
 const path = require('path');
-const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
     entry: './resources/index.js',
@@ -31,6 +32,25 @@ module.exports = {
                         loader: 'less-loader'
                     }
                 ]
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.ttf$/,
+                use: [
+                    {
+                        loader: 'file-loader'
+                    }
+                ]
             }
         ]
     },
@@ -42,13 +62,15 @@ module.exports = {
         ]
     },
     output: {
-        path: path.resolve(__dirname, 'public/lib'),
+        path: path.resolve(__dirname, 'public/lib/webpack'),
+        publicPath: '/lib/webpack/',
         filename: 'bundle.js'
     },
     plugins: [
         new MiniCSSExtractPlugin({
             filename: 'bundle.css',
             chunkFilename: '[id].css'
-        })
+        }),
+        new MonacoWebpackPlugin()
     ]
 };
