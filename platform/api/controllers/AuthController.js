@@ -14,7 +14,7 @@ module.exports = {
         return res.redirect(
             'https://discordapp.com/api/oauth2/authorize'+
             '?client_id=' + sails.config.discord.client_id +
-            '&redirect_uri=' + encode_uricomponent(constant.base_url + '/auth/discord_cb') +
+            '&redirect_uri=' + encode_uri_component(constant.base_url + '/auth/discord_cb') +
             '&response_type=code'+
             '&scope=identify%20email'
         );
