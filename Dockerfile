@@ -9,7 +9,6 @@ RUN cd /opt && \
     make install
 
 WORKDIR /opt/emkc/platform
-ENV TERM xterm-256color
 
 CMD cd migrations && \
     bmig migrate && \

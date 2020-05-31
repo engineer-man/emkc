@@ -18,18 +18,6 @@ var cron = {
                     chain = chain
                         .then(() => {
                             return [
-                                db.questions
-                                    .sum('score', {
-                                        where: {
-                                            user_id: user.user_id
-                                        }
-                                    }),
-                                db.comments
-                                    .sum('score', {
-                                        where: {
-                                            user_id: user.user_id
-                                        }
-                                    }),
                                 db.user_challenges
                                     .find_all({
                                         where: {
@@ -47,12 +35,10 @@ var cron = {
                                     })
                             ];
                         })
-                        .spread(async (score1, score2, score3) => {
+                        .spread(async (score1) => {
                             score1 = score1 || 0;
-                            score2 = score2 || 0;
-                            score3 = score3 || 0;
 
-                            user.score = score1 + score2 + score3;
+                            user.score = score1;
 
                             // test for and assign novice role
                             if (user.discord_api && user.discord_rank === null && user.score >= 40) {
