@@ -40,7 +40,9 @@ module.exports = {
 
         res.set('content-type', 'text/plain');
 
-        return res.send(script.content);
+        return res
+            .status(200)
+            .send(script.content);
     }
 
 };

@@ -144,7 +144,9 @@ module.exports = {
         let stats = await db.discord_chat_messages
             .find_all(query);
 
-        return res.send(stats);
+        return res
+            .status(200)
+            .send(stats);
     }
 
 };

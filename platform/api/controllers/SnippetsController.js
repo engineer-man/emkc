@@ -16,7 +16,7 @@ module.exports = {
             return res.view({
                 snippet
             });
-        } catch(e) {
+        } catch (e) {
             return res.redirect('/snippets');
         }
     },
@@ -53,19 +53,17 @@ module.exports = {
                         snip
                     });
 
-                return res.send({
-                    status: 'ok',
-                    payload: {
+                return res
+                    .status(200)
+                    .send({
                         url: snippet.url
-                    }
-                });
-            } catch(e) {
-                return res.send({
-                    status: 'error',
-                    payload: {
+                    });
+            } catch (e) {
+                return res
+                    .status(400)
+                    .send({
                         message: e.message
-                    }
-                });
+                    });
             }
         }
 

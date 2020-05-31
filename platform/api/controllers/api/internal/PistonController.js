@@ -1,41 +1,41 @@
-const request = require('request-promise');
+const axios = require('axios');
 
 module.exports = {
 
     async execute(req, res) {
-        const {language, source} = req.body;
+        const { language, source } = req.body;
 
         try {
-            let result = await request
+            let result = await axios
                 ({
                     method: 'post',
                     url: 'http://' + sails.config.piston.host + '/execute',
-                    body: {
+                    data: {
                         language,
                         source
-                    },
-                    json: true,
-                    simple: true
+                    }
                 });
 
-            return res.send({
-                status: 'ok',
-                payload: {
-                    ran: result.ran,
-                    output: result.output
-                        ? result.output
+            if (result.status >= 300) {
+                throw new Error('Execution problem');
+            }
+
+            return res
+                .status(200)
+                .send({
+                    ran: result.data.ran,
+                    output: result.data.output
+                        ? result.data.output
                             .replace(/\r/gi, '')
                             .slice(0, 1024)
                         : ''
-                }
-            });
+                });
         } catch (e) {
-            return res.send({
-                status: 'error',
-                payload: {
-                    message: 'Execution problem'
-                }
-            });
+            return res
+                .status(500)
+                .send({
+                    message: e.message
+                });
         }
     }
 

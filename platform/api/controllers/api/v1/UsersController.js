@@ -21,7 +21,9 @@ module.exports = {
         let users = await db.users
             .find_all(query);
 
-        return res.send(users);
+        return res
+            .status(200)
+            .send(users);
     },
 
     async read(req, res) {
@@ -46,7 +48,9 @@ module.exports = {
                 .send();
         }
 
-        return res.send(user);
+        return res
+            .status(200)
+            .send(user);
     }
 
 };

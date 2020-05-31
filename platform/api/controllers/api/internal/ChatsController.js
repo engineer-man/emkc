@@ -18,9 +18,11 @@ module.exports = {
             });
         }
 
-        return res.send({
-            last_timestamp: message.created_at
-        });
+        return res
+            .status(200)
+            .send({
+                last_timestamp: message.created_at
+            });
     },
 
     async create(req, res) {
@@ -82,11 +84,13 @@ module.exports = {
                 }
             }
         } catch (e) {
-            return res.send(200, {
-                inserted,
-                duplicate,
-                failed
-            });
+            return res
+                .status(200)
+                .send({
+                    inserted,
+                    duplicate,
+                    failed
+                });
         }
     }
 };
