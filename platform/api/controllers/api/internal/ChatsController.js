@@ -87,14 +87,14 @@ module.exports = {
             await t.commit();
         } catch (e) {
             await t.rollback();
-
-            return res
-                .status(200)
-                .send({
-                    inserted,
-                    duplicate,
-                    failed
-                });
         }
+
+        return res
+            .status(200)
+            .send({
+                inserted,
+                duplicate,
+                failed
+            });
     }
 };
