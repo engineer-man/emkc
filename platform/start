@@ -6,7 +6,8 @@ echo "running in $APPENV mode"
 
 if [ $APPENV == "production" ]; then
     node_modules/.bin/webpack --mode production --progress --color
-    node_modules/.bin/pm2 start --no-daemon pm2.json
+    #node_modules/.bin/pm2 start --no-daemon pm2.json
+    node emkc.js
 else
     sysctl -n -w fs.inotify.max_user_watches=200000
 
