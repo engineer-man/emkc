@@ -1,24 +1,24 @@
 {% extends 'master.twig'%}
 {% block content %}
-    {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.easy %}
+    {% if challenge.difficulty == sails.local.constant.challenges.difficulty.easy %}
         {% set diff = 'easy' %}
     {% endif %}
-    {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.medium %}
+    {% if challenge.difficulty == sails.local.constant.challenges.difficulty.medium %}
         {% set diff = 'medium' %}
     {% endif %}
-    {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.hard %}
+    {% if challenge.difficulty == sails.local.constant.challenges.difficulty.hard %}
         {% set diff = 'hard' %}
     {% endif %}
     <div class="em_common_content em_language_choice">
         <div class="row marginbottom40">
             <div class="col-12 center">
-                {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.easy %}
+                {% if challenge.difficulty == sails.local.constant.challenges.difficulty.easy %}
                     <h2 class="easy">Easy: {{ challenge.name }}</h2>
                 {% endif %}
-                {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.medium %}
+                {% if challenge.difficulty == sails.local.constant.challenges.difficulty.medium %}
                     <h2 class="medium">Medium: {{ challenge.name }}</h2>
                 {% endif %}
-                {% if challenge.difficulty == sails.glob.constant.challenges.difficulty.hard %}
+                {% if challenge.difficulty == sails.local.constant.challenges.difficulty.hard %}
                     <h2 class="hard">Hard: {{ challenge.name }}</h2>
                 {% endif %}
                 <h3 class="f300">How do you plan on crushing this challenge?</h3>

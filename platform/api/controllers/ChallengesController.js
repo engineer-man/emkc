@@ -15,7 +15,7 @@ module.exports = {
                         model: db.user_challenges,
                         as: 'solution',
                         where: {
-                            user_id: req.glob.user_id
+                            user_id: req.local.user_id
                         }
                     }
                 ],
@@ -36,7 +36,7 @@ module.exports = {
                         model: db.user_challenges,
                         as: 'solution',
                         where: {
-                            user_id: req.glob.user_id
+                            user_id: req.local.user_id
                         }
                     }
                 ],
@@ -57,7 +57,7 @@ module.exports = {
                         model: db.user_challenges,
                         as: 'solution',
                         where: {
-                            user_id: req.glob.user_id
+                            user_id: req.local.user_id
                         }
                     }
                 ],
@@ -85,11 +85,11 @@ module.exports = {
                 include: [
                     {
                         required: false,
-                        user_id: req.glob.user_id,
+                        user_id: req.local.user_id,
                         model: db.user_challenges,
                         as: 'solutions',
                         where: {
-                            user_id: req.glob.user_id
+                            user_id: req.local.user_id
                         }
                     }
                 ]
@@ -123,7 +123,7 @@ module.exports = {
                         model: db.user_challenges,
                         as: 'solution',
                         where: {
-                            user_id: req.glob.user_id,
+                            user_id: req.local.user_id,
                             language
                         }
                     }
@@ -312,11 +312,11 @@ module.exports = {
 
         var passed = results.filter(r => !r.passed).length === 0;
 
-        if (passed && req.glob.user_id) {
+        if (passed && req.local.user_id) {
             db.user_challenges
                 .find_or_create({
                     where: {
-                        user_id: req.glob.user_id,
+                        user_id: req.local.user_id,
                         challenge_id: challenge.challenge_id,
                         language
                     },
@@ -338,11 +338,11 @@ module.exports = {
                         //             }[challenge.difficulty],
                         //             url: `${constant.base_url}/challenges/${challenge.challenge_id}/${language}`,
                         //             author: {
-                        //                 name: `${req.glob.user.display_name} completed a challenge "${challenge.name}" with ${language}`
+                        //                 name: `${req.local.user.display_name} completed a challenge "${challenge.name}" with ${language}`
                         //             },
                         //             footer: {
-                        //                 icon_url: constant.cdn_url + req.glob.user.avatar_url,
-                        //                 text: 'completed by ' + req.glob.user.display_name
+                        //                 icon_url: constant.cdn_url + req.local.user.avatar_url,
+                        //                 text: 'completed by ' + req.local.user.display_name
                         //             }
                         //         }
                         //     })
@@ -379,7 +379,7 @@ module.exports = {
         let user_solution = await db.user_challenges
             .find_one({
                 where: {
-                    user_id: req.glob.user_id,
+                    user_id: req.local.user_id,
                     challenge_id,
                     language
                 }

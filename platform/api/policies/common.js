@@ -1,7 +1,7 @@
 module.exports = async (req, res, next) => {
-    req.glob = req.glob || {};
+    req.local = req.local || {};
 
-    req.glob.constant = constant;
+    req.local.constant = constant;
 
     // get the logged in user
     let user = await db.users
@@ -12,8 +12,8 @@ module.exports = async (req, res, next) => {
         });
 
     if (user) {
-        req.glob.user_id = user.user_id;
-        req.glob.user = user;
+        req.local.user_id = user.user_id;
+        req.local.user = user;
     }
 
     return next();

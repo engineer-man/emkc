@@ -33,7 +33,7 @@ module.exports = {
             let user_solved_challenges = await db.user_challenges
                 .find_all({
                     where: {
-                        user_id: req.glob.user_id
+                        user_id: req.local.user_id
                     },
                     include: [
                         {

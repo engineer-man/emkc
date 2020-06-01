@@ -25,7 +25,7 @@ module.exports = {
         let snippets = await db.snippets
             .find_all({
                 where: {
-                    user_id: req.glob.user_id
+                    user_id: req.local.user_id
                 },
                 order: [
                     ['snippet_id', 'desc']
@@ -48,7 +48,7 @@ module.exports = {
 
                 let snippet = await db.snippets
                     .create({
-                        user_id: req.glob.user_id || null,
+                        user_id: req.local.user_id || null,
                         language,
                         snip
                     });

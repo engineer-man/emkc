@@ -10,10 +10,10 @@ Promise = require('bluebird');
 module.exports.bootstrap = cb => {
     db = require(root_dir + '/platform/models/index.js');
 
-    sails.glob = {root_dir};
+    sails.local = {root_dir};
     sails.twig = require(root_dir + '/platform/api/services/twig.js');
-    sails.glob.constant = require(root_dir + '/platform/api/services/constant.js');
-    sails.glob.epoch = +new Date();
+    sails.local.constant = require(root_dir + '/platform/api/services/constant.js');
+    sails.local.epoch = +new Date();
 
     sails.io.sockets.on('connection', socket => {
         // test for code room socket

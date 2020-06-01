@@ -44,6 +44,6 @@ module.exports.routes = {
     'GET /api/v1/users/:user_id': 'api/v1/UsersController.read',
 
     // catch all (404)
-    'ALL r|^\/(?!css|cdn|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
+    'ALL r|^\/(?!cdn|css|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
 
 };

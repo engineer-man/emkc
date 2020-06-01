@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <meta property="og:title" content="{% block title %}Engineer Man Knowledge Center{% endblock %}"/>
-        <meta property="og:image" content="{{ sails.config.base_url ~ '/images/icon_square_642.jpg' }}"/>
+        <meta property="og:image" content="{{ sails.config.base_url ~ '/images/icon_square_64.png' }}"/>
         <meta property="og:description" content="{% block desc %}Engineer Man Knowledge Center or EMKC is an intelligent new platform for quality discussion, questions, challenges, and learning.{% endblock %}"/>
         <meta property="og:url" content="{{ sails.config.base_url ~ req.url }}" />
 
@@ -25,8 +25,7 @@
             <link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
             <link href="//use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
             <link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
-            <link href="/lib/highlightjs/agate.css" rel="stylesheet">
-            <link href="/lib/webpack/bundle.css?{{ sails.glob.epoch }}" rel="stylesheet" />
+            <link href="/lib/webpack/bundle.css?{{ sails.local.epoch }}" rel="stylesheet" />
         {% endblock %}
 
         {% block js %}
@@ -34,19 +33,17 @@
             <script src="/lib/popper/popper.min.js"></script>
             <script src="/lib/bootstrap/bootstrap.min.js"></script>
             <script src="/lib/bootbox/bootbox.js"></script>
-            <script src="/lib/highlightjs/highlight.pack.js"></script>
-            <script src="/lib/highlightjs/highlight-ln.js"></script>
         {% endblock %}
 
         <script>
             ctx = {
-                user_id: +'{{ req.glob.user_id ? req.glob.user_id : 0 }}',
-                username: '{{ req.glob.user.username }}',
-                is_staff: +'{{ req.glob.user and req.glob.user.is_staff ? 1 : 0 }}',
+                user_id: +'{{ req.local.user_id ? req.local.user_id : 0 }}',
+                username: '{{ req.local.user.username }}',
+                is_staff: +'{{ req.local.user and req.local.user.is_staff ? 1 : 0 }}',
             };
         </script>
 
-        <link rel="icon" type="image/x-icon" href="/images/icon_64.png" />
+        <link rel="icon" type="image/x-icon" href="/images/icon_circle_64.png" />
     </head>
     <body>
         <div class="em_container" style="position: relative;">
@@ -56,7 +53,7 @@
                 </div>
                 <div class="brand_icon">
                     <a href="/">
-                        <img src="/images/icon_64.png" />
+                        <img src="/images/icon_circle_64.png" />
                     </a>
                 </div>
                 <div class="main_links">
@@ -69,7 +66,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/scripts">CLI Scripts</a>
                             <a class="dropdown-item" href="/snippets">New Snippet</a>
-                            {% if req.glob.user_id %}
+                            {% if req.local.user_id %}
                                 <a class="dropdown-item" href="/snippets/mine">My Snippets</a>
                             {% endif %}
                         </div>
@@ -78,18 +75,18 @@
                 <div class="search" style="visibility: hidden;">
                     <input type="text" placeholder="Search..." />
                 </div>
-                {% if req.glob.user_id %}
+                {% if req.local.user_id %}
                     <div class="user_meta">
                         <i class="fa fa-bolt"></i>
-                        <span class="f900">{{ req.glob.user.score }}</span>
+                        <span class="f900">{{ req.local.user.score }}</span>
                         <div class="dropdown">
                             <img
-                                src="{{ sails.glob.constant.cdn_url }}{{ req.glob.user.avatar_url }}"
+                                src="{{ sails.local.constant.cdn_url }}{{ req.local.user.avatar_url }}"
                                 class="dropdown-toggle"
                                 data-toggle="dropdown" />
                             <div class="dropdown-menu dropdown-menu-right">
-                                <h6 class="dropdown-header">{{ req.glob.user.username }}</h6>
-                                <a class="dropdown-item" href="/@{{ req.glob.user.username }}">Profile</a>
+                                <h6 class="dropdown-header">{{ req.local.user.username }}</h6>
+                                <a class="dropdown-item" href="/@{{ req.local.user.username }}">Profile</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/logout">Logout</a>
                             </div>
@@ -109,9 +106,9 @@
             </div>
         </div>
         <div id="react_mobile_nav"></div>
-        {% if not req.glob.user_id %}
+        {% if not req.local.user_id %}
             <div id="react_login"></div>
         {% endif %}
-        <script src="/lib/webpack/bundle.js?{{ sails.glob.epoch }}"></script>
+        <script src="/lib/webpack/bundle.js?{{ sails.local.epoch }}"></script>
     </body>
 </html>
