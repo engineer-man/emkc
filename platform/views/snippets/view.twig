@@ -10,6 +10,9 @@
         }
     </style>
 {% endblock %}
+{% block bundles %}
+    <script src="/lib/webpack/monaco.bundle.js?{{ sails.local.epoch }}"></script>
+{% endblock %}
 {% block content %}
     <div
         id="react_snippet"

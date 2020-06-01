@@ -66,6 +66,22 @@ module.exports = {
         publicPath: '/lib/webpack/',
         filename: 'bundle.js'
     },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                monaco: {
+                    test: /[\\/]node_modules[\\/](monaco-editor)[\\/]/,
+                    name: 'monaco',
+                    chunks: 'all'
+                },
+                react: {
+                    test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+                    name: 'react',
+                    chunks: 'all'
+                }
+            }
+        }
+    },
     plugins: [
         new MiniCSSExtractPlugin({
             filename: 'bundle.css',

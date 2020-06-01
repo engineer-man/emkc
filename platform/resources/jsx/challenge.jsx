@@ -35,35 +35,34 @@ class Challenge extends React.Component {
         });
     }
 
-    execute() {
+    async execute() {
         this.setState({
             executing: true,
             test_results: []
         });
 
-        return axios
+        let res = await axios
             .post('/challenges/execute/' + this.state.challenge.challenge_id, {
                 language: this.state.language,
                 source: this.editor.getValue()
-            })
-            .then(res => {
-                var solved = res.data.payload.results.filter(r => !r.passed).length === 0;
-
-                if (solved) {
-                    this.setState({
-                        solved: true
-                    });
-                }
-
-                this.setState({
-                    executing: false,
-                    test_results: res.data.payload.results
-                });
             });
+
+        let solved = res.data.payload.results.filter(r => !r.passed).length === 0;
+
+        if (solved) {
+            this.setState({
+                solved: true
+            });
+        }
+
+        this.setState({
+            executing: false,
+            test_results: res.data.payload.results
+        });
     }
 
     render() {
-        var text_color;
+        let text_color;
 
         switch (this.state.challenge.difficulty) {
             case 1:

@@ -55,11 +55,11 @@ class Stickers extends React.Component {
                         }]
                     });
                 },
-                onAuthorize: (data, actions) => {
+                onAuthorize: async (data, actions) => {
                     return actions.payment
                         .execute()
                         .then(details => {
-                            axios
+                            let res = await axios
                                 .post('/stickers/order', {
                                     tx: details.transactions[0].related_resources[0].sale.id,
                                     quantity: this.state.quantity,
@@ -67,15 +67,14 @@ class Stickers extends React.Component {
                                     email: this.state.email,
                                     address: this.state.address,
                                     coupon: null
-                                })
-                                .then(res => {
-                                    return bootbox
-                                        .alert(
-                                            'Your order was placed successfully, thanks. Please '+
-                                            'reference Order ID #' + res.data.order_id + ' if necessary.',
-                                            () => { location = location }
-                                        );
                                 });
+
+                            return bootbox
+                                .alert(
+                                    'Your order was placed successfully, thanks. Please '+
+                                    'reference Order ID #' + res.data.order_id + ' if necessary.',
+                                    () => { location = location }
+                                );
                         });
                 }
             }, '#paypal-button');
@@ -99,19 +98,19 @@ class Stickers extends React.Component {
 
     check_coupon() {
         clearInterval(this.check_coupon_timer);
-        this.check_coupon_timer = setTimeout(() => {
-            return axios
-                .get('/stickers/check_code/' + this.state.coupon)
-                .then(res => {
-                    let valid = res.data.valid;
 
-                    if (valid) {
-                        this.setState({
-                            discounted: valid,
-                            quantity: 2
-                        });
-                    }
+        this.check_coupon_timer = setTimeout(async () => {
+            let res = await axios
+                .get('/stickers/check_code/' + this.state.coupon)
+
+            let valid = res.data.valid;
+
+            if (valid) {
+                this.setState({
+                    discounted: valid,
+                    quantity: 2
                 });
+            }
         }, 300);
     }
 
