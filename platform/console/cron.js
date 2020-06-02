@@ -1,104 +1,142 @@
 #!/usr/bin/env node
 require('./common');
 
+const axios = require('axios');
 const moment = require('moment');
-const request = require('request-promise');
 
-var cron = {
+const timeout = ms => new Promise(res => set_timeout(res, ms));
 
-    calculate_score() {
-        const timeout = ms => new Promise(res => setTimeout(res, ms));
+const cron = {
 
-        return db.users
-            .find_all()
-            .then(users => {
-                var chain = Promise.resolve(null);
+    async calculate_score() {
+        let users = await db.users
+            .find_all();
 
-                users.for_each(user => {
-                    chain = chain
-                        .then(() => {
-                            return [
-                                db.user_challenges
-                                    .find_all({
-                                        where: {
-                                            user_id: user.user_id
-                                        },
-                                        include: [
-                                            {
-                                                model: db.challenges,
-                                                as: 'challenge'
-                                            }
-                                        ]
-                                    })
-                                    .then(challenges => {
-                                        return challenges.reduce((i, c) => i + c.challenge.points, 0);
-                                    })
-                            ];
-                        })
-                        .spread(async (score1) => {
-                            score1 = score1 || 0;
-
-                            user.score = score1;
-
-                            // test for and assign novice role
-                            if (user.discord_api && user.discord_rank === null && user.score >= 40) {
-                                try {
-                                    await discord.api('put',
-                                        '/guilds/473161189120147456'+
-                                        '/members/'+user.discord_api+
-                                        '/roles/'+constant.roles.emkc_novice);
-                                    user.discord_rank = 1;
-                                } catch (e) {}
-                                await timeout(1000);
-                            }
-
-                            // test for and assign hero role
-                            if (user.discord_api && user.discord_rank === 1 && user.score >= 300) {
-                                try {
-                                    await discord.api('put',
-                                        '/guilds/473161189120147456'+
-                                        '/members/'+user.discord_api+
-                                        '/roles/'+constant.roles.emkc_hero);
-                                    user.discord_rank = 2;
-                                } catch (e) {}
-                                await timeout(1000);
-                            }
-
-                            // test for and assign master role
-                            if (user.discord_api && user.discord_rank === 2 && user.score >= 1000) {
-                                try {
-                                    await discord.api('put',
-                                        '/guilds/473161189120147456'+
-                                        '/members/'+user.discord_api+
-                                        '/roles/'+constant.roles.emkc_master);
-                                    user.discord_rank = 3;
-                                } catch (e) {}
-                                await timeout(1000);
-                            }
-
-                            // test for and assign legend role
-                            if (user.discord_api && user.discord_rank === 3 && user.score >= 5000) {
-                                try {
-                                    await discord.api('put',
-                                        '/guilds/473161189120147456'+
-                                        '/members/'+user.discord_api+
-                                        '/roles/'+constant.roles.emkc_legend);
-                                    user.discord_rank = 4;
-                                } catch (e) {}
-                                await timeout(1000);
-                            }
-
-                            await user.save();
-                        });
+        for (const users of users) {
+            let challenges = await db.user_challenges
+                .find_all({
+                    where: {
+                        user_id: user.user_id
+                    },
+                    include: [
+                        {
+                            model: db.challenges,
+                            as: 'challenge'
+                        }
+                    ]
                 });
 
-                return chain;
-            });
+            let challenges_score = challenges.reduce((i, c) => i + c.challenge.points, 0);
+
+            let score = challenges_score || 0;
+
+            user.score = score;
+
+            // test for and assign novice role
+            if (user.discord_api && user.discord_rank === null && user.score >= 40) {
+                try {
+                    await discord.api('put',
+                        '/guilds/473161189120147456'+
+                        '/members/'+user.discord_api+
+                        '/roles/'+constant.roles.emkc_novice);
+                    user.discord_rank = 1;
+                } catch (e) {}
+                await timeout(1000);
+            }
+
+            // test for and assign hero role
+            if (user.discord_api && user.discord_rank === 1 && user.score >= 300) {
+                try {
+                    await discord.api('put',
+                        '/guilds/473161189120147456'+
+                        '/members/'+user.discord_api+
+                        '/roles/'+constant.roles.emkc_hero);
+                    user.discord_rank = 2;
+                } catch (e) {}
+                await timeout(1000);
+            }
+
+            // test for and assign master role
+            if (user.discord_api && user.discord_rank === 2 && user.score >= 1000) {
+                try {
+                    await discord.api('put',
+                        '/guilds/473161189120147456'+
+                        '/members/'+user.discord_api+
+                        '/roles/'+constant.roles.emkc_master);
+                    user.discord_rank = 3;
+                } catch (e) {}
+                await timeout(1000);
+            }
+
+            // test for and assign legend role
+            if (user.discord_api && user.discord_rank === 3 && user.score >= 5000) {
+                try {
+                    await discord.api('put',
+                        '/guilds/473161189120147456'+
+                        '/members/'+user.discord_api+
+                        '/roles/'+constant.roles.emkc_legend);
+                    user.discord_rank = 4;
+                } catch (e) {}
+                await timeout(1000);
+            }
+
+            await user.save();
+        }
+    },
+
+    async update_staff() {
+        await db.users
+            .update(
+                {
+                    is_staff: 0
+                },
+                {
+                    where: {}
+                }
+            );
+
+        let users = [];
+        let last_id = null;
+
+        let base_url = `/guilds/${constant.server_id}/members?limit=1000`;
+
+        while (true) {
+            let result = await discord
+                .api('get', base_url + (last_id ? '&after=' + last_id : ''));
+
+            if (result.body.length === 0) {
+                break;
+            }
+
+            users = users.concat(result.body);
+
+            last_id = users.slice(-1)[0].user.id;
+
+            await timeout(1200);
+        }
+
+        users = users
+            .filter(user => {
+                return user.roles.includes('473167481624854541');
+            })
+            .map(user => user.user.id);
+
+        await db.users
+            .update(
+                {
+                    is_staff: 1
+                },
+                {
+                    where: {
+                        discord_api: {
+                            $in: users
+                        }
+                    }
+                }
+            );
     },
 
     async repair_roles() {
-        const timeout = ms => new Promise(res => setTimeout(res, ms));
-
         const update_role = async (user, role) => {
             console.log('assigning ' + user.username + ' ' + role);
 
