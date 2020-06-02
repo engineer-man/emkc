@@ -12,7 +12,7 @@ const cron = {
         let users = await db.users
             .find_all();
 
-        for (const users of users) {
+        for (const user of users) {
             let challenges = await db.user_challenges
                 .find_all({
                     where: {
