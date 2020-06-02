@@ -1,0 +1,46 @@
+.em_top_members {
+    .user_row {
+        position: relative;
+        display: flex;
+        margin-bottom: 4px;
+        background: #202329;
+        .score_progress {
+            position: absolute;
+            left: 0;
+            top: 85%;
+            bottom: 0;
+        }
+        .picture {
+            z-index: 1;
+            img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+        .name {
+            z-index: 1;
+            flex: 1;
+            .wrapper {
+                display: inline-block;
+                padding: 2px 8px;
+                border-radius: 20px;
+                text-align: center;
+                margin-top: 6px;
+                margin-left: 6px;
+            }
+        }
+        .power {
+            z-index: 1;
+            width: 100px;
+            text-align: right;
+            .wrapper {
+                display: inline-block;
+                padding: 2px 8px;
+                border-radius: 20px;
+                text-align: center;
+                margin-top: 6px;
+                margin-right: 6px;
+            }
+        }
+    }
+}

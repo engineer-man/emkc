@@ -58,7 +58,7 @@ class Stickers extends React.Component {
                 onAuthorize: async (data, actions) => {
                     return actions.payment
                         .execute()
-                        .then(details => {
+                        .then(async details => {
                             let res = await axios
                                 .post('/stickers/order', {
                                     tx: details.transactions[0].related_resources[0].sale.id,
