@@ -41,11 +41,11 @@ class CreateSnippet extends React.Component {
                 snip: this.state.editor.getValue()
             });
 
-        if (res.data.status === 'error') {
+        if (res.status >= 300) {
             return bootbox.alert('Please provide some code');
         }
 
-        location = res.data.payload.url;
+        location = res.data.url;
     }
 
     render() {
