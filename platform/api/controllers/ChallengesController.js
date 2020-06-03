@@ -4,21 +4,6 @@ const util = require('util');
 module.exports = {
 
     async home(req, res) {
-<<<<<<< HEAD
-        let easy = await db.challenges
-            .find_all({
-                where: {
-                    difficulty: constant.challenges.difficulty.easy
-                },
-                include: [
-                    {
-                        required: false,
-                        model: db.user_challenges,
-                        as: 'solution',
-                        where: {
-                            user_id: req.local.user_id
-                        }
-=======
         let options = {
             where: {},
             include: [
@@ -28,7 +13,6 @@ module.exports = {
                     as: 'solution',
                     where: {
                         user_id: req.glob.user_id
->>>>>>> progress on contests
                     }
                 }
             ],
@@ -46,55 +30,12 @@ module.exports = {
         options.where.difficulty = constant.challenges.difficulty.medium;
 
         let medium = await db.challenges
-<<<<<<< HEAD
-            .find_all({
-                where: {
-                    difficulty: constant.challenges.difficulty.medium
-                },
-                include: [
-                    {
-                        required: false,
-                        model: db.user_challenges,
-                        as: 'solution',
-                        where: {
-                            user_id: req.local.user_id
-                        }
-                    }
-                ],
-                order: [
-                    ['challenge_id']
-                ],
-                group: 'challenge_id'
-            });
-
-        let hard = await db.challenges
-            .find_all({
-                where: {
-                    difficulty: constant.challenges.difficulty.hard
-                },
-                include: [
-                    {
-                        required: false,
-                        model: db.user_challenges,
-                        as: 'solution',
-                        where: {
-                            user_id: req.local.user_id
-                        }
-                    }
-                ],
-                order: [
-                    ['challenge_id']
-                ],
-                group: 'challenge_id'
-            });
-=======
             .find_all(options);
 
         options.where.difficulty = constant.challenges.difficulty.hard;
 
         let hard = await db.challenges
             .find_all(options);
->>>>>>> progress on contests
 
         return res.view({
             easy,
