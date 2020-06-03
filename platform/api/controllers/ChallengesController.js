@@ -356,12 +356,9 @@ module.exports = {
                 });
         }
 
-        return res.send({
-            status: 'ok',
-            payload: {
-                results
-            }
-        });
+        return res
+            .status(200)
+            .send(results);
     },
 
     async view_other(req, res) {

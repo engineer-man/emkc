@@ -1,27 +1,15 @@
 {% extends 'master.twig'%}
+{% block bundles %}
+    <script src="/lib/webpack/monaco.bundle.js?{{ sails.local.epoch }}"></script>
+{% endblock %}
 {% block content %}
     <div class="em_wide_content">
         <h4 class="f300">{{ script.title }}</h4>
         <div style="padding: 5px 10px; background: rgba(0,0,0,.5); font-family: monospace; margin-bottom: 10px;">bash <(curl -sSf {{ sails.config.base_url }}/exec/{{ script.cli_script_id }})</div>
-        <div id="editor"></div>
+        <div
+            id="react_cli_script"
+            data-content="{{ script.content|json_encode|e }}"
+            data-snip="{{ snippet.snip|json_encode|noscript|e }}"
+        ></div>
     </div>
-    <script>
-        var editor = monaco.editor.create(document.getElementById('editor'), {
-            theme: 'em',
-            value: {{ script.content|json_encode }},
-            language: 'shell',
-            automaticLayout: true,
-            fontSize: 16,
-            readOnly: true,
-            wordWrap: 'off',
-            scrollBeyondLastLine: false,
-            scrollbar: {
-                vertical: 'hidden',
-            },
-            minimap: {
-                enabled: false
-            }
-        });
-        document.getElementById('editor').style.height = (editor.getModel().getLineCount() * 22) + 'px';
-    </script>
 {% endblock %}

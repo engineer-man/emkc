@@ -3,7 +3,10 @@ const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
-    entry: './resources/index.js',
+    entry: {
+        main: './resources/main.js',
+        monaco: './resources/monaco.js'
+    },
     module: {
         rules: [
             {
@@ -64,28 +67,22 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'public/lib/webpack'),
         publicPath: '/lib/webpack/',
-        filename: 'bundle.js'
+        filename: '[name].bundle.js'
     },
-    // optimization: {
-    //     splitChunks: {
-    //         cacheGroups: {
-    //             monaco: {
-    //                 test: /[\\/]node_modules[\\/](monaco-editor)[\\/]/,
-    //                 name: 'monaco',
-    //                 chunks: 'initial'
-    //             },
-    //             react: {
-    //                 test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-    //                 name: 'react',
-    //                 chunks: 'initial'
-    //             }
-    //         }
-    //     }
-    // },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                react: {
+                    test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+                    name: 'react',
+                    chunks: 'initial'
+                }
+            }
+        }
+    },
     plugins: [
         new MiniCSSExtractPlugin({
-            filename: 'bundle.css',
-            chunkFilename: '[id].css'
+            filename: '[name].bundle.css'
         }),
         new MonacoWebpackPlugin()
     ]

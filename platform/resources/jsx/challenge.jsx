@@ -47,7 +47,7 @@ class Challenge extends React.Component {
                 source: this.editor.getValue()
             });
 
-        let solved = res.data.payload.results.filter(r => !r.passed).length === 0;
+        let solved = res.data.filter(r => !r.passed).length === 0;
 
         if (solved) {
             this.setState({
@@ -57,7 +57,7 @@ class Challenge extends React.Component {
 
         this.setState({
             executing: false,
-            test_results: res.data.payload.results
+            test_results: res.data
         });
     }
 
@@ -100,7 +100,7 @@ class Challenge extends React.Component {
                     {
                         this.state.test_results.map(result => {
                             return (
-                                <div class="result">
+                                <div key={result.name} class="result">
                                     <span class="f700">{result.name}</span>
                                     {' '}
                                     <span class={'badge badge-' + (result.passed ? 'success' : 'danger')}>
@@ -109,9 +109,9 @@ class Challenge extends React.Component {
                                     <br/>
                                     {result.input.split('@@!@!@!@@').map((input, i) => {
                                         return (
-                                            <>
+                                            <React.Fragment key={i}>
                                                 <span class="badge badge-info">value{i+1}</span> {input}<br/>
-                                            </>
+                                            </React.Fragment>
                                         )
                                     })}
                                     <span class="badge badge-dark">expected output</span> {result.expected}<br/>
