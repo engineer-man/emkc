@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.1.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1"
+	 id="svg38" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 595.2 595.3"
+	 style="enable-background:new 0 0 595.2 595.3;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#21252B;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#84E47F;}
+	.st2{fill:#54D34A;}
+	.st3{fill:#84E47F;}
+</style>
+<sodipodi:namedview  bordercolor="#666666" borderopacity="1" gridtolerance="10" guidetolerance="10" id="namedview40" inkscape:current-layer="svg38" inkscape:cx="183.71765" inkscape:cy="243.35059" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-height="1008" inkscape:window-maximized="0" inkscape:window-width="1757" inkscape:window-x="0" inkscape:window-y="0" inkscape:zoom="1.6601562" objecttolerance="10" pagecolor="#ffffff" showgrid="false">
+	</sodipodi:namedview>
+<g id="g30" transform="matrix(1.07441,0,0,1.10624,57.6246,5.28005)">
+	<ellipse id="ellipse28" class="st0" cx="223.4" cy="264.2" rx="266.2" ry="258.5"/>
+</g>
+<path id="path32" class="st1" d="M297.6,0c164.3,0,297.6,133.4,297.6,297.6S461.9,595.3,297.6,595.3S0,461.9,0,297.6
+	S133.4,0,297.6,0z M297.6,11.6c157.9,0,286,128.2,286,286s-128.2,286-286,286s-286-128.2-286-286S139.8,11.6,297.6,11.6z"/>
+<g transform="matrix(.492308 0 0 .492308 6.941539 39.876923)">
+	<path class="st2" d="M328.9,418.9c0,0,523.3,52.3,523.3,139.5V349.2c0,0,0-87.2-523.3-139.5V418.9z"/>
+	<path class="st2" d="M328.9,698c0,0,523.3,52.3,523.3,139.5V628.3c0,0,0-87.2-523.3-139.5V698z"/>
+	<path class="st3" d="M852.1,70.1v209.3c0,0,0,87.2-523.3,139.5V209.6C328.9,209.6,852.1,157.3,852.1,70.1"/>
+	<path class="st3" d="M328.9,488.7c0,0,523.3-52.3,523.3-139.5v209.3c0,0,0,87.2-523.3,139.5V488.7z"/>
+	<path class="st3" d="M328.9,977.1V767.8c0,0,523.3-52.3,523.3-139.5v209.3C852.1,837.6,852.1,924.8,328.9,977.1"/>
+</g>
+</svg>
