@@ -102,6 +102,13 @@
                 <h4>Rust</h4>
                 <span class="badge badge-{{ ('rust' in solved) ? diff : 'light' }}">{{ ('rust' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
+            <div class="col-4 col-sm-3 col-md-2">
+                <a href="/challenges/{{ challenge.challenge_id }}/julia">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/julia.svg" class="img-fluid" />
+                </a>
+                <h4>Julia</h4>
+                <span class="badge badge-{{ ('julia' in solved) ? diff : 'light' }}">{{ ('julia' in solved) ? 'Solved' : 'Unsolved' }}</span>
+            </div>
         </div>
     </div>
 {% endblock %}
