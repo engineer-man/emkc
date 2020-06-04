@@ -23,9 +23,6 @@ class Challenge extends React.Component {
     }
 
     componentDidMount() {
-        monaco.languages.typescript.javascriptDefaults
-            .setCompilerOptions({ noLib: true, allowNonTsExtensions: true });
-
         this.editor = monaco.editor.create(document.getElementById('editor'), {
             theme: 'em',
             language: this.state.monaco_language,
