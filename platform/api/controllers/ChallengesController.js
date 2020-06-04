@@ -150,6 +150,7 @@ module.exports = {
             swift: 'swift',
             java: 'java',
             rust: 'rs',
+            julia: 'jl',
         }[language];
 
         const abstract = await read_file(base_dir + folder + '/abstract.html');
@@ -239,6 +240,9 @@ module.exports = {
                     case 'swift':
                         template += `var value${i} = CommandLine.arguments[${i}]`;
                         break;
+                    case 'julia':
+                        template += `value${i} = ARGS[${i}]`;
+                        break;
                 }
                 template += '\n';
             });
@@ -264,6 +268,7 @@ module.exports = {
                 swift: 'swift',
                 java: 'java',
                 rust: 'rust',
+                julia: 'julia',
             }[language]
         });
     },
