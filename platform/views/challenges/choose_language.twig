@@ -109,6 +109,20 @@
                 <h4>Julia</h4>
                 <span class="badge badge-{{ ('julia' in solved) ? diff : 'light' }}">{{ ('julia' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
+            <div class="col-4 col-sm-3 col-md-2">
+                <a href="/challenges/{{ challenge.challenge_id }}/bash">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/bash.svg" class="img-fluid" />
+                </a>
+                <h4>Bash</h4>
+                <span class="badge badge-{{ ('bash' in solved) ? diff : 'light' }}">{{ ('bash' in solved) ? 'Solved' : 'Unsolved' }}</span>
+            </div>
+            <div class="col-4 col-sm-3 col-md-2">
+                <a href="/challenges/{{ challenge.challenge_id }}/perl">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/perl.svg" class="img-fluid" />
+                </a>
+                <h4>Perl</h4>
+                <span class="badge badge-{{ ('perl' in solved) ? diff : 'light' }}">{{ ('perl' in solved) ? 'Solved' : 'Unsolved' }}</span>
+            </div>
         </div>
     </div>
 {% endblock %}

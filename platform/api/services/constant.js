@@ -18,7 +18,9 @@ var constant = {
             'swift',
             'java',
             'rust',
-            'julia'
+            'julia',
+            'bash',
+            'perl'
         ],
         difficulty: {
             easy: 1,

@@ -1,7 +1,8 @@
 {
-    "host": "mysql",
-    "user": "root",
-    "pass": "root",
-    "db": "emkc",
-    "migs": ""
+  "host": "mysql",
+  "port": 3306,
+  "user": "root",
+  "pass": "root",
+  "db": "emkc",
+  "platform": "mysql"
 }

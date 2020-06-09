@@ -151,6 +151,8 @@ module.exports = {
             java: 'java',
             rust: 'rs',
             julia: 'jl',
+            bash: 'sh',
+            perl: 'pl',
         }[language];
 
         const abstract = await read_file(base_dir + folder + '/abstract.html');
@@ -243,6 +245,12 @@ module.exports = {
                     case 'julia':
                         template += `value${i} = ARGS[${i}]`;
                         break;
+                    case 'bash':
+                        template += `value${i}=$${i}`;
+                        break;
+                    case 'perl':
+                        template += `my $value${i} = $ARGV[${i-1}];`;
+                        break;
                 }
                 template += '\n';
             });
@@ -269,6 +277,8 @@ module.exports = {
                 java: 'java',
                 rust: 'rust',
                 julia: 'julia',
+                bash: 'shell',
+                perl: 'perl'
             }[language]
         });
     },

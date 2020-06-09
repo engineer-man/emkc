@@ -1,16 +1,13 @@
 FROM node:14.3.0-stretch
 
 RUN apt update && apt install -y inotify-tools libjson-c-dev
-
 RUN cd /opt && \
-    git clone https://github.com/realtux/bmig && \
-    cd bmig && \
-    make && \
-    make install
+    wget https://github.com/realtux/rmig/releases/download/0.0.3/rmig-0.0.3-linux && \
+    ln -s /opt/rmig-0.0.3-linux /usr/bin/rmig
 
 WORKDIR /opt/emkc/platform
 
 CMD cd migrations && \
-    bmig migrate && \
+    rmig migrate && \
     cd .. && \
     ./start >> ../var/docker/logs/app.log 2>&1
