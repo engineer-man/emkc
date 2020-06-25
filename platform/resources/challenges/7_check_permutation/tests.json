@@ -1,20 +1,28 @@
 [
     {
         "official": false,
-        "name": "Permutation",
+        "name": "Testing permutations",
         "input": [
             ["engineer,gireneen"],
             ["cat,act"],
-            ["14467,42641"],
-            ["qwerty,qeerty"],
             ["e1m2k3c4,e2k3m14c"]
         ],
         "output": [
             "Yes",
             "Yes",
-            "No",
-            "No",
             "Yes"
+        ]
+    },
+    {
+        "official": false,
+        "name": "Testing non-permutations",
+        "input": [
+            ["14467,42641"],
+            ["qwerty,qeerty"]
+        ],
+        "output": [
+            "No",
+            "No"
         ]
     }
 ]
