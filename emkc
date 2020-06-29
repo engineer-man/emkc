@@ -37,10 +37,10 @@ case $* in
         docker exec -it emkc_mysql bash -c 'mysql -hmysql -uroot -proot -Demkc'
         ;;
     "migrate" )
-        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; bmig migrate'
+        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; rmig migrate'
         ;;
     "rollback" )
-        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; bmig rollback'
+        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; rmig rollback'
         ;;
     "tail" )
         tail -f ./var/docker/logs/*
