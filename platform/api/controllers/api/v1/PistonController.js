@@ -16,7 +16,7 @@ module.exports = {
     },
 
     async execute(req, res) {
-        console.log(req.ip);
+        const ip = req.headers['x-real-ip'];console.log(ip);
         const redis = new Redis(6379, 'redis');
 
         let entry = await redis.get(`piston-${req.ip}`);
