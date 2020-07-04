@@ -31,7 +31,7 @@ module.exports = {
             await redis.set(`piston-${req.ip}`, 0, 'ex', 1);
         }
 
-        const { language, source, args } = req.body;
+        let { language, source, args } = req.body;
 
         if (!Array.is_array(args)) {
             args = [];
