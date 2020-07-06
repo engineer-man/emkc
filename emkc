@@ -4,6 +4,8 @@ case $* in
     "init" )
         cp -n platform/config/local.js.sample platform/config/local.js
         cp -n platform/migrations/config.json.sample platform/migrations/config.json
+        docker-compose build
+        docker-compose run --rm --no-deps emkc bash -c 'cd /opt/emkc/platform; npm install'
         ;;
     "deploy" )
         git pull
