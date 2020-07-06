@@ -78,10 +78,13 @@ class Challenge extends React.Component {
     }
 
     editor_change(_) {
-        // The editor's contents have changed
-        this.setState({
-            changed: true
-        });
+        // Only change state when necessary
+        if (!this.state.changed) {
+            // The editor's contents have changed
+            this.setState({
+                changed: true
+            });
+        }
     }
 
     before_unload(e) {
