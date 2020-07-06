@@ -30,7 +30,7 @@ module.exports = {
         project_id: ''
     },
     mailgun: {
-        key: '',
+        key: 'yourkeyhere',
         domain: ''
     },
     paypal: {

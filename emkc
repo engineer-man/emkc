@@ -4,6 +4,12 @@ case $* in
     "init" )
         cp -n platform/config/local.js.sample platform/config/local.js
         cp -n platform/migrations/config.json.sample platform/migrations/config.json
+        touch var/docker/logs/app.log
+        chmod 777 var/docker/logs/app.log
+        touch var/docker/logs/sql.log
+        chmod 777 var/docker/logs/sql.log
+        docker-compose build
+        docker-compose run --rm --no-deps emkc bash -c 'cd /opt/emkc/platform; npm install'
         ;;
     "deploy" )
         git pull
@@ -37,10 +43,10 @@ case $* in
         docker exec -it emkc_mysql bash -c 'mysql -hmysql -uroot -proot -Demkc'
         ;;
     "migrate" )
-        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; bmig migrate'
+        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; rmig migrate'
         ;;
     "rollback" )
-        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; bmig rollback'
+        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; rmig rollback'
         ;;
     "tail" )
         tail -f ./var/docker/logs/*
