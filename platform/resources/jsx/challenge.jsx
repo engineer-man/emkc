@@ -16,10 +16,16 @@ class Challenge extends React.Component {
             abstract: props.abstract,
             monaco_language: props.monaco_language,
             executing: false,
-            test_results: []
+            test_results: [],
+            changed: false
         };
 
         this.execute = this.execute.bind(this);
+        this.editor_change = this.editor_change.bind(this);
+        this.before_unload = this.before_unload.bind(this);
+        
+        // Add event listener for when the user leaves with unsaved work
+        window.addEventListener('beforeunload', this.before_unload, false);
     }
 
     componentDidMount() {
@@ -28,8 +34,17 @@ class Challenge extends React.Component {
             language: this.state.monaco_language,
             value: this.state.template,
             automaticLayout: true,
-            fontSize: 16
+            fontSize: 16,
+            onChange: this.on_editor_change,
         });
+        
+        // Bind event listener for when the editor changes; unsaved work
+        this.editor.onDidChangeModelContent(this.editor_change);
+    }
+    
+    componentWillUnmount() {
+        // Remove event listener on unmount
+        window.removeEventListener('beforeunload', this.before_unload, false);
     }
 
     async execute() {
@@ -48,7 +63,11 @@ class Challenge extends React.Component {
 
         if (solved) {
             this.setState({
-                solved: true
+                solved: true,
+                
+                // The challenge's code saves on solve
+                // Therefore, we can disable the "close protection"
+                changed: false
             });
         }
 
@@ -56,6 +75,21 @@ class Challenge extends React.Component {
             executing: false,
             test_results: res.data
         });
+    }
+
+    editor_change(_) {
+        // The editor's contents have changed
+        this.setState({
+            changed: true
+        });
+    }
+
+    before_unload(e) {
+        if (this.state.changed) {
+            // Unsaved work, prompt user!
+            e.preventDefault();
+            e.returnValue = true;
+        }
     }
 
     render() {
