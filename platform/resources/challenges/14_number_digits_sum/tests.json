@@ -1,0 +1,30 @@
+[
+    {
+        "official": false,
+        "name": "Testing short numbers",
+        "input": [
+            [3],
+            [17],
+            [57]
+        ],
+        "output": [
+            "odd",
+            "even",
+            "even"
+        ]
+    },
+    {
+        "official": false,
+        "name": "Testing long numbers",
+        "input": [
+            [74739],
+            [337394],
+            [3739203]
+        ],
+        "output": [
+            "even",
+            "odd",
+            "odd"
+        ]
+    }
+]
