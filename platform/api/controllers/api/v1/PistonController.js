@@ -20,7 +20,7 @@ module.exports = {
         const authorization = req.headers['authorization'];
         const redis = new Redis(6379, 'redis');
 
-        if (authorization !== sails.config.piston.key) {
+        if (authorization !== sails.config.api.internal_key) {
             let entry = await redis.get(`piston-${req.ip}`);
 
             if (entry) {
