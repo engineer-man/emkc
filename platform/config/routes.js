@@ -30,9 +30,6 @@ module.exports.routes = {
     'GET /@:username': 'ProfilesController.view',
     'GET /@:username/challenges/:challenge_id/:language': 'ChallengesController.view_other',
 
-    // piston
-    'POST /api/internal/piston/execute': 'api/internal/PistonController.execute',
-
     // service api
     'GET /api/internal/chats/last': 'api/internal/ChatsController.last',
     'POST /api/internal/chats': 'api/internal/ChatsController.create',

@@ -16,19 +16,22 @@ module.exports = {
     },
 
     async execute(req, res) {
-        const ip = req.headers['x-real-ip'];console.log(ip);
+        const ip = req.headers['x-real-ip'];
+        const authorization = req.headers['authorization'];
         const redis = new Redis(6379, 'redis');
 
-        let entry = await redis.get(`piston-${req.ip}`);
+        if (authorization !== sails.config.piston.key) {
+            let entry = await redis.get(`piston-${req.ip}`);
 
-        if (entry) {
-            return res
-                .status(429)
-                .send({
-                    message: 'Requests limited to 1 per second'
-                });
-        } else {
-            await redis.set(`piston-${req.ip}`, 0, 'ex', 1);
+            if (entry) {
+                return res
+                    .status(429)
+                    .send({
+                        message: 'Requests limited to 1 per second'
+                    });
+            } else {
+                await redis.set(`piston-${req.ip}`, 0, 'ex', 1);
+            }
         }
 
         let { language, source, args } = req.body;
