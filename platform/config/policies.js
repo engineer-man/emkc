@@ -40,6 +40,10 @@ module.exports.policies = {
         '*': ['common']
     },
 
+    'api/v1/stats/PistonController': {
+        '*': ['common', 'api_internal_auth']
+    },
+
     'api/v1/PistonController': {
         '*': ['common']
     },

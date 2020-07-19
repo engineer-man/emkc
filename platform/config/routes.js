@@ -33,10 +33,12 @@ module.exports.routes = {
     // service api
     'GET /api/internal/chats/last': 'api/internal/ChatsController.last',
     'POST /api/internal/chats': 'api/internal/ChatsController.create',
+    'POST /api/internal/piston/log': 'api/internal/PistonController.log',
 
     // public api endpoints
     'GET /api/v1/stats/discord/messages': 'api/v1/stats/DiscordController.messages',
     'GET /api/v1/stats/discord/channels': 'api/v1/stats/DiscordController.channels',
+    'GET /api/v1/stats/piston/usage': 'api/v1/stats/PistonController.usage',
     'GET /api/v1/users': 'api/v1/UsersController.read_all',
     'GET /api/v1/users/:user_id': 'api/v1/UsersController.read',
     'GET /api/v1/piston/versions': 'api/v1/PistonController.versions',
