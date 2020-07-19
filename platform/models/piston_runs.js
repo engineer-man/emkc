@@ -7,14 +7,21 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true
             },
             server: DataTypes.STRING,
+            server_id: DataTypes.STRING,
             user: DataTypes.STRING,
-            discord_id: DataTypes.STRING,
+            user_id: DataTypes.STRING,
             language: DataTypes.STRING,
             source: DataTypes.TEXT,
             created_at: DataTypes.DATE
         },
         {
-            freezeTableName: true
+            freezeTableName: true,
+
+            hooks: {
+                beforeCreate(instance) {
+                    instance.created_at = util.now();
+                }
+            }
         }
     );
 };

@@ -1,9 +1,9 @@
 module.exports = {
 
     async log(req, res) {
-        let { server, user, discord_id, language, source } = req.body;
+        let { server, server_id, user, user_id, language, source } = req.body;
 
-        if (!server || !user || !discord_id || !language || !source) {
+        if (!server || !server_id || !user || !user_id || !language || !source) {
             return res
                 .status(400)
                 .send();
@@ -12,8 +12,9 @@ module.exports = {
         await db.piston_runs
             .create({
                 server,
+                server_id,
                 user,
-                discord_id,
+                user_id,
                 language,
                 source
             });
