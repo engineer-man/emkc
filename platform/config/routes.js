@@ -5,9 +5,9 @@ module.exports.routes = {
     'GET /auth/discord': 'AuthController.discord',
     'GET /auth/discord_cb': 'AuthController.discord_cb',
     'GET /privacy': 'HomeController.privacy',
-    'GET /stickers': 'MerchController.stickers',
-    'POST /stickers/order': 'MerchController.order_stickers',
-    'GET /stickers/check_code/:code': 'MerchController.check_code',
+    //'GET /stickers': 'MerchController.stickers',
+    //'POST /stickers/order': 'MerchController.order_stickers',
+    //'GET /stickers/check_code/:code': 'MerchController.check_code',
 
     'GET /community': 'CommunityController.home',
     'GET /community/about': 'CommunityController.about',

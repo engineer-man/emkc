@@ -23,7 +23,7 @@ class Challenge extends React.Component {
         this.execute = this.execute.bind(this);
         this.editor_change = this.editor_change.bind(this);
         this.before_unload = this.before_unload.bind(this);
-        
+
         // Add event listener for when the user leaves with unsaved work
         window.addEventListener('beforeunload', this.before_unload, false);
     }
@@ -37,11 +37,11 @@ class Challenge extends React.Component {
             fontSize: 16,
             onChange: this.on_editor_change,
         });
-        
+
         // Bind event listener for when the editor changes; unsaved work
         this.editor.onDidChangeModelContent(this.editor_change);
     }
-    
+
     componentWillUnmount() {
         // Remove event listener on unmount
         window.removeEventListener('beforeunload', this.before_unload, false);
@@ -64,7 +64,7 @@ class Challenge extends React.Component {
         if (solved) {
             this.setState({
                 solved: true,
-                
+
                 // The challenge's code saves on solve
                 // Therefore, we can disable the "close protection"
                 changed: false
