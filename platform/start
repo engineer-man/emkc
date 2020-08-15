@@ -5,22 +5,7 @@ APPENV=${APPENV:-development}
 echo "running in $APPENV mode"
 
 if [ $APPENV == "production" ]; then
-    node_modules/.bin/webpack --mode production --progress --color
-    #node_modules/.bin/pm2 start --no-daemon pm2.json
-    node emkc.js
+    npm run prod
 else
-    sysctl -n -w fs.inotify.max_user_watches=200000
-
-    node_modules/.bin/webpack --mode development --watch --progress --color &
-
-    pid=
-
-    while true; do
-        node emkc.js &
-        pid=$!
-        inotifywait -qq -r --exclude '(node_modules|public|resources)' -e modify,create,delete,move .
-        echo "killing $pid and restarting..."
-        kill -15 $pid
-        wait $pid
-    done
+    npm run dev
 fi

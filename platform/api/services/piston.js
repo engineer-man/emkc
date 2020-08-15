@@ -23,8 +23,9 @@ module.exports = {
             let result = await request
                 ({
                     method: 'post',
-                    url: constant.is_prod() ? 'http://' +sails.config.piston.host + '/execute'
-			                   : 'https://emkc.org/api/v1/piston/execute',
+                    url: constant.is_prod()
+                        ? 'http://' +sails.config.piston.host + '/execute'
+                        : 'https://emkc.org/api/v1/piston/execute',
                     body: {
                         language,
                         source,
