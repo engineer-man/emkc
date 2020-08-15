@@ -19,12 +19,12 @@ module.exports = {
         if (!Array.is_array(args)) args = [args];
 
         args = args.map(arg => '' + arg);
-
         try {
             let result = await request
                 ({
                     method: 'post',
-                    url: 'http://' + sails.config.piston.host + '/execute',
+                    url: constant.is_prod() ? 'http://' +sails.config.piston.host + '/execute'
+			                   : 'https://emkc.org/api/v1/piston/execute',
                     body: {
                         language,
                         source,
