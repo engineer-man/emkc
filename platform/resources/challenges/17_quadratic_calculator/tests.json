@@ -1,0 +1,38 @@
+[
+    {
+        "official": false,
+        "name": "Real",
+        "input": [
+            ["1x^2-1x-6=0"],
+            ["x^2-6x+9=0"],
+            ["2x^2-6x-7=0"],
+            ["9x^2-6x-7=0"],
+            ["9x^2-6x-7=0"],
+            ["-3x^2+1x+7=0"]
+        ],
+        "output": [
+          "3, -2",
+          "3, 3",
+          "3.89791, -0.89791",
+          "1.27614, -0.60947",
+          "0.68726, -1.13170",
+          "-1.36992, 1.70325"
+        ]
+    },
+    {
+        "official": false,
+        "name": "Imaginary",
+        "input": [
+            ["2x^2-6x+7=0"],
+            ["3x^2+1x+7=0"],
+            ["9x^2+9x+7=0"],
+            ["-9x^2-9x-7=0"]
+        ],
+        "output": [
+          "imaginary, imaginary",
+          "imaginary, imaginary",
+          "imaginary, imaginary",
+          "imaginary, imaginary"
+        ]
+    }
+]
