@@ -3,8 +3,8 @@
         "official": false,
         "name": "Testing simple string",
         "input": [
-            [41, 3)],
-            [14, 2]
+            41, 3,
+            14, 2
         ],
         "output": [
             31,
@@ -15,8 +15,8 @@
         "official": false,
         "name": "Testing complex string",
         "input": [
-            [35, 11],
-            [15, 15],
+            35, 11,
+            15, 15,
         ],
         "output": [
             18,
