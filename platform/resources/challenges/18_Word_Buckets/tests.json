@@ -1,0 +1,25 @@
+[
+    {
+        "official": false,
+        "name": "Testing simple string",
+        "input": [
+            ["rich magnificent trees dotted the landscape", 22],
+            ["beep bo bee bop bee bo bo bop", 10]
+        ],
+        "output": [
+            ["rich magnificent trees", "dotted the landscape"],
+            ["beep bo", "bee bop", "bee bo bo", "bop"],
+        ]
+    },
+    {
+        "official": false,
+        "name": "Testing complex string",
+        "input": [
+            ["rich magnificent trees dotted the landscape", 43],
+            ["ab bc cd", 1],
+        ],
+        "output": [
+            "rich magnificent trees dotted the landscape",
+            []
+        ]
+    }
