@@ -1,0 +1,33 @@
+[
+    {
+        "official": false,
+        "name": "First_Letter_Shift",
+        "input": [
+            ["'create a function'"],
+            ["'it should shift the sentence'"],
+            ["'i love to eat scrambled eggs and ham'"],
+            ["'EngineerMan'"]
+            
+        ],
+        "output": [
+          "freate c aunction",
+          "st ihould shift she tentence",
+          "h iove lo tat ecrambled sggs end aam",
+          "EngineerMan"
+        ]
+    },
+    {
+        "official": false,
+        "name": "First_Letter_Shift",
+        "input": [
+            ["'elephants dance about bravely in thailand'"],
+            ["'mitochondria is the powerhouse of the cell'"],
+            ["'tey ghis uot hnscrambled'"]
+        ],
+        "output": [
+          "tlephants eance dbout aravely bn ihailand",
+          "citochondria ms ihe towerhouse pf ohe tell",
+          "hey this got unscrambled"
+        ]
+    }
+] 
