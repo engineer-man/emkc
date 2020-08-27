@@ -3,25 +3,24 @@
         "official": false,
         "name": "Fauna_in_Chitwan_National_Park",
         "input": [
-            ["'There are 24 one-hornedrhino,50 python and 20000 bees.'"],
-            ["'There are 244 bengaltiger,200 monitorlizard and 5000 apples.'"]
+            ["There are 24 one-hornedrhino,50 python and 20000 bees."],
+            ["There are 244 bengaltiger,200 monitorlizard and 5000 apples."]
         ],
         "output": [
-          [('one-hornedrhino', '24'), ('python', '50')],
-          [('bengaltiger', '244'), ('monitorlizard', '200')]
+          "one-hornedrhino,24,python,50",
+          "bengaltiger,244,monitorlizard,200"
         ]
     },
     {
         "official": false,
         "name": "Fauna_in_Chitwan_National_Park",
         "input": [
-            ["'There are 2444 saltrees,2000 cobra and 5000 mangotrees.'"],
-            ["'There are 180 muggercrocodile,20 krait and 500 taipan.'"]
+            ["There are 2444 saltrees,2000 cobra and 5000 mangotrees."],
+            ["There are 180 muggercrocodile,20 krait and 500 taipan."]
         ],
         "output": [
-          []
-          [('muggercrocodile', '180')]
+          "",
+          "muggercrocodile,180"
         ]
     }
-]  
-    
+] 
