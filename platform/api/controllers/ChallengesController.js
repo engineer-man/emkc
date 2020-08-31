@@ -12,7 +12,7 @@ module.exports = {
                     model: db.user_challenges,
                     as: 'solution',
                     where: {
-                        user_id: req.glob.user_id
+                        user_id: req.local.user_id
                     }
                 }
             ],

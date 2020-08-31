@@ -9,7 +9,19 @@ module.exports = {
                     end_date: {
                         $lt: util.now()
                     }
-                }
+                },
+                include: [
+                    {
+                        model: db.user_contests,
+                        as: 'submissions',
+                        include: [
+                            {
+                                model: db.users,
+                                as: 'user'
+                            }
+                        ]
+                    }
+                ]
             });
 
         let active_contests = await db.contests
@@ -21,7 +33,23 @@ module.exports = {
                     end_date: {
                         $gte: util.now()
                     }
-                }
+                },
+                include: [
+                    {
+                        model: db.user_contests,
+                        as: 'submissions',
+                        include: [
+                            {
+                                model: db.users,
+                                as: 'user'
+                            }
+                        ]
+                    }
+                ],
+                order: [
+                    ['contest_id', 'desc'],
+                    [{ model: db.user_contests, as: 'submissions'}, 'created_at']
+                ]
             });
 
         return res.view({
@@ -30,6 +58,35 @@ module.exports = {
         });
     },
 
-    _config: {}
+    async contest(req, res) {
+        const contest_id = req.params.contest_id;
+
+        let contest = await db.contests
+            .find_one({
+                where: {
+                    contest_id
+                },
+                include: [
+                    {
+                        model: db.user_contests,
+                        as: 'submissions',
+                        include: [
+                            {
+                                model: db.users,
+                                as: 'user'
+                            }
+                        ]
+                    }
+                ]
+            });
+
+        if (!contest) {
+            return res.redirect('/contests');
+        }
+
+        return res.view({
+            contest
+        });
+    }
 
 };

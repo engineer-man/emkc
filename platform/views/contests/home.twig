@@ -30,6 +30,8 @@
                     </li>
                     <li>
                         Submitted solutions must pass automated code execution before they are recorded as a contest submission.
+                        This is done using the Piston engine. The only supported languages are the languages that Piston supports.
+                        To request new languages, submit a request in #emkc-felix-pison on <a href="https://discord.gg/engineerman">Discord</a>.
                     </li>
                     <li>
                         Leading and trailing whitespace is automatically trimmed before calculating the number of characters used.
@@ -47,13 +49,16 @@
                                 Code Golf style contest. Click for more info or to submit solutions.
                             </p>
                             <div class="time_left">
-                                Run Time: {{ contest.start_date|date('m/d/Y') }} - {{ contest.end_date|date('m/d/Y') }}
-                            </div>
-                            <div class="time_left">
-                                Time Left: {{ contest.time_left }}
+                                Active Dates: {{ contest.start_date|date('F j, Y') }} - {{ contest.end_date|date('F j, Y') }}
+                                ({{ contest.time_left }} left)
                             </div>
                             <div class="solutions">
-                                Total Solutions: {{ contest.solutions|length }}
+                                Total Solutions: {{ contest.submissions|length }}
+                                <div>
+                                    {% for submission in contest.submissions %}
+                                        <img src="{{ req.local.constant.cdn_url ~ submission.user.avatar_url }}" />
+                                    {% endfor %}
+                                </div>
                             </div>
                         </a>
                     {% else %}

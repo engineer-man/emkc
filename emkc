@@ -1,68 +1,64 @@
 #!/usr/bin/env bash
 
+function init_logs {
+    touch var/docker/logs/app.log
+    chmod 777 var/docker/logs/app.log
+    touch var/docker/logs/sql.log
+    chmod 777 var/docker/logs/sql.log
+}
+
 case $* in
-    "init" )
+    init )
         cp -n platform/config/local.js.sample platform/config/local.js
         cp -n platform/migrations/config.json.sample platform/migrations/config.json
-        touch var/docker/logs/app.log
-        chmod 777 var/docker/logs/app.log
-        touch var/docker/logs/sql.log
-        chmod 777 var/docker/logs/sql.log
+        init_logs
         docker-compose build
         docker-compose run --rm --no-deps emkc bash -c 'cd /opt/emkc/platform; npm install'
         ;;
-    "deploy" )
+    deploy )
         git pull
         docker-compose down
-        touch var/docker/logs/app.log
-        chmod 777 var/docker/logs/app.log
-        touch var/docker/logs/sql.log
-        chmod 777 var/docker/logs/sql.log
+        init_logs
         docker-compose up -d
         ;;
-    "start" )
-        touch var/docker/logs/app.log
-        chmod 777 var/docker/logs/app.log
-        touch var/docker/logs/sql.log
-        chmod 777 var/docker/logs/sql.log
+    start )
+        init_logs
         docker-compose up -d
         ;;
-    "stop" )
+    stop )
         docker-compose down
         ;;
-    "shell" )
+    shell )
         docker exec -it emkc /bin/bash
         ;;
-    "rebuild" )
+    rebuild )
         docker-compose build
         ;;
-    "npm" )
+    npm )
         docker-compose run --rm --no-deps emkc bash -c 'cd /opt/emkc/platform; npm install'
         ;;
-    "mysql" )
+    mysql )
         docker exec -it emkc_mysql bash -c 'mysql -hmysql -uroot -proot -Demkc'
         ;;
-    "migrate" )
-        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; rmig migrate'
+    rmig* )
+        docker exec -it emkc bash -c "cd /opt/emkc/platform/migrations; $*"
         ;;
-    "rollback" )
-        docker exec -it emkc bash -c 'cd /opt/emkc/platform/migrations; rmig rollback'
-        ;;
-    "tail" )
+    tail )
         tail -f ./var/docker/logs/*
         ;;
-    * )
+    "" )
         echo 'emkc control, usage: emkc [command]'
         echo ''
-        echo 'init       initialize env specific config files'
-        echo 'start      start the emkc docker container'
-        echo 'stop       stop the emkc docker container'
-        echo 'shell      start a shell in the docker container'
-        echo 'rebuild    rebuild emkc from scratch'
-        echo 'npm        update node modules'
-        echo 'mysql      login to mysql'
-        echo 'migrate    run the pending database migrations'
-        echo 'rollback   rollback one database migration'
-        echo 'tail       watch app and db logs'
+        echo 'init          initialize env specific config files'
+        echo 'start         start the emkc docker container'
+        echo 'stop          stop the emkc docker container'
+        echo 'shell         start a shell in the docker container'
+        echo 'rebuild       rebuild emkc from scratch'
+        echo 'npm           update node modules'
+        echo 'mysql         login to mysql'
+        echo 'rmig status   show the status of migrations'
+        echo 'rmig migrate  run the pending database migrations'
+        echo 'rmig rollback rollback one database migration'
+        echo 'tail          watch app and db logs'
         exit 1
 esac

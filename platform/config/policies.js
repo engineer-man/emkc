@@ -9,6 +9,10 @@ module.exports.policies = {
         'video_request_vote': ['common', 'logged_in']
     },
 
+    'ContestsController': {
+        '*': ['common']
+    },
+
     'QuestionsController': {
         '*': ['common'],
         'ask': ['common', 'logged_in'],

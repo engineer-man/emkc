@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
             language: DataTypes.STRING,
             solution: DataTypes.TEXT('medium'),
             length: DataTypes.INTEGER,
-            points: DataTypes.INTEGER,
+            award_place: DataTypes.INTEGER,
+            award_points: DataTypes.INTEGER,
             created_at: DataTypes.DATE
         },
         {
