@@ -32,6 +32,10 @@ module.exports.policies = {
         '*': ['common', 'logged_in']
     },
 
+    'admin/ContestsController': {
+        '*': ['common', 'logged_in', 'is_admin']
+    },
+
     'api/internal/ChatsController': {
         '*': ['common', 'api_internal_auth']
     },

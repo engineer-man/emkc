@@ -100,10 +100,14 @@
                 {% endif %}
             </div>
 
+            {% if sails.twig.starts_with(req.path, '/admin') and req.local.user.is_staff %}
+                
+            {% endif %}
+
             {% block content %}{% endblock %}
 
-            <div class="f700 footer" style="position: absolute; bottom: 0; left: 0; right: 0; background: #36B96E; font-size: 12px; padding: 0 10px; text-align: right;">
-                <a href="/privacy" style="color: #fff;">Privacy Policy</a>
+            <div class="f700 em_footer">
+                <a href="/privacy">Privacy Policy</a>
             </div>
         </div>
         <div id="react_mobile_nav"></div>

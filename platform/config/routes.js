@@ -34,6 +34,10 @@ module.exports.routes = {
     'GET /@:username': 'ProfilesController.view',
     'GET /@:username/challenges/:challenge_id/:language': 'ChallengesController.view_other',
 
+    // admin
+    'GET /admin/contests': 'admin/ContestsController.view_all',
+    'GET /admin/contests/all': 'admin/ContestsController.view_all',
+
     // service api
     'GET /api/internal/chats/last': 'api/internal/ChatsController.last',
     'POST /api/internal/chats': 'api/internal/ChatsController.create',
