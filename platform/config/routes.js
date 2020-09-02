@@ -35,8 +35,11 @@ module.exports.routes = {
     'GET /@:username/challenges/:challenge_id/:language': 'ChallengesController.view_other',
 
     // admin
+    'GET /admin': 'admin/DashboardController.dashboard',
     'GET /admin/contests': 'admin/ContestsController.view_all',
     'GET /admin/contests/all': 'admin/ContestsController.view_all',
+    'GET /admin/contests/update/:contest_id': 'admin/ContestsController.update',
+    'POST /admin/contests/update/:contest_id': 'admin/ContestsController.update',
 
     // service api
     'GET /api/internal/chats/last': 'api/internal/ChatsController.last',

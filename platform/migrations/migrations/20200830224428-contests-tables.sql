@@ -2,17 +2,22 @@ up:
 create table contests (
     contest_id int unsigned not null auto_increment,
     name varchar(128) not null,
+    description mediumtext not null,
     start_date datetime not null,
     end_date datetime not null,
+    input text not null,
+    output text not null,
+    created_at datetime not null,
     primary key (contest_id),
     key start_date (start_date),
-    key end_date (end_date)
+    key end_date (end_date),
+    key created_at (created_at)
 )engine=innodb default charset=utf8;
 
-insert into contests values (1, 'Test Contest', '2020-08-29 00:00:00', '2020-09-20 23:59:59');
+insert into contests values (1, 'Test Contest', 'Test Description', '2020-08-29 00:00:00', '2020-09-20 23:59:59', '5', '5', now());
 
-create table user_contests (
-    user_contest_id int unsigned not null auto_increment,
+create table contest_submissions (
+    contest_submission_id int unsigned not null auto_increment,
     user_id int unsigned not null,
     contest_id int unsigned not null,
     language varchar(32) not null,
@@ -21,7 +26,7 @@ create table user_contests (
     award_place int unsigned null,
     award_points int unsigned null,
     created_at datetime not null,
-    primary key (user_contest_id),
+    primary key (contest_submission_id),
     key user_id (user_id),
     key contest_id (contest_id),
     key language (language),
@@ -30,8 +35,8 @@ create table user_contests (
     key created_at (created_at)
 )engine=innodb default charset=utf8;
 
-insert into user_contests values (default, 1, 1, 'javascript', 'console.log(1)', 14, null, null, now());
+insert into contest_submissions values (default, 1, 1, 'javascript', 'console.log(1)', 14, null, null, now());
 
 down:
 drop table contests;
-drop table user_contests;
+drop table contest_submissions;

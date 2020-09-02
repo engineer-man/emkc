@@ -22,7 +22,7 @@ class Util {
                     final[key] = JSON.parse(ele.dataset[key]);
                 } catch(e) { }
             }
-
+console.log(final);
             return ReactDOM.render(
                 React.createElement(comp, final),
                 document.getElementById(id)

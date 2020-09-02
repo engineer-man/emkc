@@ -1,0 +1,17 @@
+{% extends 'master.twig'%}
+{% block content %}
+    <div class="em_wide_content">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="f300">Manage Contest</h4>
+
+                <div
+                    id="react_contest_manage"
+                    data-mode="{{ mode|json_encode|e }}"
+                    data-contest_id="{{ contest.contest_id|json_encode|e }}"
+                    data-contest="{{ contest|json_encode|e }}"
+                ></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

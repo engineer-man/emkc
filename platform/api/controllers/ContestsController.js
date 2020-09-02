@@ -12,7 +12,7 @@ module.exports = {
                 },
                 include: [
                     {
-                        model: db.user_contests,
+                        model: db.contest_submissions,
                         as: 'submissions',
                         include: [
                             {
@@ -36,7 +36,7 @@ module.exports = {
                 },
                 include: [
                     {
-                        model: db.user_contests,
+                        model: db.contest_submissions,
                         as: 'submissions',
                         include: [
                             {
@@ -48,7 +48,7 @@ module.exports = {
                 ],
                 order: [
                     ['contest_id', 'desc'],
-                    [{ model: db.user_contests, as: 'submissions'}, 'created_at']
+                    [{ model: db.contest_submissions, as: 'submissions'}, 'created_at']
                 ]
             });
 
@@ -68,7 +68,7 @@ module.exports = {
                 },
                 include: [
                     {
-                        model: db.user_contests,
+                        model: db.contest_submissions,
                         as: 'submissions',
                         include: [
                             {

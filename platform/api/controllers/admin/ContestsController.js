@@ -11,14 +11,16 @@ module.exports = {
 
     async create(req, res) {
         if (req.method === 'POST') {
-            const {title, description, start_date, end_date} = req.body;
+            const { name, description, start_date, end_date, input, output } = req.body;
 
             let contest = await db.contests
                 .create({
-                    title,
+                    name,
                     description,
                     start_date,
-                    end_date
+                    end_date,
+                    input,
+                    output
                 });
 
             return res
@@ -31,7 +33,6 @@ module.exports = {
 
     async update(req, res) {
         const contest_id = req.params.contest_id;
-        const {title, description, start_date, end_date} = req.body;
 
         let contest = await db.contests
             .find_one({
@@ -40,17 +41,28 @@ module.exports = {
                 }
             });
 
-        contest.title = title;
-        contest.description = description;
-        contest.start_date = start_date;
-        contest.end_date = end_date;
+        if (req.method === 'POST') {
+            const { name, description, start_date, end_date, input, output } = req.body;
 
-        await contest
-            .save();
+            contest.name = name;
+            contest.description = description;
+            contest.start_date = start_date;
+            contest.end_date = end_date;
+            contest.input = input;
+            contest.output = output;
 
-        return res
-            .status(200)
-            .send();
+            await contest
+                .save();
+
+            return res
+                .status(200)
+                .send();
+        }
+
+        return res.view({
+            contest,
+            mode: 'update'
+        });
     }
 
 };

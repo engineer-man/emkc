@@ -15,7 +15,7 @@ module.exports = {
     starts_with(string, path) {
         let pattern = new RegExp('^' + path.replace('/', '\\/'));
 
-        return pattern.test(path);
+        return pattern.test(string);
     }
 
 };

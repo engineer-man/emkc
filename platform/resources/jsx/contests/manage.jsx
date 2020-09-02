@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Quill from 'quill';
 
 import Util from 'js/util';
 
@@ -9,14 +10,25 @@ class Manage extends React.Component {
         super(props);
 
         this.state = {
-            title: ''
+            name: '',
+            description: '',
+            start_date: '',
+            end_date: '',
+            input: '',
+            output: ''
         };
+
+        if (props.mode === 'update') {
+            this.state = props.contest;
+        }
+
+        this.handle_change = this.handle_change.bind(this);
+        this.save = this.save.bind(this);
     }
 
     componentDidMount() {
         this.quill = new Quill('#description', {
             theme: 'snow',
-            placeholder: 'Description here',
             modules: {
                 syntax: true,
                 toolbar: [
@@ -29,13 +41,22 @@ class Manage extends React.Component {
             }
         });
 
-        if (this.props.description) {
-            this.quill.setContents(this.props.description);
+        if (this.props.mode === 'update') {
+            this.quill.setContents(JSON.parse(this.state.description));
         }
     }
 
-    save() {
-        const { title } = this.state;
+    handle_change(e) {
+        let id = e.target.id;
+        let value = e.target.value;
+
+        this.setState({
+            [id]: value
+        });
+    }
+
+    async save() {
+        const { name, start_date, end_date, input, output } = this.state;
         const description = JSON.stringify(this.quill.getContents());
 
         let url;
@@ -50,32 +71,82 @@ class Manage extends React.Component {
 
         let res = await axios
             .post(url, {
-                title,
-                description
+                name,
+                description,
+                start_date,
+                end_date,
+                input,
+                output
             });
+
+        //location = '/admin/contests';
     }
 
     render() {
         return (
             <div class="em_contest_manage">
-                <div class="contents">
-                    <div class="col_padding">
-                        <h5 class="f700">Title</h5>
+                <div class="col_padding">
+                    <div class="form-group">
+                        <label>Name</label>
                         <input
                             type="text"
-                            id="title"
-                            class="title"
-                            placeholder="Contest title"
-                            value={this.state.title}
-                            onChange={this.update} />
-
-                        <h5 class="f700">Description</h5>
-                        <div class="form-group">
-                            <div id="description"></div>
-                        </div>
-
-                        <button type="button" class="btn btn-sm btn-success" onClick={this.save}>Save</button>
+                            id="name"
+                            class="form-control"
+                            value={this.state.name}
+                            onChange={this.handle_change} />
                     </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <div id="description"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input
+                            type="text"
+                            id="start_date"
+                            class="form-control"
+                            value={this.state.start_date}
+                            onChange={this.handle_change} />
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input
+                            type="text"
+                            id="end_date"
+                            class="form-control"
+                            value={this.state.end_date}
+                            onChange={this.handle_change} />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Input(s) (separated by \n)</label>
+                        <textarea
+                            id="input"
+                            class="form-control"
+                            rows="4"
+                            value={this.state.input}
+                            onChange={this.handle_change}
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Output</label>
+                        <textarea
+                            id="output"
+                            class="form-control"
+                            rows="4"
+                            value={this.state.output}
+                            onChange={this.handle_change}
+                        ></textarea>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-success"
+                        onClick={this.save}>Save</button>
                 </div>
             </div>
         );

@@ -9,8 +9,12 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true
             },
             name: DataTypes.STRING,
+            description: DataTypes.TEXT('medium'),
             start_date: DataTypes.DATE,
-            end_date: DataTypes.DATE
+            end_date: DataTypes.DATE,
+            input: DataTypes.TEXT,
+            output: DataTypes.TEXT,
+            created_at: DataTypes.DATE
         },
         {
             freezeTableName: true,

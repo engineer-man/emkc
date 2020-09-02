@@ -25,6 +25,8 @@
             <link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
             <link href="//use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
             <link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
+            <link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+            <link href="/lib/highlightjs/atom-one-dark.css" rel="stylesheet">
             <link href="/lib/webpack/main.bundle.css?{{ sails.local.epoch }}" rel="stylesheet" />
         {% endblock %}
 
@@ -32,6 +34,8 @@
             <script src="/lib/jquery/jquery-3.0.0.min.js"></script>
             <script src="/lib/popper/popper.min.js"></script>
             <script src="/lib/bootstrap/bootstrap.min.js"></script>
+            <script src="/lib/highlightjs/highlight.pack.js"></script>
+            <script src="/lib/highlightjs/highlight-ln.js"></script>
             <script src="/lib/bootbox/bootbox.js"></script>
         {% endblock %}
 
@@ -88,6 +92,9 @@
                             <div class="dropdown-menu dropdown-menu-right">
                                 <h6 class="dropdown-header">{{ req.local.user.username }}</h6>
                                 <a class="dropdown-item" href="/@{{ req.local.user.username }}">Profile</a>
+                                {% if req.local.user.is_staff %}
+                                    <a class="dropdown-item" href="/admin">Staff Area</a>
+                                {% endif %}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/logout">Logout</a>
                             </div>
@@ -101,7 +108,10 @@
             </div>
 
             {% if sails.twig.starts_with(req.path, '/admin') and req.local.user.is_staff %}
-                
+                <div class="em_staff_container">
+                    Staff Stuff:
+                    <a href="/admin/contests">Contests</a>
+                </div>
             {% endif %}
 
             {% block content %}{% endblock %}
