@@ -41,6 +41,7 @@
 
         <script>
             ctx = {
+                cdn_url: '{{ req.local.constant.cdn_url }}',
                 user_id: +'{{ req.local.user_id ? req.local.user_id : 0 }}',
                 username: '{{ req.local.user.username }}',
                 is_staff: +'{{ req.local.user and req.local.user.is_staff ? 1 : 0 }}',

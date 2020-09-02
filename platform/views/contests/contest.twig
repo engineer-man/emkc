@@ -3,29 +3,10 @@
     <div class="em_common_content em_contests_contest container">
         <div class="row">
             <div class="col-12">
-                <h4 class="header f300">{{ contest.name }}</h4>
-
-                <div class="description">
-                    desciption here
-                </div>
-
-                <h5>Submissions</h5>
-                {% for submission in contest.submissions %}
-                    <div class="submission">
-                        <div class="main">
-                            <div class="summary">
-                                {{ submission.length }} characters with {{ submission.language }}
-                            </div>
-                            <div class="time">
-                                Submitted: {{ submission.created_at|date('F j, Y @ g:i a') }}
-                            </div>
-                        </div>
-                        <div class="user">
-                            <img src="{{ req.local.constant.cdn_url ~ submission.user.avatar_url }}" />
-                            {{ submission.user.username }}
-                        </div>
-                    </div>
-                {% endfor %}
+                <div
+                    id="react_contest_contest"
+                    data-contest="{{ contest|json_encode|e }}"
+                ></div>
             </div>
         </div>
     </div>
