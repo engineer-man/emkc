@@ -80,7 +80,6 @@ module.exports = {
                         as: 'submissions',
                         attributes: [
                             'language',
-                            'solution',
                             'length',
                             'created_at'
                         ],
