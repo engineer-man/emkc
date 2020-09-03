@@ -50,10 +50,10 @@ module.exports = {
                 return valid;
             });
 
-        try {
-            let t = await db.sequelize
-                .transaction();
+        let t = await db.sequelize
+            .transaction();
 
+        try {
             for (const message of messages) {
                 let new_message = {
                     channel: message.channel,

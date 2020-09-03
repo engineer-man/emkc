@@ -112,7 +112,7 @@ module.exports = {
                     encoding: null
                 })
                 .then(res => {
-                    fs.write_file(root_dir + '/cdn/avatars/' + user.user_id + '.png', res);
+                    fs.write_file(root_dir + '/cdn/avatars/' + user.user_id + '.png', res, () => {});
 
                     user.avatar_url = '/avatars/' + user.user_id + '.png';
                     user.save();

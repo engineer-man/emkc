@@ -167,6 +167,7 @@ class Contest extends React.Component {
                             </div>
                             <div class="user">
                                 <img src={ctx.cdn_url + submission.user.avatar_url} />
+                                {' '}
                                 {submission.user.username}
                             </div>
                         </div>
