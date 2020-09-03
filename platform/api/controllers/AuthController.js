@@ -27,7 +27,7 @@ module.exports = {
 
         try {
             // get an access token from the code returned from the authorization phase
-            let res = await request
+            let auth_result = await request
                 ({
                     method: 'post',
                     url: 'https://discordapp.com/api/v6/oauth2/token',
@@ -52,7 +52,7 @@ module.exports = {
                     method: 'get',
                     url: 'https://discordapp.com/api/v6/users/@me',
                     headers: {
-                        Authorization: 'Bearer ' + res.access_token
+                        Authorization: 'Bearer ' + auth_result.access_token
                     },
                     json: true,
                     simple: true
@@ -124,7 +124,7 @@ module.exports = {
 
             // add the emkc member role on discord
             discord
-                .api('put', '/guilds/473161189120147456/members/'+user.discord_api+'/roles/'+constant.roles.emkc_member);
+                .api('put', `/guilds/473161189120147456/members/${user.discord_api}/roles/${constant.roles.emkc_member}`);
 
             // according to whether or not the redirect was supplied, either go to that url or to board main
             if (req.session.redirect) {

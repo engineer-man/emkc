@@ -18,9 +18,9 @@ module.exports.routes = {
     'POST /challenges/execute/:challenge_id': 'ChallengesController.execute',
     'GET /challenges/:challenge_id/:language': 'ChallengesController.challenge',
 
-    'GET /contests/:contest_id/*': 'ContestsController.contest',
-
     'GET /contests': 'ContestsController.home',
+    'POST /contests/submit': 'ContestsController.submit',
+    'GET /contests/:contest_id/*': 'ContestsController.contest',
 
     'GET /snippets': 'SnippetsController.create',
     'POST /snippets': 'SnippetsController.create',

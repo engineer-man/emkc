@@ -10,7 +10,8 @@ module.exports.policies = {
     },
 
     'ContestsController': {
-        '*': ['common']
+        '*': ['common'],
+        'submit': ['common', 'logged_in']
     },
 
     'QuestionsController': {

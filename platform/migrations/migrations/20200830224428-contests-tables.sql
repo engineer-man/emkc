@@ -14,7 +14,7 @@ create table contests (
     key created_at (created_at)
 )engine=innodb default charset=utf8;
 
-insert into contests values (1, 'Test Contest', 'Test Description', '2020-08-29 00:00:00', '2020-09-20 23:59:59', '5', '5', now());
+insert into contests values (1, 'First Contest', 'Test Description', '2020-08-29 00:00:00', '2020-09-20 23:59:59', '5', '5', now());
 
 create table contest_submissions (
     contest_submission_id int unsigned not null auto_increment,

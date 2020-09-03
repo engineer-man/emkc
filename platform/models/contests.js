@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
             freezeTableName: true,
 
             getterMethods: {
+                active() {
+                    return moment().isAfter(moment(this.start_date)) && moment().isBefore(moment(this.end_date));
+                },
+
                 url() {
                     return '/contests/' + this.contest_id + '/' + util.slugify(this.name);
                 },
