@@ -40,7 +40,7 @@
         "regenerator-runtime": "0.13.3",
         "request-promise": "4.2.2",
         "sails": "0.12.14",
-        "sequelize": "3.30.4",
+        "sequelize": "6.3.5",
         "socket.io-redis": "1.0.0",
         "style-loader": "1.0.1",
         "twig": "0.8.2",
