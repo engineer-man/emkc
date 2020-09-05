@@ -10,6 +10,7 @@ class Manage extends React.Component {
         super(props);
 
         this.state = {
+            draft: 1,
             name: '',
             description: '',
             start_date: '',
@@ -50,13 +51,17 @@ class Manage extends React.Component {
         let id = e.target.id;
         let value = e.target.value;
 
+        if (id === 'draft') {
+            value = this.state.draft ? 0 : 1;
+        }
+
         this.setState({
             [id]: value
         });
     }
 
     async save() {
-        const { name, start_date, end_date, input, output } = this.state;
+        const { draft, name, start_date, end_date, input, output } = this.state;
         const description = JSON.stringify(this.quill.getContents());
 
         let url;
@@ -71,6 +76,7 @@ class Manage extends React.Component {
 
         let res = await axios
             .post(url, {
+                draft,
                 name,
                 description,
                 start_date,
@@ -79,7 +85,7 @@ class Manage extends React.Component {
                 output
             });
 
-        //location = '/admin/contests';
+        location = '/admin/contests';
     }
 
     render() {
@@ -94,6 +100,16 @@ class Manage extends React.Component {
                             class="form-control"
                             value={this.state.name}
                             onChange={this.handle_change} />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input
+                                type="checkbox"
+                                id="draft"
+                                checked={this.state.draft}
+                                onChange={this.handle_change} /> Draft
+                        </div>
                     </div>
 
                     <div class="form-group">

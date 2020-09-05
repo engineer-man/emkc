@@ -100,7 +100,7 @@ class Contest extends React.Component {
 
                 <h5>Your Submission</h5>
                 <div class="marginbottom20">
-                    {ctx.user_id && (
+                    {ctx.user_id && this.state.contest.active && (
                         <div>
                             <p>
                                 It's recommended that you compose your solution separately and just paste
@@ -147,9 +147,15 @@ class Contest extends React.Component {
                             </div>
                         </div>
                     ) || (
-                        <div>
-                            You are not logged in. To submit a solution, click the Login button at the top right.
-                        </div>
+                        ctx.user_id && (
+                            <div>
+                                This contest is not active so no submissions can be submitted.
+                            </div>
+                        ) || (
+                            <div>
+                                You are not logged in. To submit a solution, click the Login button at the top right.
+                            </div>
+                        )
                     )}
                 </div>
 

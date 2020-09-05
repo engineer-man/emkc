@@ -11,10 +11,11 @@ module.exports = {
 
     async create(req, res) {
         if (req.method === 'POST') {
-            const { name, description, start_date, end_date, input, output } = req.body;
+            const { draft, name, description, start_date, end_date, input, output } = req.body;
 
             let contest = await db.contests
                 .create({
+                    draft,
                     name,
                     description,
                     start_date,
@@ -42,8 +43,9 @@ module.exports = {
             });
 
         if (req.method === 'POST') {
-            const { name, description, start_date, end_date, input, output } = req.body;
+            const { draft, name, description, start_date, end_date, input, output } = req.body;
 
+            contest.draft = draft;
             contest.name = name;
             contest.description = description;
             contest.start_date = start_date;

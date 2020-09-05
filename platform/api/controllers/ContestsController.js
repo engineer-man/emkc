@@ -28,6 +28,7 @@ module.exports = {
         let active_contests = await db.contests
             .find_all({
                 where: {
+                    draft: 0,
                     start_date: {
                         $lte: util.now()
                     },
@@ -94,6 +95,10 @@ module.exports = {
                             }
                         ]
                     }
+                ],
+                order: [
+                    [{ model: db.contest_submissions, as: 'submissions' }, 'length'],
+                    [{ model: db.contest_submissions, as: 'submissions' }, 'created_at'],
                 ]
             });
 
@@ -176,6 +181,29 @@ module.exports = {
                         length: solution.trim().length
                     });
             }
+
+            discord
+                .api('post', `/channels/${constant.channels.emkc}/messages`, {
+                    embed: {
+                        title: contest.name,
+                        description:
+                            `Can you make a better solution? ` +
+                            `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
+                        type: 'rich',
+                        color: 0x84e47f,
+                        url: `${constant.base_url}${contest.url}`,
+                        author: {
+                            name:
+                                `${req.local.user.display_name} submitted a ${submission.length} ` +
+                                `character solution with ${submission.language}`
+                        },
+                        footer: {
+                            icon_url: constant.cdn_url + req.local.user.avatar_url,
+                            text: `submitted by ${req.local.user.display_name} right now`
+                        }
+                    }
+                })
+                .catch(err => {});
         }
 
         return res

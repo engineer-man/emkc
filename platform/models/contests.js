@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true,
                 autoIncrement: true
             },
+            draft: DataTypes.INTEGER,
             name: DataTypes.STRING,
             description: DataTypes.TEXT('medium'),
             start_date: DataTypes.DATE,
