@@ -172,7 +172,7 @@ module.exports = {
                 await submission
                     .save();
             } else {
-                await db.contest_submissions
+                submission = await db.contest_submissions
                     .create({
                         user_id: req.local.user_id,
                         contest_id,
