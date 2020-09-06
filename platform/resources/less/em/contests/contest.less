@@ -11,23 +11,30 @@
         padding: 30px 0;
     }
     .submission {
-        display: flex;
         padding: 10px;
         background: rgba(0, 0, 0, .1);
         margin-bottom: 10px;
-        .main {
-            flex: 1;
+        .heading {
+            display: flex;
+            .main {
+                flex: 1;
+            }
+            .user {
+                padding-top: 8px;
+            }
+            .time {
+                font-size: 12px;
+                color: #aaa;
+            }
+            img {
+                width: 28px;
+                height: 28px;
+            }
         }
-        .user {
-            padding-top: 8px;
-        }
-        .time {
-            font-size: 12px;
-            color: #aaa;
-        }
-        img {
-            width: 28px;
-            height: 28px;
+        .solution {
+            padding-top: 10px;
+            font-family: monospace;
+            word-wrap: break-word;
         }
     }
 }

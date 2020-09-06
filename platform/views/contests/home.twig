@@ -69,7 +69,24 @@
                 <div class="past">
                     <h4 class="f300">Past Contests</h4>
                     {% for contest in past_contests %}
-                        {{ contest.name }}
+                        <a href="{{ contest.url }}" class="contest">
+                            <div class="name">{{ contest.name }}</div>
+                            <p>
+                                Code Golf style contest. Click to view solutions.
+                            </p>
+                            <div class="time_left">
+                                Active Dates: {{ contest.start_date|date('F j, Y') }} - {{ contest.end_date|date('F j, Y') }}
+                                (Finished)
+                            </div>
+                            <div class="solutions">
+                                Total Solutions: {{ contest.submissions|length }}
+                                <div>
+                                    {% for submission in contest.submissions %}
+                                        <img src="{{ req.local.constant.cdn_url ~ submission.user.avatar_url }}" />
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </a>
                     {% else %}
                         There are no pasts contests at this time.
                     {% endif %}

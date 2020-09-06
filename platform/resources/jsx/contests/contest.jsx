@@ -163,19 +163,26 @@ class Contest extends React.Component {
                 {this.state.contest.submissions.map(submission => {
                     return (
                         <div key={submission.contest_submission_id} class="submission">
-                            <div class="main">
-                                <div class="summary">
-                                    {submission.length} characters with {submission.language}
+                            <div class="heading">
+                                <div class="main">
+                                    <div class="summary">
+                                        {submission.length} characters with {submission.language}
+                                    </div>
+                                    <div class="time">
+                                        Submitted: {moment(submission.created_at).format('MMMM D, YYYY @ h:mm:ss a')}
+                                    </div>
                                 </div>
-                                <div class="time">
-                                    Submitted: {moment(submission.created_at).format('MMMM D, YYYY @ h:mm:ss a')}
+                                <div class="user">
+                                    <img src={ctx.cdn_url + submission.user.avatar_url} />
+                                    {' '}
+                                    {submission.user.username}
                                 </div>
                             </div>
-                            <div class="user">
-                                <img src={ctx.cdn_url + submission.user.avatar_url} />
-                                {' '}
-                                {submission.user.username}
-                            </div>
+                            {!this.state.contest.active && (
+                                <div class="solution">
+                                    {submission.solution}
+                                </div>
+                            )}
                         </div>
                     );
                 })}

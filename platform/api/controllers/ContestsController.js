@@ -81,6 +81,7 @@ module.exports = {
                         as: 'submissions',
                         attributes: [
                             'language',
+                            'solution',
                             'length',
                             'created_at'
                         ],
@@ -101,6 +102,13 @@ module.exports = {
                     [{ model: db.contest_submissions, as: 'submissions' }, 'created_at'],
                 ]
             });
+
+        if (contest.active) {
+            contest.submissions
+                .for_each(submission => {
+                    delete submission.dataValues.solution;
+                });
+        }
 
         let submission = await db.contest_submissions
             .find_one({
