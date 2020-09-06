@@ -35,7 +35,7 @@ class Contest extends React.Component {
         let languages = await axios.get('/api/v1/piston/versions');
 
         this.setState({
-            languages: languages.data,
+            languages: languages.data.filter(lang => lang.name !== 'kotlin'),
             language: this.state.language || languages.data[0].name
         });
     }
