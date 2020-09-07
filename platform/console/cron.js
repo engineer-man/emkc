@@ -184,6 +184,86 @@ const cron = {
                 await update_role(user, constant.roles.emkc_legend);
             }
         }
+    },
+
+    async contest_status() {
+        let contest = await db.contests
+            .find_one({
+                where: {
+                    draft: 0,
+                    start_date: {
+                        $lte: util.now()
+                    },
+                    end_date: {
+                        $gte: util.now()
+                    }
+                },
+                include: [
+                    {
+                        model: db.contest_submissions,
+                        as: 'submissions',
+                        include: [
+                            {
+                                model: db.users,
+                                as: 'user'
+                            }
+                        ]
+                    }
+                ],
+                order: [
+                    ['contest_id', 'desc'],
+                    [{ model: db.contest_submissions, as: 'submissions' }, 'length'],
+                    [{ model: db.contest_submissions, as: 'submissions' }, 'created_at']
+                ]
+            });
+
+        if (!contest || contest.submissions.length === 0) {
+            return;
+        }
+
+        let submission = contest.submissions[0];
+
+        discord
+            .api('post', `/channels/${constant.channels.emkc}/messages`, {
+                embed: {
+                    //title: contest.name,
+                    description:
+                        'This contest is active right now. Submit your solution soon and ' +
+                        'try to beat the best solution! ' +
+                        `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
+                    type: 'rich',
+                    color: 0x84e47f,
+                    url: `${constant.base_url}${contest.url}`,
+                    thumbnail: {
+                        url: constant.cdn_url + submission.user.avatar_url
+                    },
+                    fields: [
+                        {
+                            name: '**leader**',
+                            value: submission.user.display_name,
+                            inline: true
+                        },
+                        {
+                            name: '**language used**',
+                            value: submission.language,
+                            inline: true
+                        },
+                        {
+                            name: '**length**',
+                            value: submission.length,
+                            inline: true
+                        }
+                    ],
+                    author: {
+                        name: 'Contest Status: ' + contest.name,
+                        icon_url: 'https://emkc.org/images/icon_circle_64.png'
+                    },
+                    footer: {
+                        text: `There's still ${contest.time_left}left to submit a solution`
+                    }
+                }
+            })
+            .catch(err => {});
     }
 
 };

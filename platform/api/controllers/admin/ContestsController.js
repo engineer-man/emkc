@@ -2,7 +2,11 @@ module.exports = {
 
     async view_all(req, res) {
         let contests = await db.contests
-            .find_all();
+            .find_all({
+                order: [
+                    ['contest_id', 'desc']
+                ]
+            });
 
         return res.view({
             contests
