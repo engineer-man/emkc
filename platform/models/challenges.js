@@ -24,6 +24,14 @@ module.exports = (sequelize, DataTypes) => {
                         [constant.challenges.difficulty.medium]: 'medium',
                         [constant.challenges.difficulty.hard]: 'hard',
                     }[this.difficulty] || null;
+                },
+
+                difficulty_name_upper() {
+                    return {
+                        [constant.challenges.difficulty.easy]: 'Easy',
+                        [constant.challenges.difficulty.medium]: 'Medium',
+                        [constant.challenges.difficulty.hard]: 'Hard',
+                    }[this.difficulty] || null;
                 }
             }
         }

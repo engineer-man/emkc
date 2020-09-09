@@ -1,4 +1,5 @@
 {% extends 'master.twig'%}
+{% block title %}Coding Challenges | EMKC{% endblock %}
 {% block content %}
     {% if challenge.difficulty == sails.local.constant.challenges.difficulty.easy %}
         {% set diff = 'easy' %}
