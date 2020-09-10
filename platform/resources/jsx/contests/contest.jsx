@@ -89,7 +89,7 @@ class Contest extends React.Component {
     render() {
         return (
             <div class="em_contests_contest">
-                <h4 class="header f300 marginbottom20">{this.state.contest.name}</h4>
+                <h4 class="header green f500 marginbottom20">{this.state.contest.name}</h4>
 
                 <div class="ql-snow marginbottom20">
                     <div
@@ -98,7 +98,7 @@ class Contest extends React.Component {
                     </div>
                 </div>
 
-                <h5>Your Submission</h5>
+                <h5 class="green">Your Submission</h5>
                 <div class="marginbottom20">
                     {ctx.user_id && this.state.contest.active && (
                         <div>
@@ -159,7 +159,7 @@ class Contest extends React.Component {
                     )}
                 </div>
 
-                <h5>Submissions</h5>
+                <h5 class="green">Submissions</h5>
                 {this.state.contest.submissions.map(submission => {
                     return (
                         <div key={submission.contest_submission_id} class="submission">
@@ -179,9 +179,9 @@ class Contest extends React.Component {
                                 </div>
                             </div>
                             {!this.state.contest.active && (
-                                <div class="solution">
+                                <pre class="solution">
                                     {submission.solution}
-                                </div>
+                                </pre>
                             )}
                         </div>
                     );
