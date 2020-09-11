@@ -18,9 +18,12 @@ class Contest extends React.Component {
             passed: true
         };
 
-        if (props.submission) {
-            this.state.language = props.submission.language;
-            this.state.solution = props.submission.solution;
+        if (props.submissions && props.submissions.length > 0) {
+            let submission = props.submissions
+                .sort((a,b) => a.length > b.length ? 1 : -1)[0];
+
+            this.state.language = submission.language;
+            this.state.solution = submission.solution;
         }
 
         this.handle_change = this.handle_change.bind(this);
@@ -43,6 +46,15 @@ class Contest extends React.Component {
     handle_change(e) {
         let id = e.target.id;
         let value = e.target.value;
+
+        if (id === 'language') {
+            let submission = this.props.submissions
+                .find(submission => submission.language === value);
+
+            this.setState({
+                solution: submission ? submission.solution : ''
+            });
+        }
 
         this.setState({
             [id]: value
@@ -125,6 +137,22 @@ class Contest extends React.Component {
                                     })}
                                 </select>
                             </div>
+                            {this.props.submissions && this.props.submissions.length > 0 && (
+                                <div class="form-group">
+                                    <small>
+                                        You have solutions in:
+                                        {' '}
+                                        {this.props.submissions.map((submission, i) => {
+                                            return (
+                                                <span key={submission.language}>
+                                                    {submission.language} ({submission.length})
+                                                    {i + 1 < this.props.submissions.length && ', '}
+                                                </span>
+                                            );
+                                        })}
+                                    </small>
+                                </div>
+                            )}
                             <div class="form-group">
                                 <label>Solution</label>
                                 <textarea
@@ -149,7 +177,7 @@ class Contest extends React.Component {
                     ) || (
                         ctx.user_id && (
                             <div>
-                                This contest is not active so no submissions can be submitted.
+                                This contest is not active so no solutions can be submitted.
                             </div>
                         ) || (
                             <div>

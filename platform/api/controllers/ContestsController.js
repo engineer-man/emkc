@@ -80,6 +80,7 @@ module.exports = {
                         model: db.contest_submissions,
                         as: 'submissions',
                         attributes: [
+                            'contest_submission_id',
                             'language',
                             'solution',
                             'length',
@@ -110,8 +111,8 @@ module.exports = {
                 });
         }
 
-        let submission = await db.contest_submissions
-            .find_one({
+        let submissions = await db.contest_submissions
+            .find_all({
                 where: {
                     contest_id,
                     user_id: req.local.user_id || null
@@ -124,7 +125,7 @@ module.exports = {
 
         return res.view({
             contest,
-            submission
+            submissions
         });
     },
 
@@ -142,6 +143,7 @@ module.exports = {
             .find_one({
                 where: {
                     contest_id,
+                    language,
                     user_id: req.local.user_id || null
                 }
             });
