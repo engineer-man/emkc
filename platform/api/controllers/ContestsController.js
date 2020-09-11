@@ -22,6 +22,9 @@ module.exports = {
                             }
                         ]
                     }
+                ],
+                order: [
+                    ['contest_id', 'desc']
                 ]
             });
 

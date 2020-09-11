@@ -36,6 +36,7 @@ class MobileNav extends React.Component {
                         <h5 class="f300">Main Menu</h5>
                         <a href="/">Home</a>
                         <a href="/challenges">Challenges</a>
+                        <a href="/contests">Contests</a>
                         <a href="/community">Community</a>
                         <a href="/snippets">Tools - Snippets</a>
                         {ctx.user_id && (
