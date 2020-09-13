@@ -180,6 +180,30 @@ module.exports = {
 
                 if (submission.length < prev_length) {
                     submission.created_at = util.now();
+
+                    discord
+                        .api('post', `/channels/${constant.channels.emkc}/messages`, {
+                            embed: {
+                                title: contest.name,
+                                description:
+                                    `Can you do better than this? ` +
+                                    `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
+                                type: 'rich',
+                                color: 0x84e47f,
+                                url: `${constant.base_url}${contest.url}`,
+                                author: {
+                                    name:
+                                        `${req.local.user.display_name} updated their ${submission.language} solution ` +
+                                        `with one that is ${submission.length} characters long ` +
+                                        `(a ${prev_length-submission.length} character improvement)`
+                                },
+                                footer: {
+                                    icon_url: constant.cdn_url + req.local.user.avatar_url,
+                                    text: `updated by ${req.local.user.display_name} right now`
+                                }
+                            }
+                        })
+                        .catch(err => {});
                 }
 
                 await submission
@@ -206,7 +230,7 @@ module.exports = {
                             url: `${constant.base_url}${contest.url}`,
                             author: {
                                 name:
-                                    `${req.local.user.display_name} submitted a ${submission.length} ` +
+                                    `${req.local.user.display_name} submitted an initial ${submission.length} ` +
                                     `character solution with ${submission.language}`
                             },
                             footer: {
