@@ -195,6 +195,14 @@ class Contest extends React.Component {
                                 <div class="main">
                                     <div class="summary">
                                         {submission.length} characters with {submission.language}
+                                        {' '}
+                                        {submission.overall_first && <img src="/images/awards/1.png" />}
+                                        {' '}
+                                        {submission.overall_second && <img src="/images/awards/2.png" />}
+                                        {' '}
+                                        {submission.overall_third && <img src="/images/awards/3.png" />}
+                                        {' '}
+                                        {submission.language_first && <img src="/images/awards/4.png" />}
                                     </div>
                                     <div class="time">
                                         Submitted: {moment(submission.created_at).format('MMMM D, YYYY @ h:mm:ss a')}

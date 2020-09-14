@@ -108,8 +108,27 @@ module.exports = {
             });
 
         if (contest.active) {
+            let awarded_languages = [];
+
             contest.submissions
-                .for_each(submission => {
+                .for_each((submission, i) => {
+                    switch (i) {
+                        case 0:
+                            submission.dataValues.overall_first = true;
+                            break;
+                        case 1:
+                            submission.dataValues.overall_second = true;
+                            break;
+                        case 2:
+                            submission.dataValues.overall_third = true;
+                            break;
+                    }
+
+                    if (!awarded_languages.includes(submission.language)) {
+                        submission.dataValues.language_first = true;
+                        awarded_languages.push(submission.language);
+                    }
+
                     delete submission.dataValues.solution;
                 });
         }
