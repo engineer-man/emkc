@@ -107,11 +107,13 @@ module.exports = {
                 ]
             });
 
-        if (contest.active) {
-            let awarded_languages = [];
+        let awarded_languages = [];
+        let awarded_users = [];
 
-            contest.submissions
-                .for_each((submission, i) => {
+        contest.submissions
+            .for_each((submission, i) => {
+                // overall awards for top 3 solutions submitted by unique users
+                if (!awarded_users.includes(submission.user_id)) {
                     switch (i) {
                         case 0:
                             submission.dataValues.overall_first = true;
@@ -123,15 +125,20 @@ module.exports = {
                             submission.dataValues.overall_third = true;
                             break;
                     }
+                    awarded_users.push(submission.user_id);
+                }
 
-                    if (!awarded_languages.includes(submission.language)) {
-                        submission.dataValues.language_first = true;
-                        awarded_languages.push(submission.language);
-                    }
+                // per language awards for top solution in each language
+                if (!awarded_languages.includes(submission.language)) {
+                    submission.dataValues.language_first = true;
+                    awarded_languages.push(submission.language);
+                }
 
+                // hide the solution in the payload to prevent cheating
+                if (contest.active) {
                     delete submission.dataValues.solution;
-                });
-        }
+                }
+            });
 
         let submissions = await db.contest_submissions
             .find_all({
