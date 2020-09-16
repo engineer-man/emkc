@@ -110,23 +110,27 @@ module.exports = {
 
         let awarded_languages = [];
         let awarded_users = [];
+        let top = 1;
 
         contest.submissions
             .for_each((submission, i) => {
                 // overall awards for top 3 solutions submitted by unique users
-                if (!awarded_users.includes(submission.user_id)) {
-                    switch (i) {
-                        case 0:
+                if (!awarded_users.includes(submission.user_id) && top <= 3) {
+                    switch (top) {
+                        case 1:
                             submission.dataValues.overall_first = true;
                             break;
-                        case 1:
+                        case 2:
                             submission.dataValues.overall_second = true;
                             break;
-                        case 2:
+                        case 3:
                             submission.dataValues.overall_third = true;
                             break;
                     }
+
                     awarded_users.push(submission.user_id);
+
+                    ++top;
                 }
 
                 // per language awards for top solution in each language
