@@ -84,6 +84,7 @@ module.exports = {
                         as: 'submissions',
                         attributes: [
                             'contest_submission_id',
+                            'user_id',
                             'language',
                             'solution',
                             'length',
