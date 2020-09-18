@@ -15,7 +15,7 @@ module.exports = {
 
         let query = {
             where: {
-                $and: []
+                [$and]: []
             },
             attributes: [
                 'user',
@@ -43,7 +43,7 @@ module.exports = {
 
         if (term) {
             query.where.message = {
-                $like: '%' + term + '%'
+                [$like]: '%' + term + '%'
             };
         }
 
@@ -51,9 +51,9 @@ module.exports = {
             start = moment(start);
 
             if (start.isValid()) {
-                query.where.$and.push({
+                query.where[$and].push({
                     created_at: {
-                        $gte: start.format('YYYY-MM-DD HH:mm:ss')
+                        [$gte]: start.format('YYYY-MM-DD HH:mm:ss')
                     }
                 });
             }
@@ -63,9 +63,9 @@ module.exports = {
             end = moment(end);
 
             if (end.isValid()) {
-                query.where.$and.push({
+                query.where[$and].push({
                     created_at: {
-                        $lte: end.format('YYYY-MM-DD HH:mm:ss')
+                        [$lte]: end.format('YYYY-MM-DD HH:mm:ss')
                     }
                 });
             }
@@ -86,7 +86,7 @@ module.exports = {
 
         let query = {
             where: {
-                $and: []
+                [$and]: []
             },
             attributes: [
                 'channel',
@@ -105,7 +105,7 @@ module.exports = {
 
         if (user) {
             query.where.user = {
-                $like: '%' + user.replace(/[^\x00-\x7F]/g, '') + '%'
+                [$like]: '%' + user.replace(/[^\x00-\x7F]/g, '') + '%'
             };
         }
 
@@ -117,9 +117,9 @@ module.exports = {
             start = moment(start);
 
             if (start.isValid()) {
-                query.where.$and.push({
+                query.where[$and].push({
                     created_at: {
-                        $gte: start.format('YYYY-MM-DD HH:mm:ss')
+                        [$gte]: start.format('YYYY-MM-DD HH:mm:ss')
                     }
                 });
             }
@@ -129,9 +129,9 @@ module.exports = {
             end = moment(end);
 
             if (end.isValid()) {
-                query.where.$and.push({
+                query.where[$and].push({
                     created_at: {
-                        $lte: end.format('YYYY-MM-DD HH:mm:ss')
+                        [$lte]: end.format('YYYY-MM-DD HH:mm:ss')
                     }
                 });
             }

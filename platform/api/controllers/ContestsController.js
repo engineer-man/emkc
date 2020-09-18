@@ -8,7 +8,7 @@ module.exports = {
             .find_all({
                 where: {
                     end_date: {
-                        $lt: util.now()
+                        [$lt]: util.now()
                     }
                 },
                 include: [
@@ -33,10 +33,10 @@ module.exports = {
                 where: {
                     draft: 0,
                     start_date: {
-                        $lte: util.now()
+                        [$lte]: util.now()
                     },
                     end_date: {
-                        $gte: util.now()
+                        [$gte]: util.now()
                     }
                 },
                 include: [
@@ -77,6 +77,7 @@ module.exports = {
                     'description',
                     'start_date',
                     'end_date',
+                    'active'
                 ],
                 include: [
                     {

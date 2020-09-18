@@ -27,8 +27,7 @@ module.exports = {
                     order: [
                         ['created_at', 'desc']
                     ]
-                })
-                .map(challenge => challenge.toJSON());
+                });
 
             let user_solved_challenges = await db.user_challenges
                 .find_all({
@@ -44,18 +43,17 @@ module.exports = {
                     order: [
                         ['created_at', 'desc']
                     ]
-                })
-                .map(challenge => {
-                    return {
-                        challenge_id: challenge.challenge_id,
-                        language: challenge.language
-                    };
                 });
 
             return res.view({
                 user,
                 challenges,
-                user_solved_challenges
+                user_solved_challenges: user_solved_challenges.map(challenge => {
+                    return {
+                        challenge_id: challenge.challenge_id,
+                        language: challenge.language
+                    };
+                })
             });
         } catch(e) {
             return res.redirect('/');

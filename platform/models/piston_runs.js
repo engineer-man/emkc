@@ -1,6 +1,10 @@
+const Sequelize = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-    return sequelize
-        .define('piston_runs', {
+    class piston_runs extends Sequelize.Model { }
+
+    piston_runs.init(
+        {
             piston_run_id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -15,8 +19,9 @@ module.exports = (sequelize, DataTypes) => {
             created_at: DataTypes.DATE
         },
         {
+            sequelize,
+            modelName: 'piston_runs',
             freezeTableName: true,
-
             hooks: {
                 beforeCreate(instance) {
                     instance.created_at = util.now();
@@ -24,4 +29,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     );
+
+    return piston_runs;
 };

@@ -54,7 +54,7 @@ class CreateSnippet extends React.Component {
                 <div class="menu">
                     <div class="wrapper">
                         <div class="language">
-                            <select onChange={this.change_language} defaultValue="javascript">
+                            <select onChange={this.change_language} defaultValue="javascript" class="form-control">
                                 <option>apex</option>
                                 <option>azcli</option>
                                 <option>bat</option>

@@ -1,6 +1,10 @@
+const Sequelize = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-    return sequelize
-        .define('contest_submissions', {
+    class contest_submissions extends Sequelize.Model { }
+
+    contest_submissions.init(
+        {
             contest_submission_id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -16,8 +20,9 @@ module.exports = (sequelize, DataTypes) => {
             created_at: DataTypes.DATE
         },
         {
+            sequelize,
+            modelName: 'contest_submissions',
             freezeTableName: true,
-
             hooks: {
                 beforeCreate(instance) {
                     instance.created_at = util.now();
@@ -25,4 +30,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     );
+
+    return contest_submissions;
 };

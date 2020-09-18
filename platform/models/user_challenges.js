@@ -1,6 +1,10 @@
+const Sequelize = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-    return sequelize
-        .define('user_challenges', {
+    class user_challenges extends Sequelize.Model { }
+
+    user_challenges.init(
+        {
             user_challenge_id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -13,8 +17,9 @@ module.exports = (sequelize, DataTypes) => {
             created_at: DataTypes.DATE
         },
         {
+            sequelize,
+            modelName: 'user_challenges',
             freezeTableName: true,
-
             hooks: {
                 beforeCreate(instance) {
                     instance.created_at = util.now();
@@ -22,4 +27,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     );
+
+    return user_challenges;
 };

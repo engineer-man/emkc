@@ -7,7 +7,7 @@ module.exports = {
 
         let query = {
             where: {
-                $and: []
+                [$and]: []
             },
             attributes: [
                 'server',
@@ -30,7 +30,7 @@ module.exports = {
             if (start.isValid()) {
                 query.where.$and.push({
                     created_at: {
-                        $gte: start.format('YYYY-MM-DD HH:mm:ss')
+                        [$gte]: start.format('YYYY-MM-DD HH:mm:ss')
                     }
                 });
             }
@@ -42,7 +42,7 @@ module.exports = {
             if (end.isValid()) {
                 query.where.$and.push({
                     created_at: {
-                        $lte: end.format('YYYY-MM-DD HH:mm:ss')
+                        [$lte]: end.format('YYYY-MM-DD HH:mm:ss')
                     }
                 });
             }

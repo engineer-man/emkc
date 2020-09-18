@@ -87,7 +87,7 @@ module.exports = {
                         .find_one({
                             where: {
                                 user_id: {
-                                    $ne: user.user_id
+                                    [$ne]: user.user_id
                                 },
                                 username: username + (ext === null ? '' : ext)
                             }

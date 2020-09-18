@@ -1,6 +1,10 @@
+const Sequelize = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-    return sequelize
-        .define('tags', {
+    class tags extends Sequelize.Model { }
+
+    tags.init(
+        {
             tag_id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -9,7 +13,12 @@ module.exports = (sequelize, DataTypes) => {
             name: DataTypes.STRING
         },
         {
-            freezeTableName: true
+            sequelize,
+            modelName: 'tags',
+            freezeTableName: true,
+            hooks: {}
         }
     );
+
+    return tags;
 };

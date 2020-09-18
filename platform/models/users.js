@@ -1,8 +1,11 @@
+const Sequelize = require('sequelize');
 const crypto = require('crypto');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize
-        .define('users', {
+    class users extends Sequelize.Model { }
+
+    users.init(
+        {
             user_id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -20,8 +23,9 @@ module.exports = (sequelize, DataTypes) => {
             created_at: DataTypes.DATE
         },
         {
+            sequelize,
+            modelName: 'users',
             freezeTableName: true,
-
             hooks: {
                 beforeCreate(instance) {
                     instance.created_at = util.now();
@@ -43,4 +47,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     );
+
+    return users;
 };

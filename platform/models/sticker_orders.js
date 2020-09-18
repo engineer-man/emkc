@@ -1,6 +1,10 @@
+const Sequelize = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-    return sequelize
-        .define('sticker_orders', {
+    class sticker_orders extends Sequelize.Model { }
+
+    sticker_orders.init(
+        {
             sticker_order_id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -17,7 +21,16 @@ module.exports = (sequelize, DataTypes) => {
             created_at: DataTypes.DATE
         },
         {
-            freezeTableName: true
+            sequelize,
+            modelName: 'sticker_orders',
+            freezeTableName: true,
+            hooks: {
+                beforeCreate(instance) {
+                    instance.created_at = util.now();
+                }
+            }
         }
     );
+
+    return sticker_orders;
 };

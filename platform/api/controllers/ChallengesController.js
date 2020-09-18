@@ -298,47 +298,49 @@ module.exports = {
         var passed = results.filter(r => !r.passed).length === 0;
 
         if (passed && req.local.user_id) {
-            db.user_challenges
-                .find_or_create({
-                    where: {
-                        user_id: req.local.user_id,
-                        challenge_id: challenge.challenge_id,
-                        language
-                    },
-                    defaults: {
-                        solution: source
-                    }
-                })
-                .spread((user_challenge, created) => {
-                    if (created) {
-                        // discord
-                        //     .api('post', `/channels/${constant.channels[language]}/messages`, {
-                        //         embed: {
-                        //             title: 'Attempt Challenge',
-                        //             type: 'rich',
-                        //             color: {
-                        //                 1: 0x84e47f,
-                        //                 2: 0xe4e37f,
-                        //                 3: 0xe47f8d
-                        //             }[challenge.difficulty],
-                        //             url: `${constant.base_url}/challenges/${challenge.challenge_id}/${language}`,
-                        //             author: {
-                        //                 name: `${req.local.user.display_name} completed a challenge "${challenge.name}" with ${language}`
-                        //             },
-                        //             footer: {
-                        //                 icon_url: constant.cdn_url + req.local.user.avatar_url,
-                        //                 text: 'completed by ' + req.local.user.display_name
-                        //             }
-                        //         }
-                        //     })
-                        //     .catch(err => {});
+            set_immediate(async () => {
+                let [ user_challenge, created ] = await db.user_challenges
+                    .find_or_create({
+                        where: {
+                            user_id: req.local.user_id,
+                            challenge_id: challenge.challenge_id,
+                            language
+                        },
+                        defaults: {
+                            solution: source
+                        }
+                    });
 
-                        return null;
-                    }
+                if (created) {
+                    // discord
+                    //     .api('post', `/channels/${constant.channels[language]}/messages`, {
+                    //         embed: {
+                    //             title: 'Attempt Challenge',
+                    //             type: 'rich',
+                    //             color: {
+                    //                 1: 0x84e47f,
+                    //                 2: 0xe4e37f,
+                    //                 3: 0xe47f8d
+                    //             }[challenge.difficulty],
+                    //             url: `${constant.base_url}/challenges/${challenge.challenge_id}/${language}`,
+                    //             author: {
+                    //                 name: `${req.local.user.display_name} completed a challenge "${challenge.name}" with ${language}`
+                    //             },
+                    //             footer: {
+                    //                 icon_url: constant.cdn_url + req.local.user.avatar_url,
+                    //                 text: 'completed by ' + req.local.user.display_name
+                    //             }
+                    //         }
+                    //     })
+                    //     .catch(err => {});
 
-                    user_challenge.solution = source;
-                    user_challenge.save();
-                });
+                    return null;
+                }
+
+                user_challenge.solution = source;
+                user_challenge.save();
+            });
+
         }
 
         return res

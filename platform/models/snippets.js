@@ -1,8 +1,11 @@
+const Sequelize = require('sequelize');
 const crypto = require('crypto');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize
-        .define('snippets', {
+    class snippets extends Sequelize.Model { }
+
+    snippets.init(
+        {
             snippet_id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -12,11 +15,26 @@ module.exports = (sequelize, DataTypes) => {
             hash: DataTypes.STRING,
             language: DataTypes.STRING,
             snip: DataTypes.TEXT('medium'),
-            created_at: DataTypes.DATE
+            created_at: DataTypes.DATE,
+
+            // getters
+            url: {
+                type: DataTypes.VIRTUAL,
+                get() {
+                    return '/s/' + this.hash;
+                }
+            },
+            time_ago: {
+                type: DataTypes.VIRTUAL,
+                get() {
+                    return util.time_ago(this.created_at);
+                }
+            },
         },
         {
+            sequelize,
+            modelName: 'snippets',
             freezeTableName: true,
-
             hooks: {
                 async beforeCreate(instance) {
                     instance.created_at = util.now();
@@ -39,17 +57,9 @@ module.exports = (sequelize, DataTypes) => {
                         if (!dupe) break;
                     }
                 }
-            },
-
-            getterMethods: {
-                url() {
-                    return '/s/' + this.hash;
-                },
-
-                time_ago() {
-                    return util.time_ago(this.created_at);
-                }
             }
         }
     );
+
+    return snippets;
 };

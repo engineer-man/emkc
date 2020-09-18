@@ -7,7 +7,7 @@ module.exports = {
             .find_all({
                 where: {
                     name: {
-                        $like: '%' + name + '%'
+                        [$like]: '%' + name + '%'
                     }
                 },
                 order: [

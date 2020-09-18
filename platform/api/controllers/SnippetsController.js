@@ -11,7 +11,9 @@ module.exports = {
             });
 
         try {
-            if (!snippet) throw null;
+            if (!snippet) {
+                throw null;
+            }
 
             return res.view({
                 snippet

@@ -1,8 +1,11 @@
+const Sequelize = require('sequelize');
 const moment = require('moment');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize
-        .define('contests', {
+    class contests extends Sequelize.Model { }
+
+    contests.init(
+        {
             contest_id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -15,25 +18,30 @@ module.exports = (sequelize, DataTypes) => {
             end_date: DataTypes.DATE,
             input: DataTypes.TEXT,
             output: DataTypes.TEXT,
-            created_at: DataTypes.DATE
-        },
-        {
-            freezeTableName: true,
+            created_at: DataTypes.DATE,
 
-            getterMethods: {
-                active() {
+            // getters
+            active: {
+                type: DataTypes.VIRTUAL,
+                get() {
                     return moment().isAfter(moment(this.start_date)) && moment().isBefore(moment(this.end_date));
-                },
-
-                url() {
+                }
+            },
+            url: {
+                type: DataTypes.VIRTUAL,
+                get() {
                     return '/contests/' + this.contest_id + '/' + util.slugify(this.name);
-                },
-
-                slug() {
-                    return util.slugify(this.title)
-                },
-
-                time_left() {
+                }
+            },
+            slug: {
+                type: DataTypes.VIRTUAL,
+                get() {
+                    return util.slugify(this.title);
+                }
+            },
+            time_left: {
+                type: DataTypes.VIRTUAL,
+                get() {
                     const start = moment().unix();
                     const end = moment(this.end_date).unix();
                     const diff = end - start;
@@ -59,7 +67,19 @@ module.exports = (sequelize, DataTypes) => {
 
                     return duration.minutes() + ' minute' + (duration.minutes() == 1 ? '' : 's') + ' ';
                 }
+            },
+        },
+        {
+            sequelize,
+            modelName: 'contests',
+            freezeTableName: true,
+            hooks: {
+                beforeCreate(instance) {
+                    instance.created_at = util.now();
+                }
             }
         }
     );
+
+    return contests;
 };

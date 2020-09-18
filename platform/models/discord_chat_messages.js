@@ -1,6 +1,10 @@
+const Sequelize = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-    return sequelize
-        .define('discord_chat_messages', {
+    class discord_chat_messages extends Sequelize.Model { }
+
+    discord_chat_messages.init(
+        {
             discord_chat_message_id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -14,7 +18,16 @@ module.exports = (sequelize, DataTypes) => {
             created_at: DataTypes.DATE
         },
         {
-            freezeTableName: true
+            sequelize,
+            modelName: 'discord_chat_messages',
+            freezeTableName: true,
+            hooks: {
+                beforeCreate(instance) {
+                    instance.created_at = util.now();
+                }
+            }
         }
     );
+
+    return discord_chat_messages;
 };

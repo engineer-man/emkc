@@ -129,7 +129,7 @@ const cron = {
                 {
                     where: {
                         discord_api: {
-                            $in: users
+                            [$in]: users
                         }
                     }
                 }
@@ -192,10 +192,10 @@ const cron = {
                 where: {
                     draft: 0,
                     start_date: {
-                        $lte: util.now()
+                        [$lte]: util.now()
                     },
                     end_date: {
-                        $gte: util.now()
+                        [$gte]: util.now()
                     }
                 },
                 include: [
@@ -264,6 +264,10 @@ const cron = {
                 }
             })
             .catch(err => {});
+    },
+
+    async process_awards() {
+
     }
 
 };

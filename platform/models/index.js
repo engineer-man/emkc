@@ -1,29 +1,28 @@
-'use strict';
+const path = require('path');
+const basename = path.basename(module.filename);
+const config = sails.config.db;
+const db = {};
 
-const fs = require('fs');
-var path = require('path');
-var Sequelize = require('sequelize');
-var basename = path.basename(module.filename);
-var config = sails.config.db;
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
-var db = {};
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+);
 
-fs
-    .readdirSync(__dirname)
+require('fs')
+    .readdir_sync(__dirname)
     .filter(file => {
         return file.indexOf('.') !== 0 && file !== basename && file.match(/\.js$/);
     })
     .for_each(file => {
-        var model = sequelize['import'](path.join(__dirname, file));
+        //let model = sequelize.import(path.join(__dirname, file));
+        let model = require(path.join(__dirname, file))(sequelize, DataTypes);
         db[model.name] = model;
     });
 
-Object.keys(db).for_each(model_name => {
-    if ('associate' in db[model_name]) {
-        db[model_name].associate(db);
-    }
-
-    // non shitty camel case aliases
+for (const model_name in db) {
     db[model_name].bulk_create = db[model_name].bulkCreate;
     db[model_name].find_one = db[model_name].findOne;
     db[model_name].find_all = db[model_name].findAll;
@@ -33,10 +32,20 @@ Object.keys(db).for_each(model_name => {
     db[model_name].has_one = db[model_name].hasOne;
     db[model_name].has_many = db[model_name].hasMany;
     db[model_name].belongs_to_many = db[model_name].belongsToMany;
-});
+}
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+$or = Sequelize.Op.or;
+$and = Sequelize.Op.and;
+$like = Sequelize.Op.like;
+$ne = Sequelize.Op.ne;
+$not = Sequelize.Op.not;
+$gt = Sequelize.Op.gt;
+$gte = Sequelize.Op.gte;
+$lt = Sequelize.Op.lt;
+$lte = Sequelize.Op.lte;
 
 db.challenges.has_one(db.user_challenges, { as: 'solution', foreignKey: 'challenge_id' });
 db.challenges.has_many(db.user_challenges, { as: 'solutions', foreignKey: 'challenge_id' });
