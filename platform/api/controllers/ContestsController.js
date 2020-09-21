@@ -167,6 +167,8 @@ module.exports = {
     async submit(req, res) {
         const { contest_id, language, solution } = req.body;
 
+        solution = solution.trim();
+
         let contest = await db.contests
             .find_one({
                 where: {
@@ -206,7 +208,7 @@ module.exports = {
             if (submission) {
                 submission.language = language;
                 submission.solution = solution;
-                submission.length = solution.trim().length;
+                submission.length = solution.length;
 
                 let prev_length = submission.previous('length');
 
@@ -247,7 +249,7 @@ module.exports = {
                         contest_id,
                         language,
                         solution,
-                        length: solution.trim().length
+                        length: solution.length
                     });
 
                 discord
