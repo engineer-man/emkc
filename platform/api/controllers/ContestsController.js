@@ -165,7 +165,7 @@ module.exports = {
     },
 
     async submit(req, res) {
-        const { contest_id, language, solution } = req.body;
+        let { contest_id, language, solution } = req.body;
 
         solution = solution.trim();
 
