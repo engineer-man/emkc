@@ -4,7 +4,7 @@
     <div class="em_common_content em_contests_home container">
         <div class="row">
             <div class="col-12">
-                <h4 class="f300">Contests</h4>
+                <h4 class="f300 green">Contests</h4>
 
                 <p>
                     The Engineer Man Knowledge Center hosts contests periodically which are done in a Code Golf format.
@@ -12,39 +12,61 @@
                     who can accomplish the given objective with the least amount of code, measured in characters.
                 </p>
 
-                <h5 class="f300">Global Rules</h5>
+                <p>
+                    Supported languages are those which <a href="https://github.com/engineer-man/piston" target="_blank">Piston</a> supports. To request new languages,
+                    submit a request in #emkc-felix-piston on <a href="https://discord.gg/engineerman">Discord</a>. Our intent
+                    is to add proper golfing languages over time.
+                </p>
+
+                <h5 class="f300 green">Overview</h5>
 
                 <ol>
                     <li>
-                        No sharing solutions during the contest period.
-                    </li>
-                    <li>
-                        Contests start at approximately 12:00pm CDT (5:00pm UTC) on Sundays and run for approximately 5 days ending at
-                        7:00pm CDT (12:00am UTC) on the following Friday.
+                        Contests start at 12:00pm CDT (5:00pm UTC) on Sundays and run for 4 days ending at
+                        12:00pm CDT (5:00am UTC) on Thursdays.
                     </li>
                     <li>
                         You can update your solution as many times as you want during the contest period. Submitting a solution
-                        that is shorter than your last submitted solution will result in the submitted time changed.
+                        that is shorter than your last submitted solution will result in the submitted time changed. This is
+                        important to understand because tiebreakers are resolved by the oldest solution.
                     </li>
                     <li>
-                        Points are awarded to the shortest solutions that meet the objective. If there
+                        Points are awarded to the shortest solutions that meet the objective both overall and per language. If there
                         are solutions that are the same length, the solution submitted the earliest will take precedent.
                         Please see <a href="/community/power">how to gain power</a> for more information.
-                    </li>
-                    <li>
-                        Submitted solutions must pass automated code execution before they are recorded as a contest submission.
-                        This is done using the <a href="https://github.com/engineer-man/piston" target="_blank">Piston</a> engine. The only supported languages are the languages that Piston supports.
-                        To request new languages, submit a request in #emkc-felix-piston on <a href="https://discord.gg/engineerman">Discord</a>.
                     </li>
                     <li>
                         Leading and trailing whitespace is automatically trimmed before calculating the number of characters used.
                     </li>
                 </ol>
 
+                <h5 class="f300 green">Rules</h5>
+
+                <ol>
+                    <li>
+                        No sharing solutions or discussing approach during the contest period.
+                    </li>
+                    <li>
+                        Submitted solutions must pass automated code execution before they are recorded as a contest submission.
+                        This is done using the <a href="https://github.com/engineer-man/piston" target="_blank">Piston</a> engine.
+                    </li>
+                    <li>
+                        For those using Bash, you can any of the GNU coreutils as well as sed and awk. You may not call
+                        into any of the other contest languages (julia, perl, python, etc.).
+                    </li>
+                    <li>
+                        If you submit a C solution, you may not copy and paste that solution and submit it for C++ as well.
+                    </li>
+                    <li>
+                        Invalid solutions and solutions which discover the secret input and are based on that secret input
+                        will be removed.
+                    </li>
+                </ol>
+
                 <hr />
 
                 <div class="active">
-                    <h4 class="f300">Active Contests</h4>
+                    <h4 class="f300 green">Active Contests</h4>
                     {% for contest in active_contests %}
                         <a href="{{ contest.url }}" class="contest">
                             <div class="name">{{ contest.name }}</div>
@@ -70,7 +92,7 @@
                 </div>
 
                 <div class="past">
-                    <h4 class="f300">Past Contests</h4>
+                    <h4 class="f300 green">Past Contests</h4>
                     {% for contest in past_contests %}
                         <a href="{{ contest.url }}" class="contest">
                             <div class="name">{{ contest.name }}</div>
