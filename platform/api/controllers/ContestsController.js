@@ -150,7 +150,7 @@ module.exports = {
             .find_all({
                 where: {
                     contest_id,
-                    user_id: req.local.user_id || null
+                    user_id: req.local.user_id
                 }
             });
 
@@ -181,7 +181,7 @@ module.exports = {
                 where: {
                     contest_id,
                     language,
-                    user_id: req.local.user_id || null
+                    user_id: req.local.user_id
                 }
             });
 

@@ -1,5 +1,5 @@
 module.exports = async (req, res, next) => {
-    req.local = req.local || {};
+    req.local = req.local || { user_id: null };
 
     req.local.constant = constant;
 

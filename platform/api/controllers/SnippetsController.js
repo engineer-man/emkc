@@ -50,7 +50,7 @@ module.exports = {
 
                 let snippet = await db.snippets
                     .create({
-                        user_id: req.local.user_id || null,
+                        user_id: req.local.user_id,
                         language,
                         snip
                     });
