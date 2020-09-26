@@ -9,19 +9,7 @@ class Manage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            draft: 1,
-            name: '',
-            description: '',
-            start_date: '',
-            end_date: '',
-            input: '',
-            output: ''
-        };
-
-        if (props.mode === 'update') {
-            this.state = props.contest;
-        }
+        this.state = props.contest;
 
         this.handle_change = this.handle_change.bind(this);
         this.save = this.save.bind(this);

@@ -38,6 +38,8 @@ module.exports.routes = {
     'GET /admin': 'admin/DashboardController.dashboard',
     'GET /admin/contests': 'admin/ContestsController.view_all',
     'GET /admin/contests/all': 'admin/ContestsController.view_all',
+    'GET /admin/contests/create': 'admin/ContestsController.create',
+    'POST /admin/contests/create': 'admin/ContestsController.create',
     'GET /admin/contests/update/:contest_id': 'admin/ContestsController.update',
     'POST /admin/contests/update/:contest_id': 'admin/ContestsController.update',
 

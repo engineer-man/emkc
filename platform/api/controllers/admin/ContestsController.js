@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 module.exports = {
 
     async view_all(req, res) {
@@ -33,7 +35,18 @@ module.exports = {
                 .send();
         }
 
-        return res.view();
+        return res.view('admin/contests/update', {
+            mode: 'create',
+            contest: {
+                draft: 1,
+                name: '',
+                description: '',
+                start_date: moment().startOf('isoweek').add(6, 'days').format(),
+                end_date: moment().startOf('isoweek').add(9, 'days').format(),
+                input: '',
+                output: ''
+            }
+        });
     },
 
     async update(req, res) {
