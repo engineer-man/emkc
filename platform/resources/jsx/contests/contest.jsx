@@ -43,8 +43,10 @@ class Contest extends React.Component {
             'python2'
         ];
 
+        languages = languages.data.filter(lang => !disallowed_languages.includes(lang.name));
+
         this.setState({
-            languages: languages.data.filter(lang => !disallowed_languages.includes(lang.name)),
+            languages,
             language: this.state.language || languages.data[0].name
         });
     }
