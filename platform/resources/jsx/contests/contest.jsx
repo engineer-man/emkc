@@ -47,7 +47,7 @@ class Contest extends React.Component {
 
         this.setState({
             languages,
-            language: this.state.language || languages.data[0].name
+            language: this.state.language || languages[0].name
         });
     }
 
