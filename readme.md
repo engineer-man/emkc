@@ -11,9 +11,13 @@ Linux/macOS machines and Windows machines running either WSL or natively with Wi
 - `cd emkc`
 - `./emkc init`
 - `./emkc start`
+- `./emkc stop` when done.
+- `./emkc` to view a list of commands.
 
 Once started, you can access the local version of the site at http://127.0.0.1:2005.
 
+>**Note:** when using WSL make sure to add `options = "metadata"` to /etc/wsl.conf under the [automount]
+>section (check https://devblogs.microsoft.com/commandline/automatically-configuring-wsl/)
 
 #### Local Config
 There are two files needed to configure the application. Make sure to modify these with your own values. If
