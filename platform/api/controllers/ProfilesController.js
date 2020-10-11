@@ -44,7 +44,10 @@ module.exports = {
             .find_all({
                 where: {
                     user_id: user.user_id
-                }
+                },
+                order: [
+                    ['type']
+                ]
             });
 
         awards = awards
