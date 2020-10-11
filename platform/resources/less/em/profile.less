@@ -5,16 +5,38 @@
         display: flex;
         .left {
             width: 220px;
-            text-align: center;
+            .padding {
+                padding: 0 10px;
+            }
         }
         .right {
             flex: 1;
         }
     }
     .avatar {
-        width: 128px;
+        width: 100%;
         height: auto;
         margin-bottom: 10px;
+    }
+    .awards {
+        margin-bottom: 30px;
+        .award {
+            display: inline-block;
+            text-align: center;
+            margin: 5px 10px 10px 10px;
+            img {
+                margin-bottom: 5px;
+                cursor: pointer;
+            }
+        }
+        .count {
+            background: rgba(0, 0, 0, .4);
+            color: #fff;
+            text-align: center;
+            display: inline-block;
+            border-radius: 20px;
+            padding: 2px 10px;
+        }
     }
     .challenge {
         display: block;

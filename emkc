@@ -37,6 +37,9 @@ case $* in
     npm )
         docker-compose run --rm --no-deps emkc bash -c 'cd /opt/emkc/platform; npm install'
         ;;
+    cron* )
+        docker-compose exec emkc bash -c "/opt/emkc/platform/console/cron.js $2"
+        ;;
     mysql )
         docker exec -it emkc_mysql bash -c 'mysql -hmysql -uroot -proot -Demkc'
         ;;

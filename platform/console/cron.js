@@ -13,6 +13,9 @@ const cron = {
             .find_all();
 
         for (const user of users) {
+            let total_score = 0;
+
+            // process points from challenges
             let challenges = await db.user_challenges
                 .find_all({
                     where: {
@@ -26,61 +29,189 @@ const cron = {
                     ]
                 });
 
-            let challenges_score = challenges.reduce((i, c) => i + c.challenge.points, 0);
+            let challenges_score = challenges
+                .reduce((i, c) => i + c.challenge.points, 0);
 
-            let score = challenges_score || 0;
+            total_score += challenges_score;
 
-            user.score = score;
+            // process points from awards
+            let awards = await db.awards
+                .find_all({
+                    where: {
+                        user_id: user.user_id
+                    }
+                });
+
+            let awards_score = awards
+                .reduce((i, a) => i + a.points, 0);
+
+            total_score += awards_score;
+
+            // sync score and apply to discord as appropriate
+            user.score = total_score;
+
+            if (!user.discord_api) {
+                return await user.save();
+            }
 
             // test for and assign novice role
-            if (user.discord_api && user.discord_rank === null && user.score >= 40) {
+            if (user.discord_rank === null && user.score >= 40) {
                 try {
-                    await discord.api('put',
-                        '/guilds/473161189120147456'+
-                        '/members/'+user.discord_api+
-                        '/roles/'+constant.roles.emkc_novice);
+                    await discord
+                        .api(
+                            'put',
+                            `/guilds/473161189120147456/members/${user.discord_api}` +
+                            `/roles/${constant.roles.emkc_novice}`
+                        );
                     user.discord_rank = 1;
                 } catch (e) {}
+
                 await timeout(1000);
             }
 
             // test for and assign hero role
-            if (user.discord_api && user.discord_rank === 1 && user.score >= 300) {
+            if (user.discord_rank === 1 && user.score >= 300) {
                 try {
-                    await discord.api('put',
-                        '/guilds/473161189120147456'+
-                        '/members/'+user.discord_api+
-                        '/roles/'+constant.roles.emkc_hero);
+                    await discord
+                        .api(
+                            'put',
+                            `/guilds/473161189120147456/members/${user.discord_api}` +
+                            `/roles/${constant.roles.emkc_hero}`
+                        );
                     user.discord_rank = 2;
                 } catch (e) {}
+
                 await timeout(1000);
             }
 
             // test for and assign master role
-            if (user.discord_api && user.discord_rank === 2 && user.score >= 1000) {
+            if (user.discord_rank === 2 && user.score >= 1000) {
                 try {
-                    await discord.api('put',
-                        '/guilds/473161189120147456'+
-                        '/members/'+user.discord_api+
-                        '/roles/'+constant.roles.emkc_master);
+                    await discord
+                        .api(
+                            'put',
+                            `/guilds/473161189120147456/members/${user.discord_api}` +
+                            `/roles/${constant.roles.emkc_master}`
+                        );
                     user.discord_rank = 3;
                 } catch (e) {}
+
                 await timeout(1000);
             }
 
             // test for and assign legend role
-            if (user.discord_api && user.discord_rank === 3 && user.score >= 5000) {
+            if (user.discord_rank === 3 && user.score >= 5000) {
                 try {
-                    await discord.api('put',
-                        '/guilds/473161189120147456'+
-                        '/members/'+user.discord_api+
-                        '/roles/'+constant.roles.emkc_legend);
+                    await discord
+                        .api(
+                            'put',
+                            `/guilds/473161189120147456/members/${user.discord_api}` +
+                            `/roles/${constant.roles.emkc_legend}`
+                        );
                     user.discord_rank = 4;
                 } catch (e) {}
+
                 await timeout(1000);
             }
 
             await user.save();
+        }
+    },
+
+    async process_awards() {
+        await db.awards
+            .destroy({
+                where: {}
+            });
+
+        // process contest related awards
+        let contests = await db.contests
+            .find_all({
+                where: {
+                    end_date: {
+                        [$lt]: util.now()
+                    }
+                },
+                include: [
+                    {
+                        model: db.contest_submissions,
+                        as: 'submissions',
+                        include: [
+                            {
+                                model: db.users,
+                                as: 'user'
+                            }
+                        ]
+                    }
+                ],
+                order: [
+                    [{ model: db.contest_submissions, as: 'submissions' }, 'length'],
+                    [{ model: db.contest_submissions, as: 'submissions' }, 'created_at'],
+                ]
+            });
+
+        for (const contest of contests) {
+            // handle 1st-3rd place
+            let placed = [...new Set(contest.submissions.map(s => s.user_id))].slice(0, 3);
+
+            let i = 1;
+
+            for (const user_id of placed) {
+                let type = {
+                    1: constant.awards.type.contest_first_overall,
+                    2: constant.awards.type.contest_second_overall,
+                    3: constant.awards.type.contest_third_overall,
+                }[i];
+
+                await db.awards
+                    .create({
+                        type,
+                        user_id,
+                        ref_type: constant.awards.ref_type.contests,
+                        ref_id: contest.contest_id,
+                        points: {
+                            [constant.awards.type.contest_first_overall]: 500,
+                            [constant.awards.type.contest_second_overall]: 200,
+                            [constant.awards.type.contest_third_overall]: 75,
+                        }[type]
+                    });
+
+                ++i;
+            }
+
+            // handle per language
+            let languages = [];
+
+            for (const submission of contest.submissions) {
+                if (languages.includes(submission.language)) {
+                    continue;
+                }
+
+                await db.awards
+                    .create({
+                        type: constant.awards.type.contest_first_language,
+                        user_id: submission.user_id,
+                        ref_type: constant.awards.ref_type.contests,
+                        ref_id: contest.contest_id,
+                        points: 50
+                    });
+
+                languages.push(submission.language);
+            }
+
+            // handle participation
+            let participants = [...new Set(contest.submissions.map(s => s.user_id))];
+
+            for (const user_id of participants) {
+                await db.awards
+                    .create({
+                        type: constant.awards.type.general_participation,
+                        user_id,
+                        ref_type: constant.awards.ref_type.contests,
+                        ref_id: contest.contest_id,
+                        points: 50
+                    });
+            }
         }
     },
 
@@ -264,10 +395,6 @@ const cron = {
                 }
             })
             .catch(err => {});
-    },
-
-    async process_awards() {
-
     }
 
 };

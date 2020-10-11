@@ -4,12 +4,48 @@
     <div class="em_common_content em_profile container">
         <div class="content">
             <div class="left">
-                <img src="{{ sails.local.constant.cdn_url }}{{ user.avatar_url }}" class="avatar" />
-                <h4 class="f700">{{ user.display_name }}</h4>
-                <h4 class="f900"><i class="fa fa-bolt"></i> {{ user.score }}</h4>
+                <div class="padding">
+                    <img src="{{ sails.local.constant.cdn_url }}{{ user.avatar_url }}" class="avatar" />
+                    <h4 class="f700">{{ user.display_name }}</h4>
+                    <h4 class="f900"><i class="fa fa-bolt"></i> {{ user.score }}</h4>
+                    <hr />
+                    <p>
+                        <span class="f700">Member Since</span><br />
+                        {{ user.created_at|date('m/d/Y') }}
+                    </p>
+                    <p>
+                        <span class="f700">Challenges Solved</span><br />
+                        {{ stat_challenges }}
+                    </p>
+                    <p>
+                        <span class="f700">Contests Entered</span><br />
+                        {{ stat_contests }}
+                    </p>
+                </div>
             </div>
             <div class="right">
-                <h4 class="f300">Solved Challenges</h4>
+                <h4 class="f300">Awards</h4>
+
+                <div class="awards">
+                    {% for award in awards %}
+                        <div class="award">
+                            <div>
+                                <img
+                                    data-placement="bottom"
+                                    title="{{ award.tooltip_text }}"
+                                    src="/images/awards/{{ award.type }}.png" />
+                            </div>
+                            <div class="count">
+                                {{ award.count }}
+                            </div>
+                        </div>
+                    {% else %}
+                        This user has no awards yet.
+                    {% endif %}
+                </div>
+                <script>$('.award img').tooltip({container: '.awards'})</script>
+
+                <h4 class="f300">Recent Solved Challenges</h4>
 
                 {% for challenge in challenges %}
                     <div class="d-flex challenge">

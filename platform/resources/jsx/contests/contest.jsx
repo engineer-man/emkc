@@ -214,6 +214,8 @@ class Contest extends React.Component {
                                     </div>
                                     <div class="time">
                                         Submitted: {moment(submission.created_at).format('MMMM D, YYYY @ h:mm:ss a')}
+                                        {' '}
+                                        (#{submission.contest_submission_id})
                                     </div>
                                 </div>
                                 <div class="user">

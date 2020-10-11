@@ -1,9 +1,22 @@
 const moment = require('moment');
 
-var constant = {
+let constant = {
 
     no: 0,
     yes: 1,
+
+    awards: {
+        type: {
+            contest_first_overall: 1,
+            contest_second_overall: 2,
+            contest_third_overall: 3,
+            contest_first_language: 4,
+            general_participation: 5
+        },
+        ref_type: {
+            contests: 1
+        }
+    },
 
     challenges: {
         supported_languages: [
@@ -26,15 +39,6 @@ var constant = {
             easy: 1,
             medium: 2,
             hard: 3
-        }
-    },
-
-    notifications: {
-        type: {
-            new_comment: 1
-        },
-        entity_type: {
-            comments: 1
         }
     },
 
@@ -63,7 +67,7 @@ var constant = {
 
     server_id: '473161189120147456',
 
-    devprod() {
+    set_dynamic() {
         this.base_url = sails.config.base_url;
         this.cdn_url = this.base_url + '/cdn';
     },
@@ -74,6 +78,6 @@ var constant = {
 
 };
 
-constant.devprod();
+constant.set_dynamic();
 
 module.exports = constant;
