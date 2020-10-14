@@ -26,6 +26,7 @@ module.exports.routes = {
     'POST /snippets': 'SnippetsController.create',
     'GET /snippets/mine': 'SnippetsController.mine',
     'GET /s/:hash': 'SnippetsController.view',
+    'POST /s/delete/:hash': 'SnippetsController.delete',
 
     'GET /scripts': 'ScriptsController.home',
     'GET /scripts/:cli_script_id/:slug': 'ScriptsController.view',

@@ -70,6 +70,30 @@ module.exports = {
         }
 
         return res.view();
+    },
+
+    async delete(req, res) {
+        const { hash } = req.params;
+
+        let status_code = 400
+
+        let snippet = await db.snippets
+            .find_one({
+                where: {
+                    hash,
+                    user_id: req.local.user_id
+                }
+            });
+
+        if (snippet) {
+            await snippet.destroy();
+            status_code = 200
+        }
+        return res
+            .status(status_code)
+            .send({
+                url: '/snippets/mine'
+            });
     }
 
 };

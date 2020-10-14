@@ -22,7 +22,8 @@ module.exports.policies = {
 
     'SnippetsController': {
         '*': ['common'],
-        'mine': ['common', 'logged_in']
+        'mine': ['common', 'logged_in'],
+        'delete': ['common', 'logged_in']
     },
 
     'ScriptsController': {
