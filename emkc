@@ -28,6 +28,9 @@ case $* in
     stop )
         docker-compose down
         ;;
+    restart )
+        docker-compose restart
+        ;;
     shell )
         docker exec -it emkc /bin/bash
         ;;
@@ -55,6 +58,7 @@ case $* in
         echo 'init          initialize env specific config files'
         echo 'start         start the emkc docker container'
         echo 'stop          stop the emkc docker container'
+        echo 'restart       restart the docker containers'
         echo 'shell         start a shell in the docker container'
         echo 'rebuild       rebuild emkc from scratch'
         echo 'npm           update node modules'
