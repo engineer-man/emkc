@@ -44,19 +44,15 @@ class ManageSnippet extends React.Component {
 
     async save() {
         if (this.props.hash) {
-            var res = await axios
-                .post('/s/edit/' + this.props.hash, {
-                    language: this.state.language,
-                    snip: this.state.editor.getValue()
-                });   
+            var post_location = "/s/edit/" + this.props.hash;
         } else {
-            var res = await axios
-                .post('/snippets', {
-                    language: this.state.language,
-                    snip: this.state.editor.getValue()
-                });   
-
+            var post_location = "/snippets";
         }
+        let res = await axios
+            .post(post_location, {
+                language: this.state.language,
+                snip: this.state.editor.getValue()
+            });
 
         if (res.status >= 300) {
             return bootbox.alert('Please provide some code');
