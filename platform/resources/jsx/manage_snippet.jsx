@@ -3,15 +3,22 @@ import axios from 'axios';
 
 import Util from 'js/util';
 
-class CreateSnippet extends React.Component {
+class ManageSnippet extends React.Component {
 
     constructor(props) {
         super(props)
 
-        this.state = {
-            snip: '',
-            language: 'javascript'
-        };
+        if (this.props.hash) {
+            this.state = {
+                snip: this.props.snip,
+                language: this.props.language
+            };
+        } else {
+            this.state = {
+                snip: '',
+                language: 'javascript'
+            };
+        }
 
         this.change_language = this.change_language.bind(this);
         this.save = this.save.bind(this);
@@ -22,6 +29,7 @@ class CreateSnippet extends React.Component {
             theme: 'em',
             language: this.state.language,
             automaticLayout: true,
+            value: this.state.snip,
             fontSize: 16
         });
     }
@@ -35,11 +43,20 @@ class CreateSnippet extends React.Component {
     }
 
     async save() {
-        let res = await axios
-            .post('/snippets', {
-                language: this.state.language,
-                snip: this.state.editor.getValue()
-            });
+        if (this.props.hash) {
+            var res = await axios
+                .post('/s/edit/' + this.props.hash, {
+                    language: this.state.language,
+                    snip: this.state.editor.getValue()
+                });   
+        } else {
+            var res = await axios
+                .post('/snippets', {
+                    language: this.state.language,
+                    snip: this.state.editor.getValue()
+                });   
+
+        }
 
         if (res.status >= 300) {
             return bootbox.alert('Please provide some code');
@@ -50,11 +67,15 @@ class CreateSnippet extends React.Component {
 
     render() {
         return (
-            <div class="em_create_snippet">
+            <div class="em_manage_snippet">
                 <div class="menu">
                     <div class="wrapper">
                         <div class="language">
-                            <select onChange={this.change_language} defaultValue="javascript" class="form-control">
+                            <select 
+                                onChange={this.change_language}
+                                defaultValue={this.state.language}
+                                class="form-control"
+                            >
                                 <option>apex</option>
                                 <option>azcli</option>
                                 <option>bat</option>
@@ -121,6 +142,6 @@ class CreateSnippet extends React.Component {
 
 }
 
-Util.try_render('react_create_snippet', CreateSnippet);
+Util.try_render('react_manage_snippet', ManageSnippet);
 
-export default CreateSnippet;
+export default ManageSnippet;
