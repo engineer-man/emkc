@@ -107,7 +107,6 @@ module.exports = {
             }
         });
 
-
         if (req.method === 'POST') {
             const { language, snip} = req.body;
 
