@@ -148,7 +148,5 @@ module.exports = {
         return res.view({
             snippet
         });
-
     }
-
 };
