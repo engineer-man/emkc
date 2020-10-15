@@ -16,7 +16,7 @@ $(document).on("click", ".confirm-delete", function(e) {
         },
         callback: async function (result) {
             if (result) {
-                let res = await axios.post('/s/delete/' + hash);
+                let res = await axios.post('/snippets/delete/' + hash);
                 location = res.data.url;
             }
         }

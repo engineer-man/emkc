@@ -44,7 +44,7 @@ class ManageSnippet extends React.Component {
 
     async save() {
         if (this.props.hash) {
-            var post_location = "/s/edit/" + this.props.hash;
+            var post_location = "/snippets/edit/" + this.props.hash;
         } else {
             var post_location = "/snippets";
         }
