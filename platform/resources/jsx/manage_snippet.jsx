@@ -43,13 +43,16 @@ class ManageSnippet extends React.Component {
     }
 
     async save() {
+        let url;
+
         if (this.props.hash) {
-            var post_location = "/snippets/edit/" + this.props.hash;
+            url = '/snippets/edit/' + this.props.hash;
         } else {
-            var post_location = "/snippets";
+            url = '/snippets';
         }
+
         let res = await axios
-            .post(post_location, {
+            .post(url, {
                 language: this.state.language,
                 snip: this.state.editor.getValue()
             });
@@ -67,7 +70,7 @@ class ManageSnippet extends React.Component {
                 <div class="menu">
                     <div class="wrapper">
                         <div class="language">
-                            <select 
+                            <select
                                 onChange={this.change_language}
                                 defaultValue={this.state.language}
                                 class="form-control"

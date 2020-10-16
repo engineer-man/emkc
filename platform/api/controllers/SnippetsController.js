@@ -75,7 +75,6 @@ module.exports = {
     async delete(req, res) {
         const { hash } = req.params;
 
-        let status_code = 400;
 
         let snippet = await db.snippets
             .find_one({
@@ -87,10 +86,10 @@ module.exports = {
 
         if (snippet) {
             await snippet.destroy();
-            status_code = 200;
         }
+
         return res
-            .status(status_code)
+            .status(snippet ? 200 : 400)
             .send({
                 url: '/snippets/mine'
             });
@@ -100,15 +99,15 @@ module.exports = {
         const { hash }  = req.params;
 
         let snippet = await db.snippets
-        .find_one({
-            where: {
-                hash,
-                user_id: req.local.user_id
-            }
-        });
+            .find_one({
+                where: {
+                    hash,
+                    user_id: req.local.user_id
+                }
+            });
 
         if (req.method === 'POST') {
-            const { language, snip} = req.body;
+            const { language, snip } = req.body;
 
             try {
                 if (!snippet) {
@@ -142,7 +141,7 @@ module.exports = {
         }
 
         if (!snippet) {
-            return res.redirect("/snippets");
+            return res.redirect('/snippets');
         }
 
         return res.view({

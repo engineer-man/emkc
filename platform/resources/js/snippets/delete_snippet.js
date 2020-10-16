@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-$(document).on("click", ".confirm-delete", function(e) {
+$(document).on('click', '.confirm-delete', function(e) {
     var hash = $(this).data('hash');
+
     bootbox.confirm({
-        message: "Are you sure you want to delete this snippet?",
+        message: 'Are you sure you want to delete this snippet?',
         buttons: {
             confirm: {
                 label: 'Delete',
