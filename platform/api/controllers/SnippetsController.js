@@ -70,6 +70,83 @@ module.exports = {
         }
 
         return res.view();
-    }
+    },
 
+    async delete(req, res) {
+        const { hash } = req.params;
+
+        let status_code = 400;
+
+        let snippet = await db.snippets
+            .find_one({
+                where: {
+                    hash,
+                    user_id: req.local.user_id
+                }
+            });
+
+        if (snippet) {
+            await snippet.destroy();
+            status_code = 200;
+        }
+        return res
+            .status(status_code)
+            .send({
+                url: '/snippets/mine'
+            });
+    },
+
+    async edit(req, res) {
+        const { hash }  = req.params;
+
+        let snippet = await db.snippets
+        .find_one({
+            where: {
+                hash,
+                user_id: req.local.user_id
+            }
+        });
+
+        if (req.method === 'POST') {
+            const { language, snip} = req.body;
+
+            try {
+                if (!snippet) {
+                    return res
+                        .status(400)
+                        .send({
+                            url: '/snippets'
+                        });
+                }
+
+                if (!snip) {
+                    throw new Error('Please supply some code');
+                }
+
+                snippet.language = language;
+                snippet.snip = snip;
+                await snippet.save();
+
+                return res
+                    .status(200)
+                    .send({
+                        url: snippet.url
+                    });
+            } catch (e) {
+                return res
+                    .status(400)
+                    .send({
+                        message: e.message
+                    });
+            }
+        }
+
+        if (!snippet) {
+            return res.redirect("/snippets");
+        }
+
+        return res.view({
+            snippet
+        });
+    }
 };
