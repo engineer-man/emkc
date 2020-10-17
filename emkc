@@ -1,28 +1,29 @@
 #!/usr/bin/env bash
 
-function init_logs {
+function init_files {
     touch var/docker/logs/app.log
     chmod 777 var/docker/logs/app.log
     touch var/docker/logs/sql.log
     chmod 777 var/docker/logs/sql.log
+    chmod 0444 var/docker/config/mysqld.cnf
 }
 
 case $* in
     init )
         cp -n platform/config/local.js.sample platform/config/local.js
         cp -n platform/migrations/config.json.sample platform/migrations/config.json
-        init_logs
+        init_files
         docker-compose build
         docker-compose run --rm --no-deps emkc bash -c 'cd /opt/emkc/platform; npm install'
         ;;
     deploy )
         git pull
         docker-compose down
-        init_logs
+        init_files
         docker-compose up -d
         ;;
     start )
-        init_logs
+        init_files
         docker-compose up -d
         ;;
     stop )
