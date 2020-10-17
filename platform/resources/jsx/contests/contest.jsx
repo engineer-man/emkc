@@ -106,6 +106,28 @@ class Contest extends React.Component {
         });
     }
 
+    async delete(contest_submission_id) {
+        bootbox.confirm({
+            message: 'Are you sure you want to delete this submission?',
+            buttons: {
+                confirm: {
+                    label: 'Delete',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: 'Cancel',
+                    className: 'btn-secondary'
+                }
+            },
+            callback: async function (result) {
+                if (result) {
+                    let res = await axios.post('/admin/submissions/delete/' + contest_submission_id);
+                    location = res.data.url;
+                }
+            }
+        });
+    }
+
     render() {
         return (
             <div class="em_contests_contest">
@@ -216,6 +238,17 @@ class Contest extends React.Component {
                                         Submitted: {moment(submission.created_at).format('MMMM D, YYYY @ h:mm:ss a')}
                                         {' '}
                                         (#{submission.contest_submission_id})
+                                        {' '}
+                                        {(
+                                            ctx.user_id && ctx.is_staff && (
+                                            <a
+                                                href="#"
+                                                onClick={() => this.delete(submission.contest_submission_id)}
+                                                class="fas fa-trash"
+                                            ></a>
+                                            )
+                                        ) || ''
+                                        }
                                     </div>
                                 </div>
                                 <div class="user">
