@@ -82,6 +82,24 @@ module.exports = {
             contest,
             mode: 'update'
         });
+    },
+
+    async delete_submission(req, res) {
+        const { contest_submission_id } = req.params;
+
+        let submission = await db.contest_submissions
+            .find_one({
+                where: {
+                    contest_submission_id
+                }
+            });
+
+        if (!submission) {
+            return res.status(400).send({ url: "/contests" });
+        }
+
+        await submission.destroy();
+        return res.status(200).send({ url: "/contests/" + submission.contest_id + "/"});
     }
 
 };
