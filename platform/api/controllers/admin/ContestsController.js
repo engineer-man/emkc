@@ -85,7 +85,7 @@ module.exports = {
     },
 
     async delete_submission(req, res) {
-        const { contest_submission_id } = req.params;
+        const { contest_submission_id } = req.body;
 
         let submission = await db.contest_submissions
             .find_one({
@@ -95,11 +95,16 @@ module.exports = {
             });
 
         if (!submission) {
-            return res.status(400).send({ url: "/contests" });
+            return res
+                .status(400)
+                .send();
         }
 
         await submission.destroy();
-        return res.status(200).send({ url: "/contests/" + submission.contest_id + "/"});
+
+        return res
+            .status(200)
+            .send();
     }
 
 };

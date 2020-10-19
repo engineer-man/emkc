@@ -120,10 +120,12 @@ class Contest extends React.Component {
                 }
             },
             callback: async function (result) {
-                if (result) {
-                    let res = await axios.post('/admin/submissions/delete/' + contest_submission_id);
-                    location = res.data.url;
-                }
+                if (!result) return;
+
+                let res = await axios
+                    .post('/admin/submissions/delete', { contest_submission_id });
+
+                location = location;
             }
         });
     }
@@ -239,16 +241,12 @@ class Contest extends React.Component {
                                         {' '}
                                         (#{submission.contest_submission_id})
                                         {' '}
-                                        {(
-                                            ctx.user_id && ctx.is_staff && (
+                                        {!!ctx.is_staff && (
                                             <a
-                                                href="#"
                                                 onClick={() => this.delete(submission.contest_submission_id)}
-                                                class="fas fa-trash"
+                                                class="fas fa-trash text-danger pointer"
                                             ></a>
-                                            )
-                                        ) || ''
-                                        }
+                                        )}
                                     </div>
                                 </div>
                                 <div class="user">

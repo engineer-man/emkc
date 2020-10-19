@@ -45,7 +45,7 @@ module.exports.routes = {
     'POST /admin/contests/create': 'admin/ContestsController.create',
     'GET /admin/contests/update/:contest_id': 'admin/ContestsController.update',
     'POST /admin/contests/update/:contest_id': 'admin/ContestsController.update',
-    'POST /admin/submissions/delete/:contest_submission_id': 'admin/ContestsController.delete_submission',
+    'POST /admin/submissions/delete': 'admin/ContestsController.delete_submission',
 
     // service api
     'GET /api/internal/chats/last': 'api/internal/ChatsController.last',
