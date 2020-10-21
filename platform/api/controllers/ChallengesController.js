@@ -275,7 +275,7 @@ module.exports = {
                 name: test.name,
                 input: test.input[test_idx].join('@@!@!@!@@'),
                 expected: test.output[test_idx],
-                result: piston.execute(language, source, test.input[test_idx])
+                result: await piston.execute(language, source, test.input[test_idx])
             });
         }
 

@@ -74,6 +74,12 @@ let constant = {
 
     is_prod() {
         return sails.config.environment === 'production';
+    },
+
+    get_piston_url() {
+        return sails.config.environment === 'production'
+            ? 'http://' + sails.config.piston.host
+            : 'https://emkc.org/api/v1/piston'
     }
 
 };
