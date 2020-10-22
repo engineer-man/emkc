@@ -25,12 +25,13 @@
                 <h3 class="f300">How do you plan on crushing this challenge?</h3>
             </div>
         </div>
-        <div class="row icons">
+        <div class="row icons get-versions">
             <div class="col-4 col-sm-3 col-md-2 offset-md-1">
                 <a href="/challenges/{{ challenge.challenge_id }}/js">
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/js.svg" class="img-fluid" />
                 </a>
                 <h4>JavaScript</h4>
+                <h6 class="version" data-langname="node">Node </h6>
                 <span class="badge badge-{{ ('js' in solved) ? diff : 'light' }}">{{ ('js' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
@@ -38,6 +39,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/python.svg" class="img-fluid" />
                 </a>
                 <h4>Python</h4>
+                <h6 class="version" data-langname="python3"></h6>
                 <span class="badge badge-{{ ('python' in solved) ? diff : 'light' }}">{{ ('python' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
@@ -45,6 +47,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/go.svg" class="img-fluid" />
                 </a>
                 <h4>Go</h4>
+                <h6 class="version" data-langname="go"></h6>
                 <span class="badge badge-{{ ('go' in solved) ? diff : 'light' }}">{{ ('go' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
@@ -52,6 +55,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/c.svg" class="img-fluid" />
                 </a>
                 <h4>C</h4>
+                <h6 class="version" data-langname="c"></h6>
                 <span class="badge badge-{{ ('c' in solved) ? diff : 'light' }}">{{ ('c' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
@@ -59,6 +63,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/ruby.svg" class="img-fluid" />
                 </a>
                 <h4>Ruby</h4>
+                <h6 class="version" data-langname="ruby"></h6>
                 <span class="badge badge-{{ ('ruby' in solved) ? diff : 'light' }}">{{ ('ruby' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2 offset-md-1">
@@ -66,6 +71,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/cpp.svg" class="img-fluid" />
                 </a>
                 <h4>C++</h4>
+                <h6 class="version" data-langname="cpp"></h6>
                 <span class="badge badge-{{ ('cpp' in solved) ? diff : 'light' }}">{{ ('cpp' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
@@ -73,6 +79,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/cs.svg" class="img-fluid" />
                 </a>
                 <h4>C#</h4>
+                <h6 class="version" data-langname="csharp"></h6>
                 <span class="badge badge-{{ ('cs' in solved) ? diff : 'light' }}">{{ ('cs' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
@@ -80,6 +87,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/php.svg" class="img-fluid" />
                 </a>
                 <h4>PHP</h4>
+                <h6 class="version" data-langname="php"></h6>
                 <span class="badge badge-{{ ('php' in solved) ? diff : 'light' }}">{{ ('php' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2 offset-sm-0 offset-md-0">
@@ -87,6 +95,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/swift.svg" class="img-fluid" />
                 </a>
                 <h4>Swift</h4>
+                <h6 class="version" data-langname="swift"></h6>
                 <span class="badge badge-{{ ('swift' in solved) ? diff : 'light' }}">{{ ('swift' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2 offset-0 offset-sm-0">
@@ -94,6 +103,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/java.svg" class="img-fluid" />
                 </a>
                 <h4>Java</h4>
+                <h6 class="version" data-langname="java"></h6>
                 <span class="badge badge-{{ ('java' in solved) ? diff : 'light' }}">{{ ('java' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2 offset-md-1">
@@ -101,6 +111,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/rust.svg" class="img-fluid" />
                 </a>
                 <h4>Rust</h4>
+                <h6 class="version" data-langname="rust"></h6>
                 <span class="badge badge-{{ ('rust' in solved) ? diff : 'light' }}">{{ ('rust' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
@@ -108,6 +119,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/julia.svg" class="img-fluid" />
                 </a>
                 <h4>Julia</h4>
+                <h6 class="version" data-langname="julia"></h6>
                 <span class="badge badge-{{ ('julia' in solved) ? diff : 'light' }}">{{ ('julia' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
@@ -115,6 +127,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/bash.svg" class="img-fluid" />
                 </a>
                 <h4>Bash</h4>
+                <h6 class="version" data-langname="bash"></h6>
                 <span class="badge badge-{{ ('bash' in solved) ? diff : 'light' }}">{{ ('bash' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
             <div class="col-4 col-sm-3 col-md-2">
@@ -122,6 +135,7 @@
                     <img src="/images/lang_icons/{{ challenge.difficulty_name }}/perl.svg" class="img-fluid" />
                 </a>
                 <h4>Perl</h4>
+                <h6 class="version" data-langname="perl"></h6>
                 <span class="badge badge-{{ ('perl' in solved) ? diff : 'light' }}">{{ ('perl' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
         </div>
