@@ -17,14 +17,15 @@ module.exports = {
 
     async execute(language, source, args) {
         if (!Array.is_array(args)) args = [args];
-
         args = args.map(arg => '' + arg);
+        const timeout = ms => new Promise(res => set_timeout(res, ms));
         try {
+            await timeout(constant.is_prod() ? 0 : 1500);  // Delay by 1.5 seconds when using the public api
             let result = await request
                 ({
                     method: 'post',
                     url: constant.is_prod()
-                        ? 'http://' +sails.config.piston.host + '/execute'
+                        ? 'http://' + sails.config.piston.host + '/execute'
                         : 'https://emkc.org/api/v1/piston/execute',
                     body: {
                         language,

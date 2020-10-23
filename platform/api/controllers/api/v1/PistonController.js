@@ -7,7 +7,7 @@ module.exports = {
         let result = await axios
             ({
                 method: 'get',
-                url: 'http://' + sails.config.piston.host + '/versions'
+                url: constant.get_piston_url() + '/versions'
             });
 
         return res
