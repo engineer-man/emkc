@@ -62,6 +62,9 @@ class Challenge extends React.Component {
         let solved = res.data.filter(r => !r.passed).length === 0;
 
         if (solved) {
+            if (!this.state.solved) {
+                bootbox.alert('Congratulations, you solved this challenge!')
+            }
             this.setState({
                 solved: true,
 
