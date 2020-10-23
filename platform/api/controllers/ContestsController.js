@@ -184,103 +184,117 @@ module.exports = {
                     user_id: req.local.user_id
                 }
             });
+        var test_cases = contest.input.split('\n');
+        var expected_results = contest.output.split('\n');
 
-        if (!contest.active) {
+        if (!contest.active || test_cases.length !== expected_results.length) {
             return res
                 .status(400)
                 .send();
         }
 
-        let test_result = await axios
-            ({
-                method: 'post',
-                url: 'http://' + sails.config.piston.host + '/execute',
-                data: {
-                    language,
-                    source: solution,
-                    args: contest.input.trim().split('\n')
-                }
-            });
+        const timeout = ms => new Promise(res => set_timeout(res, ms));
+        var counter = 0;
 
-        let passed = test_result.data.output === contest.output;
-
-        if (passed) {
-            if (submission) {
-                submission.language = language;
-                submission.solution = solution;
-                submission.length = solution.length;
-
-                let prev_length = submission.previous('length');
-
-                if (submission.length < prev_length) {
-                    submission.created_at = util.now();
-
-                    discord
-                        .api('post', `/channels/${constant.channels.emkc}/messages`, {
-                            embed: {
-                                title: contest.name,
-                                description:
-                                    `Can you do better than this? ` +
-                                    `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
-                                type: 'rich',
-                                color: 0x84e47f,
-                                url: `${constant.base_url}${contest.url}`,
-                                author: {
-                                    name:
-                                        `${req.local.user.display_name} updated their ${submission.language} solution ` +
-                                        `with one that is ${submission.length} characters long ` +
-                                        `(a ${prev_length-submission.length} character improvement)`
-                                },
-                                footer: {
-                                    icon_url: constant.cdn_url + req.local.user.avatar_url,
-                                    text: `updated by ${req.local.user.display_name} right now`
-                                }
-                            }
-                        })
-                        .catch(err => {});
-                }
-
-                await submission
-                    .save();
-            } else {
-                submission = await db.contest_submissions
-                    .create({
-                        user_id: req.local.user_id,
-                        contest_id,
+        while (counter < test_cases.length) {
+            await timeout(constant.is_prod() ? 0 : 1500);
+            let current_test_case = test_cases[counter];
+            let current_expected_result = expected_results[counter];
+            let test_result = await axios
+                ({
+                    method: 'post',
+                    url: constant.get_piston_url() + '/execute',
+                    data: {
                         language,
-                        solution,
-                        length: solution.length
-                    });
+                        source: solution,
+                        args: current_test_case.trim().split('|')
+                    }
+                });
+            if (test_result.data.output !== current_expected_result) {
+                return res
+                    .status(200)
+                    .send({
+                        passed: false
+                    })
+            }
+            counter++
+        }
+
+        if (submission) {
+            submission.language = language;
+            submission.solution = solution;
+            submission.length = solution.length;
+
+            let prev_length = submission.previous('length');
+
+            if (submission.length < prev_length) {
+                submission.created_at = util.now();
 
                 discord
                     .api('post', `/channels/${constant.channels.emkc}/messages`, {
                         embed: {
                             title: contest.name,
                             description:
-                                `Can you make a better solution? ` +
+                                `Can you do better than this? ` +
                                 `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
                             type: 'rich',
                             color: 0x84e47f,
                             url: `${constant.base_url}${contest.url}`,
                             author: {
                                 name:
-                                    `${req.local.user.display_name} submitted an initial ${submission.length} ` +
-                                    `character solution with ${submission.language}`
+                                    `${req.local.user.display_name} updated their ${submission.language} solution ` +
+                                    `with one that is ${submission.length} characters long ` +
+                                    `(a ${prev_length-submission.length} character improvement)`
                             },
                             footer: {
                                 icon_url: constant.cdn_url + req.local.user.avatar_url,
-                                text: `submitted by ${req.local.user.display_name} right now`
+                                text: `updated by ${req.local.user.display_name} right now`
                             }
                         }
                     })
                     .catch(err => {});
             }
+
+            await submission
+                .save();
+        } else {
+            submission = await db.contest_submissions
+                .create({
+                    user_id: req.local.user_id,
+                    contest_id,
+                    language,
+                    solution,
+                    length: solution.length
+                });
+
+            discord
+                .api('post', `/channels/${constant.channels.emkc}/messages`, {
+                    embed: {
+                        title: contest.name,
+                        description:
+                            `Can you make a better solution? ` +
+                            `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
+                        type: 'rich',
+                        color: 0x84e47f,
+                        url: `${constant.base_url}${contest.url}`,
+                        author: {
+                            name:
+                                `${req.local.user.display_name} submitted an initial ${submission.length} ` +
+                                `character solution with ${submission.language}`
+                        },
+                        footer: {
+                            icon_url: constant.cdn_url + req.local.user.avatar_url,
+                            text: `submitted by ${req.local.user.display_name} right now`
+                        }
+                    }
+                })
+                .catch(err => {});
         }
 
         return res
             .status(200)
             .send({
-                passed
+                passed: true
             });
     }
 

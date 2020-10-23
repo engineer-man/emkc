@@ -52,6 +52,21 @@ class Manage extends React.Component {
         const { draft, name, start_date, end_date, input, output } = this.state;
         const description = JSON.stringify(this.quill.getContents());
 
+        let test_cases = input.split('\n')
+        if (test_cases.length !== output.split('\n').length) {
+            return bootbox.alert("The number of test cases do not match the number of expected results");
+        }
+        var number_of_parameters = test_cases[0].split('|').length;
+        var valid = true
+        test_cases.forEach(test_case => {
+            if (test_case.split('|').length !== number_of_parameters) {
+                valid = false
+            }
+        });
+        if (!valid) {
+            return bootbox.alert("Two or more test cases have a different number of parameters (inputs)")
+        }
+
         let url;
 
         if (this.props.mode === 'create') {
@@ -126,7 +141,9 @@ class Manage extends React.Component {
                     </div>
 
                     <div class="form-group">
-                        <label>Input(s) (separated by \n)</label>
+                        <label>
+                            Input(s) (Each test case on a new line, multiple inputs are separated by |)
+                        </label>
                         <textarea
                             id="input"
                             class="form-control"
@@ -137,7 +154,7 @@ class Manage extends React.Component {
                     </div>
 
                     <div class="form-group">
-                        <label>Output</label>
+                        <label>Output(s) (Each test case result on a new line)</label>
                         <textarea
                             id="output"
                             class="form-control"
