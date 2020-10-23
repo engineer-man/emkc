@@ -194,7 +194,7 @@ module.exports = {
         let test_result = await axios
             ({
                 method: 'post',
-                url: constant.get_piston_url() + '/execute',
+                url: 'http://' + sails.config.piston.host + '/execute',
                 data: {
                     language,
                     source: solution,
