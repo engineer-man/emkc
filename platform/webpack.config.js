@@ -78,7 +78,8 @@ module.exports = {
                     chunks: 'initial'
                 }
             }
-        }
+        },
+        sideEffects: false
     },
     plugins: [
         new MiniCSSExtractPlugin({
