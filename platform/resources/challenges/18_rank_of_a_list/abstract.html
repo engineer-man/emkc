@@ -1,0 +1,117 @@
+<div class="em_challenge_abstract">
+    <div class="section">
+        <h4 class="f300">Instructions</h4>
+        <p>
+            Suppose each list (containing an odd number of elements) is divided into a number of ranks that equals the index
+            of its middle element. For example:
+            <div class="input">
+                [12, 67, 9, 12, 9, 5, 8, 7, 3, 2, 5]
+            </div>
+            is divided into 5 ranks since the index
+            of its middle element (5) is 5.
+        </p>
+        <p>
+            The ranks are ordered descendingly and each rank consists of two values.
+            These two values can be found by moving one element to the left and one element to the right starting from the
+            middle element. Using the previous example list we would get the following ranks and their values:
+            <div class="input">
+                Rank 5: (9, 8)<br />Rank 4: (12, 7)<br />Rank 3: (9, 3)<br />Rank 2: (67, 2)<br />Rank 1: (12, 5)
+            </div>
+        </p>
+        <p>
+            Your job is to find the largest rank (and its values) at which a combination of summations and/or subtractions
+            can be performed to the product of its values and the product of the values of the ranks after it (if found)
+            and the middle element number resulting in zero.
+        </p>
+        <p>
+            Taking the previous list into example again while starting from the middle element then performing the
+            operations on Rank 5, then on Rank 5 and Rank 4, then on Rank 5, Rank 4 and Rank 3, etc. We will find that:
+            <div class="input">
+                5 + 9 * 8<br />5 - 9 * 8
+            </div>
+            are not equal to zero, so the rank can never be 5.<br />Similarly:
+            <div class="input">
+                5 + 9 * 8 + 12 * 7<br />5 - 9 * 8 + 12 * 7<br />5 + 9 * 8 - 12 * 7<br />5 - 9 * 8 - 12 * 7
+            </div>
+            are not equal to zero, so the rank can never be 4, and so on.
+        </p>
+        <p>
+            However,
+            <div class="input">
+                5 + 9 * 8 + 12 * 7 - 9 * 3 - 67 * 2
+            </div>
+            is equal to 0, and the final two numbers in the operation (67, 2) are in
+            Rank 2, so our rank would be 2 and our output would be:
+            <div class="input">
+                2,67,2
+            </div>
+            (where the first number is the number of the rank,
+            and the two numbers following it are the values of the rank).
+            If there is not rank that satisfies this, then our rank would be 0.
+        </p>
+    </div>
+
+    <div class="section">
+        <h4 class="f300">Guidlines</h4>
+
+        <li>The number of elements of the list is always an odd number.</li>
+        <li>When getting the values of a rank, the element on the left side of the middle element preceeds</li>
+        <li>If the rank is 0 (there is no rank), only print out 0.</li>
+    </div>
+
+    <div class="section">
+        <h4 class="f300">Inputs</h4>
+
+        <div class="input">
+            <p>
+                <span class="badge badge-info">value1</span><br />
+                The list elements separated by spaces.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h4 class="f300">Sample Test Cases</h4>
+
+        <div class="test_case">
+            <div class="f700">A list that has a rank</div>
+            <div class="wrap"><span class="badge badge-info">value1</span> 5 5 6 7 8 2 9</div>
+            <div class="wrap"><span class="badge badge-dark">output</span> 1,5,9</div>
+        </div>
+    </div>
+
+    <div class="section">  
+        <h4 class="f300">Explanation</h4>
+        This list consists of 3 ranks which are:
+        <div class="input">
+            Rank 3: (6, 8)<br />Rank 2: (5, 2)<br />Rank 1: (5, 9)
+        </div>
+        By performing the operations we can find out that:
+        <div class="input">
+            7 + 6 * 8 - 5 * 2 - 5 * 9
+        </div>
+        is the combination that gives 0.<br />
+        The last two numbers in the operation (5, 9) are in Rank 1. So, our output would be 1,5,9
+    </div>  
+
+    <div class="section"> 
+        <div class="test_case">
+            <div class="f700">A list that doesn't have a rank</div>
+            <div class="wrap"><span class="badge badge-info">value1</span> 1 2 3</div>
+            <div class="wrap"><span class="badge badge-dark">output</span> 0</div>
+        </div>
+    </div>
+    <div class="section">
+        <h4 class="f300">Explanation</h4>
+        This list only contains one rank
+        <div class="input">
+            Rank 1: (2, 3)
+        </div>
+        We can see that
+        <div class="input">
+            1 + 2 * 3<br />1 - 2 * 3
+        </div> 
+        are not equal to zero and this is the smallest (and only rank), so there
+        can never be a rank for this list; hence we print out 0.
+    </div>
+</div>
