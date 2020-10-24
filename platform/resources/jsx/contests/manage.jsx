@@ -52,17 +52,21 @@ class Manage extends React.Component {
         const { draft, name, start_date, end_date, input, output } = this.state;
         const description = JSON.stringify(this.quill.getContents());
 
-        let test_cases = input.split('\n')
+        let test_cases = input.split('\n');
+
         if (test_cases.length !== output.split('\n').length) {
             return bootbox.alert("The number of test cases do not match the number of expected results");
         }
-        var number_of_parameters = test_cases[0].split('|').length;
-        var valid = true
+
+        let number_of_parameters = test_cases[0].split('|').length;
+        let valid = true
+
         test_cases.forEach(test_case => {
             if (test_case.split('|').length !== number_of_parameters) {
                 valid = false
             }
         });
+
         if (!valid) {
             return bootbox.alert("Two or more test cases have a different number of parameters (inputs)")
         }

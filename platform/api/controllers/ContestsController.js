@@ -1,6 +1,8 @@
 const moment = require('moment');
 const axios = require('axios');
 
+const timeout = ms => new Promise(res => set_timeout(res, ms));
+
 module.exports = {
 
     async home(req, res) {
@@ -184,8 +186,9 @@ module.exports = {
                     user_id: req.local.user_id
                 }
             });
-        var test_cases = contest.input.split('\n');
-        var expected_results = contest.output.split('\n');
+
+        let test_cases = contest.input.split('\n');
+        let expected_results = contest.output.split('\n');
 
         if (!contest.active || test_cases.length !== expected_results.length) {
             return res
@@ -193,13 +196,14 @@ module.exports = {
                 .send();
         }
 
-        const timeout = ms => new Promise(res => set_timeout(res, ms));
-        var counter = 0;
+        let counter = 0;
 
         while (counter < test_cases.length) {
             await timeout(constant.is_prod() ? 0 : 1500);
+
             let current_test_case = test_cases[counter];
             let current_expected_result = expected_results[counter];
+
             let test_result = await axios
                 ({
                     method: 'post',
@@ -210,6 +214,7 @@ module.exports = {
                         args: current_test_case.trim().split('|')
                     }
                 });
+
             if (test_result.data.output !== current_expected_result) {
                 return res
                     .status(200)
@@ -217,7 +222,8 @@ module.exports = {
                         passed: false
                     })
             }
-            counter++
+
+            ++counter;
         }
 
         if (submission) {

@@ -62,15 +62,18 @@ class Challenge extends React.Component {
         let solved = res.data.filter(r => !r.passed).length === 0;
 
         if (solved) {
-            if (!this.state.solved) {
-                bootbox.alert('Congratulations, you solved this challenge!')
-            }
-            this.setState({
-                solved: true,
+            this.setState(prev => {
+                if (!prev.solved) {
+                    bootbox.alert('Congratulations, you solved this challenge!');
+                }
 
-                // The challenge's code saves on solve
-                // Therefore, we can disable the "close protection"
-                changed: false
+                return {
+                    solved: true,
+
+                    // The challenge's code saves on solve
+                    // Therefore, we can disable the "close protection"
+                    changed: false
+                };
             });
         }
 
