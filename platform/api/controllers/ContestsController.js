@@ -9,6 +9,7 @@ module.exports = {
         let past_contests = await db.contests
             .find_all({
                 where: {
+                    draft: 0,
                     end_date: {
                         [$lt]: util.now()
                     }
