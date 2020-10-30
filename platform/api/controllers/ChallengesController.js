@@ -189,7 +189,7 @@ module.exports = {
                         if (typeof input === 'string')
                             template += `        String value${i} = args[${i-1}];`
                         if (typeof input === 'number')
-                            template += `        Integer value${i} = Integer.parseInt(args[${i-1}]);`
+                            template += `        int value${i} = Integer.parseInt(args[${i-1}]);`
                         break;
                     case 'rust':
                         if (typeof input === 'string')
