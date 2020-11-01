@@ -194,9 +194,9 @@ module.exports = {
                         break;
                     case 'kotlin':
                         if (typeof input === 'string')
-                            template += `        val value${i} = args[${i-1}]`
+                            template += `    val value${i} = args[${i-1}]`
                         if (typeof input === 'number')
-                            template += `        val value${i} = args[${i-1}].toInt()`
+                            template += `    val value${i} = args[${i-1}].toInt()`
                         break;
                     case 'rust':
                         if (typeof input === 'string')
