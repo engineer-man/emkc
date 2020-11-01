@@ -261,6 +261,7 @@ module.exports = {
                 bash: 'shell',
                 perl: 'perl',
                 kotlin: 'kotlin',
+                haskell: 'haskell',
             }[language]
         });
     },
