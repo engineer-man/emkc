@@ -124,6 +124,7 @@ module.exports = {
             bash: 'sh',
             perl: 'pl',
             kotlin: 'kt',
+            haskell: 'hs',
         }[language];
 
         const abstract = await read_file(base_dir + folder + '/abstract.html');
@@ -197,6 +198,9 @@ module.exports = {
                             template += `    val value${i} = args[${i-1}]`
                         if (typeof input === 'number')
                             template += `    val value${i} = args[${i-1}].toInt()`
+                        break;
+                    case 'haskell':
+                        template += `    let value${i} = (args !! ${i-1})`
                         break;
                     case 'rust':
                         if (typeof input === 'string')
