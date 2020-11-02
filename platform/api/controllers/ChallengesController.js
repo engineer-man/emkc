@@ -123,6 +123,8 @@ module.exports = {
             julia: 'jl',
             bash: 'sh',
             perl: 'pl',
+            kotlin: 'kt',
+            haskell: 'hs',
         }[language];
 
         const abstract = await read_file(base_dir + folder + '/abstract.html');
@@ -189,7 +191,16 @@ module.exports = {
                         if (typeof input === 'string')
                             template += `        String value${i} = args[${i-1}];`
                         if (typeof input === 'number')
-                            template += `        Integer value${i} = Integer.parseInt(args[${i-1}]);`
+                            template += `        int value${i} = Integer.parseInt(args[${i-1}]);`
+                        break;
+                    case 'kotlin':
+                        if (typeof input === 'string')
+                            template += `    val value${i} = args[${i-1}]`
+                        if (typeof input === 'number')
+                            template += `    val value${i} = args[${i-1}].toInt()`
+                        break;
+                    case 'haskell':
+                        template += `    let value${i} = (args !! ${i-1})`
                         break;
                     case 'rust':
                         if (typeof input === 'string')
@@ -248,7 +259,9 @@ module.exports = {
                 rust: 'rust',
                 julia: 'julia',
                 bash: 'shell',
-                perl: 'perl'
+                perl: 'perl',
+                kotlin: 'kotlin',
+                haskell: 'haskell',
             }[language]
         });
     },
