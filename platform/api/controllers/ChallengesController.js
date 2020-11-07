@@ -125,6 +125,7 @@ module.exports = {
             perl: 'pl',
             kotlin: 'kt',
             haskell: 'hs',
+            nim: 'nim',
         }[language];
 
         const abstract = await read_file(base_dir + folder + '/abstract.html');
@@ -232,6 +233,10 @@ module.exports = {
                     case 'perl':
                         template += `my $value${i} = $ARGV[${i-1}];`;
                         break;
+                    case 'nim':
+                        template += `value${i}: int\n`
+                        template += `discard parseInt(paramStr(${i}, value${i}))`;
+                        break;
                 }
                 template += '\n';
             });
@@ -262,6 +267,7 @@ module.exports = {
                 perl: 'perl',
                 kotlin: 'kotlin',
                 haskell: 'haskell',
+                nim: 'nim',
             }[language]
         });
     },
