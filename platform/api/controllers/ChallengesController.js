@@ -235,7 +235,7 @@ module.exports = {
                         break;
                     case 'nim':
                         template += `value${i}: int\n`
-                        template += `discard parseInt(paramStr(${i}, value${i}))`;
+                        template += `discard parseInt(paramStr(${i}), value${i})`;
                         break;
                 }
                 template += '\n';
