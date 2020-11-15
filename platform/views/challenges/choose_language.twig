@@ -154,6 +154,14 @@
                 <h6 class="version" data-langname="haskell"></h6>
                 <span class="badge badge-{{ ('haskell' in solved) ? diff : 'light' }}">{{ ('haskell' in solved) ? 'Solved' : 'Unsolved' }}</span>
             </div>
+            <div class="col-4 col-sm-3 col-md-2">
+                <a href="/challenges/{{ challenge.challenge_id }}/nim">
+                    <img src="/images/lang_icons/{{ challenge.difficulty_name }}/nim.svg" class="img-fluid" />
+                </a>
+                <h4>Nim</h4>
+                <h6 class="version" data-langname="nim"></h6>
+                <span class="badge badge-{{ ('nim' in solved) ? diff : 'light' }}">{{ ('nim' in solved) ? 'Solved' : 'Unsolved' }}</span>
+            </div> 
         </div>
     </div>
 {% endblock %}
