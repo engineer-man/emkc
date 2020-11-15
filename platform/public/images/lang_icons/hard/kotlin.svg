@@ -5,6 +5,8 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="Layer_1"
    x="0px"
@@ -12,10 +14,31 @@
    width="160"
    height="160"
    viewBox="19 19 117.77778 117.77778"
-   xml:space="preserve"><metadata
+   xml:space="preserve"
+   sodipodi:docname="kotlin.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1005"
+     id="namedview1073"
+     showgrid="false"
+     inkscape:zoom="5.23125"
+     inkscape:cx="80"
+     inkscape:cy="80"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" /><metadata
      id="metadata8"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
      id="defs6" /><g
      transform="translate(-164.19542,10.789546)"
      style="display:inline"
@@ -35,109 +58,7 @@
     </g><path
          d="M 256,0 C 397.29,0 512,114.71 512,256 512,397.29 397.29,512 256,512 114.71,512 0,397.29 0,256 0,114.71 114.71,0 256,0 Z m 0,10 C 391.771,10 502,120.229 502,256 502,391.771 391.771,502 256,502 120.229,502 10,391.771 10,256 10,120.229 120.229,10 256,10 Z"
          style="fill:#e47f8d;fill-opacity:1"
-         id="path34" /></g></g><g
-     id="g1890"
-     transform="matrix(1.2268519,0,0,1.2268519,41.083333,41.083333)">
-
-		<linearGradient
-   id="XMLID_3_"
-   gradientUnits="userSpaceOnUse"
-   x1="15.9594"
-   y1="-13.0143"
-   x2="44.306801"
-   y2="15.3332"
-   gradientTransform="matrix(1,0,0,-1,0,61)">
-		<stop
-   offset="9.677000e-02"
-   style="stop-color:#0095D5"
-   id="stop1852" />
-		<stop
-   offset="0.3007"
-   style="stop-color:#238AD9"
-   id="stop1854" />
-		<stop
-   offset="0.6211"
-   style="stop-color:#557BDE"
-   id="stop1856" />
-		<stop
-   offset="0.8643"
-   style="stop-color:#7472E2"
-   id="stop1858" />
-		<stop
-   offset="1"
-   style="stop-color:#806EE3"
-   id="stop1860" />
-	</linearGradient>
-	<polygon
-   id="XMLID_2_"
-   style="fill:#e47f8d;fill-opacity:1"
-   points="0,60 30.1,29.9 60,60 " />
-
-		<linearGradient
-   id="SVGID_1_"
-   gradientUnits="userSpaceOnUse"
-   x1="4.2091999"
-   y1="48.940899"
-   x2="20.673401"
-   y2="65.404999"
-   gradientTransform="matrix(1,0,0,-1,0,61)">
-		<stop
-   offset="0.1183"
-   style="stop-color:#0095D5"
-   id="stop1864" />
-		<stop
-   offset="0.4178"
-   style="stop-color:#3C83DC"
-   id="stop1866" />
-		<stop
-   offset="0.6962"
-   style="stop-color:#6D74E1"
-   id="stop1868" />
-		<stop
-   offset="0.8333"
-   style="stop-color:#806EE3"
-   id="stop1870" />
-	</linearGradient>
-	<polygon
-   style="fill:#e47f8d;fill-opacity:1"
-   points="0,0 30.1,0 0,32.5 "
-   id="polygon1873" />
-
-		<linearGradient
-   id="SVGID_2_"
-   gradientUnits="userSpaceOnUse"
-   x1="-10.1017"
-   y1="5.8362002"
-   x2="45.731499"
-   y2="61.669399"
-   gradientTransform="matrix(1,0,0,-1,0,61)">
-		<stop
-   offset="0.1075"
-   style="stop-color:#C757BC"
-   id="stop1875" />
-		<stop
-   offset="0.2138"
-   style="stop-color:#D0609A"
-   id="stop1877" />
-		<stop
-   offset="0.4254"
-   style="stop-color:#E1725C"
-   id="stop1879" />
-		<stop
-   offset="0.6048"
-   style="stop-color:#EE7E2F"
-   id="stop1881" />
-		<stop
-   offset="0.743"
-   style="stop-color:#F58613"
-   id="stop1883" />
-		<stop
-   offset="0.8232"
-   style="stop-color:#F88909"
-   id="stop1885" />
-	</linearGradient>
-	<polygon
-   style="fill:#e47f8d;fill-opacity:1"
-   points="0,31.7 0,60 30.1,29.9 60,0 30.1,0 "
-   id="polygon1888" />
-</g></svg>
+         id="path34" /></g></g><path
+     style="fill:#e47f8d;fill-opacity:1;stroke:none;stroke-width:0.736111px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M 41.083334,41.083334 H 114.69445 L 78.011573,77.766205 114.69445,114.69445 H 41.083334 Z"
+     id="path1638" /></svg>
