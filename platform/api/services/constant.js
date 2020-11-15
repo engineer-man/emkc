@@ -33,7 +33,10 @@ let constant = {
             'rust',
             'julia',
             'bash',
-            'perl'
+            'perl',
+            'kotlin',
+            'haskell',
+            'nim'
         ],
         difficulty: {
             easy: 1,
