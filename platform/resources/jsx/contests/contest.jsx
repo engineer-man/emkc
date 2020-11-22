@@ -39,7 +39,6 @@ class Contest extends React.Component {
 
         let disallowed_languages = [
             'awk',
-            'kotlin',
             'python2'
         ];
 
