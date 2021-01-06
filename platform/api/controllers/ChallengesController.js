@@ -219,13 +219,19 @@ module.exports = {
                             template += `    let value${i}: i32 = args[${i}].parse().unwrap();`
                         break;
                     case 'js':
-                        template += `const value${i} = process.argv[${i+1}];`
+                        if (typeof input === 'string')
+                            template += `const value${i} = process.argv[${i+1}];`;
+                        if (typeof input === 'number')
+                            template += `const value${i} = parseInt(process.argv[${i+1}]);`;
                         break;
                     case 'php':
                         template += `$value${i} = $argv[${i}];`;
                         break;
                     case 'python':
-                        template += `value${i} = sys.argv[${i}]`;
+                        if (typeof input === 'string')
+                            template += `value${i} = sys.argv[${i}]`;
+                        if (typeof input === 'number')
+                            template += `value${i} = int(sys.argv[${i}])`;
                         break;
                     case 'ruby':
                         template += `value${i} = ARGV[${i-1}]`;
@@ -234,7 +240,10 @@ module.exports = {
                         template += `var value${i} = CommandLine.arguments[${i}]`;
                         break;
                     case 'julia':
-                        template += `value${i} = ARGS[${i}]`;
+                        if (typeof input === 'string')
+                            template += `value${i} = ARGS[${i}]`;
+                        if (typeof input === 'number')
+                            template += `value${i} = parse(Int, ARGS[${i}])`;
                         break;
                     case 'bash':
                         template += `value${i}=$${i}`;
