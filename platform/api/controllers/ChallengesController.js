@@ -156,6 +156,15 @@ module.exports = {
                         if (has_int)
                             template += '    "strconv"\n';
                         break;
+                    case 'nim':
+                        if (has_int)
+                            template += 'import os, parseutils';
+                        else
+                            template += 'import os';
+
+                        template += '\n\n';
+
+                        break;
                 }
 
                 continue;
@@ -234,8 +243,13 @@ module.exports = {
                         template += `my $value${i} = $ARGV[${i-1}];`;
                         break;
                     case 'nim':
-                        template += `value${i}: int\n`
-                        template += `discard parseInt(paramStr(${i}), value${i})`;
+                        if (typeof input === 'number') {
+                            template += `var value${i}: int\n`
+                            template += `discard parseInt(paramStr(${i}), value${i})`;
+                        } else {
+                            template += `var value${i} = paramStr(${i})`
+                        }
+
                         break;
                 }
                 template += '\n';
