@@ -4,6 +4,14 @@ const Redis = require('ioredis');
 module.exports = {
 
     async versions(req, res) {
+        res.set('Access-Control-Allow-Origin', '*');
+
+        if (req.method === 'OPTIONS') {
+            return res
+                .status(200)
+                .send();
+        }
+
         let result = await axios
             ({
                 method: 'get',
@@ -16,6 +24,14 @@ module.exports = {
     },
 
     async execute(req, res) {
+        res.set('Access-Control-Allow-Origin', '*');
+
+        if (req.method === 'OPTIONS') {
+            return res
+                .status(200)
+                .send();
+        }
+
         const ip = req.headers['x-real-ip'];
         const authorization = req.headers['authorization'];
         const redis = new Redis(6379, 'redis');
