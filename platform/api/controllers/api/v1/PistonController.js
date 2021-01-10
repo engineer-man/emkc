@@ -5,6 +5,7 @@ module.exports = {
 
     async versions(req, res) {
         res.set('Access-Control-Allow-Origin', '*');
+        res.set('Access-Control-Allow-Headers', '*');
 
         if (req.method === 'OPTIONS') {
             return res
@@ -25,6 +26,7 @@ module.exports = {
 
     async execute(req, res) {
         res.set('Access-Control-Allow-Origin', '*');
+        res.set('Access-Control-Allow-Headers', '*');
 
         if (req.method === 'OPTIONS') {
             return res
