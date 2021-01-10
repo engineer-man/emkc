@@ -4,6 +4,14 @@ const Redis = require('ioredis');
 module.exports = {
 
     async versions(req, res) {
+        res.set('Access-Control-Allow-Origin', '*');
+
+        if (req.method === 'OPTIONS') {
+            return res
+                .status(200)
+                .send();
+        }
+
         let result = await axios
             ({
                 method: 'get',
@@ -16,6 +24,14 @@ module.exports = {
     },
 
     async execute(req, res) {
+        res.set('Access-Control-Allow-Origin', '*');
+
+        if (req.method === 'OPTIONS') {
+            return res
+                .status(200)
+                .send();
+        }
+
         const ip = req.headers['x-real-ip'];
         const authorization = req.headers['authorization'];
         const redis = new Redis(6379, 'redis');
@@ -30,7 +46,7 @@ module.exports = {
                         message: 'Requests limited to 5 per second'
                     });
             } else {
-                await redis.set(`piston-${req.ip}`, 0, 'ex', 5);
+                await redis.set(`piston-${req.ip}`, 0, 'px', 200);
             }
         }
 
