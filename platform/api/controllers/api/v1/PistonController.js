@@ -72,7 +72,9 @@ module.exports = {
                     }
                 });
 
-            if (result.status >= 300) {
+            if (result.status === 400) {
+                throw new Error('Unsupported language language supplied');
+            } else if (result.status >= 300) {
                 throw new Error('Execution problem');
             }
 
