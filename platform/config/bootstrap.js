@@ -7,6 +7,9 @@ root_dir = path.resolve(__dirname + '/../../');
 
 Promise = require('bluebird');
 
+let axios = require('axios');
+axios.defaults.validateStatus = () => true;
+
 module.exports.bootstrap = cb => {
     db = require(root_dir + '/platform/models/index.js');
 
