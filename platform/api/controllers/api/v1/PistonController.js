@@ -60,43 +60,45 @@ module.exports = {
             args = [];
         }
 
-        try {
-            let result = await axios
-                ({
-                    method: 'post',
-                    url: 'http://' + sails.config.piston.host + '/execute',
-                    data: {
-                        language,
-                        source,
-                        args
-                    }
-                });
+        let result = await axios
+            ({
+                method: 'post',
+                url: 'http://' + sails.config.piston.host + '/execute',
+                data: {
+                    language,
+                    source,
+                    args
+                }
+            });
 
-            if (result.status === 400) {
-                throw new Error('Unsupported language language supplied');
-            } else if (result.status >= 300) {
-                throw new Error('Execution problem');
-            }
-
+        if (result.status === 400) {
             return res
-                .status(200)
+                .status(400)
                 .send({
-                    ran: result.data.ran,
-                    language: result.data.language,
-                    version: result.data.version,
-                    output: result.data.output
-                        ? result.data.output
-                            .replace(/\r/gi, '')
-                            .slice(0, 65536)
-                        : ''
+                    message: 'Unsupported language language supplied'
                 });
-        } catch (e) {
+        }
+
+        if (result.status >= 300) {
             return res
                 .status(500)
                 .send({
-                    message: e.message
+                    message: 'Execution problem'
                 });
         }
+
+        return res
+            .status(200)
+            .send({
+                ran: result.data.ran,
+                language: result.data.language,
+                version: result.data.version,
+                output: result.data.output
+                    ? result.data.output
+                        .replace(/\r/gi, '')
+                        .slice(0, 65536)
+                    : ''
+            });
     }
 
 };
