@@ -97,6 +97,16 @@ module.exports = {
                     ? result.data.output
                         .replace(/\r/gi, '')
                         .slice(0, 65536)
+                    : '',
+                stdout: result.data.stdout
+                    ? result.data.stdout
+                        .replace(/\r/gi, '')
+                        .slice(0, 65536)
+                    : '',
+                stderr: result.data.stderr
+                    ? result.data.stderr
+                        .replace(/\r/gi, '')
+                        .slice(0, 65536)
                     : ''
             });
     }
