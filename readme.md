@@ -14,9 +14,9 @@ Linux/macOS machines and Windows machines running either WSL or natively with Wi
 - `./emkc stop` when done.
 - `./emkc` to view a list of commands.
 
-Once started, you can access the local version of the site at http://127.0.0.1:2005.
+Once started, you can access the local version of the site at http://127.0.0.1:2005 (localhost:2005 for WSL).
 
->**Note:** when using WSL make sure to add `options = "metadata"` to /etc/wsl.conf under the [automount]
+>**Note:** when using WSL, it is recommended to use the linux filesystem for better performance and fewer errors; however if you intend to use the windows filesystem, make sure to mount your windows volumes with metadata options since the MySQL Docker Container needs permissions to modify files in the volume. You can configure that automatically on WSL startup by adding `options = "metadata"` to /etc/wsl.conf under the [automount]
 >section (check https://devblogs.microsoft.com/commandline/automatically-configuring-wsl/)
 
 #### Local Config
