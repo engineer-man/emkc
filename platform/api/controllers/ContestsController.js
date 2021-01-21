@@ -1,8 +1,6 @@
 const moment = require('moment');
 const axios = require('axios');
 
-const timeout = ms => new Promise(res => set_timeout(res, ms));
-
 module.exports = {
 
     async home(req, res) {
@@ -191,40 +189,20 @@ module.exports = {
         let test_cases = contest.input.split('\n');
         let expected_results = contest.output.split('\n');
 
-        if (!contest.active || test_cases.length !== expected_results.length) {
+        if (!contest.active || test_cases.length !== expected_results.length ||
+            constant.contests.disallowed_languages.includes(language)) {
             return res
                 .status(400)
                 .send();
         }
 
-        let counter = 0;
-
-        while (counter < test_cases.length) {
-            await timeout(constant.is_prod() ? 0 : 1500);
-
-            let current_test_case = test_cases[counter];
-            let current_expected_result = expected_results[counter];
-
-            let test_result = await axios
-                ({
-                    method: 'post',
-                    url: constant.get_piston_url() + '/execute',
-                    data: {
-                        language,
-                        source: solution,
-                        args: current_test_case.trim().split('|')
-                    }
+        let is_valid = await contests.check_submission_validity(test_cases, expected_results, solution, language);
+        if (!is_valid) {
+            return res
+                .status(200)
+                .send({
+                    passed: false
                 });
-
-            if (test_result.data.output !== current_expected_result) {
-                return res
-                    .status(200)
-                    .send({
-                        passed: false
-                    })
-            }
-
-            ++counter;
         }
 
         if (submission) {
@@ -303,6 +281,12 @@ module.exports = {
             .send({
                 passed: true
             });
+    },
+
+    async disallowed_languages(req, res) {
+        return res.status(200).send({
+            disallowed_languages: constant.contests.disallowed_languages
+        });
     }
 
 };

@@ -45,6 +45,13 @@ let constant = {
         }
     },
 
+    contests: {
+        disallowed_languages: [
+            'python2',
+            'awk'
+        ]
+    },
+
     channels: {
         emkc: '483979558249562112',
         python: '483980259239264256', // python

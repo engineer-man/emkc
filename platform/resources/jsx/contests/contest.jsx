@@ -15,7 +15,8 @@ class Contest extends React.Component {
             language: '',
             solution: '',
             languages: [],
-            passed: true
+            passed: true,
+            validating: false
         };
 
         if (props.submissions && props.submissions.length > 0) {
@@ -28,6 +29,7 @@ class Contest extends React.Component {
 
         this.handle_change = this.handle_change.bind(this);
         this.submit = this.submit.bind(this);
+        this.validate = this.validate.bind(this);
     }
 
     async componentDidMount() {
@@ -36,12 +38,9 @@ class Contest extends React.Component {
         });
 
         let languages = await axios.get('/api/v1/piston/versions');
+        let disallowed_languages = await axios.get('/contests/disallowed_languages');
 
-        let disallowed_languages = [
-            'awk',
-            'python2'
-        ];
-
+        disallowed_languages = disallowed_languages.data.disallowed_languages;
         languages = languages.data.filter(lang => !disallowed_languages.includes(lang.name));
 
         this.setState({
@@ -126,6 +125,20 @@ class Contest extends React.Component {
 
                 location = location;
             }
+        });
+    }
+
+    async validate() {
+        this.setState({
+            validating: true
+        });
+        let res = await axios.post('/admin/submissions/validate/' + this.state.contest.contest_id);
+        let { destroyed } = res.data;
+        bootbox.alert('Submissions re-validated, removed ' + destroyed + ' submission(s)', function() {
+            location = location;
+        });
+        this.setState({
+            validating: false
         });
     }
 
@@ -219,6 +232,18 @@ class Contest extends React.Component {
                 </div>
 
                 <h5 class="green">Submissions</h5>
+                {!!ctx.is_staff && (
+                    <div>
+                        <button type="button" class="btn btn-sm btn-warning" onClick={this.validate}>
+                            Re-validate submissions
+                        </button>
+                    {this.state.validating && (
+                        <div>
+                            <a class="text-warning">Re-validation in progress...</a>
+                        </div>
+                    )}
+                    </div>
+                )}
                 {this.state.contest.submissions.map(submission => {
                     return (
                         <div key={submission.contest_submission_id} class="submission">

@@ -21,6 +21,7 @@ module.exports.routes = {
     'GET /contests': 'ContestsController.home',
     'POST /contests/submit': 'ContestsController.submit',
     'GET /contests/:contest_id/*': 'ContestsController.contest',
+    'GET /contests/disallowed_languages': 'ContestsController.disallowed_languages',
 
     'GET /snippets': 'SnippetsController.create',
     'POST /snippets': 'SnippetsController.create',
@@ -39,6 +40,7 @@ module.exports.routes = {
 
     // admin
     'GET /admin': 'admin/DashboardController.dashboard',
+    'POST /admin/submissions/validate/:contest_id': 'admin/ContestsController.validate_submissions',
     'GET /admin/contests': 'admin/ContestsController.view_all',
     'GET /admin/contests/all': 'admin/ContestsController.view_all',
     'GET /admin/contests/create': 'admin/ContestsController.create',
