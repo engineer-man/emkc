@@ -54,7 +54,7 @@ module.exports = {
 
         redis.disconnect();
 
-        let { language, source, args } = req.body;
+        let { language, source, args, stdin } = req.body;
 
         if (!Array.is_array(args)) {
             args = [];
@@ -67,7 +67,8 @@ module.exports = {
                 data: {
                     language,
                     source,
-                    args
+                    args,
+                    stdin
                 }
             });
 
@@ -75,7 +76,7 @@ module.exports = {
             return res
                 .status(400)
                 .send({
-                    message: 'Unsupported language supplied'
+                    message: result.data.message
                 });
         }
 

@@ -39,6 +39,14 @@ module.exports.policies = {
         '*': ['common', 'logged_in', 'is_admin']
     },
 
+    'admin/ChallengesController': {
+        '*': ['common', 'logged_in', 'is_admin']
+    },
+
+    'admin/DashboardController': {
+        '*': ['common', 'logged_in', 'is_admin']
+    },
+
     'api/internal/ChatsController': {
         '*': ['common', 'api_internal_auth']
     },

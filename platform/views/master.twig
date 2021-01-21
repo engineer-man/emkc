@@ -111,7 +111,8 @@
             {% if sails.twig.starts_with(req.path, '/admin') and req.local.user.is_staff %}
                 <div class="em_staff_container">
                     Staff Stuff:
-                    <a href="/admin/contests">Contests</a>
+                    <a href="/admin/contests">Contests</a> |
+                    <a href="/admin/challenges">Challenges</a>
                 </div>
             {% endif %}
 

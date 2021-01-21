@@ -96,6 +96,11 @@ module.exports = {
                             user_id: req.local.user_id,
                             language
                         }
+                    },
+                    {
+                        required: false,
+                        model: db.challenge_tests,
+                        as: 'tests'
                     }
                 ]
             });
@@ -107,7 +112,6 @@ module.exports = {
         // unpack challenge assets
         const read_file = util.promisify(fs.read_file);
         const base_dir = root_dir + '/platform/resources/challenges';
-        const folder = '/' + challenge.folder;
         const ext = {
             js: 'js',
             python: 'py',
@@ -128,8 +132,7 @@ module.exports = {
             nim: 'nim',
         }[language];
 
-        const abstract = await read_file(base_dir + folder + '/abstract.html');
-        const tests = JSON.parse(await read_file(base_dir + folder + '/tests.json'));
+        const abstract = challenge.html;
         let base_template = await read_file(base_dir + '/templates/template.' + ext);
 
         let template = '';
@@ -145,7 +148,13 @@ module.exports = {
                 continue;
             }
 
-            let input = tests[0].input[0];
+            let input = challenge.tests[0].input.split('\n').map(x => x.split('|'))[0];
+            if (input.some(input => input.match(/^[0-9]+$/))) {
+                input = input.map(input => parse_int(input));
+            }
+            else if (input.some(input => input.match(/^[0-9]+\.[0-9]+$/))) {
+                input = input.map(input => parse_float(input));
+            }
 
             if (line.match(/^\s*%%_IMPORTS_%%/gi)) {
                 let has_string = input.some(input => typeof input === 'string');
@@ -248,7 +257,7 @@ module.exports = {
             solved: !!challenge.solution,
             challenge,
             language,
-            abstract: abstract.to_string(),
+            abstract,
             template,
             monaco_language: {
                 js: 'javascript',
@@ -280,27 +289,32 @@ module.exports = {
             .find_one({
                 where: {
                     challenge_id
+                },
+                include: {
+                    required: false,
+                    model: db.challenge_tests,
+                    as: 'tests'
                 }
             });
 
-        const tests = await challenges.get_tests(challenge.folder);
-
         var results = [];
 
-        for (const test of tests) {
-            var test_idx = Math.floor(Math.random() * test.input.length);
+        for (const test of challenge.tests) {
+            let inputs = test.input.split('\n'); // We still have the arguments separated by |
+            let test_idx = Math.floor(Math.random() * inputs.length);
+            let outputs = test.output.split('\n')
 
             results.push({
                 name: test.name,
-                input: test.input[test_idx].join('@@!@!@!@@'),
-                expected: test.output[test_idx],
-                result: await piston.execute(language, source, test.input[test_idx])
+                input: inputs[test_idx],
+                expected: outputs[test_idx],
+                result: await piston.execute(language, source, inputs[test_idx].split('|'))
             });
         }
 
-        outputs = await Promise.all(results.map(result => result.result));
+        let promise_outputs = await Promise.all(results.map(result => result.result));
 
-        outputs.for_each((output, i) => {
+        promise_outputs.for_each((output, i) => {
             results[i].result = output;
         });
 

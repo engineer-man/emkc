@@ -49,6 +49,7 @@ $lte = Sequelize.Op.lte;
 
 db.challenges.has_one(db.user_challenges, { as: 'solution', foreignKey: 'challenge_id' });
 db.challenges.has_many(db.user_challenges, { as: 'solutions', foreignKey: 'challenge_id' });
+db.challenges.has_many(db.challenge_tests, { as: 'tests', foreignKey: 'challenge_id' });
 
 db.contests.has_many(db.contest_submissions, { as: 'submissions', foreignKey: 'contest_id' });
 
@@ -56,6 +57,7 @@ db.users.has_many(db.contest_submissions, { as: 'submissions', foreignKey: 'user
 
 db.user_challenges.belongs_to(db.challenges, { as: 'challenge', foreignKey: 'challenge_id' });
 db.user_challenges.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
+db.challenge_tests.belongs_to(db.challenges, { as: 'challenge', foreignKey: 'challenge_id' });
 db.contest_submissions.belongs_to(db.contests, { as: 'contest', foreignKey: 'contest_id' });
 db.contest_submissions.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
 
