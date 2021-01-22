@@ -76,7 +76,7 @@ module.exports = {
             return res
                 .status(400)
                 .send({
-                    message: 'Unsupported language supplied'
+                    message: result.data.message
                 });
         }
 
