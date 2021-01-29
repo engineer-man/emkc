@@ -20,7 +20,7 @@ module.exports = {
         args = args.map(arg => '' + arg);
         const timeout = ms => new Promise(res => set_timeout(res, ms));
         try {
-            await timeout(constant.is_prod() ? 0 : 1500);  // Delay by 1.5 seconds when using the public api
+            await timeout(constant.is_prod() ? 0 : 500);  // Delay by 0.5 seconds when using the public api
             let result = await request
                 ({
                     method: 'post',

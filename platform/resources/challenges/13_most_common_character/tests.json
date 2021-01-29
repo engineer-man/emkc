@@ -17,12 +17,12 @@
         "official": false,
         "name": "Testing long strings",
         "input": [
-            ["tttt;;;;;;tt;;t;;t;;;t;t;"],
+            ["tttt::::::tt::t::t:::t:t:"],
             ["lllasllsllslsllsllslslslal"],
             ["llllttttnabcefghigklmnop"]
         ],
         "output": [
-            ";",
+            ":",
             "l",
             "l"
         ]

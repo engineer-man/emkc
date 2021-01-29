@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             folder: DataTypes.STRING,
             name: DataTypes.STRING,
             description: DataTypes.STRING,
+            html: DataTypes.TEXT('medium'),
 
             // getters
             difficulty_name: {

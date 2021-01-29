@@ -1,0 +1,16 @@
+{% extends 'master.twig'%}
+{% block content %}
+    <div class="em_wide_content">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="f300">Manage Challenge</h4>
+
+                <div
+                    id="react_challenge_manage"
+                    data-mode="{{ mode|json_encode|e }}"
+                    data-challenge="{{ challenge|json_encode|e }}"
+                ></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
