@@ -1,10 +1,12 @@
 module.exports = {
+
     async view_all(req, res) {
         let challenges = await db.challenges.find_all({
             order: [
-                ['challenge_id']
+                ['challenge_id', 'desc']
             ]
         });
+
         return res.view({
             challenges
         });
@@ -126,4 +128,5 @@ module.exports = {
         }
         return res.status(200).send();
     }
+
 }

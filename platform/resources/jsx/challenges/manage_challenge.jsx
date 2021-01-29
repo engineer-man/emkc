@@ -29,9 +29,10 @@ class ManageChallenge extends React.Component {
                 syntax: false,
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
-                    [{ 'header': 1 }, {'header': 2}],
+                    [{ 'header': 1}, { 'header': 2}, { 'header': 3}, { 'header': 4}],
                     ['blockquote', 'code-block', 'link'],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'color': [] }, { 'background': [] }],
                     ['clean']
                 ]
             }
@@ -212,33 +213,33 @@ class ManageChallenge extends React.Component {
                 <div class="form-group">
                     <label>Name
                     <input
-                            type="text"
-                            id="name"
-                            class="form-control"
-                            value={this.state.name}
-                            onChange={this.handle_change} />
+                        type="text"
+                        id="name"
+                        class="form-control"
+                        value={this.state.name}
+                        onChange={this.handle_change} />
                     </label>
                 </div>
 
                 <div class="form-group">
                     <label>Difficulty (1: easy, 2: medium, 3: hard)
                     <input
-                            type="text"
-                            id="difficulty"
-                            class="form-control"
-                            value={this.state.difficulty}
-                            onChange={this.handle_change} />
+                        type="text"
+                        id="difficulty"
+                        class="form-control"
+                        value={this.state.difficulty}
+                        onChange={this.handle_change} />
                     </label>
                 </div>
 
                 <div class="form-group">
                     <label>Points (the standard is easy: 10, medium: 30, hard: 50)
                     <input
-                            type="text"
-                            id="points"
-                            class="form-control"
-                            value={this.state.points}
-                            onChange={this.handle_change} />
+                        type="text"
+                        id="points"
+                        class="form-control"
+                        value={this.state.points}
+                        onChange={this.handle_change} />
                     </label>
                 </div>
 
@@ -246,11 +247,11 @@ class ManageChallenge extends React.Component {
                     <label>Brief description</label>
 
                     <input
-                            type="text"
-                            id="description"
-                            class="form-control"
-                            value={this.state.description}
-                            onChange={this.handle_change} />
+                        type="text"
+                        id="description"
+                        class="form-control"
+                        value={this.state.description}
+                        onChange={this.handle_change} />
                 </div>
 
                 <div class="form-group">
@@ -258,44 +259,49 @@ class ManageChallenge extends React.Component {
                     <div id="html"></div>
                 </div>
                 <div class='form-group'>
-                    <h4>Test cases</h4>
+                    <h4>
+                        Test Cases
+                        <small>
+                            <a href="#" class="pointer" onClick={() => this.manage_test({
+                                challenge_test_id: this.state.current_test_id,
+                                challenge_id: this.state.challenge_id,
+                                official: false,
+                                name: '',
+                                input: '',
+                                output: ''
+                            })}>
+                                {' '}
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </small>
+                    </h4>
                     <table id="challenges-table" class="table table-striped table-sm">
                     <thead>
                         <tr>
+                            <th style={{ 'width': '120px' }}>Actions</th>
                             <th>Name</th>
-                            <th>Actions</th>
-                            <th>
-                                <a href="#test-name" onClick={() => this.manage_test({
-                                    challenge_test_id: this.state.current_test_id,
-                                    challenge_id: this.state.challenge_id,
-                                    official: false,
-                                    name: '',
-                                    input: '',
-                                    output: ''
-                                })}>Create new</a>
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         {!!this.state.tests.length && this.state.tests.map(test => {
                             return (
                                 <tr key={test.challenge_test_id}>
-                                    <td>{test.name}</td>
                                     <td>
-                                        <a 
-                                            href="#test-name"
+                                        <a
+                                            href="#"
                                             onClick={() => this.manage_test(test)}
                                         >
                                             Edit
-                                        </a> |&nbsp;
+                                        </a>
+                                        {' | '}
                                         <a
-                                            href="#challenges-table"
+                                            href="#"
                                             onClick={() => this.delete_test(test.challenge_test_id)}
                                         >
                                             Delete
                                         </a>
                                     </td>
-                                    <td></td>
+                                    <td>{test.name}</td>
                                 </tr>
                             )
                         })}
@@ -309,29 +315,29 @@ class ManageChallenge extends React.Component {
                         <div class="form-group">
                             <label>Name</label>
                             <input
-                                    type="text"
-                                    id="test-name"
-                                    class="form-control"
-                                    value={this.state.editing_test.name}
-                                    onChange={this.handle_change} />
+                                type="text"
+                                id="test-name"
+                                class="form-control"
+                                value={this.state.editing_test.name}
+                                onChange={this.handle_change} />
                         </div>
                         <div class="form-group">
                             <label>
                                 Inputs (each test case separated by a new line, arguments separated by '|')
                             </label>
                             <textarea
-                                    id="test-input"
-                                    class="form-control"
-                                    value={this.state.editing_test.input}
-                                    onChange={this.handle_change}></textarea>
+                                id="test-input"
+                                class="form-control"
+                                value={this.state.editing_test.input}
+                                onChange={this.handle_change}></textarea>
                         </div>
                         <div class="form-group">
                             <label>Corresponding outputs (each separated by a new line)</label>
                             <textarea
-                                    id="test-output"
-                                    class="form-control"
-                                    value={this.state.editing_test.output}
-                                    onChange={this.handle_change}></textarea>
+                                id="test-output"
+                                class="form-control"
+                                value={this.state.editing_test.output}
+                                onChange={this.handle_change}></textarea>
                         </div>
                         <button class="btn btn-success btn-sm" onClick={this.save_test}>
                             Save test
@@ -343,6 +349,6 @@ class ManageChallenge extends React.Component {
     }
 }
 
-Util.try_render('react_challenge_manage', ManageChallenge);
+Util.try_render('react_manage_challenge', ManageChallenge);
 
 export default ManageChallenge;
