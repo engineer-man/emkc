@@ -109,29 +109,42 @@ module.exports = {
 
     async validate_submissions(req, res) {
         const { contest_id } = req.params;
+
         let contest = await db.contests.find_one({
-            where: { contest_id },
-            include: {
-                required: false,
-                model: db.contest_submissions,
-                as: 'submissions'
-            }
+            where: {
+                contest_id
+            },
+            include: [
+                {
+                    required: false,
+                    model: db.contest_submissions,
+                    as: 'submissions'
+                }
+            ]
         });
+
         let destroyed = 0;
 
         for (let submission of contest.submissions) {
-            let is_valid = await contests.check_submission_validity(
-                contest.input.split('\n'), contest.output.split('\n'), submission.solution, submission.language
-            );
+            let is_valid = await contests
+                .check_submission_validity(
+                    contest.input.split('\n'),
+                    contest.output.split('\n'),
+                    submission.solution,
+                    submission.language
+                );
+
             if (!is_valid) {
-                await submission.destroy();
+                //await submission.destroy();
                 ++destroyed;
             }
         }
 
-        return res.status(200).send({
-            destroyed
-        });
+        return res
+            .status(200)
+            .send({
+                destroyed
+            });
     }
 
 };

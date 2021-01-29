@@ -1,9 +1,10 @@
 const axios = require('axios');
 
+const timeout = ms => new Promise(res => set_timeout(res, ms));
+
 module.exports = {
 
     async check_submission_validity(test_cases, expected_results, solution, language) {
-        const timeout = ms => new Promise(res => set_timeout(res, ms));
         let counter = 0;
 
         while (counter < test_cases.length) {
@@ -22,9 +23,11 @@ module.exports = {
                         args: current_test_case.trim().split('|')
                     }
                 });
+
             if (test_result.data.output !== current_expected_result) {
-                return false
+                return false;
             }
+
             ++counter;
         }
 
