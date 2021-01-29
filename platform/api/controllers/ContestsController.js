@@ -188,9 +188,13 @@ module.exports = {
 
         let test_cases = contest.input.split('\n');
         let expected_results = contest.output.split('\n');
+        let languages = await axios.get(constant.get_piston_url() + '/versions');
+        languages = languages.data.filter(lang => lang.name === language);
+        // To prevent submissions by alias
 
         if (!contest.active || test_cases.length !== expected_results.length ||
-            constant.contests.disallowed_languages.includes(language)) {
+            constant.contests.disallowed_languages.includes(language) ||
+            !languages.length) {
             return res
                 .status(400)
                 .send();
