@@ -148,13 +148,24 @@ module.exports = {
                 continue;
             }
 
-            let input = challenge.tests[0].input.split('\n').map(x => x.split('|'))[0];
-            if (input.some(input => input.match(/^[0-9]+$/))) {
-                input = input.map(input => parse_int(input));
-            }
-            else if (input.some(input => input.match(/^[0-9]+\.[0-9]+$/))) {
-                input = input.map(input => parse_float(input));
-            }
+            // parse the input according to rules and return the first to determine template types
+            let input = challenge.tests[0].input
+                .split('\n')
+                .map(input_line => {
+                    return input_line
+                        .split('|')
+                        .map(value => {
+                            if (value.match(/^[0-9]+$/)) {
+                                return parse_int(value);
+                            }
+
+                            if (value.match(/^[0-9]+\.[0-9]+$/)) {
+                                return parse_float(value);
+                            }
+
+                            return value;
+                        })
+                })[0];
 
             if (line.match(/^\s*%%_IMPORTS_%%/gi)) {
                 let has_string = input.some(input => typeof input === 'string');
