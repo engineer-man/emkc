@@ -176,6 +176,15 @@ module.exports = {
                         if (has_int)
                             template += '    "strconv"\n';
                         break;
+                    case 'nim':
+                        if (has_int)
+                            template += 'import os, parseutils';
+                        else
+                            template += 'import os';
+
+                        template += '\n\n';
+
+                        break;
                 }
 
                 continue;
@@ -230,13 +239,19 @@ module.exports = {
                             template += `    let value${i}: i32 = args[${i}].parse().unwrap();`
                         break;
                     case 'js':
-                        template += `const value${i} = process.argv[${i+1}];`
+                        if (typeof input === 'string')
+                            template += `const value${i} = process.argv[${i+1}];`;
+                        if (typeof input === 'number')
+                            template += `const value${i} = parseInt(process.argv[${i+1}]);`;
                         break;
                     case 'php':
                         template += `$value${i} = $argv[${i}];`;
                         break;
                     case 'python':
-                        template += `value${i} = sys.argv[${i}]`;
+                        if (typeof input === 'string')
+                            template += `value${i} = sys.argv[${i}]`;
+                        if (typeof input === 'number')
+                            template += `value${i} = int(sys.argv[${i}])`;
                         break;
                     case 'ruby':
                         template += `value${i} = ARGV[${i-1}]`;
@@ -245,7 +260,10 @@ module.exports = {
                         template += `var value${i} = CommandLine.arguments[${i}]`;
                         break;
                     case 'julia':
-                        template += `value${i} = ARGS[${i}]`;
+                        if (typeof input === 'string')
+                            template += `value${i} = ARGS[${i}]`;
+                        if (typeof input === 'number')
+                            template += `value${i} = parse(Int, ARGS[${i}])`;
                         break;
                     case 'bash':
                         template += `value${i}=$${i}`;
@@ -254,8 +272,13 @@ module.exports = {
                         template += `my $value${i} = $ARGV[${i-1}];`;
                         break;
                     case 'nim':
-                        template += `value${i}: int\n`
-                        template += `discard parseInt(paramStr(${i}), value${i})`;
+                        if (typeof input === 'number') {
+                            template += `var value${i}: int\n`
+                            template += `discard parseInt(paramStr(${i}), value${i})`;
+                        } else {
+                            template += `var value${i} = paramStr(${i})`
+                        }
+
                         break;
                 }
                 template += '\n';
