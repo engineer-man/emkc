@@ -15,6 +15,10 @@ module.exports = {
                 throw null;
             }
 
+            if (req.headers.accept === 'application/json') {
+                return res.status(200).send(snippet);
+            }
+
             return res.view({
                 snippet
             });
