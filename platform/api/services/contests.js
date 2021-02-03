@@ -24,7 +24,7 @@ module.exports = {
                     }
                 });
 
-            if (test_result.data.output !== current_expected_result) {
+            if (test_result.data.stdout !== current_expected_result) {
                 return false;
             }
 
