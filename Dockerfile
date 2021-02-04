@@ -8,7 +8,4 @@ RUN cd /opt && \
 
 WORKDIR /opt/emkc/platform
 
-CMD cd migrations && \
-    rmig migrate && \
-    cd .. && \
-    ./start >> ../var/docker/logs/app.log 2>&1
+CMD ./start

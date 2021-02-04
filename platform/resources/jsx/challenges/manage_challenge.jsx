@@ -9,11 +9,14 @@ class ManageChallenge extends React.Component {
         super(props);
 
         this.state = props.challenge;
-        this.state.mode = props.mode;
-        this.state.challenge_id = this.state.mode === 'create' ? -1 : this.state.challenge_id;
-        this.state.editing_test = {};  // The test being edited (to show edit section)
-        this.state.current_test_id = -1;  // IDs for newly created tests
-        this.state.deleted_tests = [];  // IDs of deleted tests
+        this.state = {
+            ...props.challenge,
+            mode: props.mode,
+            challenge_id: this.state.mode === 'create' ? -1 : this.state.challenge_id,
+            editing_test: {},  // The test being edited (to show edit section)
+            current_test_id: -1,  // IDs for newly created tests
+            deleted_tests: [],  // IDs of deleted tests
+        }
 
         this.handle_change = this.handle_change.bind(this);
         this.manage_test = this.manage_test.bind(this);
@@ -23,26 +26,36 @@ class ManageChallenge extends React.Component {
     }
 
     componentDidMount() {
+        let Inline = Quill.import('blots/inline');
+
+        class Badge extends Inline { }
+        Badge.blotName = 'badge';
+        Badge.tagName = 'span';
+        Badge.className = 'value-badge';
+        Badge.formats = () => true;
+
+        Quill.register(Badge);
+
         let quill = new Quill('#html', {
             theme: 'snow',
             modules: {
                 syntax: false,
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
-                    [{ 'header': 1}, { 'header': 2}, { 'header': 3}, { 'header': 4}],
+                    [{ 'header': 1 }, { 'header': 2 }, { 'header': 3 }, { 'header': 4 }],
                     ['blockquote', 'code-block', 'link'],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                    [{ 'color': [] }, { 'background': [] }],
+                    //['badge'],
                     ['clean']
                 ]
             }
         });
-        let self = this;
-        quill.on('text-change', function() {
-            self.setState({
+
+        quill.on('text-change', () => {
+            this.setState({
                 html: quill.root.innerHTML
             });
-        })
+        });
 
         if (this.state.mode === 'update') {
             quill.clipboard.dangerouslyPasteHTML(this.state.html);
@@ -62,6 +75,7 @@ class ManageChallenge extends React.Component {
 
         // Handles changes in tests data
         let { challenge_test_id, challenge_id, official, name, input, output } = this.state.editing_test;
+
         return this.setState({
             editing_test: {
                 challenge_test_id: challenge_test_id,
@@ -77,8 +91,10 @@ class ManageChallenge extends React.Component {
 
     async save() {
         // Create/update challenge
-        let url = this.state.mode === 'create' ? '/admin/challenges/create'
-            : '/admin/challenges/update/' + this.state.challenge_id
+        let url = this.state.mode === 'create'
+            ? '/admin/challenges/create'
+            : '/admin/challenges/update/' + this.state.challenge_id;
+
         let res = await axios.post(url, {
             difficulty: this.state.difficulty,
             points: this.state.points,
@@ -87,6 +103,7 @@ class ManageChallenge extends React.Component {
             description: this.state.description,
             html: this.state.html
         });
+
         if (res.status === 400) {
             return bootbox.alert('An error has occured.');
         }
@@ -116,18 +133,11 @@ class ManageChallenge extends React.Component {
 
     manage_test(test_to_manage) {
         this.setState({
-            editing_test: test_to_manage
+            editing_test: this.state.editing_test.challenge_test_id ? {} : test_to_manage
         });
     }
 
     async delete_test(id_to_delete) {
-        let current_tests = this.state.tests;
-        let test_to_delete = current_tests.find(test => test.challenge_test_id === id_to_delete);
-        current_tests.splice(current_tests.indexOf(test_to_delete), 1);
-        let current_deleted_tests = this.state.deleted_tests;
-        current_deleted_tests.push(id_to_delete);
-
-        let self = this;
         bootbox.confirm({
             message: 'Are you sure you want to delete this test?',
             buttons: {
@@ -140,9 +150,20 @@ class ManageChallenge extends React.Component {
                     className: 'btn-secondary'
                 }
             },
-            callback: async function (result) {
-                if (!result) return;
-                self.setState({
+            callback: async result => {
+                if (!result) {
+                    return;
+                }
+
+                let current_tests = this.state.tests;
+
+                let test_to_delete = current_tests.find(test => test.challenge_test_id === id_to_delete);
+                current_tests.splice(current_tests.indexOf(test_to_delete), 1);
+
+                let current_deleted_tests = this.state.deleted_tests;
+                current_deleted_tests.push(id_to_delete);
+
+                this.setState({
                     tests: current_tests,
                     deleted_tests: current_deleted_tests
                 });
@@ -202,7 +223,9 @@ class ManageChallenge extends React.Component {
 
     render() {
         return (
-            <div class="em_challenge_manage">
+            <div class="em_challenge_manage marginbottom20">
+                <h4 class="f300">Manage Challenge</h4>
+
                 {
                     this.state.html.indexOf('em_challenge_abstract"') !== -1 && (
                         <div class="alert alert-danger">
@@ -259,10 +282,10 @@ class ManageChallenge extends React.Component {
                     <div id="html"></div>
                 </div>
                 <div class='form-group'>
-                    <h4>
+                    <h4 class="f300">
                         Test Cases
                         <small>
-                            <a href="#" class="pointer" onClick={() => this.manage_test({
+                            <a class="pointer" onClick={() => this.manage_test({
                                 challenge_test_id: this.state.current_test_id,
                                 challenge_id: this.state.challenge_id,
                                 official: false,
@@ -271,79 +294,81 @@ class ManageChallenge extends React.Component {
                                 output: ''
                             })}>
                                 {' '}
-                                <i class="fa fa-plus"></i>
+                                <i class="fa fa-plus green"></i>
                             </a>
                         </small>
                     </h4>
+                    {Object.keys(this.state.editing_test).length > 0 && (
+                        <div class="case_box">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input
+                                    type="text"
+                                    id="test-name"
+                                    class="form-control"
+                                    value={this.state.editing_test.name}
+                                    onChange={this.handle_change} />
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Inputs (each test case separated by a new line, arguments separated by '|')
+                                </label>
+                                <textarea
+                                    rows="5"
+                                    id="test-input"
+                                    class="form-control"
+                                    value={this.state.editing_test.input}
+                                    onChange={this.handle_change}></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Corresponding outputs (each separated by a new line)</label>
+                                <textarea
+                                    rows="5"
+                                    id="test-output"
+                                    class="form-control"
+                                    value={this.state.editing_test.output}
+                                    onChange={this.handle_change}></textarea>
+                            </div>
+                            <button class="btn btn-success btn-sm" onClick={this.save_test}>
+                                Save test
+                            </button>
+                        </div>
+                    )}
                     <table id="challenges-table" class="table table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th style={{ 'width': '120px' }}>Actions</th>
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {!!this.state.tests.length && this.state.tests.map(test => {
-                            return (
-                                <tr key={test.challenge_test_id}>
-                                    <td>
-                                        <a
-                                            href="#"
-                                            onClick={() => this.manage_test(test)}
-                                        >
-                                            Edit
-                                        </a>
-                                        {' | '}
-                                        <a
-                                            href="#"
-                                            onClick={() => this.delete_test(test.challenge_test_id)}
-                                        >
-                                            Delete
-                                        </a>
-                                    </td>
-                                    <td>{test.name}</td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
-
+                        <thead>
+                            <tr>
+                                <th style={{ 'width': '80px' }}></th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {!!this.state.tests.length && this.state.tests.map(test => {
+                                return (
+                                    <tr key={test.challenge_test_id}>
+                                        <td class="actions">
+                                            <a
+                                                href="#"
+                                                onClick={() => this.manage_test(test)}
+                                            >
+                                                <i class="fa fa-pen"></i>
+                                            </a>
+                                            {' '}
+                                            <a
+                                                href="#"
+                                                onClick={() => this.delete_test(test.challenge_test_id)}
+                                            >
+                                                <i class="fa fa-trash text-danger"></i>
+                                            </a>
+                                        </td>
+                                        <td>{test.name}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
                 </div>
+
                 <button type="button" class="btn btn-success" onClick={this.save}>Save challenge</button>
-                {!!Object.keys(this.state.editing_test).length && (
-                    <div>
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input
-                                type="text"
-                                id="test-name"
-                                class="form-control"
-                                value={this.state.editing_test.name}
-                                onChange={this.handle_change} />
-                        </div>
-                        <div class="form-group">
-                            <label>
-                                Inputs (each test case separated by a new line, arguments separated by '|')
-                            </label>
-                            <textarea
-                                id="test-input"
-                                class="form-control"
-                                value={this.state.editing_test.input}
-                                onChange={this.handle_change}></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Corresponding outputs (each separated by a new line)</label>
-                            <textarea
-                                id="test-output"
-                                class="form-control"
-                                value={this.state.editing_test.output}
-                                onChange={this.handle_change}></textarea>
-                        </div>
-                        <button class="btn btn-success btn-sm" onClick={this.save_test}>
-                            Save test
-                        </button>
-                    </div>
-                )}
             </div>
         )
     }

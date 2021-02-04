@@ -1,4 +1,5 @@
-.em_challenge .abstract {
+.em_challenge .abstract,
+#react_manage_challenge .ql-editor {
     .input {
         p:last-child {
             margin-bottom: 0;
@@ -7,20 +8,64 @@
     .wrap {
         word-break: break-all;
     }
+
     .test_case {
+        background: rgba(0, 0, 0, .2);
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        color: #fff;
+        font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
         >* {
             margin-bottom: 5px;
         }
     }
+
     p {
         margin: 0;
         padding: 0;
     }
-    strong {
-        display: inline-block;
-        margin-bottom: 10px;
-    }
+
     h4 {
         font-weight: 300;
+    }
+
+    .value-badge {
+        color: #fff;
+        background-color: #007bff;
+        display: inline-block;
+        padding: .25em .4em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25rem;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    pre {
+        display: block;
+        font-size: 87.5%;
+        color: #212529;
+    }
+
+    .section {
+        margin-bottom: 30px;
+    }
+
+    .input {
+        background: rgba(0, 0, 0, .2);
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    .ql-syntax {
+        background: rgba(0, 0, 0, .2);
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            margin-top: -5px;
+            color: #fff;
     }
 }

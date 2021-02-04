@@ -9,9 +9,6 @@
             padding: 10px;
             margin-bottom: 8px;
             color: #fff;
-            &:last-child {
-                margin-bottom: 0;
-            }
             .title {
                 font-size: 18px;
             }
@@ -25,17 +22,32 @@
     }
     .easy {
         .title {
-            color: @challenge_easy;
+            .badge {
+                float: right;
+            }
+            .text {
+                color: @challenge_easy;
+            }
         }
     }
     .medium {
         .title {
-            color: @challenge_medium;
+            .badge {
+                float: right;
+            }
+            .text {
+                color: @challenge_medium;
+            }
         }
     }
     .hard {
         .title {
-            color: @challenge_hard;
+            .badge {
+                float: right;
+            }
+            .text {
+                color: @challenge_hard;
+            }
         }
     }
 }
