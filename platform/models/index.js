@@ -46,6 +46,7 @@ $gt = Sequelize.Op.gt;
 $gte = Sequelize.Op.gte;
 $lt = Sequelize.Op.lt;
 $lte = Sequelize.Op.lte;
+$in = Sequelize.Op.in;
 
 db.challenges.has_one(db.user_challenges, { as: 'solution', foreignKey: 'challenge_id' });
 db.challenges.has_many(db.user_challenges, { as: 'solutions', foreignKey: 'challenge_id' });
