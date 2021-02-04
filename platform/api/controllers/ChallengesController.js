@@ -379,28 +379,6 @@ module.exports = {
                     });
 
                 if (created) {
-                    // discord
-                    //     .api('post', `/channels/${constant.channels[language]}/messages`, {
-                    //         embed: {
-                    //             title: 'Attempt Challenge',
-                    //             type: 'rich',
-                    //             color: {
-                    //                 1: 0x84e47f,
-                    //                 2: 0xe4e37f,
-                    //                 3: 0xe47f8d
-                    //             }[challenge.difficulty],
-                    //             url: `${constant.base_url}/challenges/${challenge.challenge_id}/${language}`,
-                    //             author: {
-                    //                 name: `${req.local.user.display_name} completed a challenge "${challenge.name}" with ${language}`
-                    //             },
-                    //             footer: {
-                    //                 icon_url: constant.cdn_url + req.local.user.avatar_url,
-                    //                 text: 'completed by ' + req.local.user.display_name
-                    //             }
-                    //         }
-                    //     })
-                    //     .catch(err => {});
-
                     return null;
                 }
 

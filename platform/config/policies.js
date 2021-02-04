@@ -2,6 +2,14 @@ module.exports.policies = {
 
     '*': 'common',
 
+    'AuthController': {
+        '*': ['common']
+    },
+
+    'ChallengesController': {
+        '*': ['common']
+    },
+
     'CommunityController': {
         '*': ['common'],
         'add_video_request': ['common', 'logged_in'],
@@ -14,10 +22,20 @@ module.exports.policies = {
         'submit': ['common', 'logged_in']
     },
 
-    'QuestionsController': {
-        '*': ['common'],
-        'ask': ['common', 'logged_in'],
-        'edit': ['common', 'logged_in']
+    'HomeController': {
+        '*': ['common']
+    },
+
+    'MerchController': {
+        '*': ['common']
+    },
+
+    'ProfilesController': {
+        '*': ['common']
+    },
+
+    'ScriptsController': {
+        '*': ['common']
     },
 
     'SnippetsController': {
@@ -27,12 +45,8 @@ module.exports.policies = {
         'edit': ['common', 'logged_in']
     },
 
-    'ScriptsController': {
+    'TagsController': {
         '*': ['common']
-    },
-
-    'VotesController': {
-        '*': ['common', 'logged_in']
     },
 
     'admin/ContestsController': {
@@ -55,20 +69,20 @@ module.exports.policies = {
         '*': ['common', 'api_internal_auth']
     },
 
-    'api/v1/stats/DiscordController': {
-        '*': ['common']
-    },
-
-    'api/v1/stats/PistonController': {
-        '*': ['common', 'api_internal_auth']
-    },
-
     'api/v1/PistonController': {
         '*': ['common']
     },
 
     'api/v1/UsersController': {
         '*': ['common']
+    },
+
+    'api/v1/stats/DiscordController': {
+        '*': ['common']
+    },
+
+    'api/v1/stats/PistonController': {
+        '*': ['common', 'api_internal_auth']
     }
 
 };
