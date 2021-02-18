@@ -20,7 +20,7 @@ module.exports.routes = {
 
     'GET /contests': 'ContestsController.home',
     'POST /contests/submit': 'ContestsController.submit',
-    'GET /contests/:contest_id/*': 'ContestsController.contest',
+    'GET /contests/:contest_id/:slug': 'ContestsController.contest',
     'GET /contests/disallowed_languages': 'ContestsController.disallowed_languages',
 
     'GET /snippets': 'SnippetsController.create',

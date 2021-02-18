@@ -199,7 +199,6 @@ class ManageChallenge extends React.Component {
         }
         // Handles newly created tests
         if (editing_test.challenge_test_id === this.state.current_test_id) {
-            console.log('here');
             current_tests.push(editing_test);
             let new_test_id = this.state.current_test_id - 1;
             return this.setState({
