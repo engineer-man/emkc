@@ -65,7 +65,7 @@ module.exports = {
     },
 
     async contest(req, res) {
-        const contest_id = req.params.contest_id;
+        const { contest_id, slug } = req.params;
 
         let contest = await db.contests
             .find_one({
@@ -109,6 +109,10 @@ module.exports = {
                     [{ model: db.contest_submissions, as: 'submissions' }, 'created_at'],
                 ]
             });
+
+        if (!contest  || slug !== contest.slug) {
+            return res.redirect('/contests');
+        }
 
         let awarded_languages = [];
         let awarded_users = [];
@@ -154,10 +158,6 @@ module.exports = {
                     user_id: req.local.user_id
                 }
             });
-
-        if (!contest) {
-            return res.redirect('/contests');
-        }
 
         return res.view({
             contest,

@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
             slug: {
                 type: DataTypes.VIRTUAL,
                 get() {
-                    return util.slugify(this.title);
+                    return util.slugify(this.name);
                 }
             },
             time_left: {
