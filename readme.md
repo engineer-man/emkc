@@ -11,6 +11,7 @@ Linux/macOS machines and Windows machines running either WSL or natively with Wi
 - `cd emkc`
 - `./emkc init`
 - `./emkc start`
+- `./emkc rmig migrate`
 - `./emkc stop` when done.
 - `./emkc` to view a list of commands.
 
