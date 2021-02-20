@@ -290,9 +290,9 @@ module.exports = {
     },
 
     async disallowed_languages(req, res) {
-        return res.status(200).send({
-            disallowed_languages: constant.contests.disallowed_languages
-        });
+        return res
+            .status(200)
+            .send(constant.contests.disallowed_languages);
     }
 
 };

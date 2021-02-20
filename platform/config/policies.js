@@ -82,7 +82,7 @@ module.exports.policies = {
     },
 
     'api/v1/stats/PistonController': {
-        '*': ['common', 'api_internal_auth']
+        '*': ['common']
     }
 
 };

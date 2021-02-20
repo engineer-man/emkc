@@ -8,27 +8,14 @@ module.exports = {
         let query = {
             where: {
                 [$and]: []
-            },
-            attributes: [
-                'server',
-                [db.sequelize.literal('count(*)'), 'uses'],
-            ],
-            order: [
-                [db.sequelize.col('uses'), 'desc']
-            ],
-            group: [
-                'server'
-            ],
-            limit: 1000
+            }
         };
-
-        let dates = [];
 
         if (start) {
             start = moment(start);
 
             if (start.isValid()) {
-                query.where.$and.push({
+                query.where[$and].push({
                     created_at: {
                         [$gte]: start.format('YYYY-MM-DD HH:mm:ss')
                     }
@@ -40,7 +27,7 @@ module.exports = {
             end = moment(end);
 
             if (end.isValid()) {
-                query.where.$and.push({
+                query.where[$and].push({
                     created_at: {
                         [$lte]: end.format('YYYY-MM-DD HH:mm:ss')
                     }
@@ -48,10 +35,14 @@ module.exports = {
             }
         }
 
-        let stats = await db.piston_runs
-            .find_all(query);
+        let count = await db.piston_runs
+            .count(query);
 
-        return res.send(stats);
+        return res
+            .status(200)
+            .send({
+                count
+            });
     }
 
 };
