@@ -88,19 +88,6 @@ module.exports = {
                 });
         }
 
-        // send to piston logs for stats
-        db.piston_runs
-            .create({
-                server: 'EMKC',
-                user: 'EMKC User',
-                language: result.data.language,
-                source: result.data.output
-                    ? result.data.output
-                        .replace(/\r/gi, '')
-                        .slice(0, 65536)
-                    : ''
-            });
-
         return res
             .status(200)
             .send({

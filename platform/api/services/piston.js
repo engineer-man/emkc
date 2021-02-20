@@ -1,5 +1,7 @@
 const request = require('request-promise');
 
+const timeout = ms => new Promise(res => set_timeout(res, ms));
+
 module.exports = {
 
     languages: {
@@ -16,11 +18,15 @@ module.exports = {
     },
 
     async execute(language, source, args) {
-        if (!Array.is_array(args)) args = [args];
+        if (!Array.is_array(args)) {
+            args = [args];
+        }
+
         args = args.map(arg => '' + arg);
-        const timeout = ms => new Promise(res => set_timeout(res, ms));
+
         try {
             await timeout(constant.is_prod() ? 0 : 500);  // Delay by 0.5 seconds when using the public api
+
             let result = await request
                 ({
                     method: 'post',
@@ -34,6 +40,15 @@ module.exports = {
                     },
                     json: true,
                     simple: true
+                });
+
+            // send to piston logs for stats
+            db.piston_runs
+                .create({
+                    server: 'EMKC',
+                    user: 'EMKC Usage',
+                    language,
+                    source
                 });
 
             return typeof result.output === 'string'
