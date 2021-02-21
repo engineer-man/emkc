@@ -3,7 +3,7 @@ const moment = require('moment');
 module.exports = {
 
     async usage(req, res) {
-        let { start, end } = req.query;
+        let { start, end, category } = req.query;
 
         let query = {
             where: {
@@ -11,11 +11,39 @@ module.exports = {
             }
         };
 
+        let where = query.where[$and];
+
+        switch (category) {
+            case 'bot':
+                where.push({
+                    server_id: {
+                        [$ne]: null
+                    }
+                });
+                break;
+            case 'emkc':
+                where.push({
+                    server_id: null
+                });
+                where.push({
+                    server: 'EMKC'
+                });
+                break;
+            case 'direct':
+                where.push({
+                    server_id: null
+                });
+                where.push({
+                    server: 'Piston API'
+                });
+                break;
+        }
+
         if (start) {
             start = moment(start);
 
             if (start.isValid()) {
-                query.where[$and].push({
+                where.push({
                     created_at: {
                         [$gte]: start.format('YYYY-MM-DD HH:mm:ss')
                     }
@@ -27,7 +55,7 @@ module.exports = {
             end = moment(end);
 
             if (end.isValid()) {
-                query.where[$and].push({
+                where.push({
                     created_at: {
                         [$lte]: end.format('YYYY-MM-DD HH:mm:ss')
                     }

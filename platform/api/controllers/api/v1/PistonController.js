@@ -88,6 +88,17 @@ module.exports = {
                 });
         }
 
+        if (req.body.log !== 0) {
+            // logging for piston api direct usage
+            db.piston_runs
+                .create({
+                    server: 'Piston API',
+                    user: 'Direct Usage',
+                    language,
+                    source
+                });
+        }
+
         return res
             .status(200)
             .send({
