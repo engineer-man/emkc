@@ -13,6 +13,8 @@ module.exports = {
             let current_test_case = test_cases[counter];
             let current_expected_result = expected_results[counter];
 
+            let args = current_test_case.trim().split('|');
+
             let test_result = await axios
                 ({
                     method: 'post',
@@ -20,7 +22,8 @@ module.exports = {
                     data: {
                         language,
                         source: solution,
-                        args: current_test_case.trim().split('|')
+                        args,
+                        stdin: args.join('\n'),
                     }
                 });
 
