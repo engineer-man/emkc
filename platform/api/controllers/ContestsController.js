@@ -72,14 +72,6 @@ module.exports = {
                 where: {
                     contest_id
                 },
-                attributes: [
-                    'contest_id',
-                    'name',
-                    'description',
-                    'start_date',
-                    'end_date',
-                    'active'
-                ],
                 include: [
                     {
                         model: db.contest_submissions,
@@ -117,6 +109,20 @@ module.exports = {
         let awarded_languages = [];
         let awarded_users = [];
         let top = 1;
+
+        let inputs = contest.input.split('\n').map(o => o.split('|'));
+        let outputs = contest.output.split('\n');
+
+        let cases = [];
+
+        for (let i = 0; i < inputs.length; ++i) {
+            cases.push({
+                inputs: inputs[i],
+                output: outputs[i]
+            });
+        }
+
+        console.log(cases);
 
         contest.submissions
             .for_each((submission, i) => {
@@ -161,6 +167,7 @@ module.exports = {
 
         return res.view({
             contest,
+            cases,
             submissions
         });
     },
@@ -174,15 +181,6 @@ module.exports = {
             .find_one({
                 where: {
                     contest_id
-                }
-            });
-
-        let submission = await db.contest_submissions
-            .find_one({
-                where: {
-                    contest_id,
-                    language,
-                    user_id: req.local.user_id
                 }
             });
 
@@ -210,6 +208,15 @@ module.exports = {
                     passed: false
                 });
         }
+
+        let submission = await db.contest_submissions
+            .find_one({
+                where: {
+                    contest_id,
+                    language,
+                    user_id: req.local.user_id
+                }
+            });
 
         if (submission) {
             submission.language = language;

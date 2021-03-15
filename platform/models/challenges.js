@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true,
                 autoIncrement: true
             },
+            draft: DataTypes.INTEGER,
             difficulty: DataTypes.INTEGER,
             points: DataTypes.INTEGER,
             folder: DataTypes.STRING,

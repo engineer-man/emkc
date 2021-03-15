@@ -132,11 +132,16 @@ class Contest extends React.Component {
         this.setState({
             validating: true
         });
-        let res = await axios.post('/admin/submissions/validate/' + this.state.contest.contest_id);
+
+        let res = await axios
+            .post('/admin/submissions/validate/' + this.state.contest.contest_id);
+
         let { destroyed } = res.data;
+
         bootbox.alert('Submissions re-validated, removed ' + destroyed + ' submission(s)', function() {
             location = location;
         });
+
         this.setState({
             validating: false
         });
@@ -152,6 +157,28 @@ class Contest extends React.Component {
                         class="ql-editor"
                         dangerouslySetInnerHTML={{ __html: this.ops_to_html(this.state.contest.description)}}>
                     </div>
+                </div>
+
+                <h5 class="green marginbottom10">Test Cases</h5>
+                <div class="marginbottom20">
+                    {this.props.cases.map((c, i) => {
+                        return (
+                            <>
+                                <h6>Test Case {i+1}</h6>
+                                <pre class="case_text">
+                                    {c.inputs.map((input, i) => {
+                                        return (
+                                            <>
+                                                Argument {i+1}: {input}
+                                                {'\n'}
+                                            </>
+                                        );
+                                    })}
+                                    Expected Output: {c.output}
+                                </pre>
+                            </>
+                        );
+                    })}
                 </div>
 
                 <h5 class="green">Your Submission</h5>
@@ -231,19 +258,21 @@ class Contest extends React.Component {
                     )}
                 </div>
 
-                <h5 class="green">Submissions</h5>
-                {!!ctx.is_staff && (
-                    <div>
-                        <button type="button" class="btn btn-sm btn-warning" onClick={this.validate}>
-                            Re-validate submissions
-                        </button>
-                    {this.state.validating && (
-                        <div>
-                            <a class="text-warning">Re-validation in progress...</a>
-                        </div>
+                <h5 class="green">
+                    Submissions
+                    {' '}
+                    {!!ctx.is_staff && (
+                        <>
+                            <button type="button" class="btn btn-sm btn-warning" onClick={this.validate}>
+                                Re-validate submissions
+                            </button>
+                            {' '}
+                            {this.state.validating && (
+                                <span class="text-warning">Re-validation in progress...</span>
+                            )}
+                        </>
                     )}
-                    </div>
-                )}
+                </h5>
                 {this.state.contest.submissions.map(submission => {
                     return (
                         <div key={submission.contest_submission_id} class="submission">
@@ -273,11 +302,11 @@ class Contest extends React.Component {
                                         )}
                                     </div>
                                 </div>
-                                <div class="user">
+                                <a href={'/@' + submission.user.username} class="user">
                                     <img src={ctx.cdn_url + submission.user.avatar_url} />
                                     {' '}
                                     {submission.user.username}
-                                </div>
+                                </a>
                             </div>
                             {!this.state.contest.active && (
                                 <pre class="solution">

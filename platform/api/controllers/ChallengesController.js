@@ -5,7 +5,9 @@ module.exports = {
 
     async home(req, res) {
         let options = {
-            where: {},
+            where: {
+                draft: 0,
+            },
             include: [
                 {
                     required: false,

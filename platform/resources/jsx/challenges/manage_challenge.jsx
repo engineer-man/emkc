@@ -68,6 +68,10 @@ class ManageChallenge extends React.Component {
 
         // Handles changes in challenge data
         if (id.indexOf('test-') == -1) {
+            if (id === 'draft') {
+                value = this.state.draft ? 0 : 1;
+            }
+
             return this.setState({
                 [id]: value
             });
@@ -78,12 +82,12 @@ class ManageChallenge extends React.Component {
 
         return this.setState({
             editing_test: {
-                challenge_test_id: challenge_test_id,
-                challenge_id: challenge_id,
-                official: official,
-                name: name,
-                input: input,
-                output: output,
+                challenge_test_id,
+                challenge_id,
+                official,
+                name,
+                input,
+                output,
                 [id.replace('test-', '')]: value
             }
         });
@@ -96,6 +100,7 @@ class ManageChallenge extends React.Component {
             : '/admin/challenges/update/' + this.state.challenge_id;
 
         let res = await axios.post(url, {
+            draft: this.state.draft,
             difficulty: this.state.difficulty,
             points: this.state.points,
             folder: 'N/A',
@@ -241,6 +246,16 @@ class ManageChallenge extends React.Component {
                         value={this.state.name}
                         onChange={this.handle_change} />
                     </label>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input
+                            type="checkbox"
+                            id="draft"
+                            checked={this.state.draft}
+                            onChange={this.handle_change} /> Draft
+                    </div>
                 </div>
 
                 <div class="form-group">
