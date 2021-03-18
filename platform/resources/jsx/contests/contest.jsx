@@ -188,20 +188,20 @@ class Contest extends React.Component {
                 <div class="marginbottom20">
                     {this.props.cases.map((c, i) => {
                         return (
-                            <>
+                            <div key={'test-' + i}>
                                 <h6>Test Case {i+1}</h6>
                                 <pre class="case_text">
                                     {c.inputs.map((input, i) => {
                                         return (
-                                            <>
+                                            <div key={'input-' + i}>
                                                 Argument {i+1}: {input}
                                                 {'\n'}
-                                            </>
+                                            </div>
                                         );
                                     })}
                                     Expected Output: {c.output}
                                 </pre>
-                            </>
+                            </div>
                         );
                     })}
                 </div>
