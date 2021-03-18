@@ -136,15 +136,40 @@ class Contest extends React.Component {
         let res = await axios
             .post('/admin/submissions/validate/' + this.state.contest.contest_id);
 
-        let { destroyed } = res.data;
-
-        bootbox.alert('Submissions re-validated, removed ' + destroyed + ' submission(s)', function() {
-            location = location;
-        });
+        let { invalids } = res.data;
 
         this.setState({
             validating: false
         });
+
+        if (!invalids.length) {
+            return bootbox.alert('No invalid submissions were found')
+        }
+        let invalids_str = '';
+        for (let invalid of invalids) {
+            invalids_str += `${invalid.language} submission of length ${invalid.length}<br>`
+        }
+        return bootbox.confirm({
+            message: 'The following invalid submission were found, would you like to bulk delete them?:<br>'
+                + invalids_str,
+            buttons: {
+                confirm: {
+                    label: 'Delete',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: 'Cancel',
+                    className: 'btn-secondary'
+                }
+            },
+            callback: async function(result) {
+                if (result) {
+                    await axios.post('/admin/submissions/delete_invalids', invalids);
+                    location = location;
+                }
+            }
+        });
+
     }
 
     render() {

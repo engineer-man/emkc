@@ -123,7 +123,7 @@ module.exports = {
             ]
         });
 
-        let destroyed = 0;
+        let invalids = [];
 
         for (let submission of contest.submissions) {
             let is_valid = await contests
@@ -135,16 +135,37 @@ module.exports = {
                 );
 
             if (!is_valid) {
-                //await submission.destroy();
-                ++destroyed;
+                invalids.push(submission);
             }
         }
 
         return res
             .status(200)
             .send({
-                destroyed
+                invalids
             });
+    },
+
+    async delete_invalids(req, res) {
+        const invalids = req.body;  // Will be normal objects since they come from the front-end
+        for (let invalid of invalids) {
+            try {
+                let invalid_submission = await db.contest_submissions.find_one({
+                    where: {
+                        contest_submission_id: invalid.contest_submission_id
+                    }
+                });
+                await invalid_submission.destroy();
+            }
+            catch(e) {
+                console.log(e);
+                continue
+            }
+        }
+
+        return res
+        .status(200)
+        .send();
     }
 
 };

@@ -40,7 +40,6 @@ module.exports.routes = {
 
     // admin
     'GET /admin': 'admin/DashboardController.dashboard',
-    'POST /admin/submissions/validate/:contest_id': 'admin/ContestsController.validate_submissions',
     'GET /admin/contests': 'admin/ContestsController.view_all',
     'GET /admin/challenges': 'admin/ChallengesController.view_all',
     'GET /admin/challenges/update/:challenge_id': 'admin/ChallengesController.update',
@@ -55,6 +54,8 @@ module.exports.routes = {
     'POST /admin/contests/create': 'admin/ContestsController.create',
     'GET /admin/contests/update/:contest_id': 'admin/ContestsController.update',
     'POST /admin/contests/update/:contest_id': 'admin/ContestsController.update',
+    'POST /admin/submissions/validate/:contest_id': 'admin/ContestsController.validate_submissions',
+    'POST /admin/submissions/delete_invalids': 'admin/ContestsController.delete_invalids',
     'POST /admin/submissions/delete': 'admin/ContestsController.delete_submission',
 
     // service api
