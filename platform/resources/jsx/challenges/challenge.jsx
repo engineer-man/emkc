@@ -58,7 +58,9 @@ class Challenge extends React.Component {
                 language: this.state.language,
                 source: this.editor.getValue()
             });
-
+        if (res.status >= 400) {
+            return bootbox.alert('An error has occured, please try again later.')
+        }
         let solved = res.data.filter(r => !r.passed).length === 0;
 
         if (solved) {
@@ -81,7 +83,7 @@ class Challenge extends React.Component {
             });
         }
 
-        this.setState({
+        return this.setState({
             executing: false,
             test_results: res.data
         });
