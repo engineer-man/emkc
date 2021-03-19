@@ -94,6 +94,11 @@ class ManageChallenge extends React.Component {
     }
 
     async save() {
+        // Check if there are tests
+        if (!this.state.tests.length) {
+            return bootbox.alert('Please add at least one test.')
+        }
+
         // Create/update challenge
         let url = this.state.mode === 'create'
             ? '/admin/challenges/create'

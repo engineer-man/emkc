@@ -64,7 +64,11 @@ class Challenge extends React.Component {
         if (solved) {
             this.setState(prev => {
                 if (!prev.solved) {
-                    bootbox.alert('Congratulations, you solved this challenge!');
+                    let alert_message = !!prev.challenge.draft
+                        ? 'Thank you for testing EMKC challenges!<br />\
+                        Your answer will not be saved since this challenge is still under construction.'
+                        : 'Congratulations, you solved this challenge!'
+                    bootbox.alert(alert_message);
                 }
 
                 return {

@@ -366,7 +366,7 @@ module.exports = {
 
         var passed = results.filter(r => !r.passed).length === 0;
 
-        if (passed && req.local.user_id) {
+        if (passed && req.local.user_id && !challenge.draft) {
             set_immediate(async () => {
                 let [ user_challenge, created ] = await db.user_challenges
                     .find_or_create({
