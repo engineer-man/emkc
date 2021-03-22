@@ -297,9 +297,28 @@ module.exports = {
     },
 
     async disallowed_languages(req, res) {
+        let { contest_id } = req.params;
+        let contest = await db.contests.find_one({
+            where: {
+                contest_id
+            }
+        });
+        let disallowed_languages = contest.disallowed_languages
+            ? contest.disallowed_languages.split(',') : [];
         return res
             .status(200)
-            .send(constant.contests.disallowed_languages);
+            .send(disallowed_languages);
+    },
+
+    async default(req, res) {
+        const { type } = req.params;
+        switch (type) {
+            case 'disallowed':
+                return res.status(200).send(constant.contests.disallowed_languages);
+            case 'golf':
+                return res.status(200).send(constant.contests.golf_languages);
+            // TODO: Add more options here and their equivalent arrays in constant.js
+        }
     }
 
 };

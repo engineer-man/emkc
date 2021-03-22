@@ -38,8 +38,8 @@ class Contest extends React.Component {
         });
 
         let languages = await axios.get('/api/v1/piston/versions');
-        let disallowed_languages = await axios.get('/contests/disallowed_languages');
-
+        let disallowed_languages = await axios.get('/contests/disallowed_languages/'
+            + this.state.contest.contest_id);
         disallowed_languages = disallowed_languages.data;
         languages = languages.data.filter(lang => !disallowed_languages.includes(lang.name));
 
