@@ -92,6 +92,11 @@ class Contest extends React.Component {
                 solution
             });
 
+        if (result.status >= 400) {
+            return bootbox
+                .alert('An error occured while submitting your solution');
+        }
+
         if (result.data.passed) {
             return bootbox
                 .alert('Your solution succeeded and has been recorded/updated.', () => {
@@ -279,7 +284,7 @@ class Contest extends React.Component {
                             <div class="heading">
                                 <div class="main">
                                     <div class="summary">
-                                        {submission.length} characters with {submission.language}
+                                        {submission.length} bytes with {submission.language}
                                         {' '}
                                         {submission.overall_first && <img src="/images/awards/1.png" />}
                                         {' '}

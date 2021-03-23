@@ -92,6 +92,10 @@ class Manage extends React.Component {
                 output
             });
 
+        if (res.status >= 400) {
+            return bootbox.alert(res.data.error_message);
+        }
+
         location = '/admin/contests';
     }
 

@@ -221,7 +221,7 @@ module.exports = {
         if (submission) {
             submission.language = language;
             submission.solution = solution;
-            submission.length = solution.length;
+            submission.length = new TextEncoder().encode(solution).length;
 
             let prev_length = submission.previous('length');
 
@@ -241,8 +241,8 @@ module.exports = {
                             author: {
                                 name:
                                     `${req.local.user.display_name} updated their ${submission.language} solution ` +
-                                    `with one that is ${submission.length} characters long ` +
-                                    `(a ${prev_length-submission.length} character improvement)`
+                                    `with one that is ${submission.length} bytes large ` +
+                                    `(a ${prev_length-submission.length} byte improvement)`
                             },
                             footer: {
                                 icon_url: constant.cdn_url + req.local.user.avatar_url,
@@ -252,18 +252,30 @@ module.exports = {
                     })
                     .catch(err => {});
             }
-
-            await submission
-                .save();
+            try {
+                await submission.save();
+            }
+            catch (e) {
+                return res
+                    .status(400)
+                    .send();
+            }
         } else {
-            submission = await db.contest_submissions
+            try {
+                submission = await db.contest_submissions
                 .create({
                     user_id: req.local.user_id,
                     contest_id,
                     language,
                     solution,
-                    length: solution.length
+                    length: new TextEncoder().encode(solution).length
                 });
+            }
+            catch (e) {
+                return res
+                    .status(400)
+                    .send();
+            }
 
             discord
                 .api('post', `/channels/${constant.channels.emkc}/messages`, {
@@ -278,7 +290,7 @@ module.exports = {
                         author: {
                             name:
                                 `${req.local.user.display_name} submitted an initial ${submission.length} ` +
-                                `character solution with ${submission.language}`
+                                `byte solution with ${submission.language}`
                         },
                         footer: {
                             icon_url: constant.cdn_url + req.local.user.avatar_url,

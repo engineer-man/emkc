@@ -18,18 +18,25 @@ module.exports = {
     async create(req, res) {
         if (req.method === 'POST') {
             const { draft, name, description, start_date, end_date, input, output } = req.body;
-
-            let contest = await db.contests
-                .create({
-                    draft,
-                    name,
-                    description,
-                    start_date,
-                    end_date,
-                    input,
-                    output
-                });
-
+            try {
+                let contest = await db.contests
+                    .create({
+                        draft,
+                        name,
+                        description,
+                        start_date,
+                        end_date,
+                        input,
+                        output
+                    });
+            }
+            catch (e) {
+                return res
+                    .status(400)
+                    .send({
+                        error_message: e.message
+                    });
+            }
             return res
                 .status(200)
                 .send();
