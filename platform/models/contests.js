@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             end_date: DataTypes.DATE,
             input: DataTypes.TEXT,
             output: DataTypes.TEXT,
+            disallowed_languages: DataTypes.STRING(8192),
             created_at: DataTypes.DATE,
 
             // getters
