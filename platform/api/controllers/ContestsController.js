@@ -195,7 +195,9 @@ module.exports = {
             !languages.length) {
             return res
                 .status(400)
-                .send();
+                .send({
+                    error_message: 'An error has occurred while submitting your solution'
+                });
         }
 
         let is_valid = await contests
@@ -256,9 +258,15 @@ module.exports = {
                 await submission.save();
             }
             catch (e) {
+                let error_message = 'An error occurred while saving your solution'
+                if (e.message.includes('Conversion')) {
+                    error_message = 'Your submission includes disallowed characters'
+                }
                 return res
                     .status(400)
-                    .send();
+                    .send({
+                        error_message
+                    });
             }
         } else {
             try {
@@ -272,9 +280,15 @@ module.exports = {
                 });
             }
             catch (e) {
+                let error_message = 'An error occurred while saving your solution'
+                if (e.message.includes('Conversion')) {
+                    error_message = 'Your submission includes disallowed characters'
+                }
                 return res
                     .status(400)
-                    .send();
+                    .send({
+                        error_message
+                    });
             }
 
             discord

@@ -110,7 +110,7 @@ class ManageChallenge extends React.Component {
         });
 
         if (res.status === 400) {
-            return bootbox.alert('An error has occured.');
+            return bootbox.alert('An error has occurred.');
         }
 
         // Create/update tests
@@ -125,7 +125,7 @@ class ManageChallenge extends React.Component {
             }
         }
         if (!valid) {
-            bootbox.alert('An error has occured while saving one or more tests');
+            bootbox.alert('An error has occurred while saving one or more tests');
         }
 
         // Delete tests
