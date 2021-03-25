@@ -16,7 +16,8 @@ class Contest extends React.Component {
             solution: '',
             languages: [],
             passed: true,
-            validating: false
+            validating: false,
+            submitting: false
         };
 
         if (props.submissions && props.submissions.length > 0) {
@@ -85,12 +86,18 @@ class Contest extends React.Component {
 
         const { contest_id, language, solution } = this.state;
 
+        this.setState({
+            submitting: true
+        });
         let result = await axios
             .post('/contests/submit', {
                 contest_id: this.state.contest.contest_id,
                 language,
                 solution
             });
+        this.setState({
+            submitting: false
+        });
 
         if (result.data.passed) {
             return bootbox
@@ -238,7 +245,10 @@ class Contest extends React.Component {
                                 <button
                                     type="button"
                                     class="btn btn-sm btn-success"
-                                    onClick={this.submit}>Submit Solution</button>
+                                    disabled={this.state.submitting}
+                                    onClick={this.submit}>
+                                        {this.state.submitting ? 'Submitting...' : 'Submit Solution'}
+                                </button>
                                 {' '}
                                 {!this.state.passed && (
                                     <span class="text-danger">Sorry, your solution does not satisfy the requirements</span>
@@ -262,15 +272,16 @@ class Contest extends React.Component {
                     Submissions
                     {' '}
                     {!!ctx.is_staff && (
-                        <>
-                            <button type="button" class="btn btn-sm btn-warning" onClick={this.validate}>
-                                Re-validate submissions
+                        <div class="float-right">
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-warning"
+                                disabled={this.state.validating}
+                                onClick={this.validate}>
+                                {this.state.validating ? 'Re-validating...': 'Re-validate submissions'}
                             </button>
                             {' '}
-                            {this.state.validating && (
-                                <span class="text-warning">Re-validation in progress...</span>
-                            )}
-                        </>
+                        </div>
                     )}
                 </h5>
                 {this.state.contest.submissions.map(submission => {
