@@ -107,7 +107,7 @@ module.exports = {
                 ]
             });
 
-        if (!challenge) {
+        if (!challenge || challenge.tests.length === 0) {
             return res.redirect('back');
         }
 
@@ -333,6 +333,12 @@ module.exports = {
                 }
             });
 
+        if (challenge.tests.length === 0) {
+            return res
+                .status(400)
+                .send();
+        }
+
         var results = [];
 
         for (const test of challenge.tests) {
@@ -366,7 +372,7 @@ module.exports = {
 
         var passed = results.filter(r => !r.passed).length === 0;
 
-        if (passed && req.local.user_id) {
+        if (passed && req.local.user_id && !challenge.draft) {
             set_immediate(async () => {
                 let [ user_challenge, created ] = await db.user_challenges
                     .find_or_create({

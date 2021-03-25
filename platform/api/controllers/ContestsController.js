@@ -254,23 +254,11 @@ module.exports = {
                     })
                     .catch(err => {});
             }
-            try {
-                await submission.save();
-            }
-            catch (e) {
-                let error_message = 'An error occurred while saving your solution'
-                if (e.message.includes('Conversion')) {
-                    error_message = 'Your submission includes disallowed characters'
-                }
-                return res
-                    .status(400)
-                    .send({
-                        error_message
-                    });
-            }
+
+            await submission.save();
+
         } else {
-            try {
-                submission = await db.contest_submissions
+            submission = await db.contest_submissions
                 .create({
                     user_id: req.local.user_id,
                     contest_id,
@@ -278,18 +266,6 @@ module.exports = {
                     solution,
                     length: new TextEncoder().encode(solution).length
                 });
-            }
-            catch (e) {
-                let error_message = 'An error occurred while saving your solution'
-                if (e.message.includes('Conversion')) {
-                    error_message = 'Your submission includes disallowed characters'
-                }
-                return res
-                    .status(400)
-                    .send({
-                        error_message
-                    });
-            }
 
             discord
                 .api('post', `/channels/${constant.channels.emkc}/messages`, {

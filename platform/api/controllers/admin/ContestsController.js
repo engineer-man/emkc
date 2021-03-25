@@ -25,28 +25,21 @@ module.exports = {
                 end_date,
                 input,
                 output,
-                disallowed_languages,
+                disallowed_languages
             } = req.body;
-            try {
-                let contest = await db.contests
-                    .create({
-                        draft,
-                        name,
-                        description,
-                        start_date,
-                        end_date,
-                        input,
-                        output,
-                        disallowed_languages
-                    });
-            }
-            catch (e) {
-                return res
-                    .status(400)
-                    .send({
-                        error_message: e.message
-                    });
-            }
+
+            let contest = await db.contests
+                .create({
+                    draft,
+                    name,
+                    description,
+                    start_date,
+                    end_date,
+                    input,
+                    output,
+                    disallowed_languages
+                });
+
             return res
                 .status(200)
                 .send();

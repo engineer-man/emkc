@@ -165,10 +165,6 @@ class Manage extends React.Component {
                 disallowed_languages
             });
 
-        if (res.status >= 400) {
-            return bootbox.alert(res.data.error_message);
-        }
-
         location = '/admin/contests';
     }
 

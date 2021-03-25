@@ -73,7 +73,13 @@ module.exports = {
             }
         }
 
-        return res.view();
+        return res.view('snippets/edit', {
+            snippet: {
+                language: '',
+                snip: '',
+                hash: ''
+            }
+        });
     },
 
     async delete(req, res) {
