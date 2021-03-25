@@ -2,7 +2,7 @@ module.exports = async (req, res, next) => {
     req.local = req.local || { user_id: null };
 
     req.local.constant = constant;
-
+    req.session.old_id = req.session.old_id || null;
     // get the logged in user
     let user = await db.users
         .find_one({
