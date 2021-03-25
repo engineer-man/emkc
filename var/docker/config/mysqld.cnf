@@ -4,5 +4,5 @@ innodb_file_per_table=1
 sql_mode = ""
 
 [server]
-general_log=1
-general_log_file=/opt/emkc/var/docker/logs/sql.log
+#general_log=1
+#general_log_file=/opt/emkc/var/docker/logs/sql.log
