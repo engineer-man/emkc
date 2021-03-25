@@ -55,7 +55,6 @@ module.exports.routes = {
     'GET /admin/contests/update/:contest_id': 'admin/ContestsController.update',
     'POST /admin/contests/update/:contest_id': 'admin/ContestsController.update',
     'POST /admin/submissions/validate/:contest_id': 'admin/ContestsController.validate_submissions',
-    'POST /admin/submissions/delete_invalids': 'admin/ContestsController.delete_invalids',
     'POST /admin/submissions/delete': 'admin/ContestsController.delete_submission',
 
     // service api
