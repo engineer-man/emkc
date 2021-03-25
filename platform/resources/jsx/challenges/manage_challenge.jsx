@@ -95,7 +95,7 @@ class ManageChallenge extends React.Component {
 
     async save() {
         // Check if there are tests
-        if (!this.state.tests.length) {
+        if (this.state.tests.length === 0) {
             return bootbox.alert('Please add at least one test.')
         }
 

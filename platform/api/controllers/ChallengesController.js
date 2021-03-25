@@ -107,7 +107,7 @@ module.exports = {
                 ]
             });
 
-        if (!challenge || !challenge.tests.length) {
+        if (!challenge || challenge.tests.length === 0) {
             return res.redirect('back');
         }
 
@@ -333,9 +333,12 @@ module.exports = {
                 }
             });
 
-        if (!challenge.tests.length) {
-            return res.status(400).send();
+        if (challenge.tests.length === 0) {
+            return res
+                .status(400)
+                .send();
         }
+
         var results = [];
 
         for (const test of challenge.tests) {

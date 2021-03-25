@@ -58,9 +58,11 @@ class Challenge extends React.Component {
                 language: this.state.language,
                 source: this.editor.getValue()
             });
+
         if (res.status >= 400) {
             return bootbox.alert('An error has occured, please try again later.')
         }
+
         let solved = res.data.filter(r => !r.passed).length === 0;
 
         if (solved) {
@@ -69,7 +71,8 @@ class Challenge extends React.Component {
                     let alert_message = !!prev.challenge.draft
                         ? 'Thank you for testing EMKC challenges!<br />\
                         Your answer will not be saved since this challenge is still under construction.'
-                        : 'Congratulations, you solved this challenge!'
+                        : 'Congratulations, you solved this challenge!';
+
                     bootbox.alert(alert_message);
                 }
 
