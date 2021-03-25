@@ -89,12 +89,14 @@ class Contest extends React.Component {
         this.setState({
             submitting: true
         });
+
         let result = await axios
             .post('/contests/submit', {
                 contest_id: this.state.contest.contest_id,
                 language,
                 solution
             });
+
         this.setState({
             submitting: false
         });
@@ -247,7 +249,8 @@ class Contest extends React.Component {
                                     class="btn btn-sm btn-success"
                                     disabled={this.state.submitting}
                                     onClick={this.submit}>
-                                        {this.state.submitting ? 'Submitting...' : 'Submit Solution'}
+
+                                    {this.state.submitting ? 'Submitting...' : 'Submit Solution'}
                                 </button>
                                 {' '}
                                 {!this.state.passed && (
@@ -278,6 +281,7 @@ class Contest extends React.Component {
                                 class="btn btn-sm btn-warning"
                                 disabled={this.state.validating}
                                 onClick={this.validate}>
+
                                 {this.state.validating ? 'Re-validating...': 'Re-validate submissions'}
                             </button>
                             {' '}

@@ -120,15 +120,21 @@ class ManageChallenge extends React.Component {
 
         // Create/update tests
         let valid = true;
+
         for (let test of this.state.tests) {
             test.challenge_id = this.state.mode === 'create' ? res.data.challenge_id : test.challenge_id;
-            let test_url = test.challenge_test_id < 0 ? '/admin/tests/create'
+
+            let test_url = test.challenge_test_id < 0
+                ? '/admin/tests/create'
                 : '/admin/tests/update/' + test.challenge_test_id;
+
             let test_res = await axios.post(test_url, test);
-            if (test_res === 400) {
+
+            if (test_res.status === 400) {
                 valid = false;
             }
         }
+
         if (!valid) {
             bootbox.alert('An error has occured while saving one or more tests');
         }
@@ -183,34 +189,37 @@ class ManageChallenge extends React.Component {
 
     async save_test() {
         let current_tests = this.state.tests;
-        let editing_test = this.state.editing_test
-        if (
-            !editing_test.name ||
-            !editing_test.input ||
-            !editing_test.output
-        ) {
+        let editing_test = this.state.editing_test;
+
+        if (!editing_test.name || !editing_test.input || !editing_test.output) {
             return bootbox.alert('Please provide all data.');
         }
+
         let inputs_arr = editing_test.input.split('\n');
-        if (
-            inputs_arr.length !== editing_test.output.split('\n').length
-        ) {
+        
+        if (inputs_arr.length !== editing_test.output.split('\n').length) {
             return bootbox.alert('The number of inputs do not match the number of outputs.');
         }
+
         let arguments_number = inputs_arr[0].split('|').length;
+
         let valid = true;
         inputs_arr.forEach(input => {
             if (input.split('|').length !== arguments_number) {
                 valid = false;
             }
         });
+
         if (!valid) {
             return bootbox.alert('Number of arguments do not match in inputs.')
         }
+
         // Handles newly created tests
         if (editing_test.challenge_test_id === this.state.current_test_id) {
             current_tests.push(editing_test);
+
             let new_test_id = this.state.current_test_id - 1;
+
             return this.setState({
                 tests: current_tests,
                 editing_test: {},
@@ -219,15 +228,14 @@ class ManageChallenge extends React.Component {
         }
 
         // Handles edited tests
-        let test_to_edit = current_tests.find(
-            test => test.challenge_test_id === editing_test.challenge_test_id
-        );
+        let test_to_edit = current_tests.find(test => test.challenge_test_id === editing_test.challenge_test_id);
+
         current_tests.splice(current_tests.indexOf(test_to_edit), 1, editing_test);
+
         return this.setState({
             tests: current_tests,
             editing_test: {}
         });
-
     }
 
     render() {
