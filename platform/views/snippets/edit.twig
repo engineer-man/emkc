@@ -14,7 +14,7 @@
     <script src="/lib/webpack/monaco.bundle.js?{{ sails.local.epoch }}"></script>
 {% endblock %}
 {% block content %}
-    <div 
+    <div
         id="react_manage_snippet"
         data-language="{{ snippet.language|json_encode|e }}"
         data-snip="{{ snippet.snip|json_encode|noscript|e }}"
