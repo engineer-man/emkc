@@ -136,7 +136,6 @@ class Manage extends React.Component {
             let languages = await axios.get('/contests/default/' + item);
             languages = languages.data;
             final = final.concat(languages);
-            console.log(final);
         }
         this.setState({
             disallowed_languages: final
