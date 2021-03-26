@@ -13,14 +13,15 @@ class Manage extends React.Component {
             ...props.contest,
             filtered_languages: []
         };
-        this.all_languages = []
+        this.all_languages = [];
         this.handle_change = this.handle_change.bind(this);
         this.save = this.save.bind(this);
         this.handle_language_change = this.handle_language_change.bind(this);
+        this.sort = this.sort.bind(this);
         this.select = this.select.bind(this);
         this.get_defaults = this.get_defaults.bind(this);
         this.search_languages = this.search_languages.bind(this);
-        this.no_golf_no_disallowed = this.no_golf_no_disallowed.bind(this);
+        this.no_golf_no_esoteric = this.no_golf_no_esoteric.bind(this);
     }
 
     async componentDidMount() {
@@ -31,8 +32,8 @@ class Manage extends React.Component {
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
                     ['blockquote', 'code-block', 'link'],
-                    [{ 'header': 1 }, { 'header': 2 }],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ header: 1 }, { header: 2 }],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
                     ['clean']
                 ]
             }
@@ -42,14 +43,15 @@ class Manage extends React.Component {
             this.quill.setContents(JSON.parse(this.state.description));
         }
         let disallowed_languages = !!this.state.disallowed_languages
-            ? this.state.disallowed_languages.split(',') : [];
+            ? this.state.disallowed_languages.split(',')
+            : [];
         this.all_languages = await axios.get('/api/v1/piston/versions');
-        this.all_languages = this.all_languages.data.map(lang => lang.name);
-        let filtered_languages = this.all_languages
+        this.all_languages = this.all_languages.data.map((lang) => lang.name);
+        let filtered_languages = this.all_languages;
         this.setState({
             disallowed_languages,
             filtered_languages
-        });
+        }, this.sort);
     }
 
     handle_change(e) {
@@ -65,35 +67,53 @@ class Manage extends React.Component {
         });
     }
 
+    sort() {
+        let disallowed_languages = this.state.disallowed_languages;
+        let filtered_languages = this.state.filtered_languages;
+        filtered_languages.sort(function (lang1, lang2) {
+            if (!disallowed_languages.includes(lang1) && disallowed_languages.includes(lang2)) {
+                return 1;
+            } else if (
+                disallowed_languages.includes(lang1) && !disallowed_languages.includes(lang2)
+            ) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        this.setState({
+            filtered_languages
+        });
+    }
+
     handle_language_change(e) {
         let lang_name = e.target.id.replace('allow-', '');
         let disallowed_languages = this.state.disallowed_languages;
         if (!e.target.checked) {
             disallowed_languages.push(lang_name);
-        }
-        else {
+        } else {
             disallowed_languages.splice(disallowed_languages.indexOf(lang_name), 1);
         }
         this.setState({
             disallowed_languages
-        });
+        }, this.sort);
     }
 
     select(is_select_all) {
         let disallowed_languages = is_select_all
             ? []
-            : this.all_languages.filter(lang => !this.state.disallowed_languages.includes(lang));
+            : this.all_languages.filter((lang) => !this.state.disallowed_languages.includes(lang));
         this.setState({
             disallowed_languages
-        });
+        }, this.sort);
     }
 
     search_languages(e) {
         let search_term = e.target.value;
-        let filtered_languages = this.all_languages.filter(lang => lang.includes(search_term));
+        let filtered_languages = this.all_languages.filter((lang) => lang.includes(search_term));
         this.setState({
             filtered_languages
-        });
+        }, this.sort);
     }
 
     async get_defaults(e) {
@@ -102,22 +122,25 @@ class Manage extends React.Component {
         let disallowed_languages = default_languages.data;
         if (type !== 'disallowed') {
             disallowed_languages = this.all_languages.filter(
-                lang => !disallowed_languages.includes(lang)
+                (lang) => !disallowed_languages.includes(lang)
             ); // Invert
         }
-        return this.setState({
+        this.setState({
             disallowed_languages
-        });
+        }, this.sort);
     }
 
-    async no_golf_no_disallowed() {
-        let disallowed_languages = await axios.get('/contests/default/disallowed');
-        disallowed_languages = disallowed_languages.data;
-        let golf_languages = await axios.get('/contests/default/golf');
-        golf_languages = golf_languages.data;
+    async no_golf_no_esoteric() {
+        let final = [];
+        for (let item of ['disallowed', 'golf']) {
+            let languages = await axios.get('/contests/default/' + item);
+            languages = languages.data;
+            final = final.concat(languages);
+            console.log(final);
+        }
         this.setState({
-            disallowed_languages: golf_languages.concat(disallowed_languages)
-        });
+            disallowed_languages: final
+        }, this.sort);
     }
 
     async save() {
@@ -269,54 +292,67 @@ class Manage extends React.Component {
                         <div class="row">
                             <div class="col-2">
                                 <button
-                                type="button"
-                                class="btn btn-sm btn-secondary control_button"
-                                onClick={() => this.select(true)}>Select all</button>
-                            </div>
-                            <div class="col-2">
-                                <button
-                                type="button"
-                                class="btn btn-sm btn-secondary control_button float-right"
-                                onClick={() => this.select(false)}>Invert selection</button>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-2">
-                                <button
-                                type="button"
-                                id="disallowed"
-                                class="btn btn-sm btn-secondary control_button"
-                                onClick={this.get_defaults}>Default disallowed</button>
-                            </div>
-                            <div class="col-2">
-                                <button
-                                type="button"
-                                id="golf"
-                                class="btn btn-sm btn-secondary control_button float-right"
-                                onClick={this.get_defaults}>Default golf</button>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-2">
-                            <button
                                     type="button"
                                     class="btn btn-sm btn-secondary control_button"
-                                    onClick={this.no_golf_no_disallowed}>No golf, no disallowed</button>
+                                    onClick={() => this.select(true)}
+                                >
+                                    Select all
+                                </button>
+                            </div>
+                            <div class="col-2">
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-secondary control_button float-right"
+                                    onClick={() => this.select(false)}
+                                >
+                                    Invert selection
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <button
+                                    type="button"
+                                    id="disallowed"
+                                    class="btn btn-sm btn-secondary control_button"
+                                    onClick={this.get_defaults}
+                                >
+                                    Default disallowed
+                                </button>
+                            </div>
+                            <div class="col-2">
+                                <button
+                                    type="button"
+                                    id="golf"
+                                    class="btn btn-sm btn-secondary control_button float-right"
+                                    onClick={this.get_defaults}
+                                >
+                                    Default golf
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-secondary control_button"
+                                    onClick={this.no_golf_no_esoteric}
+                                >
+                                    No golf, no esoteric
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <button
-                        type="button"
-                        class="btn btn-sm btn-success"
-                        onClick={this.save}>Save</button>
+                    <button type="button" class="btn btn-sm btn-success" onClick={this.save}>
+                        Save
+                    </button>
                 </div>
             </div>
         );
     }
-
 }
 
 Util.try_render('react_contest_manage', Manage);
