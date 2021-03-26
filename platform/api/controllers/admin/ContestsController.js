@@ -123,7 +123,7 @@ module.exports = {
             ]
         });
 
-        let destroyed = 0;
+        let invalids = [];
 
         for (let submission of contest.submissions) {
             let is_valid = await contests
@@ -135,16 +135,14 @@ module.exports = {
                 );
 
             if (!is_valid) {
-                //await submission.destroy();
-                ++destroyed;
+                invalids.push(submission);
             }
         }
 
         return res
             .status(200)
             .send({
-                destroyed
+                invalids
             });
-    }
-
+    },
 };

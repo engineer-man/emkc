@@ -145,15 +145,22 @@ class Contest extends React.Component {
         let res = await axios
             .post('/admin/submissions/validate/' + this.state.contest.contest_id);
 
-        let { destroyed } = res.data;
-
-        bootbox.alert('Submissions re-validated, removed ' + destroyed + ' submission(s)', function() {
-            location = location;
-        });
+        let { invalids } = res.data;
 
         this.setState({
             validating: false
         });
+
+        if (!invalids.length) {
+            return bootbox.alert('No invalid submissions were found')
+        }
+        let invalids_str = '';
+        for (let invalid of invalids) {
+            invalids_str += `(#${invalid.contest_submission_id}) ${invalid.language}\
+            submission of length ${invalid.length}<br />`
+        }
+        return bootbox.alert('The following invalid submissions were found:<br />' + invalids_str);
+
     }
 
     render() {
@@ -172,20 +179,20 @@ class Contest extends React.Component {
                 <div class="marginbottom20">
                     {this.props.cases.map((c, i) => {
                         return (
-                            <>
+                            <div key={'test-' + i}>
                                 <h6>Test Case {i+1}</h6>
                                 <pre class="case_text">
                                     {c.inputs.map((input, i) => {
                                         return (
-                                            <>
+                                            <div key={'input-' + i}>
                                                 Argument {i+1}: {input}
                                                 {'\n'}
-                                            </>
+                                            </div>
                                         );
                                     })}
                                     Expected Output: {c.output}
                                 </pre>
-                            </>
+                            </div>
                         );
                     })}
                 </div>

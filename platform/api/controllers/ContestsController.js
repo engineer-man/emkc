@@ -122,8 +122,6 @@ module.exports = {
             });
         }
 
-        console.log(cases);
-
         contest.submissions
             .for_each((submission, i) => {
                 // overall awards for top 3 solutions submitted by unique users
