@@ -154,11 +154,14 @@ class Contest extends React.Component {
         if (!invalids.length) {
             return bootbox.alert('No invalid submissions were found')
         }
+
         let invalids_str = '';
+
         for (let invalid of invalids) {
             invalids_str += `(#${invalid.contest_submission_id}) ${invalid.language}\
             submission of length ${invalid.length}<br />`
         }
+
         return bootbox.alert('The following invalid submissions were found:<br />' + invalids_str);
 
     }
