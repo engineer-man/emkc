@@ -82,7 +82,8 @@ module.exports = {
                             'language',
                             'solution',
                             'length',
-                            'created_at'
+                            'created_at',
+                            'late'
                         ],
                         include: [
                             {
@@ -125,7 +126,7 @@ module.exports = {
         contest.submissions
             .for_each((submission, i) => {
                 // overall awards for top 3 solutions submitted by unique users
-                if (!awarded_users.includes(submission.user_id) && top <= 3) {
+                if (!submission.late && !awarded_users.includes(submission.user_id) && top <= 3) {
                     switch (top) {
                         case 1:
                             submission.dataValues.overall_first = true;
@@ -144,7 +145,7 @@ module.exports = {
                 }
 
                 // per language awards for top solution in each language
-                if (!awarded_languages.includes(submission.language)) {
+                if (!submission.late && !awarded_languages.includes(submission.language)) {
                     submission.dataValues.language_first = true;
                     awarded_languages.push(submission.language);
                 }
@@ -188,7 +189,7 @@ module.exports = {
         languages = languages.data.filter(lang => lang.name === language);
 
         // To prevent submissions by alias
-        if (!contest.active || test_cases.length !== expected_results.length ||
+        if (test_cases.length !== expected_results.length ||
             constant.contests.disallowed_languages.includes(language) ||
             !languages.length) {
             return res
@@ -212,7 +213,8 @@ module.exports = {
                 where: {
                     contest_id,
                     language,
-                    user_id: req.local.user_id
+                    user_id: req.local.user_id,
+                    late: !contest.active
                 }
             });
 
@@ -223,7 +225,7 @@ module.exports = {
 
             let prev_length = submission.previous('length');
 
-            if (submission.length < prev_length) {
+            if (submission.length < prev_length && contest.active) {
                 submission.created_at = util.now();
 
                 discord
@@ -260,31 +262,34 @@ module.exports = {
                     contest_id,
                     language,
                     solution,
-                    length: solution.length
+                    length: solution.length,
+                    late: !contest.active
                 });
 
-            discord
-                .api('post', `/channels/${constant.channels.emkc}/messages`, {
-                    embed: {
-                        title: contest.name,
-                        description:
-                            `Can you make a better solution? ` +
-                            `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
-                        type: 'rich',
-                        color: 0x84e47f,
-                        url: `${constant.base_url}${contest.url}`,
-                        author: {
-                            name:
-                                `${req.local.user.display_name} submitted an initial ${submission.length} ` +
-                                `character solution with ${submission.language}`
-                        },
-                        footer: {
-                            icon_url: constant.cdn_url + req.local.user.avatar_url,
-                            text: `submitted by ${req.local.user.display_name} right now`
+            if (contest.active) {
+                discord
+                    .api('post', `/channels/${constant.channels.emkc}/messages`, {
+                        embed: {
+                            title: contest.name,
+                            description:
+                                `Can you make a better solution? ` +
+                                `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
+                            type: 'rich',
+                            color: 0x84e47f,
+                            url: `${constant.base_url}${contest.url}`,
+                            author: {
+                                name:
+                                    `${req.local.user.display_name} submitted an initial ${submission.length} ` +
+                                    `character solution with ${submission.language}`
+                            },
+                            footer: {
+                                icon_url: constant.cdn_url + req.local.user.avatar_url,
+                                text: `submitted by ${req.local.user.display_name} right now`
+                            }
                         }
-                    }
-                })
-                .catch(err => {});
+                    })
+                    .catch(err => {});
+            }
         }
 
         return res

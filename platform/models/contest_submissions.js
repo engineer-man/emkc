@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
             length: DataTypes.INTEGER,
             award_place: DataTypes.INTEGER,
             award_points: DataTypes.INTEGER,
-            created_at: DataTypes.DATE
+            created_at: DataTypes.DATE,
+            late: DataTypes.BOOLEAN
         },
         {
             sequelize,
