@@ -312,15 +312,4 @@ module.exports = {
             .send(disallowed_languages);
     },
 
-    async default(req, res) {
-        const { type } = req.params;
-        switch (type) {
-            case 'disallowed':
-                return res.status(200).send(constant.contests.disallowed_languages);
-            case 'golf':
-                return res.status(200).send(constant.contests.golf_languages);
-            // TODO: Add more options here and their equivalent arrays in constant.js
-        }
-    }
-
 };

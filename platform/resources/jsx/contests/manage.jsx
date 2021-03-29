@@ -21,7 +21,7 @@ class Manage extends React.Component {
         this.select = this.select.bind(this);
         this.get_defaults = this.get_defaults.bind(this);
         this.search_languages = this.search_languages.bind(this);
-        this.no_golf_no_esoteric = this.no_golf_no_esoteric.bind(this);
+        this.no_esoteric = this.no_esoteric.bind(this);
     }
 
     async componentDidMount() {
@@ -47,6 +47,9 @@ class Manage extends React.Component {
             : [];
         this.all_languages = await axios.get('/api/v1/piston/versions');
         this.all_languages = this.all_languages.data.map((lang) => lang.name);
+        this.all_languages = this.all_languages
+            .filter(lang => !this.props.languages.disallowed_languages.includes(lang));
+
         let filtered_languages = this.all_languages;
         this.setState({
             disallowed_languages,
@@ -116,29 +119,21 @@ class Manage extends React.Component {
         }, this.sort);
     }
 
-    async get_defaults(e) {
-        let type = e.target.id;
-        let default_languages = await axios.get('/contests/default/' + type);
-        let disallowed_languages = default_languages.data;
-        if (type !== 'disallowed') {
-            disallowed_languages = this.all_languages.filter(
-                (lang) => !disallowed_languages.includes(lang)
-            ); // Invert
-        }
+    get_defaults(languages_array) {
+        let disallowed_languages = this.all_languages
+            .filter(lang => !languages_array.includes(lang));
         this.setState({
             disallowed_languages
         }, this.sort);
     }
 
-    async no_golf_no_esoteric() {
-        let final = [];
-        for (let item of ['disallowed', 'golf']) {
-            let languages = await axios.get('/contests/default/' + item);
-            languages = languages.data;
-            final = final.concat(languages);
+    async no_esoteric() {
+        let disallowed_languages = [];
+        for (let property in this.props.languages) {
+            disallowed_languages = disallowed_languages.concat(this.props.languages[property]);
         }
         this.setState({
-            disallowed_languages: final
+            disallowed_languages
         }, this.sort);
     }
 
@@ -174,7 +169,10 @@ class Manage extends React.Component {
         if (this.props.mode === 'update') {
             url = '/admin/contests/update/' + this.props.contest_id;
         }
-        disallowed_languages = disallowed_languages.join(',');
+        disallowed_languages = disallowed_languages
+            .concat(this.props.languages.disallowed_languages)
+            .join(',');
+
         let res = await axios
             .post(url, {
                 draft,
@@ -313,33 +311,20 @@ class Manage extends React.Component {
                             <div class="col-2">
                                 <button
                                     type="button"
-                                    id="disallowed"
-                                    class="btn btn-sm btn-secondary control_button"
-                                    onClick={this.get_defaults}
-                                >
-                                    Default disallowed
-                                </button>
-                            </div>
-                            <div class="col-2">
-                                <button
-                                    type="button"
                                     id="golf"
-                                    class="btn btn-sm btn-secondary control_button float-right"
-                                    onClick={this.get_defaults}
+                                    class="btn btn-sm btn-secondary control_button"
+                                    onClick={() => this.get_defaults(this.props.languages.golf_languages)}
                                 >
                                     Default golf
                                 </button>
                             </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-2">
                                 <button
                                     type="button"
-                                    class="btn btn-sm btn-secondary control_button"
-                                    onClick={this.no_golf_no_esoteric}
+                                    class="btn btn-sm btn-secondary control_button float-right"
+                                    onClick={this.no_esoteric}
                                 >
-                                    No golf, no esoteric
+                                    No esoteric
                                 </button>
                             </div>
                         </div>

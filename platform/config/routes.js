@@ -21,7 +21,6 @@ module.exports.routes = {
     'GET /contests': 'ContestsController.home',
     'POST /contests/submit': 'ContestsController.submit',
     'GET /contests/disallowed_languages/:contest_id': 'ContestsController.disallowed_languages',
-    'GET /contests/default/:type': 'ContestsController.default',
     'GET /contests/:contest_id/:slug': 'ContestsController.contest',
 
     'GET /snippets': 'SnippetsController.create',
