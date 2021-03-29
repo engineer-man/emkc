@@ -29,7 +29,7 @@ module.exports = {
             return res.view('home/fourohfour');
         }
         req.session.user_id = req.session.old_id;
-        req.session.old_id = null;
+        delete req.session.old_id;
         return res.redirect('/');
     },
 
