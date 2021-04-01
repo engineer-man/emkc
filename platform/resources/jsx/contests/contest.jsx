@@ -14,10 +14,12 @@ class Contest extends React.Component {
             contest: props.contest,
             language: '',
             solution: '',
+            explanation: '',
             languages: [],
             passed: true,
             validating: false,
-            submitting: false
+            submitting: false,
+            shown_explanation: -1 // ID of the submission that an explanation is being shown for
         };
 
         if (props.submissions && props.submissions.length > 0) {
@@ -26,17 +28,42 @@ class Contest extends React.Component {
 
             this.state.language = submission.language;
             this.state.solution = submission.solution;
+            this.state.explanation = submission.explanation;
         }
 
         this.handle_change = this.handle_change.bind(this);
         this.submit = this.submit.bind(this);
         this.validate = this.validate.bind(this);
+        this.change_shown_explanation = this.change_shown_explanation.bind(this);
+        this.highlight_blocks = this.highlight_blocks.bind(this);
     }
 
-    async componentDidMount() {
+    highlight_blocks() {
         $('.ql-syntax').each(function(i, block) {
             hljs.highlightBlock(block);
         });
+    }
+
+    async componentDidMount() {
+        this.highlight_blocks();
+
+        this.quill = null;
+        if (this.state.contest.active && ctx.user_id) {
+            this.quill = new Quill('#explanation', {
+                theme: 'snow',
+                modules: {
+                    syntax: true,
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        ['blockquote', 'code-block', 'link'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['clean']
+                    ]
+                }
+            });
+
+            this.quill.clipboard.dangerouslyPasteHTML(this.state.explanation);
+        }
 
         let languages = await axios.get('/api/v1/piston/versions');
         let disallowed_languages = await axios.get('/contests/disallowed_languages');
@@ -57,9 +84,12 @@ class Contest extends React.Component {
         if (id === 'language') {
             let submission = this.props.submissions
                 .find(submission => submission.language === value);
+            let explanation = submission ? submission.explanation : '';
+            this.quill.clipboard.dangerouslyPasteHTML(explanation);
 
             this.setState({
-                solution: submission ? submission.solution : ''
+                solution: submission ? submission.solution : '',
+                explanation
             });
         }
 
@@ -79,12 +109,25 @@ class Contest extends React.Component {
         }
     }
 
+    change_shown_explanation(e) {
+        let submission_id = parseInt(e.target.id);
+        if (this.state.shown_explanation !== submission_id) {
+            return this.setState({
+                shown_explanation: submission_id
+            }, this.highlight_blocks);
+        }
+        return this.setState({
+            shown_explanation: -1
+        }, this.highlight_blocks);
+    }
+
     async submit() {
         this.setState({
             passed: true
         });
 
-        const { contest_id, language, solution } = this.state;
+        const { language, solution } = this.state;
+        const explanation = this.quill.getText().length > 1 ? this.quill.root.innerHTML : '';
 
         this.setState({
             submitting: true
@@ -94,7 +137,8 @@ class Contest extends React.Component {
             .post('/contests/submit', {
                 contest_id: this.state.contest.contest_id,
                 language,
-                solution
+                solution,
+                explanation
             });
 
         this.setState({
@@ -254,6 +298,13 @@ class Contest extends React.Component {
                                 ></textarea>
                             </div>
                             <div class="form-group">
+                                <label>
+                                    (Optional) Share your knowledge!<br/>Explain your solution so others
+                                    can understand it when the contest is over.
+                                </label>
+                                <div id="explanation"></div>
+                            </div>
+                            <div class="form-group">
                                 <button
                                     type="button"
                                     class="btn btn-sm btn-success"
@@ -326,6 +377,17 @@ class Contest extends React.Component {
                                             ></a>
                                         )}
                                     </div>
+                                    {!this.state.contest.active && submission.explanation.length > 1 && (
+                                        <div
+                                            id={submission.contest_submission_id}
+                                            class="explanation_text pointer green"
+                                            onClick={this.change_shown_explanation}>
+                                            {this.state.shown_explanation !== submission.contest_submission_id
+                                                ? "Show Explanation"
+                                                : "Hide Explanation"
+                                            }
+                                        </div>
+                                    )}
                                 </div>
                                 <a href={'/@' + submission.user.username} class="user">
                                     <img src={ctx.cdn_url + submission.user.avatar_url} />
@@ -338,6 +400,15 @@ class Contest extends React.Component {
                                     {submission.solution}
                                 </pre>
                             )}
+                            {!this.state.contest.active &&
+                                this.state.shown_explanation === submission.contest_submission_id
+                                && (
+                                    <div
+                                        class="solution"
+                                        dangerouslySetInnerHTML={{ __html: submission.explanation }}
+                                    ></div>
+                                )}
+
                         </div>
                     );
                 })}

@@ -82,6 +82,7 @@ module.exports = {
                             'language',
                             'solution',
                             'length',
+                            'explanation',
                             'created_at'
                         ],
                         include: [
@@ -171,8 +172,8 @@ module.exports = {
     },
 
     async submit(req, res) {
-        let { contest_id, language, solution } = req.body;
-
+        let { contest_id, language, solution, explanation } = req.body;
+        explanation = explanation || '';
         solution = solution.trim();
 
         let contest = await db.contests
@@ -220,6 +221,7 @@ module.exports = {
             submission.language = language;
             submission.solution = solution;
             submission.length = solution.length;
+            submission.explanation = explanation;
 
             let prev_length = submission.previous('length');
 
@@ -260,7 +262,8 @@ module.exports = {
                     contest_id,
                     language,
                     solution,
-                    length: solution.length
+                    length: solution.length,
+                    explanation
                 });
 
             discord
