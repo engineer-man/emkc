@@ -77,8 +77,8 @@ class Contest extends React.Component {
         }
 
         let languages = await axios.get('/api/v1/piston/versions');
-        let disallowed_languages = await axios.get('/contests/disallowed_languages');
-
+        let disallowed_languages = await axios.get('/contests/disallowed_languages/'
+            + this.state.contest.contest_id);
         disallowed_languages = disallowed_languages.data;
         languages = languages.data.filter(lang => !disallowed_languages.includes(lang.name));
 
@@ -158,6 +158,10 @@ class Contest extends React.Component {
             submitting: false
         });
 
+        if (result.status >= 400) {
+            return bootbox
+                .alert(result.data.error_message);
+        }
         if (result.data.passed) {
             return bootbox
                 .alert('Your solution succeeded and has been recorded/updated.', () => {
@@ -401,7 +405,7 @@ class Contest extends React.Component {
                             <div class="heading">
                                 <div class="main">
                                     <div class="summary">
-                                        {submission.length} characters with {submission.language}
+                                        {submission.length} bytes with {submission.language}
                                         {' '}
                                         {submission.overall_first && <img src="/images/awards/1.png" />}
                                         {' '}
@@ -442,7 +446,7 @@ class Contest extends React.Component {
                                 </a>
                             </div>
                             {!this.state.contest.active && (
-                                <pre class="solution marginbottom5">
+                                <pre class="solution">
                                     {submission.solution}
                                 </pre>
                             )}
@@ -450,7 +454,7 @@ class Contest extends React.Component {
                                 this.state.shown_explanation === submission.contest_submission_id
                                 && (
                                     <div
-                                        class="solution"
+                                        class="margintop15"
                                         dangerouslySetInnerHTML={{ __html: submission.explanation }}
                                     ></div>
                                 )}

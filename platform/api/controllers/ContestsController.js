@@ -195,7 +195,9 @@ module.exports = {
             !languages.length) {
             return res
                 .status(400)
-                .send();
+                .send({
+                    error_message: 'An error has occurred while submitting your solution'
+                });
         }
 
         let is_valid = await contests
@@ -222,7 +224,7 @@ module.exports = {
         if (submission) {
             submission.language = language;
             submission.solution = solution;
-            submission.length = solution.length;
+            submission.length = new TextEncoder().encode(solution).length;
             submission.explanation = explanation;
 
             let prev_length = submission.previous('length');
@@ -243,8 +245,8 @@ module.exports = {
                             author: {
                                 name:
                                     `${req.local.user.display_name} updated their ${submission.language} solution ` +
-                                    `with one that is ${submission.length} characters long ` +
-                                    `(a ${prev_length-submission.length} character improvement)`
+                                    `with one that is ${submission.length} bytes large ` +
+                                    `(a ${prev_length-submission.length} byte improvement)`
                             },
                             footer: {
                                 icon_url: constant.cdn_url + req.local.user.avatar_url,
@@ -255,8 +257,8 @@ module.exports = {
                     .catch(err => {});
             }
 
-            await submission
-                .save();
+            await submission.save();
+
         } else {
             submission = await db.contest_submissions
                 .create({
@@ -264,7 +266,7 @@ module.exports = {
                     contest_id,
                     language,
                     solution,
-                    length: solution.length,
+                    length: new TextEncoder().encode(solution).length,
                     explanation,
                     late: !contest.active
                 });
@@ -283,7 +285,7 @@ module.exports = {
                             author: {
                                 name:
                                     `${req.local.user.display_name} submitted an initial ${submission.length} ` +
-                                    `character solution with ${submission.language}`
+                                    `byte solution with ${submission.language}`
                             },
                             footer: {
                                 icon_url: constant.cdn_url + req.local.user.avatar_url,
@@ -303,9 +305,17 @@ module.exports = {
     },
 
     async disallowed_languages(req, res) {
+        let { contest_id } = req.params;
+        let contest = await db.contests.find_one({
+            where: {
+                contest_id
+            }
+        });
+        let disallowed_languages = contest.disallowed_languages
+            ? contest.disallowed_languages.split(',') : [];
         return res
             .status(200)
-            .send(constant.contests.disallowed_languages);
-    }
+            .send(disallowed_languages);
+    },
 
 };
