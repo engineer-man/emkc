@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sanitize_html = require('sanitize-html');
 
-const allowedTags = ['p', 'strong', 'em', 'u', 'blockquote', 'pre', 'span', 'a', 'ol', 'ul', 'li']
+const allowedTags = ['p', 'strong', 'em', 'u', 'blockquote', 'pre', 'span', 'a', 'ol', 'ul', 'li', 's']
 const allowedAttributes = {
     a: ['href', 'rel', 'target']
 }
@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
             explanation: DataTypes.TEXT('medium'),
             award_place: DataTypes.INTEGER,
             award_points: DataTypes.INTEGER,
-            created_at: DataTypes.DATE
+            created_at: DataTypes.DATE,
+            late: DataTypes.BOOLEAN
         },
         {
             sequelize,
