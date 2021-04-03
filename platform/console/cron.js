@@ -130,6 +130,9 @@ const cron = {
                 where: {
                     end_date: {
                         [$lt]: util.now()
+                    },
+                    contest_id: {
+                        [$not_id]: [30]
                     }
                 },
                 include: [
