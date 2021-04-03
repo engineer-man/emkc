@@ -18,6 +18,8 @@ case $* in
         ;;
     deploy )
         git pull
+        docker-compose run --rm --no-deps emkc bash -c 'cd /opt/emkc/platform; npm install'
+        docker-compose run --rm --no-deps emkc bash -c 'cd /opt/emkc/platform/migrations; rmig migrate'
         docker-compose down
         init_files
         docker-compose up -d
