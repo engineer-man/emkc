@@ -4,6 +4,7 @@ import moment from 'moment';
 import Quill from 'quill';
 
 import Util from 'js/util';
+import { contest } from '../../../api/controllers/ContestsController';
 
 class Contest extends React.Component {
 
@@ -14,11 +15,18 @@ class Contest extends React.Component {
             contest: props.contest,
             language: '',
             solution: '',
+            explanation: '',
             languages: [],
             passed: true,
             validating: false,
-            submitting: false
+            submitting: false,
+            shown_explanation: -1, // ID of the submission that an explanation is being shown for
+            shown_submissions: [],
+            showing_late: false
         };
+
+        this.on_time_submissions = [];
+        this.late_submissions = [];
 
         if (props.submissions && props.submissions.length > 0) {
             let submission = props.submissions
@@ -26,27 +34,58 @@ class Contest extends React.Component {
 
             this.state.language = submission.language;
             this.state.solution = submission.solution;
+            this.state.explanation = submission.explanation;
+        }
+
+        if (this.state.contest.submissions.length > 0) {
+            this.on_time_submissions = this.state.contest.submissions.filter(submission => !submission.late);
+            this.late_submissions = this.state.contest.submissions.filter(submission => submission.late);
         }
 
         this.handle_change = this.handle_change.bind(this);
         this.submit = this.submit.bind(this);
         this.validate = this.validate.bind(this);
+        this.change_shown_explanation = this.change_shown_explanation.bind(this);
+        this.highlight_blocks = this.highlight_blocks.bind(this);
     }
 
-    async componentDidMount() {
+    highlight_blocks() {
         $('.ql-syntax').each(function(i, block) {
             hljs.highlightBlock(block);
         });
+    }
+
+    async componentDidMount() {
+        this.highlight_blocks();
+
+        this.quill = null;
+        if (ctx.user_id) {
+            this.quill = new Quill('#explanation', {
+                theme: 'snow',
+                modules: {
+                    syntax: true,
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        ['code-block', 'link'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['clean']
+                    ]
+                }
+            });
+
+            this.quill.clipboard.dangerouslyPasteHTML(this.state.explanation);
+        }
 
         let languages = await axios.get('/api/v1/piston/versions');
-        let disallowed_languages = await axios.get('/contests/disallowed_languages');
-
+        let disallowed_languages = await axios.get('/contests/disallowed_languages/'
+            + this.state.contest.contest_id);
         disallowed_languages = disallowed_languages.data;
         languages = languages.data.filter(lang => !disallowed_languages.includes(lang.name));
 
         this.setState({
             languages,
-            language: this.state.language || languages[0].name
+            language: this.state.language || languages[0].name,
+            shown_submissions: this.on_time_submissions
         });
     }
 
@@ -56,10 +95,14 @@ class Contest extends React.Component {
 
         if (id === 'language') {
             let submission = this.props.submissions
-                .find(submission => submission.language === value);
+                .find(submission => submission.language === value
+                    && submission.late === !this.state.contest.active);
+            let explanation = submission ? submission.explanation : '';
+            this.quill.clipboard.dangerouslyPasteHTML(explanation);
 
             this.setState({
-                solution: submission ? submission.solution : ''
+                solution: submission ? submission.solution : '',
+                explanation
             });
         }
 
@@ -79,12 +122,25 @@ class Contest extends React.Component {
         }
     }
 
+    change_shown_explanation(e) {
+        let submission_id = parseInt(e.target.id);
+        if (this.state.shown_explanation !== submission_id) {
+            return this.setState({
+                shown_explanation: submission_id
+            }, this.highlight_blocks);
+        }
+        return this.setState({
+            shown_explanation: -1
+        }, this.highlight_blocks);
+    }
+
     async submit() {
         this.setState({
             passed: true
         });
 
-        const { contest_id, language, solution } = this.state;
+        const { language, solution } = this.state;
+        const explanation = this.quill.getText().length > 1 ? this.quill.root.innerHTML : '';
 
         this.setState({
             submitting: true
@@ -94,13 +150,18 @@ class Contest extends React.Component {
             .post('/contests/submit', {
                 contest_id: this.state.contest.contest_id,
                 language,
-                solution
+                solution,
+                explanation
             });
 
         this.setState({
             submitting: false
         });
 
+        if (result.status >= 400) {
+            return bootbox
+                .alert(result.data.error_message);
+        }
         if (result.data.passed) {
             return bootbox
                 .alert('Your solution succeeded and has been recorded/updated.', () => {
@@ -163,7 +224,6 @@ class Contest extends React.Component {
         }
 
         return bootbox.alert('The following invalid submissions were found:<br />' + invalids_str);
-
     }
 
     render() {
@@ -202,14 +262,24 @@ class Contest extends React.Component {
 
                 <h5 class="green">Your Submission</h5>
                 <div class="marginbottom20">
-                    {ctx.user_id && this.state.contest.active && (
+                    {ctx.user_id && (
                         <div>
-                            <p>
-                                It's recommended that you compose your solution separately and just paste
-                                here once you're ready. After clicking "Submit Solution" your solution will be
-                                tested with secret inputs. If successful, your solution will be saved. Be sure
-                                to choose the correct language.
-                            </p>
+                            {this.state.contest.active && (
+                                <p>
+                                    It's recommended that you compose your solution separately and just paste
+                                    here once you're ready. After clicking "Submit Solution" your solution will be
+                                    tested with the given inputs. If successful, your solution will be saved. Be sure
+                                    to choose the correct language.
+                                </p>
+
+                            ) || (
+                                <p class="text-warning">
+                                    This contest is no longer active but you can click "Submit Solution" to make a late
+                                    submission (you will not receive score for your submission).
+                                    Your solution will be tested with the given inputs and saved if it
+                                    passes all the tests. Be sure to choose the correct language.
+                                </p>
+                            )}
                             <div class="form-group">
                                 <label>Language</label>
                                 <select
@@ -234,7 +304,7 @@ class Contest extends React.Component {
                                         {' '}
                                         {this.props.submissions.map((submission, i) => {
                                             return (
-                                                <span key={submission.language}>
+                                                <span key={submission.language + "-" + submission.late}>
                                                     {submission.language} ({submission.length})
                                                     {i + 1 < this.props.submissions.length && ', '}
                                                 </span>
@@ -254,6 +324,13 @@ class Contest extends React.Component {
                                 ></textarea>
                             </div>
                             <div class="form-group">
+                                <label>
+                                    (Optional) Share your knowledge!<br/>Explain your solution so others
+                                    can understand it when the contest is over.
+                                </label>
+                                <div id="explanation"></div>
+                            </div>
+                            <div class="form-group">
                                 <button
                                     type="button"
                                     class="btn btn-sm btn-success"
@@ -269,15 +346,9 @@ class Contest extends React.Component {
                             </div>
                         </div>
                     ) || (
-                        ctx.user_id && (
-                            <div>
-                                This contest is not active so no solutions can be submitted.
-                            </div>
-                        ) || (
-                            <div>
-                                You are not logged in. To submit a solution, click the Login button at the top right.
-                            </div>
-                        )
+                        <div>
+                            You are not logged in. To submit a solution, click the Login button at the top right.
+                        </div>
                     )}
                 </div>
 
@@ -298,13 +369,43 @@ class Contest extends React.Component {
                         </div>
                     )}
                 </h5>
-                {this.state.contest.submissions.map(submission => {
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a
+                            class={this.state.showing_late
+                                ? "pointer nav-link" : "pointer nav-link green-back"}
+                            onClick={() => {
+                                this.setState({
+                                    showing_late: false,
+                                    shown_submissions: this.on_time_submissions
+                                });
+                            }}
+                        >
+                            On time
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            class={this.state.showing_late
+                                ? "pointer nav-link green-back" : "pointer nav-link"}
+                            onClick={() => {
+                                this.setState({
+                                    showing_late: true,
+                                    shown_submissions: this.late_submissions
+                                });
+                            }}
+                        >
+                            Late
+                        </a>
+                    </li>
+                </ul>
+                {this.state.shown_submissions.map(submission => {
                     return (
                         <div key={submission.contest_submission_id} class="submission">
                             <div class="heading">
                                 <div class="main">
                                     <div class="summary">
-                                        {submission.length} characters with {submission.language}
+                                        {submission.length} bytes with {submission.language}
                                         {' '}
                                         {submission.overall_first && <img src="/images/awards/1.png" />}
                                         {' '}
@@ -326,6 +427,17 @@ class Contest extends React.Component {
                                             ></a>
                                         )}
                                     </div>
+                                    {!this.state.contest.active && submission.explanation.length > 1 && (
+                                        <div
+                                            id={submission.contest_submission_id}
+                                            class="explanation_text pointer green"
+                                            onClick={this.change_shown_explanation}>
+                                            {this.state.shown_explanation !== submission.contest_submission_id
+                                                ? "Show Explanation"
+                                                : "Hide Explanation"
+                                            }
+                                        </div>
+                                    )}
                                 </div>
                                 <a href={'/@' + submission.user.username} class="user">
                                     <img src={ctx.cdn_url + submission.user.avatar_url} />
@@ -338,9 +450,19 @@ class Contest extends React.Component {
                                     {submission.solution}
                                 </pre>
                             )}
+                            {!this.state.contest.active &&
+                                this.state.shown_explanation === submission.contest_submission_id
+                                && (
+                                    <div
+                                        class="margintop15"
+                                        dangerouslySetInnerHTML={{ __html: submission.explanation }}
+                                    ></div>
+                                )}
+
                         </div>
                     );
-                })}
+                })
+                }
             </div>
         );
     }

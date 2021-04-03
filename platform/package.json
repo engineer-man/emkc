@@ -1,4 +1,12 @@
 {
+    "scripts": {
+        "prod": "run-s prod:webpack prod:app",
+        "prod:webpack": "webpack --mode production --colors --progress",
+        "prod:app": "node emkc.js",
+        "dev": "run-p dev:webpack dev:app",
+        "dev:webpack": "webpack --mode development --colors --watch --progress",
+        "dev:app": "nodemon --ignore resources/ --ignore public/ -e js,twig emkc.js"
+    },
     "dependencies": {
         "@babel/core": "7.7.4",
         "@babel/plugin-proposal-object-rest-spread": "7.7.4",
@@ -40,6 +48,7 @@
         "regenerator-runtime": "0.13.3",
         "request-promise": "4.2.2",
         "sails": "0.12.14",
+        "sanitize-html": "2.3.3",
         "sequelize": "6.3.5",
         "socket.io-redis": "1.0.0",
         "style-loader": "1.0.1",
@@ -47,13 +56,5 @@
         "uuid": "3.2.1",
         "webpack": "^4.41.2",
         "webpack-cli": "3.3.10"
-    },
-    "scripts": {
-        "prod": "run-s prod:webpack prod:app",
-        "prod:webpack": "webpack --mode production --colors --progress",
-        "prod:app": "node emkc.js",
-        "dev": "run-p dev:webpack dev:app",
-        "dev:webpack": "webpack --mode development --colors --watch --progress",
-        "dev:app": "nodemon --ignore resources/ --ignore public/ -e js,twig emkc.js"
     }
 }

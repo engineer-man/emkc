@@ -49,6 +49,10 @@ let constant = {
         disallowed_languages: [
             'python2',
             'awk'
+        ],
+        golf_languages: [
+            'jelly',
+            'osabie'
         ]
     },
 

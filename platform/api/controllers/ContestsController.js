@@ -82,7 +82,9 @@ module.exports = {
                             'language',
                             'solution',
                             'length',
-                            'created_at'
+                            'explanation',
+                            'created_at',
+                            'late'
                         ],
                         include: [
                             {
@@ -125,7 +127,7 @@ module.exports = {
         contest.submissions
             .for_each((submission, i) => {
                 // overall awards for top 3 solutions submitted by unique users
-                if (!awarded_users.includes(submission.user_id) && top <= 3) {
+                if (!submission.late && !awarded_users.includes(submission.user_id) && top <= 3) {
                     switch (top) {
                         case 1:
                             submission.dataValues.overall_first = true;
@@ -144,7 +146,7 @@ module.exports = {
                 }
 
                 // per language awards for top solution in each language
-                if (!awarded_languages.includes(submission.language)) {
+                if (!submission.late && !awarded_languages.includes(submission.language)) {
                     submission.dataValues.language_first = true;
                     awarded_languages.push(submission.language);
                 }
@@ -171,8 +173,8 @@ module.exports = {
     },
 
     async submit(req, res) {
-        let { contest_id, language, solution } = req.body;
-
+        let { contest_id, language, solution, explanation } = req.body;
+        explanation = explanation || '';
         solution = solution.trim();
 
         let contest = await db.contests
@@ -188,12 +190,14 @@ module.exports = {
         languages = languages.data.filter(lang => lang.name === language);
 
         // To prevent submissions by alias
-        if (!contest.active || test_cases.length !== expected_results.length ||
+        if (test_cases.length !== expected_results.length ||
             constant.contests.disallowed_languages.includes(language) ||
             !languages.length) {
             return res
                 .status(400)
-                .send();
+                .send({
+                    error_message: 'An error has occurred while submitting your solution'
+                });
         }
 
         let is_valid = await contests
@@ -212,18 +216,20 @@ module.exports = {
                 where: {
                     contest_id,
                     language,
-                    user_id: req.local.user_id
+                    user_id: req.local.user_id,
+                    late: !contest.active
                 }
             });
 
         if (submission) {
             submission.language = language;
             submission.solution = solution;
-            submission.length = solution.length;
+            submission.length = new TextEncoder().encode(solution).length;
+            submission.explanation = explanation;
 
             let prev_length = submission.previous('length');
 
-            if (submission.length < prev_length) {
+            if (submission.length < prev_length && contest.active) {
                 submission.created_at = util.now();
 
                 discord
@@ -239,8 +245,8 @@ module.exports = {
                             author: {
                                 name:
                                     `${req.local.user.display_name} updated their ${submission.language} solution ` +
-                                    `with one that is ${submission.length} characters long ` +
-                                    `(a ${prev_length-submission.length} character improvement)`
+                                    `with one that is ${submission.length} bytes large ` +
+                                    `(a ${prev_length-submission.length} byte improvement)`
                             },
                             footer: {
                                 icon_url: constant.cdn_url + req.local.user.avatar_url,
@@ -251,8 +257,8 @@ module.exports = {
                     .catch(err => {});
             }
 
-            await submission
-                .save();
+            await submission.save();
+
         } else {
             submission = await db.contest_submissions
                 .create({
@@ -260,31 +266,35 @@ module.exports = {
                     contest_id,
                     language,
                     solution,
-                    length: solution.length
+                    length: new TextEncoder().encode(solution).length,
+                    explanation,
+                    late: !contest.active
                 });
 
-            discord
-                .api('post', `/channels/${constant.channels.emkc}/messages`, {
-                    embed: {
-                        title: contest.name,
-                        description:
-                            `Can you make a better solution? ` +
-                            `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
-                        type: 'rich',
-                        color: 0x84e47f,
-                        url: `${constant.base_url}${contest.url}`,
-                        author: {
-                            name:
-                                `${req.local.user.display_name} submitted an initial ${submission.length} ` +
-                                `character solution with ${submission.language}`
-                        },
-                        footer: {
-                            icon_url: constant.cdn_url + req.local.user.avatar_url,
-                            text: `submitted by ${req.local.user.display_name} right now`
+            if (contest.active) {
+                discord
+                    .api('post', `/channels/${constant.channels.emkc}/messages`, {
+                        embed: {
+                            title: contest.name,
+                            description:
+                                `Can you make a better solution? ` +
+                                `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
+                            type: 'rich',
+                            color: 0x84e47f,
+                            url: `${constant.base_url}${contest.url}`,
+                            author: {
+                                name:
+                                    `${req.local.user.display_name} submitted an initial ${submission.length} ` +
+                                    `byte solution with ${submission.language}`
+                            },
+                            footer: {
+                                icon_url: constant.cdn_url + req.local.user.avatar_url,
+                                text: `submitted by ${req.local.user.display_name} right now`
+                            }
                         }
-                    }
-                })
-                .catch(err => {});
+                    })
+                    .catch(err => {});
+            }
         }
 
         return res
@@ -295,9 +305,17 @@ module.exports = {
     },
 
     async disallowed_languages(req, res) {
+        let { contest_id } = req.params;
+        let contest = await db.contests.find_one({
+            where: {
+                contest_id
+            }
+        });
+        let disallowed_languages = contest.disallowed_languages
+            ? contest.disallowed_languages.split(',') : [];
         return res
             .status(200)
-            .send(constant.contests.disallowed_languages);
-    }
+            .send(disallowed_languages);
+    },
 
 };

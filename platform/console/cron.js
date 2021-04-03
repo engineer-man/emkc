@@ -139,6 +139,9 @@ const cron = {
                     {
                         model: db.contest_submissions,
                         as: 'submissions',
+                        where: {
+                            late: false
+                        },
                         include: [
                             {
                                 model: db.users,

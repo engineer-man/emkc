@@ -1,4 +1,14 @@
 const Sequelize = require('sequelize');
+const sanitize_html = require('sanitize-html');
+
+const allowedTags = ['p', 'strong', 'em', 'u', 'blockquote', 'pre', 'span', 'a', 'ol', 'ul', 'li', 's']
+const allowedAttributes = {
+    a: ['href', 'rel', 'target']
+}
+const allowedClasses = {
+    pre: ['ql-syntax'],
+    span: ['hljs-attribute']
+}
 
 module.exports = (sequelize, DataTypes) => {
     class contest_submissions extends Sequelize.Model { }
@@ -15,9 +25,11 @@ module.exports = (sequelize, DataTypes) => {
             language: DataTypes.STRING,
             solution: DataTypes.TEXT('medium'),
             length: DataTypes.INTEGER,
+            explanation: DataTypes.TEXT('medium'),
             award_place: DataTypes.INTEGER,
             award_points: DataTypes.INTEGER,
-            created_at: DataTypes.DATE
+            created_at: DataTypes.DATE,
+            late: DataTypes.BOOLEAN
         },
         {
             sequelize,
@@ -26,6 +38,15 @@ module.exports = (sequelize, DataTypes) => {
             hooks: {
                 beforeCreate(instance) {
                     instance.created_at = util.now();
+                    instance.explanation = sanitize_html(instance.explanation, {
+                        allowedTags, allowedAttributes, allowedClasses
+                    });
+                },
+
+                beforeUpdate(instance) {
+                    instance.explanation = sanitize_html(instance.explanation, {
+                        allowedTags, allowedAttributes, allowedClasses
+                    });
                 }
             }
         }
