@@ -2,6 +2,7 @@ module.exports.routes = {
 
     'GET /': 'HomeController.home',
     'GET /logout': 'HomeController.logout',
+    'GET /log_back': 'HomeController.log_back',
     'GET /auth/discord': 'AuthController.discord',
     'GET /auth/discord_cb': 'AuthController.discord_cb',
     'GET /privacy': 'HomeController.privacy',
@@ -56,6 +57,7 @@ module.exports.routes = {
     'POST /admin/contests/update/:contest_id': 'admin/ContestsController.update',
     'POST /admin/submissions/validate/:contest_id': 'admin/ContestsController.validate_submissions',
     'POST /admin/submissions/delete': 'admin/ContestsController.delete_submission',
+    'GET /admin/login_as': 'admin/UsersController.login_as',
 
     // service api
     'GET /api/internal/chats/last': 'api/internal/ChatsController.last',

@@ -77,6 +77,10 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% if req.session.old_id %}
+                        <a href="/log_back">Log back</a></button>
+                    {% endif %}
+
                 </div>
                 <div class="search" style="visibility: hidden;">
                     <input type="text" placeholder="Search..." />
@@ -112,7 +116,8 @@
                 <div class="em_staff_container">
                     Staff Stuff:
                     <a href="/admin/contests">Contests</a> |
-                    <a href="/admin/challenges">Challenges</a>
+                    <a href="/admin/challenges">Challenges</a> |
+                    <a href="/admin/login_as">Log in as a user</a>
                 </div>
             {% endif %}
 
