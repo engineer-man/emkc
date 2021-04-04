@@ -77,10 +77,6 @@
                             {% endif %}
                         </div>
                     </div>
-                    {% if req.session.old_id %}
-                        <a href="/log_back">Log back</a></button>
-                    {% endif %}
-
                 </div>
                 <div class="search" style="visibility: hidden;">
                     <input type="text" placeholder="Search..." />
@@ -102,6 +98,9 @@
                                 {% endif %}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/logout">Logout</a>
+                                {% if req.session.old_id %}
+                                    <a class="dropdown-item" href="/logout_as">Logout Admin</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -115,9 +114,9 @@
             {% if sails.twig.starts_with(req.path, '/admin') and req.local.user.is_staff %}
                 <div class="em_staff_container">
                     Staff Stuff:
+                    <a href="/admin/users">Users</a> |
                     <a href="/admin/contests">Contests</a> |
-                    <a href="/admin/challenges">Challenges</a> |
-                    <a href="/admin/login_as">Log in as a user</a>
+                    <a href="/admin/challenges">Challenges</a>
                 </div>
             {% endif %}
 

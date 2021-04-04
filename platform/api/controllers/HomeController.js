@@ -23,13 +23,15 @@ module.exports = {
         return res.view();
     },
 
-    async log_back(req, res) {
+    async logout_as(req, res) {
         if (!req.session.old_id) {
             // Logging back from nothing
             return res.view('home/fourohfour');
         }
+
         req.session.user_id = req.session.old_id;
         delete req.session.old_id;
+        
         return res.redirect('/');
     },
 
