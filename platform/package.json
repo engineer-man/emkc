@@ -10,6 +10,7 @@
     "dependencies": {
         "@babel/core": "7.7.4",
         "@babel/plugin-proposal-object-rest-spread": "7.7.4",
+        "@babel/plugin-proposal-class-properties": "7.7.4",
         "@babel/plugin-transform-async-to-generator": "7.7.4",
         "@babel/preset-env": "7.7.4",
         "@babel/preset-react": "7.7.4",
@@ -48,7 +49,6 @@
         "regenerator-runtime": "0.13.3",
         "request-promise": "4.2.2",
         "sails": "0.12.14",
-        "sanitize-html": "2.3.3",
         "sequelize": "6.3.5",
         "socket.io-redis": "1.0.0",
         "style-loader": "1.0.1",

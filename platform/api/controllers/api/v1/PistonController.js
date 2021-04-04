@@ -42,6 +42,8 @@ module.exports = {
             let entry = await redis.get(`piston-${req.ip}`);
 
             if (entry) {
+                redis.disconnect();
+
                 return res
                     .status(429)
                     .send({

@@ -20,7 +20,6 @@ class Contest extends React.Component {
             passed: true,
             validating: false,
             submitting: false,
-            shown_explanation: -1, // ID of the submission that an explanation is being shown for
             shown_submissions: [],
             showing_late: false
         };
@@ -28,25 +27,23 @@ class Contest extends React.Component {
         this.on_time_submissions = [];
         this.late_submissions = [];
 
-        if (props.submissions && props.submissions.length > 0) {
-            let submission = props.submissions
-                .sort((a,b) => a.length > b.length ? 1 : -1)[0];
+        // choose the right initial on time solution by length
+        let submission = props.submissions
+            .filter(submission => !submission.late)
+            .sort((a,b) => a.length > b.length ? 1 : -1)[0];
 
+        if (submission) {
             this.state.language = submission.language;
             this.state.solution = submission.solution;
             this.state.explanation = submission.explanation;
         }
 
         if (this.state.contest.submissions.length > 0) {
-            this.on_time_submissions = this.state.contest.submissions.filter(submission => !submission.late);
-            this.late_submissions = this.state.contest.submissions.filter(submission => submission.late);
+            this.on_time_submissions = this.state.contest.submissions
+                .filter(submission => !submission.late);
+            this.late_submissions = this.state.contest.submissions
+                .filter(submission => submission.late);
         }
-
-        this.handle_change = this.handle_change.bind(this);
-        this.submit = this.submit.bind(this);
-        this.validate = this.validate.bind(this);
-        this.change_shown_explanation = this.change_shown_explanation.bind(this);
-        this.highlight_blocks = this.highlight_blocks.bind(this);
     }
 
     highlight_blocks() {
@@ -58,27 +55,10 @@ class Contest extends React.Component {
     async componentDidMount() {
         this.highlight_blocks();
 
-        this.quill = null;
-        if (ctx.user_id) {
-            this.quill = new Quill('#explanation', {
-                theme: 'snow',
-                modules: {
-                    syntax: true,
-                    toolbar: [
-                        ['bold', 'italic', 'underline', 'strike'],
-                        ['code-block', 'link'],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        ['clean']
-                    ]
-                }
-            });
-
-            this.quill.clipboard.dangerouslyPasteHTML(this.state.explanation);
-        }
-
         let languages = await axios.get('/api/v1/piston/versions');
-        let disallowed_languages = await axios.get('/contests/disallowed_languages/'
-            + this.state.contest.contest_id);
+        let disallowed_languages = await axios
+            .get('/contests/disallowed_languages/' + this.state.contest.contest_id);
+
         disallowed_languages = disallowed_languages.data;
         languages = languages.data.filter(lang => !disallowed_languages.includes(lang.name));
 
@@ -89,20 +69,19 @@ class Contest extends React.Component {
         });
     }
 
-    handle_change(e) {
+    handle_change = e => {
         let id = e.target.id;
         let value = e.target.value;
 
         if (id === 'language') {
             let submission = this.props.submissions
-                .find(submission => submission.language === value
-                    && submission.late === !this.state.contest.active);
-            let explanation = submission ? submission.explanation : '';
-            this.quill.clipboard.dangerouslyPasteHTML(explanation);
+                .find(submission => {
+                    return submission.language === value && !!submission.late === !this.state.contest.active
+                });
 
             this.setState({
                 solution: submission ? submission.solution : '',
-                explanation
+                explanation: submission ? submission.explanation : '',
             });
         }
 
@@ -122,25 +101,45 @@ class Contest extends React.Component {
         }
     }
 
-    change_shown_explanation(e) {
-        let submission_id = parseInt(e.target.id);
-        if (this.state.shown_explanation !== submission_id) {
-            return this.setState({
-                shown_explanation: submission_id
-            }, this.highlight_blocks);
-        }
-        return this.setState({
-            shown_explanation: -1
-        }, this.highlight_blocks);
+    toggle_explanation = submission => {
+        submission.explanation_open = !submission.explanation_open;
+
+        this.setState(prev => {
+            return {
+                shown_submissions: prev.shown_submissions
+            };
+        });
     }
 
-    async submit() {
+    set_late = showing_late => {
+        // update the main list of submissions
+        let shown_submissions = showing_late
+            ? this.late_submissions
+            : this.on_time_submissions;
+
+        // update the user specific submission
+        let submission = this.props.submissions
+            .filter(submission => showing_late ? submission.late : !submission.late)
+            .sort((a,b) => a.length > b.length ? 1 : -1)
+            [0];
+
+        this.setState(prev => {
+            return {
+                showing_late,
+                shown_submissions,
+                language: submission ? submission.language : prev.language,
+                solution: submission ? submission.solution : '',
+                explanation: submission ? submission.explanation : '',
+            };
+        });
+    }
+
+    submit = async () => {
         this.setState({
             passed: true
         });
 
-        const { language, solution } = this.state;
-        const explanation = this.quill.getText().length > 1 ? this.quill.root.innerHTML : '';
+        const { language, solution, explanation } = this.state;
 
         this.setState({
             submitting: true
@@ -162,6 +161,7 @@ class Contest extends React.Component {
             return bootbox
                 .alert(result.data.error_message);
         }
+
         if (result.data.passed) {
             return bootbox
                 .alert('Your solution succeeded and has been recorded/updated.', () => {
@@ -187,8 +187,10 @@ class Contest extends React.Component {
                     className: 'btn-secondary'
                 }
             },
-            callback: async function (result) {
-                if (!result) return;
+            callback: async result => {
+                if (!result) {
+                    return;
+                }
 
                 let res = await axios
                     .post('/admin/submissions/delete', { contest_submission_id });
@@ -198,7 +200,7 @@ class Contest extends React.Component {
         });
     }
 
-    async validate() {
+    validate = async () => {
         this.setState({
             validating: true
         });
@@ -227,6 +229,8 @@ class Contest extends React.Component {
     }
 
     render() {
+        const active = this.state.contest.active;
+
         return (
             <div class="em_contests_contest">
                 <h4 class="header green f500 marginbottom20">{this.state.contest.name}</h4>
@@ -264,86 +268,99 @@ class Contest extends React.Component {
                 <div class="marginbottom20">
                     {ctx.user_id && (
                         <div>
-                            {this.state.contest.active && (
-                                <p>
-                                    It's recommended that you compose your solution separately and just paste
-                                    here once you're ready. After clicking "Submit Solution" your solution will be
-                                    tested with the given inputs. If successful, your solution will be saved. Be sure
-                                    to choose the correct language.
-                                </p>
+                            {(active || this.state.showing_late) && (
+                                <>
+                                    <p>
+                                        It's recommended that you compose your solution separately and just paste
+                                        here once you're ready.
+                                        After clicking "Submit Solution" your solution will be
+                                        tested with the given inputs. If successful, your solution will be saved. Be sure
+                                        to choose the correct language.
+                                    </p>
+                                    <div class="form-group">
+                                        <label class="green">Language</label>
+                                        <select
+                                            id="language"
+                                            class="form-control"
+                                            style={{ width: '200px'}}
+                                            value={this.state.language}
+                                            onChange={this.handle_change}>
+                                            {this.state.languages.map(language => {
+                                                return (
+                                                    <option
+                                                        key={language.name}
+                                                        value={language.name}>{language.name} ({language.version})</option>
+                                                )
+                                            })}
+                                        </select>
+                                    </div>
+                                    {this.props.submissions && this.props.submissions.length > 0 && (
+                                        <div class="form-group">
+                                            <small>
+                                                You have solutions in:
+                                                {' '}
+                                                {this.props.submissions
+                                                    .filter(s => this.state.showing_late ? s.late : !s.late)
+                                                    .map((submission, i) => {
+                                                        return (
+                                                            <span key={submission.language + "-" + submission.late}>
+                                                                {submission.language} ({submission.length})
+                                                                {i + 1 < this.props.submissions.length && ', '}
+                                                            </span>
+                                                        );
+                                                    })
+                                                }
+                                            </small>
+                                        </div>
+                                    )}
+                                    <div class="form-group">
+                                        <label class="green">Solution</label>
+                                        <textarea
+                                            id="solution"
+                                            rows="6"
+                                            class="form-control"
+                                            value={this.state.solution}
+                                            onChange={this.handle_change}
+                                        ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="green">
+                                            (Optional) Share your knowledge!
+                                        </label>
+                                        <br />
+                                        <label>
+                                            Explain your solution so others can understand it when the contest is over.
+                                        </label>
+                                        <textarea
+                                            id="explanation"
+                                            rows="6"
+                                            class="form-control"
+                                            value={this.state.explanation}
+                                            onChange={this.handle_change}
+                                        ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-success"
+                                            disabled={this.state.submitting}
+                                            onClick={this.submit}>
 
+                                            {this.state.submitting ? 'Submitting...' : 'Submit Solution'}
+                                        </button>
+                                        {' '}
+                                        {!this.state.passed && (
+                                            <span class="text-danger">Sorry, your solution does not satisfy the requirements</span>
+                                        )}
+                                    </div>
+                                </>
                             ) || (
                                 <p class="text-warning">
-                                    This contest is no longer active but you can click "Submit Solution" to make a late
-                                    submission (you will not receive score for your submission).
-                                    Your solution will be tested with the given inputs and saved if it
-                                    passes all the tests. Be sure to choose the correct language.
+                                    This contest is no longer active but you can still submit a late solution.
+                                    Click on the "Late" tab below and then submit as usual.
+                                    Note that late submissions will not receive any points.
                                 </p>
                             )}
-                            <div class="form-group">
-                                <label>Language</label>
-                                <select
-                                    id="language"
-                                    class="form-control"
-                                    style={{ width: '200px'}}
-                                    value={this.state.language}
-                                    onChange={this.handle_change}>
-                                    {this.state.languages.map(language => {
-                                        return (
-                                            <option
-                                                key={language.name}
-                                                value={language.name}>{language.name} ({language.version})</option>
-                                        )
-                                    })}
-                                </select>
-                            </div>
-                            {this.props.submissions && this.props.submissions.length > 0 && (
-                                <div class="form-group">
-                                    <small>
-                                        You have solutions in:
-                                        {' '}
-                                        {this.props.submissions.map((submission, i) => {
-                                            return (
-                                                <span key={submission.language + "-" + submission.late}>
-                                                    {submission.language} ({submission.length})
-                                                    {i + 1 < this.props.submissions.length && ', '}
-                                                </span>
-                                            );
-                                        })}
-                                    </small>
-                                </div>
-                            )}
-                            <div class="form-group">
-                                <label>Solution</label>
-                                <textarea
-                                    id="solution"
-                                    rows="6"
-                                    class="form-control"
-                                    value={this.state.solution}
-                                    onChange={this.handle_change}
-                                ></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    (Optional) Share your knowledge!<br/>Explain your solution so others
-                                    can understand it when the contest is over.
-                                </label>
-                                <div id="explanation"></div>
-                            </div>
-                            <div class="form-group">
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-success"
-                                    disabled={this.state.submitting}
-                                    onClick={this.submit}>
-
-                                    {this.state.submitting ? 'Submitting...' : 'Submit Solution'}
-                                </button>
-                                {' '}
-                                {!this.state.passed && (
-                                    <span class="text-danger">Sorry, your solution does not satisfy the requirements</span>
-                                )}
-                            </div>
                         </div>
                     ) || (
                         <div>
@@ -352,9 +369,7 @@ class Contest extends React.Component {
                     )}
                 </div>
 
-                <h5 class="green">
-                    Submissions
-                    {' '}
+                <h5 class="green marginbottom20">
                     {!!ctx.is_staff && (
                         <div class="float-right">
                             <button
@@ -368,37 +383,28 @@ class Contest extends React.Component {
                             {' '}
                         </div>
                     )}
+                    Submissions
                 </h5>
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a
-                            class={this.state.showing_late
-                                ? "pointer nav-link" : "pointer nav-link green-back"}
-                            onClick={() => {
-                                this.setState({
-                                    showing_late: false,
-                                    shown_submissions: this.on_time_submissions
-                                });
-                            }}
-                        >
-                            On time
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a
-                            class={this.state.showing_late
-                                ? "pointer nav-link green-back" : "pointer nav-link"}
-                            onClick={() => {
-                                this.setState({
-                                    showing_late: true,
-                                    shown_submissions: this.late_submissions
-                                });
-                            }}
-                        >
-                            Late
-                        </a>
-                    </li>
-                </ul>
+                {!active && (
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a
+                                class={this.state.showing_late ? 'pointer nav-link' : 'pointer nav-link tab-active'}
+                                onClick={() => this.set_late(false)}>
+
+                                On time
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                class={this.state.showing_late ? 'pointer nav-link tab-active' : 'pointer nav-link'}
+                                onClick={() => this.set_late(true)}>
+
+                                Late
+                            </a>
+                        </li>
+                    </ul>
+                )}
                 {this.state.shown_submissions.map(submission => {
                     return (
                         <div key={submission.contest_submission_id} class="submission">
@@ -427,15 +433,12 @@ class Contest extends React.Component {
                                             ></a>
                                         )}
                                     </div>
-                                    {!this.state.contest.active && submission.explanation.length > 1 && (
+                                    {!active && !!submission.explanation && (
                                         <div
                                             id={submission.contest_submission_id}
                                             class="explanation_text pointer green"
-                                            onClick={this.change_shown_explanation}>
-                                            {this.state.shown_explanation !== submission.contest_submission_id
-                                                ? "Show Explanation"
-                                                : "Hide Explanation"
-                                            }
+                                            onClick={() => this.toggle_explanation(submission)}>
+                                            {submission.explanation_open ? 'Hide' : 'Show'} Explanation
                                         </div>
                                     )}
                                 </div>
@@ -445,24 +448,22 @@ class Contest extends React.Component {
                                     {submission.user.username}
                                 </a>
                             </div>
-                            {!this.state.contest.active && (
+                            {!active && (
                                 <pre class="solution">
                                     {submission.solution}
                                 </pre>
                             )}
-                            {!this.state.contest.active &&
-                                this.state.shown_explanation === submission.contest_submission_id
-                                && (
-                                    <div
-                                        class="margintop15"
-                                        dangerouslySetInnerHTML={{ __html: submission.explanation }}
-                                    ></div>
-                                )}
-
+                            {!active && !!submission.explanation_open && (
+                                <div class="margintop10">
+                                    <small class="green">The following explanation was provided:</small>
+                                    <pre class="solution">
+                                        {submission.explanation}
+                                    </pre>
+                                </div>
+                            )}
                         </div>
                     );
-                })
-                }
+                })}
             </div>
         );
     }

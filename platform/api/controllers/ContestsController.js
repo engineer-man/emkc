@@ -174,6 +174,7 @@ module.exports = {
 
     async submit(req, res) {
         let { contest_id, language, solution, explanation } = req.body;
+
         explanation = explanation || '';
         solution = solution.trim();
 
@@ -187,12 +188,15 @@ module.exports = {
         let test_cases = contest.input.split('\n');
         let expected_results = contest.output.split('\n');
         let languages = await axios.get(constant.get_piston_url() + '/versions');
-        languages = languages.data.filter(lang => lang.name === language);
+
+        languages = languages.data
+            .filter(lang => lang.name === language);
 
         // To prevent submissions by alias
         if (test_cases.length !== expected_results.length ||
             constant.contests.disallowed_languages.includes(language) ||
             !languages.length) {
+
             return res
                 .status(400)
                 .send({
@@ -217,7 +221,7 @@ module.exports = {
                     contest_id,
                     language,
                     user_id: req.local.user_id,
-                    late: !contest.active
+                    late: contest.active ? 0 : 1
                 }
             });
 
@@ -306,13 +310,18 @@ module.exports = {
 
     async disallowed_languages(req, res) {
         let { contest_id } = req.params;
-        let contest = await db.contests.find_one({
-            where: {
-                contest_id
-            }
-        });
+
+        let contest = await db.contests
+            .find_one({
+                where: {
+                    contest_id
+                }
+            });
+
         let disallowed_languages = contest.disallowed_languages
-            ? contest.disallowed_languages.split(',') : [];
+            ? contest.disallowed_languages.split(',')
+            : [];
+
         return res
             .status(200)
             .send(disallowed_languages);

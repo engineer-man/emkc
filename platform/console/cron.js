@@ -140,7 +140,7 @@ const cron = {
                         model: db.contest_submissions,
                         as: 'submissions',
                         where: {
-                            late: false
+                            late: constant.no
                         },
                         include: [
                             {
