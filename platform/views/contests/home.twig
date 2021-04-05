@@ -8,13 +8,14 @@
                 <h4 class="f300 green">Contests</h4>
 
                 <p>
-                    The Engineer Man Knowledge Center hosts contests periodically which are done in a Code Golf format.
+                    The Engineer Man Knowledge Center hosts contests weekly which are done in a Code Golf format.
                     For those not familiar with Code Golf, it basically means that the winner of the contest is the person
-                    who can accomplish the given objective with the least amount of code, measured in characters.
+                    who can accomplish the given objective with the least amount of code, measured in bytes.
                 </p>
 
                 <p>
-                    Supported languages are those which <a href="https://github.com/engineer-man/piston" target="_blank">Piston</a> supports. To request new languages,
+                    Supported languages are those which <a href="https://github.com/engineer-man/piston" target="_blank">Piston</a> supports.
+                    To request new languages,
                     submit a request in #emkc-felix-piston on <a href="https://discord.gg/engineerman">Discord</a>. Our intent
                     is to add proper golfing languages over time as well as a separate leaderboard for these languages.
                 </p>
@@ -36,10 +37,11 @@
                         Please see <a href="/community/power">how to gain power</a> for more information.
                     </li>
                     <li>
-                        Leading and trailing whitespace is automatically trimmed before calculating the number of characters used.
+                        Leading and trailing whitespace is automatically trimmed before calculating the number of bytes used.
                     </li>
                     <li>
-                        Inputs are provided as command line arguments (ARGV).
+                        Inputs are provided as command line arguments (ARGV) and standard input (STDIN) with each
+                        input separated by a newline character, you may use either one.
                     </li>
                 </ol>
 
@@ -58,16 +60,11 @@
                         into any of the other contest languages (julia, perl, python, etc.).
                     </li>
                     <li>
-                        If you submit a C solution, you may not copy and paste that solution and submit it for C++ as well.
-                        The same is true for js/ts/deno, nasm32/nasm64.
+                        Don't submit duplicate solutions for similar languages (e.g. c/c++, js/ts/deno, etc).
                     </li>
                     <li>
                         Invalid solutions and solutions which discover the secret input and are based on that secret input
                         will be removed.
-                    </li>
-                    <li>
-                        Code compression by way of multibyte characters are not allowed. Compressed code will be uncompressed
-                        at the end of the contest if necessary.
                     </li>
                 </ol>
 

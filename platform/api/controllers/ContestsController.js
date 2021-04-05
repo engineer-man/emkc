@@ -153,6 +153,7 @@ module.exports = {
 
                 // hide the solution in the payload to prevent cheating
                 if (contest.active) {
+                    delete submission.dataValues.explanation;
                     delete submission.dataValues.solution;
                 }
             });
