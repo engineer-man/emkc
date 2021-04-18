@@ -25,7 +25,7 @@ module.exports = {
                     }
                 ],
                 order: [
-                    ['contest_id', 'desc']
+                    ['end_date', 'desc']
                 ]
             });
 
@@ -53,7 +53,7 @@ module.exports = {
                     }
                 ],
                 order: [
-                    ['contest_id', 'desc'],
+                    ['end_date', 'desc'],
                     [{ model: db.contest_submissions, as: 'submissions'}, 'created_at']
                 ]
             });
