@@ -132,7 +132,7 @@ const cron = {
                         [$lt]: util.now()
                     },
                     contest_id: {
-                        [$not_id]: [30]
+                        [$not_in]: [30]
                     }
                 },
                 include: [
