@@ -346,11 +346,14 @@ module.exports = {
             let test_idx = Math.floor(Math.random() * inputs.length);
             let outputs = test.output.split('\n')
 
+            let result = await piston.execute(language, source, inputs[test_idx].split('|'),'','*');
+            result = result.run.stdout.trim();
+
             results.push({
                 name: test.name,
                 input: inputs[test_idx],
                 expected: outputs[test_idx],
-                result: await piston.execute(language, source, inputs[test_idx].split('|'))
+                result
             });
         }
 

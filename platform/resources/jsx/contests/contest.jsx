@@ -14,6 +14,7 @@ class Contest extends React.Component {
         this.state = {
             contest: props.contest,
             language: '',
+            language_version: '',
             solution: '',
             explanation: '',
             languages: [],
@@ -34,6 +35,7 @@ class Contest extends React.Component {
 
         if (submission) {
             this.state.language = submission.language;
+            this.state.language_version = submission.language_version;
             this.state.solution = submission.solution;
             this.state.explanation = submission.explanation;
         }
@@ -65,6 +67,7 @@ class Contest extends React.Component {
         this.setState({
             languages,
             language: this.state.language || languages[0].name,
+            language_version: this.state.language_version || languages[0].version,
             shown_submissions: this.on_time_submissions
         });
     }
@@ -74,20 +77,26 @@ class Contest extends React.Component {
         let value = e.target.value;
 
         if (id === 'language') {
+            
+
+            let [language, language_version] = value.split('-');
+
             let submission = this.props.submissions
                 .find(submission => {
-                    return submission.language === value && !!submission.late === !this.state.contest.active
+                    return submission.language === language && submission.language_version === language_version && !!submission.late === !this.state.contest.active
                 });
 
             this.setState({
                 solution: submission ? submission.solution : '',
                 explanation: submission ? submission.explanation : '',
+                language, language_version
+            });
+        }else{
+
+            this.setState({
+                [id]: value
             });
         }
-
-        this.setState({
-            [id]: value
-        });
     }
 
     toggle_explanation = submission => {
@@ -128,7 +137,7 @@ class Contest extends React.Component {
             passed: true
         });
 
-        const { language, solution, explanation } = this.state;
+        const { language, solution, explanation, language_version } = this.state;
 
         this.setState({
             submitting: true
@@ -139,7 +148,8 @@ class Contest extends React.Component {
                 contest_id: this.state.contest.contest_id,
                 language,
                 solution,
-                explanation
+                explanation,
+                language_version
             });
 
         this.setState({
@@ -268,13 +278,13 @@ class Contest extends React.Component {
                                             id="language"
                                             class="form-control"
                                             style={{ width: '200px'}}
-                                            value={this.state.language}
+                                            value={this.state.language + "-" + this.state.language_version}
                                             onChange={this.handle_change}>
                                             {this.state.languages.map(language => {
                                                 return (
                                                     <option
-                                                        key={language.name}
-                                                        value={language.name}>{language.name} ({language.version})</option>
+                                                        key={language.name + "-" + language.version}
+                                                        value={language.name + "-" + language.version}>{language.name} ({language.version})</option>
                                                 )
                                             })}
                                         </select>

@@ -4,7 +4,7 @@ const timeout = ms => new Promise(res => set_timeout(res, ms));
 
 module.exports = {
 
-    async check_submission_validity(test_cases, expected_results, solution, language) {
+    async check_submission_validity(test_cases, expected_results, solution, language, version) {
         let counter = 0;
 
         while (counter < test_cases.length) {
@@ -15,19 +15,17 @@ module.exports = {
 
             let args = current_test_case.trim().split('|');
 
-            let test_result = await axios
-                ({
-                    method: 'post',
-                    url: constant.get_piston_url() + '/execute',
-                    data: {
-                        language,
-                        source: solution,
-                        args,
-                        stdin: args.join('\n'),
-                    }
-                });
+            let test_result = await piston.execute(
+                language,
+                solution,
+                args,
+                args.join('\n'),
+                version
+            );
 
-            if (test_result.data.stdout !== current_expected_result) {
+
+
+            if (test_result.run.stdout.trim() !== current_expected_result) {
                 return false;
             }
 

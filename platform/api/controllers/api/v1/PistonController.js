@@ -13,15 +13,12 @@ module.exports = {
                 .send();
         }
 
-        let result = await axios
-            ({
-                method: 'get',
-                url: constant.get_piston_url() + '/versions'
-            });
+
+        let result = await piston.runtimes();
 
         return res
             .status(200)
-            .send(result.data);
+            .send(result);
     },
 
     async execute(req, res) {
@@ -56,73 +53,59 @@ module.exports = {
 
         redis.disconnect();
 
-        let { language, source, args, stdin } = req.body;
+        let { language, source, args, stdin, version } = req.body;
 
-        if (!Array.is_array(args)) {
-            args = [];
-        }
-
-        let result = await axios
-            ({
-                method: 'post',
-                url: 'http://' + sails.config.piston.host + '/execute',
-                data: {
-                    language,
-                    source,
-                    args,
-                    stdin
-                }
-            });
-
-        if (result.status === 400) {
-            return res
-                .status(400)
-                .send({
-                    message: result.data.message
-                });
-        }
-
-        if (result.status >= 300) {
-            return res
-                .status(500)
-                .send({
-                    message: 'Execution problem'
-                });
-        }
-
-        if (req.body.log !== 0) {
-            // logging for piston api direct usage
-            db.piston_runs
-                .create({
+        try {
+            let result = await piston.execute(language,
+                source,
+                args,
+                stdin,
+                version || '*', //default to latest version
+                {
                     server: 'Piston API',
-                    user: 'Direct Usage',
-                    language,
-                    source
+                    user: 'Direct Usage'
                 });
+
+            return res
+                .status(200)
+                .send({
+                    ran: result.ran,
+                    language: result.language,
+                    version: result.version,
+                    output: result.output
+                        ? result.output
+                            .replace(/\r/gi, '')
+                            .slice(0, 65536)
+                        : '',
+                    stdout: result.stdout
+                        ? result.stdout
+                            .replace(/\r/gi, '')
+                            .slice(0, 65536)
+                        : '',
+                    stderr: result.stderr
+                        ? result.stderr
+                            .replace(/\r/gi, '')
+                            .slice(0, 65536)
+                        : ''
+                });
+
+        }catch(e){
+            if (e.status_code === 400) {
+                return res
+                    .status(400)
+                    .send({
+                        message: e.message
+                    });
+            }else{
+                return res
+                    .status(500)
+                    .send({
+                        message: 'Execution problem'
+                    });
+            }
         }
 
-        return res
-            .status(200)
-            .send({
-                ran: result.data.ran,
-                language: result.data.language,
-                version: result.data.version,
-                output: result.data.output
-                    ? result.data.output
-                        .replace(/\r/gi, '')
-                        .slice(0, 65536)
-                    : '',
-                stdout: result.data.stdout
-                    ? result.data.stdout
-                        .replace(/\r/gi, '')
-                        .slice(0, 65536)
-                    : '',
-                stderr: result.data.stderr
-                    ? result.data.stderr
-                        .replace(/\r/gi, '')
-                        .slice(0, 65536)
-                    : ''
-            });
+        
     }
 
 };

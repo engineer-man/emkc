@@ -144,7 +144,8 @@ module.exports = {
                     contest.input.split('\n'),
                     contest.output.split('\n'),
                     submission.solution,
-                    submission.language
+                    submission.language,
+                    submission.language_version,
                 );
 
             if (!is_valid) {

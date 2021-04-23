@@ -80,6 +80,7 @@ module.exports = {
                             'contest_submission_id',
                             'user_id',
                             'language',
+                            'language_version',
                             'solution',
                             'length',
                             'explanation',
@@ -174,7 +175,7 @@ module.exports = {
     },
 
     async submit(req, res) {
-        let { contest_id, language, solution, explanation } = req.body;
+        let { contest_id, language, solution, explanation, language_version } = req.body;
 
         explanation = explanation || '';
         solution = solution.trim();
@@ -188,9 +189,9 @@ module.exports = {
 
         let test_cases = contest.input.split('\n');
         let expected_results = contest.output.split('\n');
-        let languages = await axios.get(constant.get_piston_url() + '/versions');
+        let languages = await piston.runtimes();
 
-        languages = languages.data
+        languages = languages
             .filter(lang => lang.name === language);
 
         // To prevent submissions by alias
@@ -206,7 +207,7 @@ module.exports = {
         }
 
         let is_valid = await contests
-            .check_submission_validity(test_cases, expected_results, solution, language);
+            .check_submission_validity(test_cases, expected_results, solution, language, language_version);
 
         if (!is_valid) {
             return res
@@ -221,6 +222,7 @@ module.exports = {
                 where: {
                     contest_id,
                     language,
+                    language_version,
                     user_id: req.local.user_id,
                     late: contest.active ? 0 : 1
                 }
@@ -231,6 +233,7 @@ module.exports = {
             submission.solution = solution;
             submission.length = new TextEncoder().encode(solution).length;
             submission.explanation = explanation;
+            submission.language_version = language_version;
 
             let prev_length = submission.previous('length');
 
@@ -249,7 +252,7 @@ module.exports = {
                             url: `${constant.base_url}${contest.url}`,
                             author: {
                                 name:
-                                    `${req.local.user.display_name} updated their ${submission.language} solution ` +
+                                    `${req.local.user.display_name} updated their ${submission.language} ${submission.language_version} solution ` +
                                     `with one that is ${submission.length} bytes large ` +
                                     `(a ${prev_length-submission.length} byte improvement)`
                             },
@@ -270,6 +273,7 @@ module.exports = {
                     user_id: req.local.user_id,
                     contest_id,
                     language,
+                    language_version,
                     solution,
                     length: new TextEncoder().encode(solution).length,
                     explanation,
@@ -290,7 +294,7 @@ module.exports = {
                             author: {
                                 name:
                                     `${req.local.user.display_name} submitted an initial ${submission.length} ` +
-                                    `byte solution with ${submission.language}`
+                                    `byte solution with ${submission.language} ${submission.language_version}`
                             },
                             footer: {
                                 icon_url: constant.cdn_url + req.local.user.avatar_url,

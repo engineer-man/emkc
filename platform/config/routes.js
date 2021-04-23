@@ -59,6 +59,10 @@ module.exports.routes = {
     'POST /admin/submissions/delete': 'admin/ContestsController.delete_submission',
     'GET /admin/users': 'admin/UsersController.view_all',
     'GET /admin/users/login_as': 'admin/UsersController.login_as',
+    'GET /admin/piston': 'admin/PistonController.view_all',
+    'GET /admin/piston/packages': 'admin/PistonController.packages',
+    'GET /admin/piston/install': 'admin/PistonController.install',
+    'GET /admin/piston/uninstall': 'admin/PistonController.uninstall',
 
     // service api
     'GET /api/internal/chats/last': 'api/internal/ChatsController.last',
