@@ -79,6 +79,9 @@ module.exports.routes = {
     'OPTIONS /api/v1/piston/versions': 'api/v1/PistonController.versions',
     'POST /api/v1/piston/execute': 'api/v1/PistonController.execute',
     'OPTIONS /api/v1/piston/execute': 'api/v1/PistonController.execute',
+    'OPTIONS /api/v2/piston/runtimes': 'api/v2/PistonController.runtimes',
+    'POST /api/v2/piston/execute': 'api/v2/PistonController.execute',
+    'OPTIONS /api/v2/piston/execute': 'api/v2/PistonController.execute',
 
     // catch all (404)
     'ALL r|^\/(?!cdn|css|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
