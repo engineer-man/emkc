@@ -126,6 +126,7 @@ class Contest extends React.Component {
                 showing_late,
                 shown_submissions,
                 language: submission ? submission.language : prev.language,
+                language_version: submission ? submission.language_version : prev.language_version,
                 solution: submission ? submission.solution : '',
                 explanation: submission ? submission.explanation : '',
             };
