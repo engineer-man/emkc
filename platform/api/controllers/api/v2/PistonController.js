@@ -3,7 +3,7 @@ const Redis = require('ioredis');
 
 module.exports = {
 
-    async versions(req, res) {
+    async runtimes(req, res) {
         res.set('Access-Control-Allow-Origin', '*');
         res.set('Access-Control-Allow-Headers', '*');
 
@@ -16,11 +16,6 @@ module.exports = {
 
         let result = await piston.runtimes();
 
-        result = result.map(lang => ({
-            name: lang.language,
-            version: lang.version,
-            aliases: lang.aliases
-        }));
 
         return res
             .status(200)
@@ -59,14 +54,14 @@ module.exports = {
 
         redis.disconnect();
 
-        let { language, source, args, stdin, version } = req.body;
+        let { language, files, args, stdin, version } = req.body;
 
         try {
             let result = await piston.execute(language,
-                source,
+                files,
                 args,
                 stdin,
-                version || '*', //default to latest version
+                version,
                 {
                     server: 'Piston API',
                     user: 'Direct Usage'
@@ -75,24 +70,10 @@ module.exports = {
             return res
                 .status(200)
                 .send({
-                    ran: result.ran,
                     language: result.language,
                     version: result.version,
-                    output: result.output
-                        ? result.output
-                            .replace(/\r/gi, '')
-                            .slice(0, 65536)
-                        : '',
-                    stdout: result.stdout
-                        ? result.stdout
-                            .replace(/\r/gi, '')
-                            .slice(0, 65536)
-                        : '',
-                    stderr: result.stderr
-                        ? result.stderr
-                            .replace(/\r/gi, '')
-                            .slice(0, 65536)
-                        : ''
+                    run: result.run,
+                    compile: result.compile
                 });
 
         }catch(e){

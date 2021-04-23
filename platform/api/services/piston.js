@@ -35,10 +35,7 @@ module.exports = {
             url: constant.get_piston_url() + '/api/v1/runtimes'
         });
 
-        return result.data.map(rt => ({
-            ...rt,
-            name: rt.language
-        }));
+        return result.data;
     },
 
     async packages(){
@@ -56,9 +53,14 @@ module.exports = {
         return result.data
     },
 
-    async execute(language, source, args, stdin, version, log_message = emkc_internal_log_message){
+    async execute(language, files, args, stdin, version, log_message = emkc_internal_log_message){
         if (!Array.is_array(args)) {
             args = [];
+        }
+
+        if(typeof files === 'string'){
+            //Assume this is just source, not files
+            files=[{content: files}];
         }
 
         await timeout(constant.is_prod() ? 0 : 500);  // Delay by 0.5 seconds when using the public api
@@ -69,8 +71,8 @@ module.exports = {
                 url: constant.get_piston_url() + '/api/v1/execute',
                 data: {
                     language,
-                    version: version,
-                    files: [{content: source}],
+                    version,
+                    files,
                     args,
                     stdin,
                     compile_timeout: sails.config.piston.timeouts.compile,
