@@ -16,11 +16,13 @@ module.exports = {
 
         let result = await piston.runtimes();
 
-        result = result.map(lang => ({
-            name: lang.language,
-            version: lang.version,
-            aliases: lang.aliases
-        }));
+        result = result.map(lang => {
+            return {
+                name: lang.language,
+                version: lang.version,
+                aliases: lang.aliases
+            };
+        });
 
         return res
             .status(200)
@@ -62,15 +64,18 @@ module.exports = {
         let { language, source, args, stdin, version } = req.body;
 
         try {
-            let result = await piston.execute(language,
-                source,
-                args,
-                stdin,
-                version || '*', //default to latest version
-                {
-                    server: 'Piston API',
-                    user: 'Direct Usage'
-                });
+            let result = await piston
+                .execute(
+                    language,
+                    source,
+                    args,
+                    stdin,
+                    version || '*', //default to latest version
+                    {
+                        server: 'Piston API',
+                        user: 'Direct Usage'
+                    }
+                );
 
             return res
                 .status(200)
@@ -95,14 +100,14 @@ module.exports = {
                         : ''
                 });
 
-        }catch(e){
+        } catch(e) {
             if (e.status_code === 400) {
                 return res
                     .status(400)
                     .send({
                         message: e.message
                     });
-            }else{
+            } else {
                 return res
                     .status(500)
                     .send({
@@ -110,8 +115,6 @@ module.exports = {
                     });
             }
         }
-
-        
     }
 
 };
