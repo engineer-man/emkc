@@ -32,9 +32,10 @@ module.exports = {
 
         const ip = req.headers['x-real-ip'];
         const authorization = req.headers['authorization'];
-        const redis = new Redis(6379, 'redis');
 
-        if (authorization !== sails.config.api.internal_key) {
+        if (!sails.config.piston.unlimited_keys.includes(authorization)) {
+            const redis = new Redis(6379, 'redis');
+
             let entry = await redis.get(`piston-${req.ip}`);
 
             if (entry) {
@@ -48,9 +49,9 @@ module.exports = {
             } else {
                 await redis.set(`piston-${req.ip}`, 0, 'px', 500);
             }
-        }
 
-        redis.disconnect();
+            redis.disconnect();
+        }
 
         let { language, files, args, stdin, version } = req.body;
 
