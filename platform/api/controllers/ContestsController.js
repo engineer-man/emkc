@@ -192,7 +192,7 @@ module.exports = {
         let languages = await piston.runtimes();
 
         languages = languages
-            .filter(lang => lang.name === language);
+            .filter(lang => lang.language === language);
 
         // To prevent submissions by alias
         if (test_cases.length !== expected_results.length ||

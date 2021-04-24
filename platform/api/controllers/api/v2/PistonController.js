@@ -87,7 +87,7 @@ module.exports = {
                 return res
                     .status(500)
                     .send({
-                        message: 'Execution problem'
+                        message: 'Execution problem: ' + e.message
                     });
             }
         }

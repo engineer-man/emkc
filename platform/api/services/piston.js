@@ -8,7 +8,9 @@ const emkc_internal_log_message = {
 
 class PistonError extends Error {
     constructor(message, status_code){
-        super(message);
+        super(status_code + ": " + message);
+        this.message = message;
+        this.error_message = message;
         this.status_code = status_code;
     }
 }
@@ -83,7 +85,7 @@ module.exports = {
         if(result.status !== 200)
             throw new PistonError(result.data.message, result.status)
         
-        db.piston_runs.create({...log_message, language, source});
+        db.piston_runs.create({...log_message, language, source: files[0].content});
 
         let output = "";
         let stdout = "";
