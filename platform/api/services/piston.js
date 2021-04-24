@@ -61,8 +61,12 @@ module.exports = {
         }
 
         if (typeof files === 'string') {
-            //Assume this is just source, not files
-            files=[{content: files}];
+            // Assume this is just source, not files
+            files = [
+                {
+                    content: files
+                }
+            ];
         }
 
         await timeout(constant.is_prod() ? 0 : 500);  // Delay by 0.5 seconds when using the public api
@@ -82,12 +86,14 @@ module.exports = {
             throw new PistonError(result.data.message, result.status);
         }
 
-        db.piston_runs
-            .create({
-                ...log_message,
-                language,
-                source: files[0].content
-            });
+        if (log_message) {
+            db.piston_runs
+                .create({
+                    ...log_message,
+                    language,
+                    source: files[0].content
+                });
+        }
 
         let output = '';
         let stdout = '';

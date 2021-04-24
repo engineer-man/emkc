@@ -64,6 +64,15 @@ module.exports = {
 
         let { language, source, args, stdin, version } = req.body;
 
+        let log = null;
+
+        if (req.body.log !== 0) {
+            log = {
+                server: 'Piston API',
+                user: 'Direct Usage'
+            };
+        }
+
         try {
             let result = await piston
                 .execute(
@@ -72,10 +81,7 @@ module.exports = {
                     args,
                     stdin,
                     version || '*', //default to latest version
-                    {
-                        server: 'Piston API',
-                        user: 'Direct Usage'
-                    }
+                    log
                 );
 
             return res
