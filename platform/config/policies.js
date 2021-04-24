@@ -65,6 +65,10 @@ module.exports.policies = {
         '*': ['common', 'logged_in', 'is_admin']
     },
 
+    'admin/PistonController': {
+        '*': ['common', 'logged_in', 'is_admin']
+    },
+
     'api/internal/ChatsController': {
         '*': ['common', 'api_internal_auth']
     },

@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             user_id: DataTypes.INTEGER,
             contest_id: DataTypes.INTEGER,
             language: DataTypes.STRING,
+            language_version: DataTypes.STRING,
             solution: DataTypes.TEXT('medium'),
             length: DataTypes.INTEGER,
             explanation: DataTypes.TEXT('medium'),

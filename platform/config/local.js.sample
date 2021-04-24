@@ -45,6 +45,10 @@ module.exports = {
     },
     piston: {
         host: '127.0.0.1:2000',
+        timeouts: {
+            run: 3000,
+            compile: 10000
+        },
         key: ''
     },
     dispenserd: {

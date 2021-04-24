@@ -59,6 +59,10 @@ module.exports.routes = {
     'POST /admin/submissions/delete': 'admin/ContestsController.delete_submission',
     'GET /admin/users': 'admin/UsersController.view_all',
     'GET /admin/users/login_as': 'admin/UsersController.login_as',
+    'GET /admin/piston': 'admin/PistonController.view_all',
+    'GET /admin/piston/packages': 'admin/PistonController.packages',
+    'GET /admin/piston/install': 'admin/PistonController.install',
+    'GET /admin/piston/uninstall': 'admin/PistonController.uninstall',
 
     // service api
     'GET /api/internal/chats/last': 'api/internal/ChatsController.last',
@@ -75,6 +79,10 @@ module.exports.routes = {
     'OPTIONS /api/v1/piston/versions': 'api/v1/PistonController.versions',
     'POST /api/v1/piston/execute': 'api/v1/PistonController.execute',
     'OPTIONS /api/v1/piston/execute': 'api/v1/PistonController.execute',
+    'GET /api/v2/piston/runtimes': 'api/v2/PistonController.runtimes',
+    'OPTIONS /api/v2/piston/runtimes': 'api/v2/PistonController.runtimes',
+    'POST /api/v2/piston/execute': 'api/v2/PistonController.execute',
+    'OPTIONS /api/v2/piston/execute': 'api/v2/PistonController.execute',
 
     // catch all (404)
     'ALL r|^\/(?!cdn|css|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
