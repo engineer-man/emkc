@@ -55,7 +55,7 @@ module.exports = {
         return result.data
     },
 
-    async execute(language, files, args, stdin, version, log_message = emkc_internal_log_message, timeouts={}){
+    async execute(language, files, args, stdin, version, log_message = emkc_internal_log_message, timeouts = {}){
         if (!Array.is_array(args)) {
             args = [];
         }
@@ -73,12 +73,14 @@ module.exports = {
 
         let compile_timeout = sails.config.piston.timeouts.compile;
         let run_timeout = sails.config.piston.timeouts.run;
-        
-        if(timeouts.compile < compile_timeout )
+
+        if (timeouts.compile < compile_timeout) {
             compile_timeout = timeouts.compile;
-            
-        if(timeouts.run < run_timeout )
+        }
+
+        if (timeouts.run < run_timeout) {
             run_timeout = timeouts.run;
+        }
 
         let result = await axios
             ({
