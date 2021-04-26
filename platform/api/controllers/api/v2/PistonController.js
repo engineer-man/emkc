@@ -54,7 +54,7 @@ module.exports = {
 
         redis.disconnect();
 
-        let { language, files, args, stdin, version } = req.body;
+        let { language, files, args, stdin, version, run_timeout, compile_timeout } = req.body;
 
         try {
             let result = await piston.execute(language,
@@ -65,6 +65,9 @@ module.exports = {
                 {
                     server: 'Piston API',
                     user: 'Direct Usage'
+                },{
+                    run: run_timeout,
+                    compile: compile_timeout
                 });
 
             return res
