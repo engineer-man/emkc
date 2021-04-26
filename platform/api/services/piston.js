@@ -55,7 +55,7 @@ module.exports = {
         return result.data
     },
 
-    async execute(language, files, args, stdin, version, log_message = emkc_internal_log_message) {
+    async execute(language, files, args, stdin, version, log_message = emkc_internal_log_message, timeouts={}){
         if (!Array.is_array(args)) {
             args = [];
         }
@@ -71,15 +71,28 @@ module.exports = {
 
         await timeout(constant.is_prod() ? 0 : 500);  // Delay by 0.5 seconds when using the public api
 
+        let compile_timeout = sails.config.piston.timeouts.compile;
+        let run_timeout = sails.config.piston.timeouts.run;
+        
+        if(timeouts.compile < compile_timeout )
+            compile_timeout = timeouts.compile;
+            
+        if(timeouts.run < run_timeout )
+            run_timeout = timeouts.run;
+
         let result = await axios
-            .post(constant.get_piston_url() + '/api/v1/execute', {
-                language,
-                version,
-                files,
-                args,
-                stdin,
-                compile_timeout: sails.config.piston.timeouts.compile,
-                run_timeout: sails.config.piston.timeouts.run,
+            ({
+                method: 'post',
+                url: constant.get_piston_url() + '/api/v1/execute',
+                data: {
+                    language,
+                    version,
+                    files,
+                    args,
+                    stdin,
+                    compile_timeout: compile_timeout,
+                    run_timeout: run_timeout,
+                }
             });
 
         if (result.status !== 200) {

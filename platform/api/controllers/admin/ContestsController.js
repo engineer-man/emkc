@@ -145,7 +145,7 @@ module.exports = {
                     contest.output.split('\n'),
                     submission.solution,
                     submission.language,
-                    submission.language_version,
+                    submission.language_version || '*', // Default to latest, just incase its blank
                 );
 
             if (!is_valid) {
