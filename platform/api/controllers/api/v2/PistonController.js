@@ -13,9 +13,7 @@ module.exports = {
                 .send();
         }
 
-
         let result = await piston.runtimes();
-
 
         return res
             .status(200)
@@ -34,9 +32,10 @@ module.exports = {
 
         const ip = req.headers['x-real-ip'];
         const authorization = req.headers['authorization'];
-        const redis = new Redis(6379, 'redis');
 
-        if (authorization !== sails.config.api.internal_key) {
+        if (!sails.config.piston.unlimited_keys.includes(authorization)) {
+            const redis = new Redis(6379, 'redis');
+
             let entry = await redis.get(`piston-${req.ip}`);
 
             if (entry) {
@@ -50,22 +49,25 @@ module.exports = {
             } else {
                 await redis.set(`piston-${req.ip}`, 0, 'px', 500);
             }
-        }
 
-        redis.disconnect();
+            redis.disconnect();
+        }
 
         let { language, files, args, stdin, version } = req.body;
 
         try {
-            let result = await piston.execute(language,
-                files,
-                args,
-                stdin,
-                version,
-                {
-                    server: 'Piston API',
-                    user: 'Direct Usage'
-                });
+            let result = await piston
+                .execute(
+                    language,
+                    files,
+                    args,
+                    stdin,
+                    version,
+                    {
+                        server: 'Piston API',
+                        user: 'Direct Usage'
+                    }
+                );
 
             return res
                 .status(200)
@@ -75,15 +77,14 @@ module.exports = {
                     run: result.run,
                     compile: result.compile
                 });
-
-        }catch(e){
+        } catch(e) {
             if (e.status_code === 400) {
                 return res
                     .status(400)
                     .send({
                         message: e.message
                     });
-            }else{
+            } else {
                 return res
                     .status(500)
                     .send({
@@ -91,8 +92,6 @@ module.exports = {
                     });
             }
         }
-
-        
     }
 
 };
