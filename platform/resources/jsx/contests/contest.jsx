@@ -77,13 +77,13 @@ class Contest extends React.Component {
         let value = e.target.value;
 
         if (id === 'language') {
-            
-
-            let [language, language_version] = value.split('-');
+            let [ language, language_version ] = value.split('-');
 
             let submission = this.props.submissions
                 .find(submission => {
-                    return submission.language === language && submission.language_version === language_version && !!submission.late === !this.state.contest.active
+                    return submission.language === language &&
+                        submission.language_version === language_version &&
+                        !!submission.late === !this.state.contest.active;
                 });
 
             this.setState({
@@ -91,8 +91,7 @@ class Contest extends React.Component {
                 explanation: submission ? submission.explanation : '',
                 language, language_version
             });
-        }else{
-
+        } else {
             this.setState({
                 [id]: value
             });
@@ -279,13 +278,13 @@ class Contest extends React.Component {
                                             id="language"
                                             class="form-control"
                                             style={{ width: '200px'}}
-                                            value={this.state.language + "-" + this.state.language_version}
+                                            value={this.state.language + '-' + this.state.language_version}
                                             onChange={this.handle_change}>
                                             {this.state.languages.map(language => {
                                                 return (
                                                     <option
-                                                        key={language.name + "-" + language.version}
-                                                        value={language.name + "-" + language.version}>{language.name} ({language.version})</option>
+                                                        key={language.name + '-' + language.version}
+                                                        value={language.name + '-' + language.version}>{language.name} ({language.version})</option>
                                                 )
                                             })}
                                         </select>
@@ -299,7 +298,7 @@ class Contest extends React.Component {
                                                     .filter(s => this.state.showing_late ? s.late : !s.late)
                                                     .map((submission, i) => {
                                                         return (
-                                                            <span key={submission.language + "-" + submission.late}>
+                                                            <span key={submission.language + '-' + submission.late}>
                                                                 {submission.language} ({submission.length})
                                                                 {i + 1 < this.props.submissions.length && ', '}
                                                             </span>

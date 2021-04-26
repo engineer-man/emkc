@@ -15,13 +15,12 @@ class PistonPackageManager extends React.Component {
     }
 
     async componentDidMount() {
-        let packages = await axios.get('/admin/piston/packages');
-        packages = packages.data;
-        console.log(packages);
+        let { data: packages } = await axios.get('/admin/piston/packages');
 
-        this.setState({packages});
+        this.setState({
+            packages
+        });
     }
-
 
     render() {
         return (
@@ -38,25 +37,25 @@ class PistonPackageManager extends React.Component {
                         return (
                             <tr>
                                 <td>
-                                    {pkg.installed ? 
+                                    {pkg.installed && (
                                         <a
                                             key={pkg.language + '-' + pkg.language_version}
                                             href={`/admin/piston/uninstall?language=${pkg.language}&version=${pkg.language_version}`}
                                             class="user_row marginbottom20">
                                             Uninstall
                                         </a>
-                                        :
+                                    ) || (
                                         <a
                                             key={pkg.language + '-' + pkg.language_version}
                                             href={`/admin/piston/install?language=${pkg.language}&version=${pkg.language_version}`}
                                             class="user_row marginbottom20">
                                             Install
                                         </a>
-                                    }
+                                    )}
                                 </td>
                                 <td>{pkg.language}</td>
                                 <td>{pkg.language_version}</td>
-                                <td>{pkg.installed ? "Yes": "No"}</td>
+                                <td>{pkg.installed ? 'Yes': 'No'}</td>
                             </tr>
                         );
                     })}
