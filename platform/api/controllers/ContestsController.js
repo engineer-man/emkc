@@ -222,7 +222,6 @@ module.exports = {
                 where: {
                     contest_id,
                     language,
-                    language_version,
                     user_id: req.local.user_id,
                     late: contest.active ? 0 : 1
                 }
