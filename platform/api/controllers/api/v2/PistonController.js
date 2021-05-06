@@ -55,6 +55,15 @@ module.exports = {
 
         let { language, files, args, stdin, version, run_timeout, compile_timeout } = req.body;
 
+        let log = null;
+
+        if (req.body.log !== 0) {
+            log = {
+                server: 'Piston API',
+                user: 'Direct Usage'
+            };
+        }
+
         try {
             let result = await piston
                 .execute(
@@ -63,10 +72,7 @@ module.exports = {
                     args,
                     stdin,
                     version,
-                    {
-                        server: 'Piston API',
-                        user: 'Direct Usage'
-                    },
+                    log,
                     {
                         run: run_timeout,
                         compile: compile_timeout

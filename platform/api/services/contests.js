@@ -15,14 +15,18 @@ module.exports = {
 
             let args = current_test_case.trim().split('|');
 
-            let test_result = await piston
-                .execute(
-                    language,
-                    solution,
-                    args,
-                    args.join('\n'),
-                    version
-                );
+            try {
+                let test_result = await piston
+                    .execute(
+                        language,
+                        solution,
+                        args,
+                        args.join('\n'),
+                        version
+                    );
+            } catch (e) {
+                return false;
+            }
 
             if (test_result.run.stdout.trim() !== current_expected_result) {
                 return false;

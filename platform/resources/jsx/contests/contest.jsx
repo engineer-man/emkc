@@ -57,16 +57,33 @@ class Contest extends React.Component {
     async componentDidMount() {
         this.highlight_blocks();
 
-        let languages = await axios.get('/api/v1/piston/versions');
+        let languages = await axios
+            .get('/api/v2/piston/runtimes');
         let disallowed_languages = await axios
             .get('/contests/disallowed_languages/' + this.state.contest.contest_id);
 
         disallowed_languages = disallowed_languages.data;
-        languages = languages.data.filter(lang => !disallowed_languages.includes(lang.name));
+
+        languages = languages.data
+            .sort((a, b) => a.language < b.language ? -1 : 1)
+            .reduce((a, c) => {
+                if (a.find(l => l.language === c.language)) {
+                    return a;
+                }
+
+                let tmp = languages.data
+                    .filter(language => language.language === c.language)
+                    .sort((a, b) => a.version > b.version ? -1 : 1);
+
+                a.push(tmp[0]);
+
+                return a;
+            }, [])
+            .filter(lang => !disallowed_languages.includes(lang.language));
 
         this.setState({
             languages,
-            language: this.state.language || languages[0].name,
+            language: this.state.language || languages[0].language,
             language_version: this.state.language_version || languages[0].version,
             shown_submissions: this.on_time_submissions
         });
@@ -277,14 +294,14 @@ class Contest extends React.Component {
                                         <select
                                             id="language"
                                             class="form-control"
-                                            style={{ width: '200px'}}
+                                            style={{ width: '300px'}}
                                             value={this.state.language + '-' + this.state.language_version}
                                             onChange={this.handle_change}>
                                             {this.state.languages.map(language => {
                                                 return (
                                                     <option
-                                                        key={language.name + '-' + language.version}
-                                                        value={language.name + '-' + language.version}>{language.name} ({language.version})</option>
+                                                        key={language.language + '-' + language.version}
+                                                        value={language.language + '-' + language.version}>{language.language} ({language.runtime ? `via ${language.runtime} ` : ''}{language.version})</option>
                                                 )
                                             })}
                                         </select>

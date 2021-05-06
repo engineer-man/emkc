@@ -13,7 +13,6 @@ module.exports = {
                 .send();
         }
 
-
         let result = await piston.runtimes();
 
         result = result.map(lang => {

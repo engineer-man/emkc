@@ -91,9 +91,7 @@ let constant = {
     },
 
     get_piston_url() {
-        return sails.config.environment === 'production'
-            ? 'http://' + sails.config.piston.host
-            : 'https://emkc.org/api/v1/piston'
+        return 'http://' + sails.config.piston.host;
     }
 
 };
