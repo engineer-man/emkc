@@ -24,11 +24,11 @@ module.exports = {
                         args.join('\n'),
                         version
                     );
-            } catch (e) {
-                return false;
-            }
 
-            if (test_result.run.stdout.trim() !== current_expected_result) {
+                if (test_result.run.stdout.trim() !== current_expected_result) {
+                    return false;
+                }
+            } catch (e) {
                 return false;
             }
 
