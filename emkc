@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
 function init_files {
-    touch var/docker/logs/app.log
-    chmod 777 var/docker/logs/app.log
-    touch var/docker/logs/sql.log
-    chmod 777 var/docker/logs/sql.log
     chmod 0444 var/docker/config/mysqld.cnf
 }
 
@@ -53,7 +49,7 @@ case $* in
         docker exec -it emkc bash -c "cd /opt/emkc/platform/migrations; $*"
         ;;
     tail )
-        tail -f ./var/docker/logs/*
+        docker-compose logs -f
         ;;
     "" )
         echo 'emkc control, usage: emkc [command]'
