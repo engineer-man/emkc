@@ -33,25 +33,25 @@ module.exports = {
     },
 
     async runtimes() {
-        let result = await axios.get(constant.get_piston_url() + '/api/v2/runtimes');
+        let result = await axios.get(constant.get_piston_url() + '/runtimes');
 
         return result.data;
     },
 
     async packages() {
-        let result = await axios.get(constant.get_piston_url() + '/api/v2/packages');
+        let result = await axios.get(constant.get_piston_url() + '/packages');
 
         return result.data;
     },
 
     async install(language, version) {
-        let result = await axios.post(constant.get_piston_url() + `/api/v2/packages/${language}/${version}`);
+        let result = await axios.post(constant.get_piston_url() + `/packages/${language}/${version}`);
 
         return result.data
     },
 
     async uninstall(language, version) {
-        let result = await axios.delete(constant.get_piston_url() + `/api/v2/packages/${language}/${version}`);
+        let result = await axios.delete(constant.get_piston_url() + `/packages/${language}/${version}`);
 
         return result.data
     },
@@ -86,7 +86,7 @@ module.exports = {
         let result = await axios
             ({
                 method: 'post',
-                url: constant.get_piston_url() + '/api/v2/execute',
+                url: constant.get_piston_url() + '/execute',
                 data: {
                     language,
                     version,

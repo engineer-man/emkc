@@ -91,7 +91,12 @@ let constant = {
     },
 
     get_piston_url() {
-        return 'http://' + sails.config.piston.host;
+        // Use the public api if the public API if the environment is development
+        // or the local host if the environment is production
+        let url = sails.config.environment === 'production'
+            ? 'http://' + sails.config.piston.host + '/api/v2'
+            : 'https://emkc.org/api/v2/piston'
+        return url;
     }
 
 };
