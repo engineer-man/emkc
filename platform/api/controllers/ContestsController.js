@@ -214,8 +214,7 @@ module.exports = {
                 });
         }
 
-        if (!!contest.draft)
-        {
+        if (contest.draft) {
             // Don't save solution for draft contests
             return res
                 .status(200)
