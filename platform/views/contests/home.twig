@@ -108,10 +108,10 @@
                                 (Finished)
                             </div>
                             <div class="solutions">
-                                Total Solutions: {{ contest.submissions|length }}
+                                Total Solutions: {{ contest.solutions }}
                                 <div>
-                                    {% for submission in contest.submissions %}
-                                        <img src="{{ req.local.constant.cdn_url ~ submission.user.avatar_url }}" />
+                                    {% for participant in contest.participants %}
+                                        <img src="{{ req.local.constant.cdn_url ~ participant }}" />
                                     {% endfor %}
                                 </div>
                             </div>

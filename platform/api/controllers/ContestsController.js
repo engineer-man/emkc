@@ -9,22 +9,47 @@ module.exports = {
                         [$lt]: util.now()
                     }
                 },
-                include: [
-                    {
-                        model: db.contest_submissions,
-                        as: 'submissions',
-                        include: [
-                            {
-                                model: db.users,
-                                as: 'user'
-                            }
-                        ]
-                    }
-                ],
                 order: [
                     ['end_date', 'desc']
                 ]
             });
+
+        let past_submissions = await db.contest_submissions
+            .find_all({
+                where: {
+                    contest_id: past_contests.map(contest => contest.contest_id)
+                },
+                attributes: [
+                    'contest_id',
+                ],
+                include: [
+                    {
+                        model: db.users,
+                        as: 'user',
+                        attributes: [
+                            'avatar_url',
+                        ]
+                    }
+                ]
+            });
+
+        let submission_map = {};
+
+        for (const submission of past_submissions) {
+            if (!submission_map[submission.contest_id]) {
+                submission_map[submission.contest_id] = [];
+            }
+
+            submission_map[submission.contest_id].push(submission.user.avatar_url);
+        }
+
+        for (const contest of past_contests) {
+            contest.solutions = submission_map[contest.contest_id]
+                ? submission_map[contest.contest_id].length
+                : 0;
+
+            contest.participants = [...new Set(submission_map[contest.contest_id] || [])];
+        }
 
         let active_contests = await db.contests
             .find_all({
