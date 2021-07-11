@@ -14,7 +14,7 @@
                     <table class="table table-dark table-bordered table-sm table-hover">
                         <thead>
                             <tr>
-                                <th style="width: 70px;">Actions</th>
+                                <th style="width: 70px;"></th>
                                 <th style="width: 120px;">Language</th>
                                 <th style="width: 120px;">Age</th>
                                 <th>Preview</th>
@@ -25,9 +25,12 @@
                                 <tr>
                                     <td class="center">
                                         <nobr>
-                                            <a href="{{ snippet.url }}">View</a> |
-                                            <a href="/snippets/edit/{{ snippet.hash }}">Edit</a> |
-                                            <a href="#" class="confirm-delete" data-hash="{{ snippet.hash }}">Delete</a>
+                                            <a href="{{ snippet.url }}" class="fas fa-eye"></a>&nbsp;
+                                            <a href="/snippets/edit/{{ snippet.hash }}" class="fas fa-pen"></a>&nbsp;
+                                            <a href="#"
+                                                class="confirm-delete fas fa-trash text-danger"
+                                                data-hash="{{ snippet.hash }}">
+                                            </a>
                                         </nobr>
                                     </td>
                                     <td>{{ snippet.language }}</td>
