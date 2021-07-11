@@ -31,7 +31,7 @@ module.exports = {
 
         req.session.user_id = req.session.old_id;
         delete req.session.old_id;
-        
+
         return res.redirect('/');
     },
 
