@@ -330,7 +330,7 @@ class Contest extends React.Component {
                                         <textarea
                                             id="solution"
                                             rows="6"
-                                            class="form-control"
+                                            class="form-control text-monospace"
                                             value={this.state.solution}
                                             onChange={this.handle_change}
                                         ></textarea>
@@ -346,7 +346,7 @@ class Contest extends React.Component {
                                         <textarea
                                             id="explanation"
                                             rows="6"
-                                            class="form-control"
+                                            class="form-control text-monospace"
                                             value={this.state.explanation}
                                             onChange={this.handle_change}
                                         ></textarea>
