@@ -25,7 +25,9 @@ module.exports = (sequelize, DataTypes) => {
             active: {
                 type: DataTypes.VIRTUAL,
                 get() {
-                    return moment().isAfter(moment(this.start_date)) && moment().isBefore(moment(this.end_date));
+                    return moment().isAfter(moment(this.start_date))
+                        && moment().isBefore(moment(this.end_date))
+                        && !this.draft;
                 }
             },
             url: {

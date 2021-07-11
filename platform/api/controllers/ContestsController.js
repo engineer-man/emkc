@@ -1,6 +1,3 @@
-const moment = require('moment');
-const axios = require('axios');
-
 module.exports = {
 
     async home(req, res) {
@@ -214,6 +211,16 @@ module.exports = {
                 .status(200)
                 .send({
                     passed: false
+                });
+        }
+
+        if (!!contest.draft)
+        {
+            // Don't save solution for draft contests
+            return res
+                .status(200)
+                .send({
+                    passed: true
                 });
         }
 
