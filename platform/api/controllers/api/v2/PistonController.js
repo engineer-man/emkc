@@ -44,10 +44,10 @@ module.exports = {
                 return res
                     .status(429)
                     .send({
-                        message: 'Requests limited to 2 per second'
+                        message: 'Requests limited to 1 per 200ms'
                     });
             } else {
-                await redis.set(`piston-${req.ip}`, 0, 'px', 500);
+                await redis.set(`piston-${req.ip}`, 0, 'px', 200);
             }
 
             redis.disconnect();
