@@ -96,12 +96,7 @@ class Contest extends React.Component {
         if (id === 'language') {
             let [ language, language_version ] = value.split('-');
 
-            let submission = this.props.submissions
-                .find(submission => {
-                    return submission.language === language &&
-                        submission.language_version === language_version &&
-                        !!submission.late === !this.state.contest.active;
-                });
+            let submission = this.find_submission(language, language_version);
 
             this.setState({
                 solution: submission ? submission.solution : '',
@@ -149,11 +144,18 @@ class Contest extends React.Component {
         });
     }
 
-    submit = async () => {
-        this.setState({
-            passed: true
-        });
+    find_submission = (language, language_version) => {
+        // Finds a specific submission for a user
+        let submission = this.props.submissions
+                .find(submission => {
+                    return submission.language === language &&
+                        submission.language_version === language_version &&
+                        !!submission.late === !this.state.contest.active;
+                });
+        return submission;
+    }
 
+    save_submission = async() => {
         const { language, solution, explanation, language_version } = this.state;
 
         this.setState({
@@ -188,6 +190,38 @@ class Contest extends React.Component {
         this.setState({
             passed: false
         });
+    }
+
+    submit = () => {
+        this.setState({
+            passed: true
+        });
+        let previous_submission = this.find_submission(this.state.language, this.state.language_version);
+        // Use this.save_submission() inside bootbox callback
+        let self = { save_submission: this.save_submission };
+
+        if (previous_submission.length < this.state.solution.length) {
+            return bootbox.confirm({
+                message: 'This solution is longer than your previous one, you might lose your place if you submit,\
+                are you sure you want to proceed?',
+                buttons: {
+                    confirm: {
+                        label: 'Submit',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Cancel',
+                        className: 'btn-secondary'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        self.save_submission();
+                    }
+                }
+            });
+        }
+        self.save_submission();
     }
 
     async delete(contest_submission_id) {
