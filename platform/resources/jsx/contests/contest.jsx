@@ -89,6 +89,17 @@ class Contest extends React.Component {
         });
     }
 
+    find_submission = (language, language_version) => {
+        // Finds a specific submission for a user
+        let submission = this.props.submissions
+                .find(submission => {
+                    return submission.language === language &&
+                        submission.language_version === language_version &&
+                        !!submission.late === !this.state.contest.active;
+                });
+        return submission;
+    }
+
     handle_change = e => {
         let id = e.target.id;
         let value = e.target.value;
@@ -142,17 +153,6 @@ class Contest extends React.Component {
                 explanation: submission ? submission.explanation : '',
             };
         });
-    }
-
-    find_submission = (language, language_version) => {
-        // Finds a specific submission for a user
-        let submission = this.props.submissions
-                .find(submission => {
-                    return submission.language === language &&
-                        submission.language_version === language_version &&
-                        !!submission.late === !this.state.contest.active;
-                });
-        return submission;
     }
 
     save_submission = async() => {
@@ -221,7 +221,7 @@ class Contest extends React.Component {
                 }
             });
         }
-        self.save_submission();
+        this.save_submission();
     }
 
     async delete(contest_submission_id) {
