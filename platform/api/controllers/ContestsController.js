@@ -258,46 +258,50 @@ module.exports = {
                 }
             });
 
+        let solution_bytes = new TextEncoder().encode(solution).length;
+
         if (submission) {
             submission.language = language;
             submission.solution = solution;
-            submission.length = new TextEncoder().encode(solution).length;
+            submission.length = solution_bytes;
             submission.explanation = explanation;
             submission.language_version = language_version;
 
             let prev_length = submission.previous('length');
+            let prev_length_best = submission.previous('length_best');
 
-            if (submission.length < prev_length) {
+            if (submission.length < prev_length_best) {
+                submission.length_best = solution_bytes;
                 submission.created_at = util.now();
-                if (contest.active) {
-                    discord
-                        .api('post', `/channels/${constant.channels.emkc}/messages`, {
-                            embed: {
-                                title: contest.name,
-                                description:
-                                    `Can you do better than this? ` +
-                                    `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
-                                type: 'rich',
-                                color: 0x84e47f,
-                                url: `${constant.base_url}${contest.url}`,
-                                author: {
-                                    name:
-                                        `${req.local.user.display_name} updated their ${submission.language} ${submission.language_version} solution ` +
-                                        `with one that is ${submission.length} bytes large ` +
-                                        `(a ${prev_length-submission.length} byte improvement)`
-                                },
-                                footer: {
-                                    icon_url: constant.cdn_url + req.local.user.avatar_url,
-                                    text: `updated by ${req.local.user.display_name} right now`
-                                }
+            }
+
+            if (submission.length < prev_length && contest.active) {
+                discord
+                    .api('post', `/channels/${constant.channels.emkc}/messages`, {
+                        embed: {
+                            title: contest.name,
+                            description:
+                                `Can you do better than this? ` +
+                                `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
+                            type: 'rich',
+                            color: 0x84e47f,
+                            url: `${constant.base_url}${contest.url}`,
+                            author: {
+                                name:
+                                    `${req.local.user.display_name} updated their ${submission.language} ${submission.language_version} solution ` +
+                                    `with one that is ${submission.length} bytes large ` +
+                                    `(a ${prev_length-submission.length} byte improvement)`
+                            },
+                            footer: {
+                                icon_url: constant.cdn_url + req.local.user.avatar_url,
+                                text: `updated by ${req.local.user.display_name} right now`
                             }
-                        })
-                        .catch(err => {});
-                }
+                        }
+                    })
+                    .catch(err => {});
             }
 
             await submission.save();
-
         } else {
             submission = await db.contest_submissions
                 .create({
@@ -306,7 +310,8 @@ module.exports = {
                     language,
                     language_version,
                     solution,
-                    length: new TextEncoder().encode(solution).length,
+                    length: solution_bytes,
+                    length_best: solution_bytes,
                     explanation,
                     late: !contest.active
                 });

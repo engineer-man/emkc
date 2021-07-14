@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
             language_version: DataTypes.STRING,
             solution: DataTypes.TEXT('medium'),
             length: DataTypes.INTEGER,
+            length_best: DataTypes.INTEGER,
             explanation: DataTypes.TEXT('medium'),
             award_place: DataTypes.INTEGER,
             award_points: DataTypes.INTEGER,
