@@ -267,32 +267,33 @@ module.exports = {
 
             let prev_length = submission.previous('length');
 
-            if (submission.length < prev_length && contest.active) {
+            if (submission.length < prev_length) {
                 submission.created_at = util.now();
-
-                discord
-                    .api('post', `/channels/${constant.channels.emkc}/messages`, {
-                        embed: {
-                            title: contest.name,
-                            description:
-                                `Can you do better than this? ` +
-                                `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
-                            type: 'rich',
-                            color: 0x84e47f,
-                            url: `${constant.base_url}${contest.url}`,
-                            author: {
-                                name:
-                                    `${req.local.user.display_name} updated their ${submission.language} ${submission.language_version} solution ` +
-                                    `with one that is ${submission.length} bytes large ` +
-                                    `(a ${prev_length-submission.length} byte improvement)`
-                            },
-                            footer: {
-                                icon_url: constant.cdn_url + req.local.user.avatar_url,
-                                text: `updated by ${req.local.user.display_name} right now`
+                if (contest.active) {
+                    discord
+                        .api('post', `/channels/${constant.channels.emkc}/messages`, {
+                            embed: {
+                                title: contest.name,
+                                description:
+                                    `Can you do better than this? ` +
+                                    `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
+                                type: 'rich',
+                                color: 0x84e47f,
+                                url: `${constant.base_url}${contest.url}`,
+                                author: {
+                                    name:
+                                        `${req.local.user.display_name} updated their ${submission.language} ${submission.language_version} solution ` +
+                                        `with one that is ${submission.length} bytes large ` +
+                                        `(a ${prev_length-submission.length} byte improvement)`
+                                },
+                                footer: {
+                                    icon_url: constant.cdn_url + req.local.user.avatar_url,
+                                    text: `updated by ${req.local.user.display_name} right now`
+                                }
                             }
-                        }
-                    })
-                    .catch(err => {});
+                        })
+                        .catch(err => {});
+                }
             }
 
             await submission.save();
