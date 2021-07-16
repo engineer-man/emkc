@@ -15,8 +15,18 @@ module.exports = {
                 throw null;
             }
 
+            if (req.headers.accept === 'text/plain' || req.path.match(/\/raw$/)) {
+                res.set('content-type', 'text/plain');
+
+                return res
+                    .status(200)
+                    .send(snippet.snip);
+            }
+
             if (req.headers.accept === 'application/json') {
-                return res.status(200).send(snippet);
+                return res
+                    .status(200)
+                    .send(snippet);
             }
 
             return res.view({
