@@ -22,7 +22,9 @@ class Contest extends React.Component {
             validating: false,
             submitting: false,
             shown_submissions: [],
-            showing_late: false
+            showing_late: false,
+            filtered_language: 'all',
+            filtered_language_version: ''
         };
 
         this.on_time_submissions = [];
@@ -46,6 +48,7 @@ class Contest extends React.Component {
             this.late_submissions = this.state.contest.submissions
                 .filter(submission => submission.late);
         }
+        this.filter_languages = this.filter_languages.bind(this);
     }
 
     highlight_blocks() {
@@ -115,6 +118,25 @@ class Contest extends React.Component {
         }
     }
 
+    filter_languages = e => {
+        let [ filtered_language, filtered_language_version ] = e.target.value.split('-');
+        if (filtered_language === 'all') {
+            filtered_language_version = '';
+        }
+
+        let shown_submissions = this.state.showing_late ? this.late_submissions : this.on_time_submissions;
+        if (filtered_language != 'all') {
+            shown_submissions = shown_submissions
+                .filter(submission => submission.language === filtered_language
+                    && submission.language_version === filtered_language_version);
+        }
+        this.setState({
+            filtered_language,
+            filtered_language_version,
+            shown_submissions
+        });
+    }
+
     toggle_explanation = submission => {
         submission.explanation_open = !submission.explanation_open;
 
@@ -145,6 +167,8 @@ class Contest extends React.Component {
                 language_version: submission ? submission.language_version : prev.language_version,
                 solution: submission ? submission.solution : '',
                 explanation: submission ? submission.explanation : '',
+                filtered_language: 'all',
+                filtered_language_version: ''
             };
         });
     }
@@ -301,7 +325,12 @@ class Contest extends React.Component {
                                                 return (
                                                     <option
                                                         key={language.language + '-' + language.version}
-                                                        value={language.language + '-' + language.version}>{language.language} ({language.runtime ? `via ${language.runtime} ` : ''}{language.version})</option>
+                                                        value={language.language + '-' + language.version}
+                                                    >
+                                                        {language.language} ({language.runtime
+                                                            ? `via ${language.runtime} `
+                                                            : ''}
+                                                        {language.version})</option>
                                                 )
                                             })}
                                         </select>
@@ -397,6 +426,26 @@ class Contest extends React.Component {
                     )}
                     Submissions
                 </h5>
+                <h6>Language filter</h6>
+                <select
+                    id="language-filter"
+                    class="form-control marginbottom10"
+                    style={{ width: '300px'}}
+                    value={this.state.filtered_language + '-' + this.state.filtered_language_version}
+                    onChange={this.filter_languages}>
+                    <option key='all' value='all'>All</option>
+                    {this.state.languages.map(language => {
+                        return (
+                            <option
+                                key={language.language + '-' + language.version}
+                                value={language.language + '-' + language.version}
+                            >
+                                {language.language} ({language.runtime ? `via ${language.runtime} ` : ''}
+                                {language.version})
+                            </option>
+                        )
+                    })}
+                </select>
                 {!active && (
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
