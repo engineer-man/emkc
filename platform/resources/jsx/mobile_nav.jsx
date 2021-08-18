@@ -33,6 +33,7 @@ class MobileNav extends React.Component {
                 <div class="backdrop" onClick={this.close}></div>
                 <div class="menu">
                     <div class="contents">
+                        <i class="fa fa-bars pointer marginbottom20" onClick={this.close}></i>
                         <h5 class="f300">Main Menu</h5>
                         <a href="/">Home</a>
                         <a href="/challenges">Challenges</a>
