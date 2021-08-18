@@ -110,9 +110,7 @@ module.exports = {
 
         return res
             .status(snippet ? 200 : 400)
-            .send({
-                url: '/snippets/mine'
-            });
+            .send();
     },
 
     async edit(req, res) {

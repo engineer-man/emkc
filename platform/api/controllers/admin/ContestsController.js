@@ -97,6 +97,25 @@ module.exports = {
         });
     },
 
+    async delete(req, res) {
+        const { contest_id } = req.params;
+        let contest = await db.contests
+            .find_one({
+                where: {
+                    contest_id
+                }
+            });
+
+        if (contest)
+        {
+            await contest.destroy();
+        }
+
+        return res
+            .status(contest ? 200 : 400)
+            .send();
+    },
+
     async delete_submission(req, res) {
         const { contest_submission_id } = req.body;
 

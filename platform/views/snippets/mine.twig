@@ -23,13 +23,14 @@
                         <tbody>
                             {% for snippet in snippets %}
                                 <tr>
-                                    <td class="center">
+                                    <td class="actions center">
                                         <nobr>
                                             <a href="{{ snippet.url }}" class="fas fa-eye"></a>&nbsp;
                                             <a href="/snippets/edit/{{ snippet.hash }}" class="fas fa-pen"></a>&nbsp;
-                                            <a href="#"
-                                                class="confirm-delete fas fa-trash text-danger"
-                                                data-hash="{{ snippet.hash }}">
+                                            <a
+                                                id="delete-snippet"
+                                                class="confirm-delete fas fa-trash text-danger pointer"
+                                                data-target="{{ snippet.hash }}">
                                             </a>
                                         </nobr>
                                     </td>

@@ -26,12 +26,20 @@
                         {% for contest in contests %}
                             <tr>
                                 <td class="actions center">
-                                    <a href="/admin/contests/update/{{ contest.contest_id }}">
-                                        <i class="fa fa-pencil-alt"></i>
-                                    </a>
-                                    <a href="{{ contest.url }}">
-                                        <i class="fa fa-search"></i>
-                                    </a>
+                                    <nobr>
+                                        <a href="/admin/contests/update/{{ contest.contest_id }}">
+                                            <i class="fa fa-pencil-alt"></i>
+                                        </a>
+                                        <a href="{{ contest.url }}">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                        <a>
+                                            <i
+                                                id="delete-contest"
+                                                class="confirm-delete fa fa-trash pointer text-danger"
+                                                data-target="{{ contest.contest_id }}"></i>
+                                        </a>
+                                    </nobr>
                                 </td>
                                 <td>{{ contest.contest_id }}</td>
                                 <td>{{ contest.name }}</td>

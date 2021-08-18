@@ -56,6 +56,7 @@ module.exports.routes = {
     'POST /admin/contests/create': 'admin/ContestsController.create',
     'GET /admin/contests/update/:contest_id': 'admin/ContestsController.update',
     'POST /admin/contests/update/:contest_id': 'admin/ContestsController.update',
+    'POST /admin/contests/delete/:contest_id': 'admin/ContestsController.delete',
     'POST /admin/submissions/validate/:contest_id': 'admin/ContestsController.validate_submissions',
     'POST /admin/submissions/delete': 'admin/ContestsController.delete_submission',
     'GET /admin/users': 'admin/UsersController.view_all',
