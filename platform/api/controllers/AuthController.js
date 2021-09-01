@@ -131,7 +131,7 @@ module.exports = {
                 return res.redirect(req.session.redirect);
                 delete req.session.redirect;
             } else {
-                return res.redirect('/board');
+                return res.redirect('/');
             }
         } catch (e) {
             return res.redirect('/');
