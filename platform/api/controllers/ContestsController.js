@@ -1,10 +1,11 @@
+const moment = require("moment");
+
 module.exports = {
 
     async home(req, res) {
         let past_contests = await db.contests
             .find_all({
                 where: {
-                    draft: 0,
                     end_date: {
                         [$lt]: util.now()
                     }
@@ -54,7 +55,6 @@ module.exports = {
         let active_contests = await db.contests
             .find_all({
                 where: {
-                    draft: 0,
                     start_date: {
                         [$lte]: util.now()
                     },
@@ -239,8 +239,8 @@ module.exports = {
                 });
         }
 
-        if (contest.draft) {
-            // Don't save solution for draft contests
+        if (moment().isBefore(contest.start_date)) {
+            // Don't save solution for upcoming contests
             return res
                 .status(200)
                 .send({

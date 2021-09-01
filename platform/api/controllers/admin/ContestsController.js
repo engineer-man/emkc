@@ -18,7 +18,6 @@ module.exports = {
     async create(req, res) {
         if (req.method === 'POST') {
             const {
-                draft,
                 name,
                 description,
                 start_date,
@@ -30,7 +29,6 @@ module.exports = {
 
             let contest = await db.contests
                 .create({
-                    draft,
                     name,
                     description,
                     start_date,
@@ -49,7 +47,6 @@ module.exports = {
         return res.view('admin/contests/update', {
             mode: 'create',
             contest: {
-                draft: 1,
                 name: '',
                 description: '',
                 start_date: moment().startOf('isoweek').add(6, 'days').format(),
@@ -72,9 +69,8 @@ module.exports = {
             });
 
         if (req.method === 'POST') {
-            const { draft, name, description, start_date, end_date, input, output, disallowed_languages } = req.body;
+            const { name, description, start_date, end_date, input, output, disallowed_languages } = req.body;
 
-            contest.draft = draft;
             contest.name = name;
             contest.description = description;
             contest.start_date = start_date;
