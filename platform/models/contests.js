@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true,
                 autoIncrement: true
             },
-            draft: DataTypes.INTEGER,
             name: DataTypes.STRING,
             description: DataTypes.TEXT('medium'),
             start_date: DataTypes.DATE,
@@ -25,9 +24,7 @@ module.exports = (sequelize, DataTypes) => {
             active: {
                 type: DataTypes.VIRTUAL,
                 get() {
-                    return moment().isAfter(moment(this.start_date))
-                        && moment().isBefore(moment(this.end_date))
-                        && !this.draft;
+                    return moment().isAfter(moment(this.start_date)) && moment().isBefore(moment(this.end_date));
                 }
             },
             url: {
