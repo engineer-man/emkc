@@ -27,6 +27,7 @@ class Contest extends React.Component {
             filtered_language_version: ''
         };
 
+        this.encoder = new TextEncoder();
         this.on_time_submissions = [];
         this.late_submissions = [];
 
@@ -363,6 +364,9 @@ class Contest extends React.Component {
                                             value={this.state.solution}
                                             onChange={this.handle_change}
                                         ></textarea>
+                                        <span class="margintop5" style={{display: 'flex', 'justify-content': 'end'}}>
+                                            {this.encoder.encode(this.state.solution).length} bytes
+                                        </span>
                                     </div>
                                     <div class="form-group">
                                         <label class="green">
