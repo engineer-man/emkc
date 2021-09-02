@@ -430,7 +430,6 @@ class Contest extends React.Component {
                     )}
                     Submissions
                 </h5>
-                <h6>Language filter</h6>
                 <select
                     id="language-filter"
                     class="form-control marginbottom10"
