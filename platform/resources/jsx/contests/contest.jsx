@@ -415,40 +415,42 @@ class Contest extends React.Component {
                 </div>
 
                 <h5 class="green marginbottom20">
-                    {!!ctx.is_staff && (
-                        <div class="float-right">
-                            <button
-                                type="button"
-                                class="btn btn-sm btn-warning"
-                                disabled={this.state.validating}
-                                onClick={this.validate}>
-
-                                {this.state.validating ? 'Re-validating...': 'Re-validate submissions'}
-                            </button>
-                            {' '}
-                        </div>
-                    )}
                     Submissions
                 </h5>
-                <select
-                    id="language-filter"
-                    class="form-control marginbottom10"
-                    style={{ width: '300px'}}
-                    value={this.state.filtered_language + '-' + this.state.filtered_language_version}
-                    onChange={this.filter_languages}>
-                    <option key='all' value='all'>All</option>
-                    {this.state.languages.map(language => {
-                        return (
-                            <option
-                                key={language.language + '-' + language.version}
-                                value={language.language + '-' + language.version}
-                            >
-                                {language.language} ({language.runtime ? `via ${language.runtime} ` : ''}
-                                {language.version})
-                            </option>
-                        )
-                    })}
-                </select>
+                <div class="space-between marginbottom10">
+                    <select
+                        id="language-filter"
+                        class="form-control"
+                        style={{ width: '300px'}}
+                        value={this.state.filtered_language + '-' + this.state.filtered_language_version}
+                        onChange={this.filter_languages}>
+                        <option key='all' value='all'>All</option>
+                        {this.state.languages.map(language => {
+                            return (
+                                <option
+                                    key={language.language + '-' + language.version}
+                                    value={language.language + '-' + language.version}
+                                >
+                                    {language.language} ({language.runtime ? `via ${language.runtime} ` : ''}
+                                    {language.version})
+                                </option>
+                            )
+                        })}
+                    </select>
+                    {!!ctx.is_staff && (
+                            <div class="float-right">
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-warning"
+                                    disabled={this.state.validating}
+                                    onClick={this.validate}>
+
+                                    {this.state.validating ? 'Re-validating...': 'Re-validate submissions'}
+                                </button>
+                                {' '}
+                            </div>
+                    )}
+                </div>
                 {!active && (
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
