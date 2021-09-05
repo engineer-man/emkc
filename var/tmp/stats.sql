@@ -3,13 +3,16 @@ select
     count(*) as messages
 from discord_chat_messages
 where
-    created_at > '2021-03-26 00:00:00' and
+    created_at > '2021-07-29 00:00:00' and
     channel not in (
-        'off-topic',
         'team-room',
+        'hero-room',
         'oof-topic',
         'command-center',
-        'gaming'
+        'moderator-report',
+        'gaming',
+        'music',
+        'bot-playground'
     ) and
     discord_id in (
         '252862670842232832',
@@ -29,32 +32,37 @@ where
 group by discord_id
 order by messages desc;
 
+
 select
     user,
     count(*) as messages
 from discord_chat_messages
 where
-    created_at > '2021-03-26 00:00:00' and
+    created_at > '2021-07-29 00:00:00' and
     channel not in (
-        'off-topic',
+        'team-room',
         'hero-room',
         'oof-topic',
         'command-center',
-        'gaming'
+        'moderator-report',
+        'gaming',
+        'music',
+        'bot-playground'
     ) and
     discord_id in (
         '319509382889209866',
         '681375864042160128',
         '222005750598205440',
+        '243412893234757632',
         '532835388448833556',
         '271357207180738563',
-        '266140088138858496',
-        '736234578745884682',
+        '406634590325964801',
+        '276380118761340928',
         '563228793704022038',
         '496790880548814858',
-        '601873098496671755',
-        '570306780010119170',
-        '299252694147661824',
+        '158250066417549312',
+        '266140088138858496',
+        '710952300209766410',
         '197774061315686400',
         '536269399783505950'
     )
