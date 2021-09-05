@@ -49,8 +49,8 @@ module.exports = {
             contest: {
                 name: '',
                 description: '',
-                start_date: moment().startOf('isoweek').add(6, 'days').format(),
-                end_date: moment().startOf('isoweek').add(9, 'days').format(),
+                start_date: moment().startOf('isoweek').add(6, 'days').format('YYYY-MM-DD 17:00:00'),
+                end_date: moment().startOf('isoweek').add(9, 'days').format('YYYY-MM-DD 17:00:00'),
                 input: '',
                 output: '',
                 disallowed_languages
