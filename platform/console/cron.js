@@ -327,7 +327,6 @@ const cron = {
         let contest = await db.contests
             .find_one({
                 where: {
-                    draft: 0,
                     start_date: {
                         [$lte]: util.now()
                     },
