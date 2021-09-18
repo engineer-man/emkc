@@ -1,9 +1,6 @@
-const axios = require('axios');
-
-const timeout = ms => new Promise(res => set_timeout(res, ms));
+const timeout = (ms) => new Promise((res) => set_timeout(res, ms));
 
 module.exports = {
-
     async check_submission_validity(test_cases, expected_results, solution, language, version) {
         let counter = 0;
 
@@ -16,16 +13,16 @@ module.exports = {
             let args = current_test_case.trim().split('|');
 
             try {
-                let test_result = await piston
-                    .execute(
-                        language,
-                        solution,
-                        args,
-                        args.join('\n'),
-                        version
-                    );
-
-                if (test_result.run.stdout.trim() !== current_expected_result) {
+                let test_result = await piston.execute(
+                    language,
+                    solution,
+                    args,
+                    args.join('\n'),
+                    version
+                );
+                if (
+                    test_result.run.stdout.trim() !== current_expected_result.replace(/\\n/g, '\n')
+                ) {
                     return false;
                 }
             } catch (e) {
@@ -37,5 +34,4 @@ module.exports = {
 
         return true;
     }
-
-}
+};
