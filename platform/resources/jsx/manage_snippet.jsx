@@ -4,23 +4,16 @@ import axios from 'axios';
 import Util from 'js/util';
 
 class ManageSnippet extends React.Component {
-
     constructor(props) {
-        super(props)
-
-        if (this.props.hash) {
-            this.state = {
-                snip: this.props.snip,
-                language: this.props.language
-            };
-        } else {
-            this.state = {
-                snip: '',
-                language: 'javascript'
-            };
-        }
+        super(props);
+        this.state = {
+            snip: this.props.hash ? this.props.snip : '',
+            language: this.props.hash ? this.props.language : 'javascript',
+            word_wrap: 'off'
+        };
 
         this.change_language = this.change_language.bind(this);
+        this.toggle_word_wrap = this.toggle_word_wrap.bind(this);
         this.save = this.save.bind(this);
     }
 
@@ -42,6 +35,16 @@ class ManageSnippet extends React.Component {
         monaco.editor.setModelLanguage(this.state.editor.getModel(), event.target.value);
     }
 
+    toggle_word_wrap() {
+        let word_wrap = this.state.word_wrap === 'off' ? 'bounded' : 'off';
+        this.state.editor.updateOptions({
+            wordWrap: word_wrap
+        });
+        this.setState({
+            word_wrap
+        });
+    }
+
     async save() {
         let url;
 
@@ -51,11 +54,10 @@ class ManageSnippet extends React.Component {
             url = '/snippets';
         }
 
-        let res = await axios
-            .post(url, {
-                language: this.state.language,
-                snip: this.state.editor.getValue()
-            });
+        let res = await axios.post(url, {
+            language: this.state.language,
+            snip: this.state.editor.getValue()
+        });
 
         if (res.status >= 300) {
             return bootbox.alert('Please provide some code');
@@ -129,16 +131,30 @@ class ManageSnippet extends React.Component {
                                 <option>yaml</option>
                             </select>
                         </div>
-                        <div class="save">
-                            <button type="button" class="btn btn-md btn-success" onClick={this.save}>Save</button>
+                        <div>
+                            <button
+                                type="button"
+                                title="Toggle word wrap"
+                                class="btn btn-md btn-dark control-button"
+                                onClick={this.toggle_word_wrap}
+                            >
+                                Wrap
+                            </button>
+                            <button
+                                type="button"
+                                title="Save the snippet"
+                                class="btn btn-md btn-success control-button"
+                                onClick={this.save}
+                            >
+                                <i class="fas fa-save"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div id="editor"></div>
             </div>
-        )
+        );
     }
-
 }
 
 Util.try_render('react_manage_snippet', ManageSnippet);
