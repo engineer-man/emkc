@@ -7,8 +7,8 @@ class ManageSnippet extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            snip: this.props.hash ? this.props.snip : '',
-            language: this.props.hash ? this.props.language : 'javascript',
+            snip: this.props.mode === 'create' ? '' : this.props.snip,
+            language: this.props.mode === 'create' ? 'javascript' : this.props.language,
             word_wrap: 'off'
         };
 
@@ -23,6 +23,7 @@ class ManageSnippet extends React.Component {
             language: this.state.language,
             automaticLayout: true,
             value: this.state.snip,
+            readOnly: this.props.mode === 'view',
             fontSize: 16
         });
     }
@@ -48,7 +49,7 @@ class ManageSnippet extends React.Component {
     async save() {
         let url;
 
-        if (this.props.hash) {
+        if (this.props.mode === 'update') {
             url = '/snippets/edit/' + this.props.hash;
         } else {
             url = '/snippets';
@@ -72,64 +73,71 @@ class ManageSnippet extends React.Component {
                 <div class="menu">
                     <div class="wrapper">
                         <div class="language">
-                            <select
-                                onChange={this.change_language}
-                                defaultValue={this.state.language}
-                                class="form-control"
-                            >
-                                <option>apex</option>
-                                <option>azcli</option>
-                                <option>bat</option>
-                                <option>c</option>
-                                <option>clojure</option>
-                                <option>coffeescript</option>
-                                <option>cpp</option>
-                                <option>csharp</option>
-                                <option>csp</option>
-                                <option>css</option>
-                                <option>dockerfile</option>
-                                <option>fsharp</option>
-                                <option>go</option>
-                                <option>handlebars</option>
-                                <option>html</option>
-                                <option>ini</option>
-                                <option>java</option>
-                                <option>javascript</option>
-                                <option>json</option>
-                                <option>less</option>
-                                <option>lua</option>
-                                <option>markdown</option>
-                                <option>msdax</option>
-                                <option>mysql</option>
-                                <option>objective-c</option>
-                                <option>perl</option>
-                                <option>pgsql</option>
-                                <option>php</option>
-                                <option>plaintext</option>
-                                <option>postiats</option>
-                                <option>powerquery</option>
-                                <option>powershell</option>
-                                <option>pug</option>
-                                <option>python</option>
-                                <option>r</option>
-                                <option>razor</option>
-                                <option>redis</option>
-                                <option>redshift</option>
-                                <option>ruby</option>
-                                <option>rust</option>
-                                <option>sb</option>
-                                <option>scheme</option>
-                                <option>scss</option>
-                                <option>shell</option>
-                                <option>sol</option>
-                                <option>sql</option>
-                                <option>st</option>
-                                <option>swift</option>
-                                <option>typescript</option>
-                                <option>vb</option>
-                                <option>xml</option>
-                                <option>yaml</option>
-                            </select>
+                            {(this.props.mode !== 'view' && (
+                                <select
+                                    onChange={this.change_language}
+                                    defaultValue={this.state.language}
+                                    class="form-control"
+                                >
+                                    <option>apex</option>
+                                    <option>azcli</option>
+                                    <option>bat</option>
+                                    <option>c</option>
+                                    <option>clojure</option>
+                                    <option>coffeescript</option>
+                                    <option>cpp</option>
+                                    <option>csharp</option>
+                                    <option>csp</option>
+                                    <option>css</option>
+                                    <option>dockerfile</option>
+                                    <option>fsharp</option>
+                                    <option>go</option>
+                                    <option>handlebars</option>
+                                    <option>html</option>
+                                    <option>ini</option>
+                                    <option>java</option>
+                                    <option>javascript</option>
+                                    <option>json</option>
+                                    <option>less</option>
+                                    <option>lua</option>
+                                    <option>markdown</option>
+                                    <option>msdax</option>
+                                    <option>mysql</option>
+                                    <option>objective-c</option>
+                                    <option>perl</option>
+                                    <option>pgsql</option>
+                                    <option>php</option>
+                                    <option>plaintext</option>
+                                    <option>postiats</option>
+                                    <option>powerquery</option>
+                                    <option>powershell</option>
+                                    <option>pug</option>
+                                    <option>python</option>
+                                    <option>r</option>
+                                    <option>razor</option>
+                                    <option>redis</option>
+                                    <option>redshift</option>
+                                    <option>ruby</option>
+                                    <option>rust</option>
+                                    <option>sb</option>
+                                    <option>scheme</option>
+                                    <option>scss</option>
+                                    <option>shell</option>
+                                    <option>sol</option>
+                                    <option>sql</option>
+                                    <option>st</option>
+                                    <option>swift</option>
+                                    <option>typescript</option>
+                                    <option>vb</option>
+                                    <option>xml</option>
+                                    <option>yaml</option>
+                                </select>
+                            )) || (
+                                <>
+                                    <span class="language_label f700">Language:</span>
+                                    {this.props.language}
+                                </>
+                            )}
                         </div>
                         <div>
                             <button
@@ -139,6 +147,14 @@ class ManageSnippet extends React.Component {
                                 onClick={this.toggle_word_wrap}
                             >
                                 Wrap
+                            </button>
+                            <button
+                                type="button"
+                                title="Run the code"
+                                class="btn btn-md btn-primary control-button"
+                                onClick={this.toggle_word_wrap}
+                            >
+                                <i class="fas fa-play"></i>
                             </button>
                             <button
                                 type="button"

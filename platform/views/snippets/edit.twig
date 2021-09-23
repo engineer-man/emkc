@@ -16,6 +16,7 @@
 {% block content %}
     <div
         id="react_manage_snippet"
+        data-mode="{{ mode|json_encode|e }}"
         data-language="{{ snippet.language|json_encode|e }}"
         data-snip="{{ snippet.snip|json_encode|noscript|e }}"
         data-hash="{{ snippet.hash|json_encode|e }}"
