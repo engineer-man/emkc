@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Util from 'js/util';
 
-class ManageSnippet extends React.Component {
+class Snippet extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -156,14 +156,28 @@ class ManageSnippet extends React.Component {
                             >
                                 <i class="fas fa-play"></i>
                             </button>
-                            <button
-                                type="button"
-                                title="Save the snippet"
-                                class="btn btn-md btn-success control-button"
-                                onClick={this.save}
-                            >
-                                <i class="fas fa-save"></i>
-                            </button>
+                            {(this.props.mode !== 'view' && (
+                                <button
+                                    type="button"
+                                    title="Save the snippet"
+                                    class="btn btn-md btn-success control-button"
+                                    onClick={this.save}
+                                >
+                                    <i class="fas fa-save"></i>
+                                </button>
+                            )) ||
+                                (ctx.user_id === this.props.user_id && (
+                                    <button
+                                        type="button"
+                                        title="Edit the snippet"
+                                        class="btn btn-md btn-success control-button"
+                                        onClick={() => {
+                                            location = `/snippets/edit/${this.props.hash}`;
+                                        }}
+                                    >
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                ))}
                         </div>
                     </div>
                 </div>
@@ -173,6 +187,6 @@ class ManageSnippet extends React.Component {
     }
 }
 
-Util.try_render('react_manage_snippet', ManageSnippet);
+Util.try_render('react_snippet', Snippet);
 
-export default ManageSnippet;
+export default Snippet;
