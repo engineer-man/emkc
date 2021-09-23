@@ -85,8 +85,8 @@ module.exports = {
         }
 
         return res.view('snippets/edit', {
+            mode: 'create',
             snippet: {
-                mode: 'create',
                 language: '',
                 snip: '',
                 hash: ''
@@ -170,5 +170,5 @@ module.exports = {
             mode: 'update',
             snippet
         });
-    }
+    },
 };

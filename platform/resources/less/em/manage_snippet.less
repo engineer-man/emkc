@@ -1,0 +1,61 @@
+.em_manage_snippet {
+    #editor {
+        height: calc(100vh - 144px);
+        @media (max-width: 700px) {
+            height: calc(100vh - 190px);
+        }
+    }
+    .menu {
+        .wrapper {
+            display: flex;
+            background: #21252b;
+            align-items: center;
+            padding: 10px 10px 10px 75px;
+            @media (max-width: 700px) {
+                display: grid;
+                grid-template-columns: 1fr;
+                align-items: unset;
+                place-items: center;
+                gap: 0.5rem;
+            }
+            > * {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .language {
+                flex: 1;
+                select {
+                    width: 200px;
+                }
+            }
+            .language_label {
+                margin-right: 10px;
+                flex: 1;
+            }
+            .control-button {
+                margin-right: 0.5rem;
+            }
+        }
+    }
+    .run-data {
+        display: flex;
+        width: 100%;
+        overflow: auto;
+        pre {
+            font: unset;
+            color: unset;
+        }
+        .inputs-outputs {
+            width: 100%;
+            padding: 20px 15px;
+        }
+    }
+    .info {
+        background-color: rgba(0, 0, 0, 0.3);
+        min-height: 20px;
+        margin-bottom: 10px;
+        padding: 10px 5px 5px 5px;
+        overflow-x: auto;
+        max-width: 600px;
+    }
+}

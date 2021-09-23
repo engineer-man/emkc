@@ -56,12 +56,6 @@ let constant = {
         ]
     },
 
-    snippets: {
-        monaco_piston_map: {
-
-        }
-    },
-
     channels: {
         emkc: '483979558249562112',
         python: '483980259239264256', // python

@@ -3,7 +3,7 @@
     {{ parent() }}
     <style>
         body {
-            overflow: hidden;
+            overflow-x: hidden;
         }
         .em_container {
             background: #1E1E1E;
@@ -15,7 +15,7 @@
 {% endblock %}
 {% block content %}
     <div
-        id="react_snippet"
+        id="react_manage_snippet"
         data-mode="{{ mode|json_encode|e }}"
         data-language="{{ snippet.language|json_encode|e }}"
         data-snip="{{ snippet.snip|json_encode|noscript|e }}"
