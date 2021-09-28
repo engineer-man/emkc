@@ -48,7 +48,10 @@ let constant = {
     contests: {
         disallowed_languages: [
             'python2',
-            'awk'
+            'awk',
+            'dotnet',
+            'csharp.net',
+            'basic.net'
         ],
         golf_languages: [
             'jelly',
