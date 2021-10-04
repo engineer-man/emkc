@@ -127,7 +127,16 @@ module.exports = {
                 {
                     required: false,
                     model: db.contest_submissions,
-                    as: 'submissions'
+                    as: 'submissions',
+                    include: [
+                        {
+                            model: db.users,
+                            as: 'user',
+                            attributes: [
+                                'username'
+                            ]
+                        }
+                    ]
                 }
             ]
         });

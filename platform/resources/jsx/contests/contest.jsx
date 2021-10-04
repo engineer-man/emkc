@@ -262,7 +262,7 @@ class Contest extends React.Component {
         let invalids_str = '';
 
         for (let invalid of invalids) {
-            invalids_str += `(#${invalid.contest_submission_id}) ${invalid.language}\
+            invalids_str += `(#${invalid.contest_submission_id}) ${invalid.user.username}'s ${invalid.language}\
             submission of length ${invalid.length}<br />`
         }
 
