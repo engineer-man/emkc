@@ -365,7 +365,7 @@ class Contest extends React.Component {
                                             onChange={this.handle_change}
                                         ></textarea>
                                         <span class="margintop5" style={{display: 'flex', 'justify-content': 'end'}}>
-                                            {this.encoder.encode(this.state.solution).length} bytes
+                                            {this.encoder.encode(this.state.solution.trim()).length} bytes
                                         </span>
                                     </div>
                                     <div class="form-group">
