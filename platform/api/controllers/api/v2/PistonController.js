@@ -36,7 +36,7 @@ module.exports = {
         if (!sails.config.piston.unlimited_keys.includes(authorization)) {
             const redis = new Redis(6379, 'redis');
 
-            let entry = await redis.get(`piston-${req.ip}`);
+            let entry = await redis.get(`piston-${ip}`);
 
             if (entry) {
                 redis.disconnect();
@@ -47,7 +47,7 @@ module.exports = {
                         message: 'Requests limited to 1 per 200ms'
                     });
             } else {
-                await redis.set(`piston-${req.ip}`, 0, 'px', 200);
+                await redis.set(`piston-${ip}`, 0, 'px', 200);
             }
 
             redis.disconnect();
