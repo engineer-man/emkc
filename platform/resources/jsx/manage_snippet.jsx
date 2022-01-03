@@ -180,7 +180,10 @@ class ManageSnippet extends React.Component {
         this.setState({
             executing: false
         });
-        if (result.status === 400) {
+        if (result.status === 429) {
+            return bootbox.alert('You are executing the snippet too many times.');
+        }
+        if (result.status >= 400) {
             return bootbox.alert('An internal error has occurred.');
         }
         // Check if it is a compiled language
