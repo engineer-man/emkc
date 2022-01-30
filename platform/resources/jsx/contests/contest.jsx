@@ -289,12 +289,12 @@ class Contest extends React.Component {
                                     {c.inputs.map((input, i) => {
                                         return (
                                             <div key={'input-' + i}>
-                                                Argument {i+1}: {input}
+                                                <strong>Argument {i+1}</strong>{'\n'}{input}
                                                 {'\n'}
                                             </div>
                                         );
                                     })}
-                                    Expected Output: {c.output}
+                                    <strong>Expected Output</strong>{'\n'}{c.output.replace(/\\n/g, '\n')}
                                 </pre>
                             </div>
                         );
