@@ -119,11 +119,13 @@ class Manage extends React.Component {
             return bootbox.alert("The number of test cases do not match the number of expected results");
         }
 
-        let number_of_parameters = test_cases[0].split('|').length;
+        let first_case_inputs = test_cases[0].split('|');
+        let number_of_parameters = first_case_inputs.length - (first_case_inputs[0] == "" ? 2 : 0 ); // if first case is blank, next arg is options
         let valid = true
 
         test_cases.forEach(test_case => {
-            if (test_case.split('|').length !== number_of_parameters) {
+            let case_inputs = test_case.split('|');
+            if ((case_inputs.length - (case_inputs[0] == "" ? 2 : 0)) !== number_of_parameters) {
                 valid = false
             }
         });
