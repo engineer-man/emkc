@@ -273,6 +273,7 @@ module.exports = {
                                 `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
                             type: 'rich',
                             color: 0x84e47f,
+                            timestamp: new Date().toISOString(),
                             url: `${constant.base_url}${contest.url}`,
                             author: {
                                 name:
@@ -282,7 +283,7 @@ module.exports = {
                             },
                             footer: {
                                 icon_url: constant.cdn_url + req.local.user.avatar_url,
-                                text: `updated by ${req.local.user.display_name} right now`
+                                text: `updated by ${req.local.user.display_name}`
                             }
                         }
                     })
@@ -314,6 +315,7 @@ module.exports = {
                                 `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
                             type: 'rich',
                             color: 0x84e47f,
+                            timestamp: new Date().toISOString(),
                             url: `${constant.base_url}${contest.url}`,
                             author: {
                                 name:
@@ -322,7 +324,7 @@ module.exports = {
                             },
                             footer: {
                                 icon_url: constant.cdn_url + req.local.user.avatar_url,
-                                text: `submitted by ${req.local.user.display_name} right now`
+                                text: `submitted by ${req.local.user.display_name}`
                             }
                         }
                     })
