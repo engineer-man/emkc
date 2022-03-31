@@ -249,7 +249,7 @@ module.exports = {
                 }
             });
         
-        let test_cases = get_case(contest)
+        let test_cases = get_cases(contest)
         let languages = await piston.runtimes();
 
         languages = languages
