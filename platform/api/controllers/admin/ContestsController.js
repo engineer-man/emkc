@@ -3,7 +3,7 @@ const moment = require('moment');
 module.exports = {
 
     async view_all(req, res) {
-        let contests = await db.contests
+        let all_contests = await db.contests
             .find_all({
                 order: [
                     ['contest_id', 'desc']
@@ -11,7 +11,7 @@ module.exports = {
             });
 
         return res.view({
-            contests
+            contests: all_contests
         });
     },
 
@@ -132,13 +132,14 @@ module.exports = {
             ]
         });
 
+        let test_cases = contests.get_cases(contest)
+
         let invalids = [];
 
         for (let submission of contest.submissions) {
             let is_valid = await contests
                 .check_submission_validity(
-                    contest.input.split('\n'),
-                    contest.output.split('\n'),
+                    test_cases,
                     submission.solution,
                     submission.language,
                     submission.language_version || '*', // Default to latest, just incase its blank

@@ -135,17 +135,7 @@ module.exports = {
         let awarded_users = [];
         let top = 1;
 
-        let inputs = contest.input.split('\n').map(o => o.split('|'));
-        let outputs = contest.output.split('\n');
-
-        let cases = [];
-
-        for (let i = 0; i < inputs.length; ++i) {
-            cases.push({
-                inputs: inputs[i],
-                output: outputs[i]
-            });
-        }
+        let cases = contests.get_cases(contest, true)
 
         contest.submissions
             .for_each((submission, i) => {
@@ -208,17 +198,15 @@ module.exports = {
                     contest_id
                 }
             });
-
-        let test_cases = contest.input.split('\n');
-        let expected_results = contest.output.split('\n');
+        
+        let test_cases = contests.get_cases(contest)
         let languages = await piston.runtimes();
 
         languages = languages
             .filter(lang => lang.language === language);
 
         // To prevent submissions by alias
-        if (test_cases.length !== expected_results.length ||
-            constant.contests.disallowed_languages.includes(language) ||
+        if (constant.contests.disallowed_languages.includes(language) ||
             !languages.length) {
 
             return res
@@ -229,7 +217,7 @@ module.exports = {
         }
 
         let is_valid = await contests
-            .check_submission_validity(test_cases, expected_results, solution, language, language_version);
+            .check_submission_validity(test_cases, solution, language, language_version);
 
         if (!is_valid) {
             return res

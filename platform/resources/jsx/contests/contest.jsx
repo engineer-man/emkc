@@ -286,15 +286,23 @@ class Contest extends React.Component {
                             <div key={'test-' + i}>
                                 <h6>Test Case {i+1}</h6>
                                 <pre class="case_text">
-                                    {c.inputs.map((input, i) => {
-                                        return (
-                                            <div key={'input-' + i}>
-                                                <strong>Argument {i+1}</strong>{'\n'}{input}
-                                                {'\n'}
-                                            </div>
-                                        );
-                                    })}
-                                    <strong>Expected Output</strong>{'\n'}{c.output.replace(/\\n/g, '\n')}
+                                    {(c.hide_input && (active || c.hide_ignore_active))
+                                        ? <strong>{c.args.length} hidden argument(s)</strong>
+                                        : c.args.map((input, i) => {
+                                            return (
+                                                <div key={'input-' + i}>
+                                                    <strong>Argument {i+1}</strong>{'\n'}{input}
+                                                    {'\n'}
+                                                </div>
+                                            );
+                                        })
+                                    }
+                                    {'\n'}
+                                    {(c.hide_output && (active || c.hide_ignore_active))
+                                        ? <strong>Hidden Output</strong>
+                                        : <><strong>Expected Output</strong>{'\n'}{c.output.replace(/\\n/g, '\n')}</>
+                                    }
+                                    
                                 </pre>
                             </div>
                         );
