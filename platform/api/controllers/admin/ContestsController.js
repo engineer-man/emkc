@@ -3,7 +3,7 @@ const moment = require('moment');
 module.exports = {
 
     async view_all(req, res) {
-        let contests = await db.contests
+        let all_contests = await db.contests
             .find_all({
                 order: [
                     ['contest_id', 'desc']
@@ -11,7 +11,7 @@ module.exports = {
             });
 
         return res.view({
-            contests
+            contests: all_contests
         });
     },
 
@@ -132,7 +132,7 @@ module.exports = {
             ]
         });
 
-        let test_cases = get_cases(contest)
+        let test_cases = contests.get_cases(contest)
 
         let invalids = [];
 
