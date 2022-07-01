@@ -174,23 +174,18 @@ class Challenge extends React.Component {
                                 {result.expected}
                                 <br />
                                 <span class="badge badge-dark">actual output</span>{' '}
-                                <span
-                                    dangerouslySetInnerHTML={{
-                                        __html: result.actual
-                                            .split('\n')
-                                            .map((a) => a + '<br/>')
-                                            .join('')
-                                    }}
-                                ></span>
+                                <pre>{result.actual}</pre>
                                 {!!result.compile_output && (
                                     <>
-                                        <span class="badge badge-dark">compile output</span>
+                                        <br />
+                                        <span class="badge badge-dark">compile output</span> <br />
                                         <pre>{result.compile_output}</pre>
                                     </>
                                 )}
                                 {!!result.run_error && (
                                     <>
-                                        <span class="badge badge-dark">run error</span>
+                                        <br />
+                                        <span class="badge badge-dark">run error</span> <br />
                                         <pre>{result.run_error}</pre>
                                     </>
                                 )}
