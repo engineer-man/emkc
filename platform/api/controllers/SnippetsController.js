@@ -29,7 +29,8 @@ module.exports = {
                     .send(snippet);
             }
 
-            return res.view({
+            return res.view('snippets/edit', {
+                mode: 'view',
                 snippet
             });
         } catch (e) {
@@ -84,6 +85,7 @@ module.exports = {
         }
 
         return res.view('snippets/edit', {
+            mode: 'create',
             snippet: {
                 language: '',
                 snip: '',
@@ -165,7 +167,8 @@ module.exports = {
         }
 
         return res.view({
+            mode: 'update',
             snippet
         });
-    }
+    },
 };

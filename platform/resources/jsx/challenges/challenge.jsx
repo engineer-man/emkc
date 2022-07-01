@@ -34,8 +34,7 @@ class Challenge extends React.Component {
             language: this.state.monaco_language,
             value: this.state.template,
             automaticLayout: true,
-            fontSize: 16,
-            onChange: this.on_editor_change
+            fontSize: 16
         });
 
         // Bind event listener for when the editor changes; unsaved work
