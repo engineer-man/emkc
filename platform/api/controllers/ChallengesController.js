@@ -347,13 +347,17 @@ module.exports = {
             let outputs = test.output.split('\n')
 
             let result = await piston.execute(language, source, inputs[test_idx].split('|'),'','*');
+            const compile_output = result.compile && result.compile.output;
+            const run_error = result.run.stderr;
             result = result.run.stdout.trim();
 
             results.push({
                 name: test.name,
                 input: inputs[test_idx],
                 expected: outputs[test_idx],
-                result
+                result,
+                compile_output,
+                run_error
             });
         }
 
@@ -369,7 +373,9 @@ module.exports = {
                 passed: result.result === result.expected,
                 input: result.input,
                 expected: result.expected,
-                actual: result.result
+                actual: result.result,
+                compile_output: result.compile_output,
+                run_error: result.run_error
             };
         });
 
