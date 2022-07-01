@@ -75,12 +75,14 @@ module.exports = {
         let compile_timeout = sails.config.piston.timeouts.compile;
         let run_timeout = sails.config.piston.timeouts.run;
 
-        if (timeouts.compile < compile_timeout) {
-            compile_timeout = timeouts.compile;
+        const request_timeouts = {};
+
+        if (timeouts.compile) {
+            request_timeouts.compile_timeout = Math.min(compile_timeout, timeouts.compile);
         }
 
-        if (timeouts.run < run_timeout) {
-            run_timeout = timeouts.run;
+        if (timeouts.run) {
+            request_timeouts.run_timeout = Math.min(run_timeout, timeouts.run);
         }
 
         let result = await axios
@@ -93,8 +95,7 @@ module.exports = {
                     files,
                     args,
                     stdin,
-                    compile_timeout: compile_timeout,
-                    run_timeout: run_timeout,
+                    ...request_timeouts
                 }
             });
 
