@@ -198,7 +198,7 @@ module.exports = {
                     contest_id
                 }
             });
-        
+
         let test_cases = contests.get_cases(contest)
         let languages = await piston.runtimes();
 
@@ -273,7 +273,7 @@ module.exports = {
                                 `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
                             type: 'rich',
                             color: 0x84e47f,
-                            timestamp: new Date().toISOString(),
+                            timestamp: moment().to_iso_string(),
                             url: `${constant.base_url}${contest.url}`,
                             author: {
                                 name:
