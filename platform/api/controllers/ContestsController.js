@@ -273,7 +273,7 @@ module.exports = {
                                 `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
                             type: 'rich',
                             color: 0x84e47f,
-                            timestamp: moment().to_iso_string(),
+                            timestamp: moment().toISOString(),
                             url: `${constant.base_url}${contest.url}`,
                             author: {
                                 name:
@@ -315,7 +315,7 @@ module.exports = {
                                 `[Click here](${constant.base_url}${contest.url}) to give it a try.`,
                             type: 'rich',
                             color: 0x84e47f,
-                            timestamp: new Date().toISOString(),
+                            timestamp: moment().toISOString(),
                             url: `${constant.base_url}${contest.url}`,
                             author: {
                                 name:
