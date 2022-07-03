@@ -266,7 +266,7 @@ module.exports = {
             if (submission.length < prev_length && contest.active) {
                 discord
                     .api('post', `/channels/${constant.channels.emkc}/messages`, {
-                        embed: {
+                        embeds: [{
                             title: contest.name,
                             description:
                                 `Can you do better than this? ` +
@@ -285,7 +285,7 @@ module.exports = {
                                 icon_url: constant.cdn_url + req.local.user.avatar_url,
                                 text: `updated by ${req.local.user.display_name}`
                             }
-                        }
+                        }]
                     })
                     .catch(err => {});
             }
@@ -308,7 +308,7 @@ module.exports = {
             if (contest.active) {
                 discord
                     .api('post', `/channels/${constant.channels.emkc}/messages`, {
-                        embed: {
+                        embeds: [{
                             title: contest.name,
                             description:
                                 `Can you make a better solution? ` +
@@ -326,7 +326,7 @@ module.exports = {
                                 icon_url: constant.cdn_url + req.local.user.avatar_url,
                                 text: `submitted by ${req.local.user.display_name}`
                             }
-                        }
+                        }]
                     })
                     .catch(err => {});
             }

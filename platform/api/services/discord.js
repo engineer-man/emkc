@@ -5,7 +5,7 @@ module.exports = {
     async api(method, url, body = null) {
         const options = {
             method,
-            url: 'https://discordapp.com/api/v6' + url,
+            url: 'https://discord.com/api/v10' + url,
             headers: {
                 Authorization: 'Bot ' + sails.config.felix.key
             },
@@ -18,7 +18,9 @@ module.exports = {
             options.body = body;
         }
 
-        return await request(options);
+        const response = await request(options);
+
+        return response;
     }
 
 };

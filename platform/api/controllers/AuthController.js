@@ -124,7 +124,7 @@ module.exports = {
 
             // add the emkc member role on discord
             discord
-                .api('put', `/guilds/473161189120147456/members/${user.discord_api}/roles/${constant.roles.emkc_member}`);
+                .api('put', `/guilds/${constant.server_id}/members/${user.discord_api}/roles/${constant.roles.emkc_member}`);
 
             // according to whether or not the redirect was supplied, either go to that url or to board main
             if (req.session.redirect) {
