@@ -12,7 +12,7 @@ module.exports = {
         }
 
         return res.redirect(
-            'https://discordapp.com/api/oauth2/authorize'+
+            'https://discord.com/api/v10/oauth2/authorize'+
             '?client_id=' + sails.config.discord.client_id +
             '&redirect_uri=' + encode_uri_component(constant.base_url + '/auth/discord_cb') +
             '&response_type=code'+
@@ -30,7 +30,7 @@ module.exports = {
             let auth_result = await request
                 ({
                     method: 'post',
-                    url: 'https://discordapp.com/api/v6/oauth2/token',
+                    url: 'https://discord.com/api/v10/oauth2/token',
                     headers: {
                         'content-type': 'application/x-www-form-urlencoded'
                     },
@@ -50,7 +50,7 @@ module.exports = {
             let discord_user = await request
                 ({
                     method: 'get',
-                    url: 'https://discordapp.com/api/v6/users/@me',
+                    url: 'https://discord.com/api/v10/users/@me',
                     headers: {
                         Authorization: 'Bearer ' + auth_result.access_token
                     },
