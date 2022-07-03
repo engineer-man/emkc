@@ -361,7 +361,7 @@ const cron = {
 
         discord
             .api('post', `/channels/${constant.channels.emkc}/messages`, {
-                embed: {
+                embeds: [{
                     //title: contest.name,
                     description:
                         'This contest is active right now. Submit your solution soon and ' +
@@ -397,7 +397,7 @@ const cron = {
                     footer: {
                         text: `There's still ${contest.time_left}left to submit a solution`
                     }
-                }
+                }]
             })
             .catch(err => {});
     }
