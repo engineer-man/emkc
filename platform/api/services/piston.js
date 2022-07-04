@@ -79,7 +79,7 @@ module.exports = {
             ];
         }
 
-        await timeout(constant.is_prod() ? 0 : 500); // Delay by 0.5 seconds when using the public api
+        await timeout(constant.is_prod ? 0 : 500); // Delay by 0.5 seconds when using the public api
 
         let compile_timeout = sails.config.piston.timeouts.compile;
         let run_timeout = sails.config.piston.timeouts.run;

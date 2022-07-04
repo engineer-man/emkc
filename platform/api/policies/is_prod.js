@@ -1,5 +1,5 @@
 module.exports = (req, res, next) => {
-    if (!constant.is_prod()) {
+    if (!constant.is_prod) {
         return res.redirect('/');
     }
 

@@ -1,5 +1,3 @@
-const moment = require('moment');
-
 let constant = {
     no: 0,
     yes: 1,
@@ -83,10 +81,7 @@ let constant = {
     set_dynamic() {
         this.base_url = sails.config.base_url;
         this.cdn_url = this.base_url + '/cdn';
-    },
-
-    is_prod() {
-        return sails.config.environment === 'production';
+        this.is_prod = sails.config.environment === 'production';
     },
 
     get_piston_url() {
