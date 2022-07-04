@@ -5,13 +5,12 @@ import Quill from 'quill';
 import Util from 'js/util';
 
 class Manage extends React.Component {
-
     constructor(props) {
         super(props);
 
         this.state = {
             ...props.contest,
-            languages: [],
+            languages: []
         };
     }
 
@@ -41,17 +40,17 @@ class Manage extends React.Component {
         let { data: languages } = await axios.get('/api/v2/piston/runtimes');
 
         languages = languages
-            .sort((a, b) => a.language < b.language ? -1 : 1)
+            .sort((a, b) => (a.language < b.language ? -1 : 1))
             .reduce((a, c) => {
                 c.enabled = !disallowed_languages.includes(c.language);
 
-                if (a.find(l => l.language === c.language)) {
+                if (a.find((l) => l.language === c.language)) {
                     return a;
                 }
 
                 let tmp = languages
-                    .filter(language => language.language === c.language)
-                    .sort((a, b) => a.version > b.version ? -1 : 1);
+                    .filter((language) => language.language === c.language)
+                    .sort((a, b) => (a.version > b.version ? -1 : 1));
 
                 a.push(tmp[0]);
 
@@ -64,74 +63,87 @@ class Manage extends React.Component {
         });
     }
 
-    handle_change = e => {
+    handle_change = (e) => {
         let id = e.target.id;
         let value = e.target.value;
         this.setState({
             [id]: value
         });
-    }
+    };
 
-    handle_language_change = e => {
+    handle_language_change = (e) => {
         e.persist();
 
         let name = e.target.id;
 
-        this.setState(prev => {
-            const languages = prev.languages
-                .map(language => {
-                    if (language.language === name) {
-                        language.enabled = e.target.checked;
-                    }
+        this.setState((prev) => {
+            const languages = prev.languages.map((language) => {
+                if (language.language === name) {
+                    language.enabled = e.target.checked;
+                }
 
-                    return language;
-                });
-
-            return {
-                languages
-            };
-        });
-    }
-
-    select = all => {
-        this.setState(prev => {
-            const languages = prev.languages
-                .map(language => {
-                    language.enabled = all ? true : !language.enabled;
-
-                    return language;
-                });
+                return language;
+            });
 
             return {
                 languages
             };
         });
-    }
+    };
+
+    select = (all) => {
+        this.setState((prev) => {
+            const languages = prev.languages.map((language) => {
+                language.enabled = all ? true : !language.enabled;
+
+                return language;
+            });
+
+            return {
+                languages
+            };
+        });
+    };
 
     save = async () => {
-        let { name, start_date, end_date, input, output, disallowed_languages } = this.state;
+        let {
+            name,
+            start_date,
+            end_date,
+            input,
+            output,
+            disallowed_languages
+        } = this.state;
 
         const description = JSON.stringify(this.quill.getContents());
 
         let test_cases = input.split('\n');
 
         if (test_cases.length !== output.split('\n').length) {
-            return bootbox.alert("The number of test cases do not match the number of expected results");
+            return bootbox.alert(
+                'The number of test cases do not match the number of expected results'
+            );
         }
 
         let first_case_inputs = test_cases[0].split('|');
-        let number_of_parameters = first_case_inputs.length - (first_case_inputs[0] == "" ? 2 : 0 ); // if first case is blank, next arg is options
-        let valid = true
+        let number_of_parameters =
+            first_case_inputs.length - (first_case_inputs[0] == '' ? 2 : 0); // if first case is blank, next arg is options
+        let valid = true;
 
-        test_cases.forEach(test_case => {
+        test_cases.forEach((test_case) => {
             let case_inputs = test_case.split('|');
-            if ((case_inputs.length - (case_inputs[0] == "" ? 2 : 0)) !== number_of_parameters) {
-                valid = false
+            if (
+                case_inputs.length - (case_inputs[0] == '' ? 2 : 0) !==
+                number_of_parameters
+            ) {
+                valid = false;
             }
         });
 
         if (!valid) {
-            return bootbox.alert("Two or more test cases have a different number of parameters (inputs)")
+            return bootbox.alert(
+                'Two or more test cases have a different number of parameters (inputs)'
+            );
         }
 
         let url;
@@ -145,24 +157,23 @@ class Manage extends React.Component {
         }
 
         disallowed_languages = this.state.languages
-            .filter(language => !language.enabled)
-            .map(language => language.language)
+            .filter((language) => !language.enabled)
+            .map((language) => language.language)
             .concat(this.props.languages.disallowed_languages)
             .join(',');
 
-        let res = await axios
-            .post(url, {
-                name,
-                description,
-                start_date,
-                end_date,
-                input,
-                output,
-                disallowed_languages
-            });
+        let res = await axios.post(url, {
+            name,
+            description,
+            start_date,
+            end_date,
+            input,
+            output,
+            disallowed_languages
+        });
 
         location = '/admin/contests';
-    }
+    };
 
     render() {
         return (
@@ -176,7 +187,8 @@ class Manage extends React.Component {
                                 id="name"
                                 class="form-control"
                                 value={this.state.name}
-                                onChange={this.handle_change} />
+                                onChange={this.handle_change}
+                            />
                         </div>
 
                         <div class="form-group">
@@ -191,7 +203,8 @@ class Manage extends React.Component {
                                 id="start_date"
                                 class="form-control"
                                 value={this.state.start_date}
-                                onChange={this.handle_change} />
+                                onChange={this.handle_change}
+                            />
                         </div>
 
                         <div class="form-group">
@@ -201,12 +214,14 @@ class Manage extends React.Component {
                                 id="end_date"
                                 class="form-control"
                                 value={this.state.end_date}
-                                onChange={this.handle_change} />
+                                onChange={this.handle_change}
+                            />
                         </div>
 
                         <div class="form-group">
                             <label>
-                                Input(s) (Each test case on a new line, multiple inputs are separated by |)
+                                Input(s) (Each test case on a new line, multiple
+                                inputs are separated by |)
                             </label>
                             <textarea
                                 id="input"
@@ -218,7 +233,9 @@ class Manage extends React.Component {
                         </div>
 
                         <div class="form-group">
-                            <label>Output(s) (Each test case result on a new line)</label>
+                            <label>
+                                Output(s) (Each test case result on a new line)
+                            </label>
                             <textarea
                                 id="output"
                                 class="form-control"
@@ -229,7 +246,11 @@ class Manage extends React.Component {
                         </div>
 
                         <div class="form-group">
-                            <button type="button" class="btn btn-sm btn-success" onClick={this.save}>
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-success"
+                                onClick={this.save}
+                            >
                                 Save
                             </button>
                         </div>
@@ -242,28 +263,35 @@ class Manage extends React.Component {
                                 <button
                                     type="button"
                                     class="btn btn-sm btn-secondary"
-                                    onClick={() => this.select(true)}>
+                                    onClick={() => this.select(true)}
+                                >
                                     All
-                                </button>
-                                {' '}
+                                </button>{' '}
                                 <button
                                     type="button"
                                     class="btn btn-sm btn-secondary"
-                                    onClick={() => this.select(false)}>
+                                    onClick={() => this.select(false)}
+                                >
                                     Invert
                                 </button>
                             </div>
 
-                            {this.state.languages.map(lang => {
+                            {this.state.languages.map((lang) => {
                                 return (
                                     <div key={lang.language}>
                                         <input
                                             type="checkbox"
                                             id={lang.language}
                                             checked={lang.enabled}
-                                            onChange={this.handle_language_change} />
-                                        {' '}
-                                        {lang.language} ({lang.runtime ? `via ${lang.runtime} ` : ''}{lang.version})
+                                            onChange={
+                                                this.handle_language_change
+                                            }
+                                        />{' '}
+                                        {lang.language} (
+                                        {lang.runtime
+                                            ? `via ${lang.runtime} `
+                                            : ''}
+                                        {lang.version})
                                     </div>
                                 );
                             })}

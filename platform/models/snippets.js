@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const crypto = require('crypto');
 
 module.exports = (sequelize, DataTypes) => {
-    class snippets extends Sequelize.Model { }
+    class snippets extends Sequelize.Model {}
 
     snippets.init(
         {
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
                 get() {
                     return util.time_ago(this.created_at);
                 }
-            },
+            }
         },
         {
             sequelize,
@@ -39,20 +39,23 @@ module.exports = (sequelize, DataTypes) => {
                 async beforeCreate(instance) {
                     instance.created_at = util.now();
 
-                    var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                    var letters =
+                        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
                     for (;;) {
                         instance.hash = '';
                         for (var i = 0; i < 6; ++i) {
-                            instance.hash += letters[Math.floor(Math.random() * letters.length)];
+                            instance.hash +=
+                                letters[
+                                    Math.floor(Math.random() * letters.length)
+                                ];
                         }
 
-                        var dupe = await db.snippets
-                            .find_one({
-                                where: {
-                                    hash: instance.hash
-                                }
-                            });
+                        var dupe = await db.snippets.find_one({
+                            where: {
+                                hash: instance.hash
+                            }
+                        });
 
                         if (!dupe) break;
                     }

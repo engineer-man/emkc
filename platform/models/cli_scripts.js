@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class cli_scripts extends Sequelize.Model { }
+    class cli_scripts extends Sequelize.Model {}
 
     cli_scripts.init(
         {
@@ -21,7 +21,12 @@ module.exports = (sequelize, DataTypes) => {
             view_url: {
                 type: DataTypes.VIRTUAL,
                 get() {
-                    return '/scripts/' + this.cli_script_id + '/' + util.slugify(this.title);
+                    return (
+                        '/scripts/' +
+                        this.cli_script_id +
+                        '/' +
+                        util.slugify(this.title)
+                    );
                 }
             },
             exec_url: {
@@ -29,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
                 get() {
                     return '/exec/' + this.cli_script_id;
                 }
-            },
+            }
         },
         {
             sequelize,

@@ -5,11 +5,9 @@ for (let filter of require('../resources/twig/filters')) {
 }
 
 module.exports.views = {
-
     layout: false,
     engine: {
-       ext: 'twig',
-       fn: twig.__express
+        ext: 'twig',
+        fn: twig.__express
     }
-
 };

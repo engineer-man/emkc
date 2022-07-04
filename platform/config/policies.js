@@ -1,51 +1,50 @@
 module.exports.policies = {
-
     '*': 'common',
 
-    'AuthController': {
+    AuthController: {
         '*': ['common']
     },
 
-    'ChallengesController': {
+    ChallengesController: {
         '*': ['common']
     },
 
-    'CommunityController': {
+    CommunityController: {
         '*': ['common'],
-        'add_video_request': ['common', 'logged_in'],
-        'delete_video_request': ['common', 'logged_in'],
-        'video_request_vote': ['common', 'logged_in']
+        add_video_request: ['common', 'logged_in'],
+        delete_video_request: ['common', 'logged_in'],
+        video_request_vote: ['common', 'logged_in']
     },
 
-    'ContestsController': {
+    ContestsController: {
         '*': ['common'],
-        'submit': ['common', 'logged_in']
+        submit: ['common', 'logged_in']
     },
 
-    'HomeController': {
+    HomeController: {
         '*': ['common']
     },
 
-    'MerchController': {
+    MerchController: {
         '*': ['common']
     },
 
-    'ProfilesController': {
+    ProfilesController: {
         '*': ['common']
     },
 
-    'ScriptsController': {
+    ScriptsController: {
         '*': ['common']
     },
 
-    'SnippetsController': {
+    SnippetsController: {
         '*': ['common'],
-        'mine': ['common', 'logged_in'],
-        'delete': ['common', 'logged_in'],
-        'edit': ['common', 'logged_in']
+        mine: ['common', 'logged_in'],
+        delete: ['common', 'logged_in'],
+        edit: ['common', 'logged_in']
     },
 
-    'TagsController': {
+    TagsController: {
         '*': ['common']
     },
 
@@ -92,5 +91,4 @@ module.exports.policies = {
     'api/v1/stats/PistonController': {
         '*': ['common']
     }
-
 };

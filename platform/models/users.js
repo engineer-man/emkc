@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const crypto = require('crypto');
 
 module.exports = (sequelize, DataTypes) => {
-    class users extends Sequelize.Model { }
+    class users extends Sequelize.Model {}
 
     users.init(
         {

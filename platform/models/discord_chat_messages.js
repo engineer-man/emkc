@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class discord_chat_messages extends Sequelize.Model { }
+    class discord_chat_messages extends Sequelize.Model {}
 
     discord_chat_messages.init(
         {

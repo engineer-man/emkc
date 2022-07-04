@@ -1,5 +1,4 @@
 module.exports = {
-
     async view_all(req, res) {
         return res.view({
             message: null
@@ -9,9 +8,7 @@ module.exports = {
     async packages(req, res) {
         let packages = await piston.packages();
 
-        return res
-            .status(200)
-            .send(packages);
+        return res.status(200).send(packages);
     },
 
     async install(req, res) {
@@ -19,12 +16,13 @@ module.exports = {
 
         let result = await piston.install(language, version);
 
-        let message = result.language ? 'succeeded' : 'failed: ' + result.message;
+        let message = result.language
+            ? 'succeeded'
+            : 'failed: ' + result.message;
 
-        return res.view('admin/piston/view_all',{
+        return res.view('admin/piston/view_all', {
             message: `Installation of ${language}-${version} ${message}`
         });
-
     },
 
     async uninstall(req, res) {
@@ -32,11 +30,12 @@ module.exports = {
 
         let result = await piston.uninstall(language, version);
 
-        let message = result.language ? 'succeeded' : 'failed: ' + result.message;
+        let message = result.language
+            ? 'succeeded'
+            : 'failed: ' + result.message;
 
         return res.view('admin/piston/view_all', {
             message: `Uninstallation of ${language}-${version} ${message}`
         });
     }
-
-}
+};

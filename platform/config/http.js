@@ -1,5 +1,4 @@
 module.exports.http = {
-
     middleware: {
         xframe: require('lusca').xframe('SAMEORIGIN'),
         order: [
@@ -32,5 +31,4 @@ module.exports.http = {
     bodyParser() {
         return require('skipper')({ limit: '4096mb' });
     }
-
 };

@@ -8,7 +8,10 @@ class ManageSnippet extends React.Component {
         super(props);
         this.state = {
             snip: this.props.mode === 'create' ? '' : this.props.snip,
-            language: this.props.mode === 'create' ? 'javascript' : this.props.language,
+            language:
+                this.props.mode === 'create'
+                    ? 'javascript'
+                    : this.props.language,
             word_wrap: 'off',
             runnable_language: false,
             executing: false,
@@ -141,16 +144,22 @@ class ManageSnippet extends React.Component {
     }
 
     componentDidMount() {
-        this.state.editor = monaco.editor.create(document.getElementById('editor'), {
-            theme: 'em',
-            language: this.state.language,
-            automaticLayout: true,
-            value: this.state.snip,
-            readOnly: this.props.mode === 'view',
-            fontSize: 16
-        });
+        this.state.editor = monaco.editor.create(
+            document.getElementById('editor'),
+            {
+                theme: 'em',
+                language: this.state.language,
+                automaticLayout: true,
+                value: this.state.snip,
+                readOnly: this.props.mode === 'view',
+                fontSize: 16
+            }
+        );
         this.props.mode !== 'view' &&
-            this.state.editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, this.save);
+            this.state.editor.addCommand(
+                monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
+                this.save
+            );
         this.state.editor.addCommand(monaco.KeyCode.F9, this.execute);
         this.check_runnable_language();
     }
@@ -181,13 +190,16 @@ class ManageSnippet extends React.Component {
             executing: false
         });
         if (result.status === 429) {
-            return bootbox.alert('You are executing the snippet too many times.');
+            return bootbox.alert(
+                'You are executing the snippet too many times.'
+            );
         }
         if (result.status >= 400) {
             return bootbox.alert('An internal error has occurred.');
         }
         // Check if it is a compiled language
-        const compile_output = 'compile' in result.data ? result.data.compile.output : '';
+        const compile_output =
+            'compile' in result.data ? result.data.compile.output : '';
         const { stdout, stderr } = result.data.run;
         this.setState({ compile_output, stdout, stderr });
     }
@@ -206,7 +218,10 @@ class ManageSnippet extends React.Component {
             this.check_runnable_language
         );
 
-        monaco.editor.setModelLanguage(this.state.editor.getModel(), event.target.value);
+        monaco.editor.setModelLanguage(
+            this.state.editor.getModel(),
+            event.target.value
+        );
     }
 
     toggle_word_wrap() {
@@ -221,7 +236,9 @@ class ManageSnippet extends React.Component {
 
     async save() {
         const url =
-            this.props.mode === 'update' ? '/snippets/edit/' + this.props.hash : '/snippets';
+            this.props.mode === 'update'
+                ? '/snippets/edit/' + this.props.hash
+                : '/snippets';
         const res = await axios.post(url, {
             language: this.state.language,
             snip: this.state.editor.getValue()
@@ -246,13 +263,21 @@ class ManageSnippet extends React.Component {
                                     defaultValue={this.state.language}
                                     class="form-control"
                                 >
-                                    {Object.keys(this.monaco_piston_map).map((language) => {
-                                        return <option key={language}>{language}</option>;
-                                    })}
+                                    {Object.keys(this.monaco_piston_map).map(
+                                        (language) => {
+                                            return (
+                                                <option key={language}>
+                                                    {language}
+                                                </option>
+                                            );
+                                        }
+                                    )}
                                 </select>
                             )) || (
                                 <>
-                                    <span class="language_label f700">Language:</span>
+                                    <span class="language_label f700">
+                                        Language:
+                                    </span>
                                     {this.props.language}
                                 </>
                             )}
@@ -304,7 +329,9 @@ class ManageSnippet extends React.Component {
                 </div>
                 <div
                     id="editor"
-                    style={this.state.runnable_language ? { height: '55vh' } : {}}
+                    style={
+                        this.state.runnable_language ? { height: '55vh' } : {}
+                    }
                 ></div>
                 {this.state.runnable_language && (
                     <div class="run-data text-monospace">
@@ -319,7 +346,10 @@ class ManageSnippet extends React.Component {
                                 ></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Command-line arguments (separated by a new line)</label>
+                                <label>
+                                    Command-line arguments (separated by a new
+                                    line)
+                                </label>
                                 <textarea
                                     id="argv"
                                     class="form-control"

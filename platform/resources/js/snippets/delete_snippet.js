@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-$(document).on('click', '.confirm-delete', function(e) {
+$(document).on('click', '.confirm-delete', function (e) {
     var hash = $(this).data('hash');
 
     bootbox.confirm({

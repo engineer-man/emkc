@@ -5,16 +5,16 @@ import axios from 'axios';
 
 try {
     axios.defaults.validateStatus = () => true;
-} catch(e) {}
+} catch (e) {}
 
-(ctx => {
+((ctx) => {
     return ctx.keys().map(ctx);
 })(require.context('./js', true, /\.js$/));
 
-(ctx => {
+((ctx) => {
     return ctx.keys().map(ctx);
 })(require.context('./jsx', true, /\.jsx$/));
 
-(ctx => {
+((ctx) => {
     return ctx.keys().map(ctx);
 })(require.context('./less', true, /\.less$/));

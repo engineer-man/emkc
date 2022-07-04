@@ -2,7 +2,6 @@ const fs = require('fs');
 const request = require('request-promise');
 
 module.exports = {
-
     discord(req, res) {
         // handle the redirect if one was passed with the login operation
         if (req.query.r) {
@@ -12,11 +11,13 @@ module.exports = {
         }
 
         return res.redirect(
-            'https://discord.com/api/v10/oauth2/authorize'+
-            '?client_id=' + sails.config.discord.client_id +
-            '&redirect_uri=' + encode_uri_component(constant.base_url + '/auth/discord_cb') +
-            '&response_type=code'+
-            '&scope=identify%20email'
+            'https://discord.com/api/v10/oauth2/authorize' +
+                '?client_id=' +
+                sails.config.discord.client_id +
+                '&redirect_uri=' +
+                encode_uri_component(constant.base_url + '/auth/discord_cb') +
+                '&response_type=code' +
+                '&scope=identify%20email'
         );
     },
 
@@ -27,48 +28,45 @@ module.exports = {
 
         try {
             // get an access token from the code returned from the authorization phase
-            let auth_result = await request
-                ({
-                    method: 'post',
-                    url: 'https://discord.com/api/v10/oauth2/token',
-                    headers: {
-                        'content-type': 'application/x-www-form-urlencoded'
-                    },
-                    form: {
-                        code,
-                        client_id: sails.config.discord.client_id,
-                        client_secret: sails.config.discord.client_secret,
-                        grant_type: 'authorization_code',
-                        redirect_uri: constant.base_url + '/auth/discord_cb',
-                        scope: 'identify email'
-                    },
-                    json: true,
-                    simple: true
-                });
+            let auth_result = await request({
+                method: 'post',
+                url: 'https://discord.com/api/v10/oauth2/token',
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                form: {
+                    code,
+                    client_id: sails.config.discord.client_id,
+                    client_secret: sails.config.discord.client_secret,
+                    grant_type: 'authorization_code',
+                    redirect_uri: constant.base_url + '/auth/discord_cb',
+                    scope: 'identify email'
+                },
+                json: true,
+                simple: true
+            });
 
             // use the returned token to get the data of the user who just logged in
-            let discord_user = await request
-                ({
-                    method: 'get',
-                    url: 'https://discord.com/api/v10/users/@me',
-                    headers: {
-                        Authorization: 'Bearer ' + auth_result.access_token
-                    },
-                    json: true,
-                    simple: true
-                });
+            let discord_user = await request({
+                method: 'get',
+                url: 'https://discord.com/api/v10/users/@me',
+                headers: {
+                    Authorization: 'Bearer ' + auth_result.access_token
+                },
+                json: true,
+                simple: true
+            });
 
             // add a new user record if there is not already one matching the given api id
-            let [user, created] = await db.users
-                .find_or_create({
-                    where: {
-                        discord_api: discord_user.id
-                    },
-                    defaults: {
-                        display_name: discord_user.username,
-                        email: discord_user.email || null
-                    }
-                });
+            let [user, created] = await db.users.find_or_create({
+                where: {
+                    discord_api: discord_user.id
+                },
+                defaults: {
+                    display_name: discord_user.username,
+                    email: discord_user.email || null
+                }
+            });
 
             // if this is a new account, sort out what they're username should be
             // usernames must be letter, numbers, underscores, and dashes only
@@ -83,15 +81,14 @@ module.exports = {
 
                 // make sure username is unique
                 for (;;) {
-                    let dupe = await db.users
-                        .find_one({
-                            where: {
-                                user_id: {
-                                    [$ne]: user.user_id
-                                },
-                                username: username + (ext === null ? '' : ext)
-                            }
-                        });
+                    let dupe = await db.users.find_one({
+                        where: {
+                            user_id: {
+                                [$ne]: user.user_id
+                            },
+                            username: username + (ext === null ? '' : ext)
+                        }
+                    });
 
                     if (!dupe) break;
 
@@ -104,27 +101,37 @@ module.exports = {
             }
 
             // download discord avatar
-            request
-                ({
-                    method: 'get',
-                    url: 'https://cdn.discordapp.com/avatars/' + discord_user.id + '/' + discord_user.avatar + '.png',
-                    simple: true,
-                    encoding: null
-                })
-                .then(res => {
-                    fs.write_file(root_dir + '/cdn/avatars/' + user.user_id + '.png', res, () => {});
+            request({
+                method: 'get',
+                url:
+                    'https://cdn.discordapp.com/avatars/' +
+                    discord_user.id +
+                    '/' +
+                    discord_user.avatar +
+                    '.png',
+                simple: true,
+                encoding: null
+            })
+                .then((res) => {
+                    fs.write_file(
+                        root_dir + '/cdn/avatars/' + user.user_id + '.png',
+                        res,
+                        () => {}
+                    );
 
                     user.avatar_url = '/avatars/' + user.user_id + '.png';
                     user.save();
                 })
-                .catch(err => {});
+                .catch((err) => {});
 
             // this logs the user in basically
             req.session.user_id = user.user_id;
 
             // add the emkc member role on discord
-            discord
-                .api('put', `/guilds/${constant.server_id}/members/${user.discord_api}/roles/${constant.roles.emkc_member}`);
+            discord.api(
+                'put',
+                `/guilds/${constant.server_id}/members/${user.discord_api}/roles/${constant.roles.emkc_member}`
+            );
 
             // according to whether or not the redirect was supplied, either go to that url or to board main
             if (req.session.redirect) {
@@ -137,5 +144,4 @@ module.exports = {
             return res.redirect('/');
         }
     }
-
 };

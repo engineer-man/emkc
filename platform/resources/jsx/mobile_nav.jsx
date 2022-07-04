@@ -3,7 +3,6 @@ import React from 'react';
 import Util from 'js/util';
 
 class MobileNav extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -33,27 +32,30 @@ class MobileNav extends React.Component {
                 <div class="backdrop" onClick={this.close}></div>
                 <div class="menu">
                     <div class="contents">
-                        <i class="fa fa-bars pointer marginbottom20" onClick={this.close}></i>
+                        <i
+                            class="fa fa-bars pointer marginbottom20"
+                            onClick={this.close}
+                        ></i>
                         <h5 class="f300">Main Menu</h5>
                         <a href="/">Home</a>
                         <a href="/challenges">Challenges</a>
                         <a href="/contests">Contests</a>
                         <a href="/community">Community</a>
                         <a href="/snippets">Tools - Snippets</a>
-                        {ctx.user_id && (
+                        {(ctx.user_id && (
                             <>
                                 <div class="spacer"></div>
                                 <h5 class="f300">You</h5>
                                 <a href={'/@' + ctx.username}>Profile</a>
                                 <a href="/logout">Logout</a>
                             </>
-                        ) || null}
+                        )) ||
+                            null}
                     </div>
                 </div>
             </div>
-        )
+        );
     }
-
 }
 
 window.mobile_nav = Util.try_render('react_mobile_nav', MobileNav);

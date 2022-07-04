@@ -12,7 +12,9 @@ class Challenge extends React.Component {
             challenge: props.challenge,
             language: props.language,
             template:
-                (props.challenge.solution && props.challenge.solution.solution) || props.template,
+                (props.challenge.solution &&
+                    props.challenge.solution.solution) ||
+                props.template,
             abstract: props.abstract,
             monaco_language: props.monaco_language,
             executing: false,
@@ -52,13 +54,18 @@ class Challenge extends React.Component {
             test_results: []
         });
 
-        let res = await axios.post('/challenges/execute/' + this.state.challenge.challenge_id, {
-            language: this.state.language,
-            source: this.editor.getValue()
-        });
+        let res = await axios.post(
+            '/challenges/execute/' + this.state.challenge.challenge_id,
+            {
+                language: this.state.language,
+                source: this.editor.getValue()
+            }
+        );
 
         if (res.status >= 400) {
-            return bootbox.alert('An error has occured, please try again later.');
+            return bootbox.alert(
+                'An error has occured, please try again later.'
+            );
         }
 
         let solved = res.data.filter((r) => !r.passed).length === 0;
@@ -128,7 +135,12 @@ class Challenge extends React.Component {
                 <div class="instructions">
                     <h3 class={text_color}>{this.state.challenge.name}</h3>
                     <p>{this.state.challenge.description}</p>
-                    <span class={'badge badge-' + (this.state.solved ? text_color : 'light')}>
+                    <span
+                        class={
+                            'badge badge-' +
+                            (this.state.solved ? text_color : 'light')
+                        }
+                    >
                         {this.state.solved ? 'Solved' : 'Unsolved'}
                     </span>
                     <hr />
@@ -142,7 +154,9 @@ class Challenge extends React.Component {
                     <hr />
                     <div
                         class="abstract"
-                        dangerouslySetInnerHTML={{ __html: this.state.abstract }}
+                        dangerouslySetInnerHTML={{
+                            __html: this.state.abstract
+                        }}
                     ></div>
                 </div>
                 <div class="editor">
@@ -155,7 +169,10 @@ class Challenge extends React.Component {
                             <div key={result.name} class="result">
                                 <span class="f700">{result.name}</span>{' '}
                                 <span
-                                    class={'badge badge-' + (result.passed ? 'success' : 'danger')}
+                                    class={
+                                        'badge badge-' +
+                                        (result.passed ? 'success' : 'danger')
+                                    }
                                 >
                                     {result.passed ? 'passed' : 'failed'}
                                 </span>
@@ -163,28 +180,40 @@ class Challenge extends React.Component {
                                 {result.input.split('|').map((input, i) => {
                                     return (
                                         <React.Fragment key={i}>
-                                            <span class="badge badge-info">value{i + 1}</span>{' '}
+                                            <span class="badge badge-info">
+                                                value{i + 1}
+                                            </span>{' '}
                                             {input}
                                             <br />
                                         </React.Fragment>
                                     );
                                 })}
-                                <span class="badge badge-dark">expected output</span>{' '}
+                                <span class="badge badge-dark">
+                                    expected output
+                                </span>{' '}
                                 {result.expected}
                                 <br />
-                                <span class="badge badge-dark">actual output</span>{' '}
+                                <span class="badge badge-dark">
+                                    actual output
+                                </span>{' '}
                                 <pre>{result.actual}</pre>
                                 {!!result.compile_output && (
                                     <>
                                         <br />
-                                        <span class="badge badge-dark">compile output</span> <br />
+                                        <span class="badge badge-dark">
+                                            compile output
+                                        </span>{' '}
+                                        <br />
                                         <pre>{result.compile_output}</pre>
                                     </>
                                 )}
                                 {!!result.run_error && (
                                     <>
                                         <br />
-                                        <span class="badge badge-dark">run error</span> <br />
+                                        <span class="badge badge-dark">
+                                            run error
+                                        </span>{' '}
+                                        <br />
                                         <pre>{result.run_error}</pre>
                                     </>
                                 )}

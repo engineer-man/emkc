@@ -1,7 +1,6 @@
 const moment = require('moment');
 
 module.exports = {
-
     async usage(req, res) {
         let { start, end, category } = req.query;
 
@@ -63,14 +62,10 @@ module.exports = {
             }
         }
 
-        let count = await db.piston_runs
-            .count(query);
+        let count = await db.piston_runs.count(query);
 
-        return res
-            .status(200)
-            .send({
-                count
-            });
+        return res.status(200).send({
+            count
+        });
     }
-
 };

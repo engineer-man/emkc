@@ -12,11 +12,12 @@ class ManageChallenge extends React.Component {
         this.state = {
             ...props.challenge,
             mode: props.mode,
-            challenge_id: this.state.mode === 'create' ? -1 : this.state.challenge_id,
-            editing_test: {},  // The test being edited (to show edit section)
-            current_test_id: -1,  // IDs for newly created tests
-            deleted_tests: [],  // IDs of deleted tests
-        }
+            challenge_id:
+                this.state.mode === 'create' ? -1 : this.state.challenge_id,
+            editing_test: {}, // The test being edited (to show edit section)
+            current_test_id: -1, // IDs for newly created tests
+            deleted_tests: [] // IDs of deleted tests
+        };
 
         this.handle_change = this.handle_change.bind(this);
         this.manage_test = this.manage_test.bind(this);
@@ -28,7 +29,7 @@ class ManageChallenge extends React.Component {
     componentDidMount() {
         let Inline = Quill.import('blots/inline');
 
-        class Badge extends Inline { }
+        class Badge extends Inline {}
         Badge.blotName = 'badge';
         Badge.tagName = 'span';
         Badge.className = 'value-badge';
@@ -42,9 +43,14 @@ class ManageChallenge extends React.Component {
                 syntax: false,
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
-                    [{ 'header': 1 }, { 'header': 2 }, { 'header': 3 }, { 'header': 4 }],
+                    [
+                        { header: 1 },
+                        { header: 2 },
+                        { header: 3 },
+                        { header: 4 }
+                    ],
                     ['blockquote', 'code-block', 'link'],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
                     //['badge'],
                     ['clean']
                 ]
@@ -78,7 +84,8 @@ class ManageChallenge extends React.Component {
         }
 
         // Handles changes in tests data
-        let { challenge_test_id, challenge_id, official, name, input, output } = this.state.editing_test;
+        let { challenge_test_id, challenge_id, official, name, input, output } =
+            this.state.editing_test;
 
         return this.setState({
             editing_test: {
@@ -96,13 +103,14 @@ class ManageChallenge extends React.Component {
     async save() {
         // Check if there are tests
         if (this.state.tests.length === 0) {
-            return bootbox.alert('Please add at least one test.')
+            return bootbox.alert('Please add at least one test.');
         }
 
         // Create/update challenge
-        let url = this.state.mode === 'create'
-            ? '/admin/challenges/create'
-            : '/admin/challenges/update/' + this.state.challenge_id;
+        let url =
+            this.state.mode === 'create'
+                ? '/admin/challenges/create'
+                : '/admin/challenges/update/' + this.state.challenge_id;
 
         let res = await axios.post(url, {
             draft: this.state.draft,
@@ -122,11 +130,15 @@ class ManageChallenge extends React.Component {
         let valid = true;
 
         for (let test of this.state.tests) {
-            test.challenge_id = this.state.mode === 'create' ? res.data.challenge_id : test.challenge_id;
+            test.challenge_id =
+                this.state.mode === 'create'
+                    ? res.data.challenge_id
+                    : test.challenge_id;
 
-            let test_url = test.challenge_test_id < 0
-                ? '/admin/tests/create'
-                : '/admin/tests/update/' + test.challenge_test_id;
+            let test_url =
+                test.challenge_test_id < 0
+                    ? '/admin/tests/create'
+                    : '/admin/tests/update/' + test.challenge_test_id;
 
             let test_res = await axios.post(test_url, test);
 
@@ -136,7 +148,9 @@ class ManageChallenge extends React.Component {
         }
 
         if (!valid) {
-            bootbox.alert('An error has occurred while saving one or more tests');
+            bootbox.alert(
+                'An error has occurred while saving one or more tests'
+            );
         }
 
         // Delete tests
@@ -149,7 +163,9 @@ class ManageChallenge extends React.Component {
 
     manage_test(test_to_manage) {
         this.setState({
-            editing_test: this.state.editing_test.challenge_test_id ? {} : test_to_manage
+            editing_test: this.state.editing_test.challenge_test_id
+                ? {}
+                : test_to_manage
         });
     }
 
@@ -166,14 +182,16 @@ class ManageChallenge extends React.Component {
                     className: 'btn-secondary'
                 }
             },
-            callback: async result => {
+            callback: async (result) => {
                 if (!result) {
                     return;
                 }
 
                 let current_tests = this.state.tests;
 
-                let test_to_delete = current_tests.find(test => test.challenge_test_id === id_to_delete);
+                let test_to_delete = current_tests.find(
+                    (test) => test.challenge_test_id === id_to_delete
+                );
                 current_tests.splice(current_tests.indexOf(test_to_delete), 1);
 
                 let current_deleted_tests = this.state.deleted_tests;
@@ -196,22 +214,24 @@ class ManageChallenge extends React.Component {
         }
 
         let inputs_arr = editing_test.input.split('\n');
-        
+
         if (inputs_arr.length !== editing_test.output.split('\n').length) {
-            return bootbox.alert('The number of inputs do not match the number of outputs.');
+            return bootbox.alert(
+                'The number of inputs do not match the number of outputs.'
+            );
         }
 
         let arguments_number = inputs_arr[0].split('|').length;
 
         let valid = true;
-        inputs_arr.forEach(input => {
+        inputs_arr.forEach((input) => {
             if (input.split('|').length !== arguments_number) {
                 valid = false;
             }
         });
 
         if (!valid) {
-            return bootbox.alert('Number of arguments do not match in inputs.')
+            return bootbox.alert('Number of arguments do not match in inputs.');
         }
 
         // Handles newly created tests
@@ -228,9 +248,15 @@ class ManageChallenge extends React.Component {
         }
 
         // Handles edited tests
-        let test_to_edit = current_tests.find(test => test.challenge_test_id === editing_test.challenge_test_id);
+        let test_to_edit = current_tests.find(
+            (test) => test.challenge_test_id === editing_test.challenge_test_id
+        );
 
-        current_tests.splice(current_tests.indexOf(test_to_edit), 1, editing_test);
+        current_tests.splice(
+            current_tests.indexOf(test_to_edit),
+            1,
+            editing_test
+        );
 
         return this.setState({
             tests: current_tests,
@@ -243,21 +269,22 @@ class ManageChallenge extends React.Component {
             <div class="em_challenge_manage marginbottom20">
                 <h4 class="f300">Manage Challenge</h4>
 
-                {
-                    this.state.html.indexOf('em_challenge_abstract"') !== -1 && (
-                        <div class="alert alert-danger">
-                            Editing is not supported for this challenge unless reformatted.
-                        </div>
-                    )
-                }
+                {this.state.html.indexOf('em_challenge_abstract"') !== -1 && (
+                    <div class="alert alert-danger">
+                        Editing is not supported for this challenge unless
+                        reformatted.
+                    </div>
+                )}
                 <div class="form-group">
-                    <label>Name
-                    <input
-                        type="text"
-                        id="name"
-                        class="form-control"
-                        value={this.state.name}
-                        onChange={this.handle_change} />
+                    <label>
+                        Name
+                        <input
+                            type="text"
+                            id="name"
+                            class="form-control"
+                            value={this.state.name}
+                            onChange={this.handle_change}
+                        />
                     </label>
                 </div>
 
@@ -267,29 +294,35 @@ class ManageChallenge extends React.Component {
                             type="checkbox"
                             id="draft"
                             checked={this.state.draft}
-                            onChange={this.handle_change} /> Draft
+                            onChange={this.handle_change}
+                        />{' '}
+                        Draft
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Difficulty (1: easy, 2: medium, 3: hard)
-                    <input
-                        type="text"
-                        id="difficulty"
-                        class="form-control"
-                        value={this.state.difficulty}
-                        onChange={this.handle_change} />
+                    <label>
+                        Difficulty (1: easy, 2: medium, 3: hard)
+                        <input
+                            type="text"
+                            id="difficulty"
+                            class="form-control"
+                            value={this.state.difficulty}
+                            onChange={this.handle_change}
+                        />
                     </label>
                 </div>
 
                 <div class="form-group">
-                    <label>Points (the standard is easy: 10, medium: 30, hard: 50)
-                    <input
-                        type="text"
-                        id="points"
-                        class="form-control"
-                        value={this.state.points}
-                        onChange={this.handle_change} />
+                    <label>
+                        Points (the standard is easy: 10, medium: 30, hard: 50)
+                        <input
+                            type="text"
+                            id="points"
+                            class="form-control"
+                            value={this.state.points}
+                            onChange={this.handle_change}
+                        />
                     </label>
                 </div>
 
@@ -301,25 +334,32 @@ class ManageChallenge extends React.Component {
                         id="description"
                         class="form-control"
                         value={this.state.description}
-                        onChange={this.handle_change} />
+                        onChange={this.handle_change}
+                    />
                 </div>
 
                 <div class="form-group">
                     <label>Challenge explanation</label>
                     <div id="html"></div>
                 </div>
-                <div class='form-group'>
+                <div class="form-group">
                     <h4 class="f300">
                         Test Cases
                         <small>
-                            <a class="pointer" onClick={() => this.manage_test({
-                                challenge_test_id: this.state.current_test_id,
-                                challenge_id: this.state.challenge_id,
-                                official: false,
-                                name: '',
-                                input: '',
-                                output: ''
-                            })}>
+                            <a
+                                class="pointer"
+                                onClick={() =>
+                                    this.manage_test({
+                                        challenge_test_id:
+                                            this.state.current_test_id,
+                                        challenge_id: this.state.challenge_id,
+                                        official: false,
+                                        name: '',
+                                        input: '',
+                                        output: ''
+                                    })
+                                }
+                            >
                                 {' '}
                                 <i class="fa fa-plus green"></i>
                             </a>
@@ -334,70 +374,95 @@ class ManageChallenge extends React.Component {
                                     id="test-name"
                                     class="form-control"
                                     value={this.state.editing_test.name}
-                                    onChange={this.handle_change} />
+                                    onChange={this.handle_change}
+                                />
                             </div>
                             <div class="form-group">
                                 <label>
-                                    Inputs (each test case separated by a new line, arguments separated by '|')
+                                    Inputs (each test case separated by a new
+                                    line, arguments separated by '|')
                                 </label>
                                 <textarea
                                     rows="5"
                                     id="test-input"
                                     class="form-control"
                                     value={this.state.editing_test.input}
-                                    onChange={this.handle_change}></textarea>
+                                    onChange={this.handle_change}
+                                ></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Corresponding outputs (each separated by a new line)</label>
+                                <label>
+                                    Corresponding outputs (each separated by a
+                                    new line)
+                                </label>
                                 <textarea
                                     rows="5"
                                     id="test-output"
                                     class="form-control"
                                     value={this.state.editing_test.output}
-                                    onChange={this.handle_change}></textarea>
+                                    onChange={this.handle_change}
+                                ></textarea>
                             </div>
-                            <button class="btn btn-success btn-sm" onClick={this.save_test}>
+                            <button
+                                class="btn btn-success btn-sm"
+                                onClick={this.save_test}
+                            >
                                 Save test
                             </button>
                         </div>
                     )}
-                    <table id="challenges-table" class="table table-striped table-sm">
+                    <table
+                        id="challenges-table"
+                        class="table table-striped table-sm"
+                    >
                         <thead>
                             <tr>
-                                <th style={{ 'width': '80px' }}></th>
+                                <th style={{ width: '80px' }}></th>
                                 <th>Name</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {!!this.state.tests.length && this.state.tests.map(test => {
-                                return (
-                                    <tr key={test.challenge_test_id}>
-                                        <td class="actions">
-                                            <a
-                                                href="#"
-                                                onClick={() => this.manage_test(test)}
-                                            >
-                                                <i class="fa fa-pen"></i>
-                                            </a>
-                                            {' '}
-                                            <a
-                                                href="#"
-                                                onClick={() => this.delete_test(test.challenge_test_id)}
-                                            >
-                                                <i class="fa fa-trash text-danger"></i>
-                                            </a>
-                                        </td>
-                                        <td>{test.name}</td>
-                                    </tr>
-                                )
-                            })}
+                            {!!this.state.tests.length &&
+                                this.state.tests.map((test) => {
+                                    return (
+                                        <tr key={test.challenge_test_id}>
+                                            <td class="actions">
+                                                <a
+                                                    href="#"
+                                                    onClick={() =>
+                                                        this.manage_test(test)
+                                                    }
+                                                >
+                                                    <i class="fa fa-pen"></i>
+                                                </a>{' '}
+                                                <a
+                                                    href="#"
+                                                    onClick={() =>
+                                                        this.delete_test(
+                                                            test.challenge_test_id
+                                                        )
+                                                    }
+                                                >
+                                                    <i class="fa fa-trash text-danger"></i>
+                                                </a>
+                                            </td>
+                                            <td>{test.name}</td>
+                                        </tr>
+                                    );
+                                })}
                         </tbody>
                     </table>
                 </div>
 
-                <button type="button" class="btn btn-success" onClick={this.save}>Save challenge</button>
+                <button
+                    type="button"
+                    class="btn btn-success"
+                    onClick={this.save}
+                >
+                    Save challenge
+                </button>
             </div>
-        )
+        );
     }
 }
 

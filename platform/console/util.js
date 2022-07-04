@@ -5,16 +5,15 @@ const moment = require('moment');
 const request = require('request-promise');
 
 let cron = {
-
     ingest_chats() {
         let messages = require('fs')
             .read_file_sync('chats.log')
             .to_string()
             .split('\n')
-            .map(msg => {
+            .map((msg) => {
                 const pieces = msg.split('|');
 
-                const [ timestamp, channel, user ] = pieces;
+                const [timestamp, channel, user] = pieces;
                 const message = pieces.slice(3).join('');
 
                 return {
@@ -25,23 +24,19 @@ let cron = {
                 };
             });
 
-        request
-            ({
-                method: 'post',
-                url: 'http://127.0.0.1:2727/api/internal/chats',
-                headers: {
-                    authorization: sails.config.api.internal_key
-                },
-                body: messages,
-                json: true,
-                simple: true
-            });
+        request({
+            method: 'post',
+            url: 'http://127.0.0.1:2727/api/internal/chats',
+            headers: {
+                authorization: sails.config.api.internal_key
+            },
+            body: messages,
+            json: true,
+            simple: true
+        });
     }
-
 };
 
-let method = process.argv[2]
-    .replace(/-/gi, '_')
-    .replace(/^_+/gi, '');
+let method = process.argv[2].replace(/-/gi, '_').replace(/^_+/gi, '');
 
 cron[method]();

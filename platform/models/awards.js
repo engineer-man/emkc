@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class awards extends Sequelize.Model { }
+    class awards extends Sequelize.Model {}
 
     awards.init(
         {
@@ -21,15 +21,22 @@ module.exports = (sequelize, DataTypes) => {
             tooltip_text: {
                 type: DataTypes.VIRTUAL,
                 get() {
-                    return {
-                        [constant.awards.type.contest_first_overall]: 'Placed 1st overall in a contest',
-                        [constant.awards.type.contest_second_overall]: 'Placed 2nd overall in a contest',
-                        [constant.awards.type.contest_third_overall]: 'Placed 3rd overall in a contest',
-                        [constant.awards.type.contest_first_language]: 'Placed 1st for a specific language in a contest',
-                        [constant.awards.type.general_participation]: 'Participation',
-                    }[this.type] || '';
+                    return (
+                        {
+                            [constant.awards.type.contest_first_overall]:
+                                'Placed 1st overall in a contest',
+                            [constant.awards.type.contest_second_overall]:
+                                'Placed 2nd overall in a contest',
+                            [constant.awards.type.contest_third_overall]:
+                                'Placed 3rd overall in a contest',
+                            [constant.awards.type.contest_first_language]:
+                                'Placed 1st for a specific language in a contest',
+                            [constant.awards.type.general_participation]:
+                                'Participation'
+                        }[this.type] || ''
+                    );
                 }
-            },
+            }
         },
         {
             sequelize,

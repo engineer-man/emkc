@@ -1,14 +1,9 @@
 module.exports = {
-
     async home(req, res) {
-        let users = await db.users
-            .find_all({
-                order: [
-                    ['score', 'desc'],
-                    ['user_id']
-                ],
-                limit: 100
-            });
+        let users = await db.users.find_all({
+            order: [['score', 'desc'], ['user_id']],
+            limit: 100
+        });
 
         return res.view({
             users
@@ -41,9 +36,6 @@ module.exports = {
     },
 
     fourohfour(req, res) {
-        return res
-            .status(404)
-            .view('home/fourohfour');
+        return res.status(404).view('home/fourohfour');
     }
-
 };

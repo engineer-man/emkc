@@ -1,5 +1,4 @@
 module.exports.routes = {
-
     'GET /': 'HomeController.home',
     'GET /logout': 'HomeController.logout',
     'GET /logout_as': 'HomeController.logout_as',
@@ -15,13 +14,15 @@ module.exports.routes = {
     'GET /community/power': 'CommunityController.power',
 
     'GET /challenges': 'ChallengesController.home',
-    'GET /challenges/choose_language/:challenge_id': 'ChallengesController.choose_language',
+    'GET /challenges/choose_language/:challenge_id':
+        'ChallengesController.choose_language',
     'POST /challenges/execute/:challenge_id': 'ChallengesController.execute',
     'GET /challenges/:challenge_id/:language': 'ChallengesController.challenge',
 
     'GET /contests': 'ContestsController.home',
     'POST /contests/submit': 'ContestsController.submit',
-    'GET /contests/disallowed_languages/:contest_id': 'ContestsController.disallowed_languages',
+    'GET /contests/disallowed_languages/:contest_id':
+        'ContestsController.disallowed_languages',
     'GET /contests/:contest_id/:slug': 'ContestsController.contest',
 
     'GET /snippets': 'SnippetsController.create',
@@ -38,26 +39,34 @@ module.exports.routes = {
     'GET /exec/:cli_script_id': 'ScriptsController.exec',
 
     'GET /@:username': 'ProfilesController.view',
-    'GET /@:username/challenges/:challenge_id/:language': 'ChallengesController.view_other',
+    'GET /@:username/challenges/:challenge_id/:language':
+        'ChallengesController.view_other',
 
     // admin
     'GET /admin': 'admin/DashboardController.dashboard',
     'GET /admin/contests': 'admin/ContestsController.view_all',
     'GET /admin/challenges': 'admin/ChallengesController.view_all',
-    'GET /admin/challenges/update/:challenge_id': 'admin/ChallengesController.update',
-    'POST /admin/challenges/update/:challenge_id': 'admin/ChallengesController.update',
+    'GET /admin/challenges/update/:challenge_id':
+        'admin/ChallengesController.update',
+    'POST /admin/challenges/update/:challenge_id':
+        'admin/ChallengesController.update',
     'GET /admin/challenges/create': 'admin/ChallengesController.create',
     'POST /admin/challenges/create': 'admin/ChallengesController.create',
     'POST /admin/tests/create': 'admin/ChallengesController.create_test',
-    'POST /admin/tests/update/:challenge_test_id': 'admin/ChallengesController.update_test',
-    'POST /admin/tests/delete/:challenge_test_id': 'admin/ChallengesController.delete_test',
+    'POST /admin/tests/update/:challenge_test_id':
+        'admin/ChallengesController.update_test',
+    'POST /admin/tests/delete/:challenge_test_id':
+        'admin/ChallengesController.delete_test',
     'GET /admin/contests/all': 'admin/ContestsController.view_all',
     'GET /admin/contests/create': 'admin/ContestsController.create',
     'POST /admin/contests/create': 'admin/ContestsController.create',
     'GET /admin/contests/update/:contest_id': 'admin/ContestsController.update',
-    'POST /admin/contests/update/:contest_id': 'admin/ContestsController.update',
-    'POST /admin/submissions/validate/:contest_id': 'admin/ContestsController.validate_submissions',
-    'POST /admin/submissions/delete': 'admin/ContestsController.delete_submission',
+    'POST /admin/contests/update/:contest_id':
+        'admin/ContestsController.update',
+    'POST /admin/submissions/validate/:contest_id':
+        'admin/ContestsController.validate_submissions',
+    'POST /admin/submissions/delete':
+        'admin/ContestsController.delete_submission',
     'GET /admin/users': 'admin/UsersController.view_all',
     'GET /admin/users/login_as': 'admin/UsersController.login_as',
     'GET /admin/piston': 'admin/PistonController.view_all',
@@ -71,8 +80,10 @@ module.exports.routes = {
     'POST /api/internal/piston/log': 'api/internal/PistonController.log',
 
     // public api endpoints
-    'GET /api/v1/stats/discord/messages': 'api/v1/stats/DiscordController.messages',
-    'GET /api/v1/stats/discord/channels': 'api/v1/stats/DiscordController.channels',
+    'GET /api/v1/stats/discord/messages':
+        'api/v1/stats/DiscordController.messages',
+    'GET /api/v1/stats/discord/channels':
+        'api/v1/stats/DiscordController.channels',
     'GET /api/v1/stats/piston/usage': 'api/v1/stats/PistonController.usage',
     'GET /api/v1/users': 'api/v1/UsersController.read_all',
     'GET /api/v1/users/:user_id': 'api/v1/UsersController.read',
@@ -86,6 +97,6 @@ module.exports.routes = {
     'OPTIONS /api/v2/piston/execute': 'api/v2/PistonController.execute',
 
     // catch all (404)
-    'ALL r|^\/(?!cdn|css|images|js|lib|other|robots\.txt|google*)|': 'HomeController.fourohfour',
-
+    'ALL r|^/(?!cdn|css|images|js|lib|other|robots.txt|google*)|':
+        'HomeController.fourohfour'
 };

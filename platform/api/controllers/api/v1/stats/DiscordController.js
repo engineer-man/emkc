@@ -1,7 +1,6 @@
 const moment = require('moment');
 
 module.exports = {
-
     async messages(req, res) {
         let { user, discord_id, term, start, end, limit } = req.query;
 
@@ -20,14 +19,10 @@ module.exports = {
             attributes: [
                 'user',
                 'discord_id',
-                [db.sequelize.literal('count(*)'), 'messages'],
+                [db.sequelize.literal('count(*)'), 'messages']
             ],
-            order: [
-                [db.sequelize.col('messages'), 'desc']
-            ],
-            group: [
-                'discord_id'
-            ],
+            order: [[db.sequelize.col('messages'), 'desc']],
+            group: ['discord_id'],
             limit: 1000
         };
 
@@ -75,8 +70,7 @@ module.exports = {
             query.limit = +limit;
         }
 
-        let stats = await db.discord_chat_messages
-            .find_all(query);
+        let stats = await db.discord_chat_messages.find_all(query);
 
         return res.send(stats);
     },
@@ -90,14 +84,10 @@ module.exports = {
             },
             attributes: [
                 'channel',
-                [db.sequelize.literal('count(*)'), 'messages'],
+                [db.sequelize.literal('count(*)'), 'messages']
             ],
-            order: [
-                [db.sequelize.col('messages'), 'desc']
-            ],
-            group: [
-                'channel'
-            ],
+            order: [[db.sequelize.col('messages'), 'desc']],
+            group: ['channel'],
             limit: 1000
         };
 
@@ -141,12 +131,8 @@ module.exports = {
             query.limit = +limit;
         }
 
-        let stats = await db.discord_chat_messages
-            .find_all(query);
+        let stats = await db.discord_chat_messages.find_all(query);
 
-        return res
-            .status(200)
-            .send(stats);
+        return res.status(200).send(stats);
     }
-
 };

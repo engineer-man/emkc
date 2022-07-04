@@ -1,5 +1,4 @@
 module.exports.controllers = {
-
     blueprints: {
         actions: false,
         rest: false,
@@ -10,5 +9,4 @@ module.exports.controllers = {
 
     jsonp: false,
     expectIntegerId: false
-
 };

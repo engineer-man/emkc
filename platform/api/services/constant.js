@@ -1,7 +1,6 @@
 const moment = require('moment');
 
 let constant = {
-
     no: 0,
     yes: 1,
 
@@ -53,10 +52,7 @@ let constant = {
             'csharp.net',
             'basic.net'
         ],
-        golf_languages: [
-            'jelly',
-            'osabie'
-        ]
+        golf_languages: ['jelly', 'osabie']
     },
 
     channels: {
@@ -96,12 +92,12 @@ let constant = {
     get_piston_url() {
         // Use the public api if the public API if the environment is development
         // or the local host if the environment is production
-        let url = sails.config.environment === 'production'
-            ? 'http://' + sails.config.piston.host + '/api/v2'
-            : 'https://emkc.org/api/v2/piston'
+        let url =
+            sails.config.environment === 'production'
+                ? 'http://' + sails.config.piston.host + '/api/v2'
+                : 'https://emkc.org/api/v2/piston';
         return url;
     }
-
 };
 
 constant.set_dynamic();

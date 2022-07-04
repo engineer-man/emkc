@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class Util {
-
     static unpack_props(props) {
         for (const key in props) {
             try {
                 props[key] = JSON.parse(props[key]);
-            } catch(e) { }
+            } catch (e) {}
         }
     }
 
@@ -20,7 +19,7 @@ class Util {
             for (const key in ele.dataset) {
                 try {
                     final[key] = JSON.parse(ele.dataset[key]);
-                } catch(e) { }
+                } catch (e) {}
             }
 
             return ReactDOM.render(
@@ -29,7 +28,6 @@ class Util {
             );
         }
     }
-
 }
 
 export default Util;

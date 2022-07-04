@@ -2,14 +2,10 @@ const crypto = require('crypto');
 const moment = require('moment');
 
 module.exports = {
-
     async last(req, res) {
-        let message = await db.discord_chat_messages
-            .find_one({
-                order: [
-                    ['created_at', 'desc']
-                ]
-            });
+        let message = await db.discord_chat_messages.find_one({
+            order: [['created_at', 'desc']]
+        });
 
         // this should only be a thing once, send beginning of time
         if (!message) {
@@ -18,11 +14,9 @@ module.exports = {
             });
         }
 
-        return res
-            .status(200)
-            .send({
-                last_timestamp: message.created_at
-            });
+        return res.status(200).send({
+            last_timestamp: message.created_at
+        });
     },
 
     async create(req, res) {
@@ -36,22 +30,21 @@ module.exports = {
         let failed = 0;
 
         // filter out any messages that don't have all the necessary information
-        messages = messages
-            .filter(m => {
-                let valid = m.channel &&
-                    m.user &&
-                    m.discord_id &&
-                    m.message &&
-                    m.timestamp &&
-                    moment(m.timestamp).isValid();
+        messages = messages.filter((m) => {
+            let valid =
+                m.channel &&
+                m.user &&
+                m.discord_id &&
+                m.message &&
+                m.timestamp &&
+                moment(m.timestamp).isValid();
 
-                if (!valid) ++failed;
+            if (!valid) ++failed;
 
-                return valid;
-            });
+            return valid;
+        });
 
-        let t = await db.sequelize
-            .transaction();
+        let t = await db.sequelize.transaction();
 
         try {
             for (const message of messages) {
@@ -71,12 +64,16 @@ module.exports = {
                 new_message.hash = hash;
 
                 try {
-                    await db.discord_chat_messages
-                        .create(new_message, { transaction: t });
+                    await db.discord_chat_messages.create(new_message, {
+                        transaction: t
+                    });
 
                     ++inserted;
                 } catch (e) {
-                    if (err.original.code && err.original.code === 'ER_DUP_ENTRY') {
+                    if (
+                        err.original.code &&
+                        err.original.code === 'ER_DUP_ENTRY'
+                    ) {
                         ++duplicate;
                     } else {
                         ++failed;
@@ -89,12 +86,10 @@ module.exports = {
             await t.rollback();
         }
 
-        return res
-            .status(200)
-            .send({
-                inserted,
-                duplicate,
-                failed
-            });
+        return res.status(200).send({
+            inserted,
+            duplicate,
+            failed
+        });
     }
 };

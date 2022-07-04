@@ -3,7 +3,6 @@ import React from 'react';
 import Util from 'js/util';
 
 class CliScript extends React.Component {
-
     componentDidMount() {
         let editor = monaco.editor.create(document.getElementById('editor'), {
             theme: 'em',
@@ -15,22 +14,20 @@ class CliScript extends React.Component {
             wordWrap: 'off',
             scrollBeyondLastLine: false,
             scrollbar: {
-                vertical: 'hidden',
+                vertical: 'hidden'
             },
             minimap: {
                 enabled: false
             }
         });
 
-        document.getElementById('editor').style.height = (editor.getModel().getLineCount() * 22) + 'px';
+        document.getElementById('editor').style.height =
+            editor.getModel().getLineCount() * 22 + 'px';
     }
 
     render() {
-        return (
-            <div id="editor"></div>
-        )
+        return <div id="editor"></div>;
     }
-
 }
 
 Util.try_render('react_cli_script', CliScript);

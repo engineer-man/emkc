@@ -1,7 +1,6 @@
 const request = require('request-promise');
 
 module.exports = {
-
     async api(method, url, body = null) {
         const options = {
             method,
@@ -22,5 +21,4 @@ module.exports = {
 
         return response;
     }
-
 };

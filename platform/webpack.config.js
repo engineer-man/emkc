@@ -24,7 +24,12 @@ module.exports = {
                         loader: MiniCSSExtractPlugin.loader,
                         options: {
                             publicPath: (resourcePath, context) => {
-                                return path.relative(path.dirname(resourcePath), context) + '/';
+                                return (
+                                    path.relative(
+                                        path.dirname(resourcePath),
+                                        context
+                                    ) + '/'
+                                );
                             }
                         }
                     },
@@ -59,10 +64,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx', '.json'],
-        modules: [
-            'node_modules',
-            path.resolve(__dirname, 'resources/')
-        ]
+        modules: ['node_modules', path.resolve(__dirname, 'resources/')]
     },
     output: {
         path: path.resolve(__dirname, 'public/lib/webpack'),

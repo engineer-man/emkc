@@ -2,11 +2,10 @@ const fs = require('fs');
 const util = require('util');
 
 module.exports = {
-
     async home(req, res) {
         let options = {
             where: {
-                draft: 0,
+                draft: 0
             },
             include: [
                 {
@@ -18,26 +17,21 @@ module.exports = {
                     }
                 }
             ],
-            order: [
-                ['challenge_id']
-            ],
+            order: [['challenge_id']],
             group: 'challenge_id'
         };
 
         options.where.difficulty = constant.challenges.difficulty.easy;
 
-        let easy = await db.challenges
-            .find_all(options);
+        let easy = await db.challenges.find_all(options);
 
         options.where.difficulty = constant.challenges.difficulty.medium;
 
-        let medium = await db.challenges
-            .find_all(options);
+        let medium = await db.challenges.find_all(options);
 
         options.where.difficulty = constant.challenges.difficulty.hard;
 
-        let hard = await db.challenges
-            .find_all(options);
+        let hard = await db.challenges.find_all(options);
 
         return res.view({
             easy,
@@ -49,23 +43,22 @@ module.exports = {
     async choose_language(req, res) {
         const { challenge_id } = req.params;
 
-        let challenge = await db.challenges
-            .find_one({
-                where: {
-                    challenge_id
-                },
-                include: [
-                    {
-                        required: false,
-                        user_id: req.local.user_id,
-                        model: db.user_challenges,
-                        as: 'solutions',
-                        where: {
-                            user_id: req.local.user_id
-                        }
+        let challenge = await db.challenges.find_one({
+            where: {
+                challenge_id
+            },
+            include: [
+                {
+                    required: false,
+                    user_id: req.local.user_id,
+                    model: db.user_challenges,
+                    as: 'solutions',
+                    where: {
+                        user_id: req.local.user_id
                     }
-                ]
-            });
+                }
+            ]
+        });
 
         if (!challenge) {
             return res.redirect('back');
@@ -73,7 +66,7 @@ module.exports = {
 
         return res.view({
             challenge,
-            solved: challenge.solutions.map(s => s.language)
+            solved: challenge.solutions.map((s) => s.language)
         });
     },
 
@@ -84,28 +77,27 @@ module.exports = {
             return res.redirect('back');
         }
 
-        let challenge = await db.challenges
-            .find_one({
-                where: {
-                    challenge_id
-                },
-                include: [
-                    {
-                        required: false,
-                        model: db.user_challenges,
-                        as: 'solution',
-                        where: {
-                            user_id: req.local.user_id,
-                            language
-                        }
-                    },
-                    {
-                        required: false,
-                        model: db.challenge_tests,
-                        as: 'tests'
+        let challenge = await db.challenges.find_one({
+            where: {
+                challenge_id
+            },
+            include: [
+                {
+                    required: false,
+                    model: db.user_challenges,
+                    as: 'solution',
+                    where: {
+                        user_id: req.local.user_id,
+                        language
                     }
-                ]
-            });
+                },
+                {
+                    required: false,
+                    model: db.challenge_tests,
+                    as: 'tests'
+                }
+            ]
+        });
 
         if (!challenge || challenge.tests.length === 0) {
             return res.redirect('back');
@@ -131,17 +123,17 @@ module.exports = {
             perl: 'pl',
             kotlin: 'kt',
             haskell: 'hs',
-            nim: 'nim',
+            nim: 'nim'
         }[language];
 
         const abstract = challenge.html;
-        let base_template = await read_file(base_dir + '/templates/template.' + ext);
+        let base_template = await read_file(
+            base_dir + '/templates/template.' + ext
+        );
 
         let template = '';
 
-        base_template = base_template
-            .to_string()
-            .split('\n');
+        base_template = base_template.to_string().split('\n');
 
         for (const line of base_template) {
             // non processed line, add directly
@@ -153,36 +145,33 @@ module.exports = {
             // parse the input according to rules and return the first to determine template types
             let input = challenge.tests[0].input
                 .split('\n')
-                .map(input_line => {
-                    return input_line
-                        .split('|')
-                        .map(value => {
-                            if (value.match(/^[0-9]+$/)) {
-                                return parse_int(value);
-                            }
+                .map((input_line) => {
+                    return input_line.split('|').map((value) => {
+                        if (value.match(/^[0-9]+$/)) {
+                            return parse_int(value);
+                        }
 
-                            if (value.match(/^[0-9]+\.[0-9]+$/)) {
-                                return parse_float(value);
-                            }
+                        if (value.match(/^[0-9]+\.[0-9]+$/)) {
+                            return parse_float(value);
+                        }
 
-                            return value;
-                        })
+                        return value;
+                    });
                 })[0];
 
             if (line.match(/^\s*%%_IMPORTS_%%/gi)) {
-                let has_string = input.some(input => typeof input === 'string');
-                let has_int = input.some(input => typeof input === 'number');
+                let has_string = input.some(
+                    (input) => typeof input === 'string'
+                );
+                let has_int = input.some((input) => typeof input === 'number');
 
                 switch (language) {
                     case 'go':
-                        if (has_int)
-                            template += '    "strconv"\n';
+                        if (has_int) template += '    "strconv"\n';
                         break;
                     case 'nim':
-                        if (has_int)
-                            template += 'import os, parseutils';
-                        else
-                            template += 'import os';
+                        if (has_int) template += 'import os, parseutils';
+                        else template += 'import os';
 
                         template += '\n\n';
 
@@ -209,42 +198,56 @@ module.exports = {
                         break;
                     case 'cs':
                         if (typeof input === 'string')
-                            template += `        string value${i} = args[${i-1}];`
+                            template += `        string value${i} = args[${
+                                i - 1
+                            }];`;
                         if (typeof input === 'number')
-                            template += `        int value${i} = Convert.ToInt32(args[${i-1}]);`
+                            template += `        int value${i} = Convert.ToInt32(args[${
+                                i - 1
+                            }]);`;
                         break;
                     case 'go':
                         if (typeof input === 'string')
-                            template += `    var value${i} string = os.Args[${i}]`
+                            template += `    var value${i} string = os.Args[${i}]`;
                         if (typeof input === 'number')
-                            template += `    value${i}, _ := strconv.Atoi(os.Args[${i}])`
+                            template += `    value${i}, _ := strconv.Atoi(os.Args[${i}])`;
                         break;
                     case 'java':
                         if (typeof input === 'string')
-                            template += `        String value${i} = args[${i-1}];`
+                            template += `        String value${i} = args[${
+                                i - 1
+                            }];`;
                         if (typeof input === 'number')
-                            template += `        int value${i} = Integer.parseInt(args[${i-1}]);`
+                            template += `        int value${i} = Integer.parseInt(args[${
+                                i - 1
+                            }]);`;
                         break;
                     case 'kotlin':
                         if (typeof input === 'string')
-                            template += `    val value${i} = args[${i-1}]`
+                            template += `    val value${i} = args[${i - 1}]`;
                         if (typeof input === 'number')
-                            template += `    val value${i} = args[${i-1}].toInt()`
+                            template += `    val value${i} = args[${
+                                i - 1
+                            }].toInt()`;
                         break;
                     case 'haskell':
-                        template += `    let value${i} = (args !! ${i-1})`
+                        template += `    let value${i} = (args !! ${i - 1})`;
                         break;
                     case 'rust':
                         if (typeof input === 'string')
-                            template += `    let value${i}: &String = &args[${i}];`
+                            template += `    let value${i}: &String = &args[${i}];`;
                         if (typeof input === 'number')
-                            template += `    let value${i}: i32 = args[${i}].parse().unwrap();`
+                            template += `    let value${i}: i32 = args[${i}].parse().unwrap();`;
                         break;
                     case 'js':
                         if (typeof input === 'string')
-                            template += `const value${i} = process.argv[${i+1}];`;
+                            template += `const value${i} = process.argv[${
+                                i + 1
+                            }];`;
                         if (typeof input === 'number')
-                            template += `const value${i} = parseInt(process.argv[${i+1}]);`;
+                            template += `const value${i} = parseInt(process.argv[${
+                                i + 1
+                            }]);`;
                         break;
                     case 'php':
                         template += `$value${i} = $argv[${i}];`;
@@ -256,7 +259,7 @@ module.exports = {
                             template += `value${i} = int(sys.argv[${i}])`;
                         break;
                     case 'ruby':
-                        template += `value${i} = ARGV[${i-1}]`;
+                        template += `value${i} = ARGV[${i - 1}]`;
                         break;
                     case 'swift':
                         template += `var value${i} = CommandLine.arguments[${i}]`;
@@ -271,14 +274,14 @@ module.exports = {
                         template += `value${i}=$${i}`;
                         break;
                     case 'perl':
-                        template += `my $value${i} = $ARGV[${i-1}];`;
+                        template += `my $value${i} = $ARGV[${i - 1}];`;
                         break;
                     case 'nim':
                         if (typeof input === 'number') {
-                            template += `var value${i}: int\n`
+                            template += `var value${i}: int\n`;
                             template += `discard parseInt(paramStr(${i}), value${i})`;
                         } else {
-                            template += `var value${i} = paramStr(${i})`
+                            template += `var value${i} = paramStr(${i})`;
                         }
 
                         break;
@@ -312,7 +315,7 @@ module.exports = {
                 perl: 'perl',
                 kotlin: 'kotlin',
                 haskell: 'haskell',
-                nim: 'nim',
+                nim: 'nim'
             }[language]
         });
     },
@@ -321,22 +324,19 @@ module.exports = {
         const { challenge_id } = req.params;
         const { language, source } = req.body;
 
-        let challenge = await db.challenges
-            .find_one({
-                where: {
-                    challenge_id
-                },
-                include: {
-                    required: false,
-                    model: db.challenge_tests,
-                    as: 'tests'
-                }
-            });
+        let challenge = await db.challenges.find_one({
+            where: {
+                challenge_id
+            },
+            include: {
+                required: false,
+                model: db.challenge_tests,
+                as: 'tests'
+            }
+        });
 
         if (challenge.tests.length === 0) {
-            return res
-                .status(400)
-                .send();
+            return res.status(400).send();
         }
 
         var results = [];
@@ -344,9 +344,15 @@ module.exports = {
         for (const test of challenge.tests) {
             let inputs = test.input.split('\n'); // We still have the arguments separated by |
             let test_idx = Math.floor(Math.random() * inputs.length);
-            let outputs = test.output.split('\n')
+            let outputs = test.output.split('\n');
 
-            let result = await piston.execute(language, source, inputs[test_idx].split('|'),'','*');
+            let result = await piston.execute(
+                language,
+                source,
+                inputs[test_idx].split('|'),
+                '',
+                '*'
+            );
             const compile_output = result.compile && result.compile.output;
             const run_error = result.run.stderr;
             result = result.run.stdout.trim();
@@ -361,7 +367,9 @@ module.exports = {
             });
         }
 
-        let promise_outputs = await Promise.all(results.map(result => result.result));
+        let promise_outputs = await Promise.all(
+            results.map((result) => result.result)
+        );
 
         promise_outputs.for_each((output, i) => {
             results[i].result = output;
@@ -379,12 +387,12 @@ module.exports = {
             };
         });
 
-        var passed = results.filter(r => !r.passed).length === 0;
+        var passed = results.filter((r) => !r.passed).length === 0;
 
         if (passed && req.local.user_id && !challenge.draft) {
             set_immediate(async () => {
-                let [ user_challenge, created ] = await db.user_challenges
-                    .find_or_create({
+                let [user_challenge, created] =
+                    await db.user_challenges.find_or_create({
                         where: {
                             user_id: req.local.user_id,
                             challenge_id: challenge.challenge_id,
@@ -402,56 +410,48 @@ module.exports = {
                 user_challenge.solution = source;
                 user_challenge.save();
             });
-
         }
 
-        return res
-            .status(200)
-            .send(results);
+        return res.status(200).send(results);
     },
 
     async view_other(req, res) {
         const { username, challenge_id, language } = req.params;
 
-        let user = await db.users
-            .find_one({
-                where: {
-                    username
-                }
-            });
+        let user = await db.users.find_one({
+            where: {
+                username
+            }
+        });
 
         if (!user) throw null;
 
-        let user_solution = await db.user_challenges
-            .find_one({
-                where: {
-                    user_id: req.local.user_id,
-                    challenge_id,
-                    language
-                }
-            });
+        let user_solution = await db.user_challenges.find_one({
+            where: {
+                user_id: req.local.user_id,
+                challenge_id,
+                language
+            }
+        });
 
         if (!user_solution) {
             return res.redirect('back');
         }
 
-        let challenge = await db.user_challenges
-            .find_one({
-                where: {
-                    user_id: user.user_id,
-                    challenge_id,
-                    language
-                },
-                include: [
-                    {
-                        model: db.challenges,
-                        as: 'challenge'
-                    }
-                ],
-                order: [
-                    ['created_at', 'desc']
-                ]
-            });
+        let challenge = await db.user_challenges.find_one({
+            where: {
+                user_id: user.user_id,
+                challenge_id,
+                language
+            },
+            include: [
+                {
+                    model: db.challenges,
+                    as: 'challenge'
+                }
+            ],
+            order: [['created_at', 'desc']]
+        });
 
         if (challenge) {
             return res.view('snippets/view', {
@@ -464,5 +464,4 @@ module.exports = {
 
         return res.redirect('/snippets');
     }
-
 };

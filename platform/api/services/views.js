@@ -1,7 +1,6 @@
 const twig = require('twig');
 
 module.exports = {
-
     async render(template, data) {
         data.sails = sails;
         data.constant = constant;
@@ -15,5 +14,4 @@ module.exports = {
             })
             .render(data);
     }
-
 };

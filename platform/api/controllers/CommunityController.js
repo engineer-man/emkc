@@ -1,5 +1,4 @@
 module.exports = {
-
     home(req, res) {
         return res.view();
     },
@@ -11,5 +10,4 @@ module.exports = {
     power(req, res) {
         return res.view();
     }
-
 };

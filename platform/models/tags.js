@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class tags extends Sequelize.Model { }
+    class tags extends Sequelize.Model {}
 
     tags.init(
         {

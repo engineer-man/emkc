@@ -3,7 +3,6 @@ import React from 'react';
 import Util from 'js/util';
 
 class Login extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -37,18 +36,23 @@ class Login extends React.Component {
                             <i class="fa fa-times"></i>
                         </div>
                         <h4>Login/Register</h4>
-                        <p>
-                            At the moment only Discord login is supported.
-                        </p>
+                        <p>At the moment only Discord login is supported.</p>
                         <a
-                            href={'/auth/discord' + (this.state.redirect ? '?r=' + this.state.redirect : '')}
-                            class="btn btn-block">Login with Discord</a>
+                            href={
+                                '/auth/discord' +
+                                (this.state.redirect
+                                    ? '?r=' + this.state.redirect
+                                    : '')
+                            }
+                            class="btn btn-block"
+                        >
+                            Login with Discord
+                        </a>
                     </div>
                 </div>
             </div>
-        )
+        );
     }
-
 }
 
 window.login = Util.try_render('react_login', Login);

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class user_challenges extends Sequelize.Model { }
+    class user_challenges extends Sequelize.Model {}
 
     user_challenges.init(
         {

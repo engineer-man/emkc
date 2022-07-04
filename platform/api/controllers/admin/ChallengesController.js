@@ -1,10 +1,7 @@
 module.exports = {
-
     async view_all(req, res) {
         let challenges = await db.challenges.find_all({
-            order: [
-                ['challenge_id', 'desc']
-            ]
+            order: [['challenge_id', 'desc']]
         });
 
         return res.view({
@@ -20,7 +17,7 @@ module.exports = {
                 return res.status(200).send({
                     challenge_id: created_challenge.challenge_id
                 });
-            } catch(e) {
+            } catch (e) {
                 return res.status(400).send();
             }
         }
@@ -42,8 +39,7 @@ module.exports = {
         const { challenge_id } = req.params;
 
         let challenge = await db.challenges.find_one({
-            where:
-            {
+            where: {
                 challenge_id
             },
             include: [
@@ -67,7 +63,7 @@ module.exports = {
             try {
                 await challenge.save();
                 return res.status(200).send();
-            } catch(e) {
+            } catch (e) {
                 return res.status(400).send();
             }
         }
@@ -89,7 +85,7 @@ module.exports = {
                 output
             });
             return res.status(200).send();
-        } catch(e) {
+        } catch (e) {
             return res.status(400).send();
         }
     },
@@ -111,7 +107,7 @@ module.exports = {
         try {
             await test_to_update.save();
             return res.status(200).send();
-        } catch(e) {
+        } catch (e) {
             return res.status(400).send();
         }
     },
@@ -128,5 +124,4 @@ module.exports = {
         }
         return res.status(200).send();
     }
-
-}
+};

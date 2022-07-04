@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class piston_runs extends Sequelize.Model { }
+    class piston_runs extends Sequelize.Model {}
 
     piston_runs.init(
         {

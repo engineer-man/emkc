@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const moment = require('moment');
 
 module.exports = (sequelize, DataTypes) => {
-    class contests extends Sequelize.Model { }
+    class contests extends Sequelize.Model {}
 
     contests.init(
         {
@@ -24,13 +24,21 @@ module.exports = (sequelize, DataTypes) => {
             active: {
                 type: DataTypes.VIRTUAL,
                 get() {
-                    return moment().isAfter(moment(this.start_date)) && moment().isBefore(moment(this.end_date));
+                    return (
+                        moment().isAfter(moment(this.start_date)) &&
+                        moment().isBefore(moment(this.end_date))
+                    );
                 }
             },
             url: {
                 type: DataTypes.VIRTUAL,
                 get() {
-                    return '/contests/' + this.contest_id + '/' + util.slugify(this.name);
+                    return (
+                        '/contests/' +
+                        this.contest_id +
+                        '/' +
+                        util.slugify(this.name)
+                    );
                 }
             },
             slug: {
@@ -45,29 +53,70 @@ module.exports = (sequelize, DataTypes) => {
                     const start = moment().unix();
                     const end = moment(this.end_date).unix();
                     const diff = end - start;
-                    const duration = moment.duration(diff * 1000, 'milliseconds');
+                    const duration = moment.duration(
+                        diff * 1000,
+                        'milliseconds'
+                    );
 
                     if (duration.weeks() > 0) {
-                        return duration.weeks() + ' week' + (duration.weeks() == 1 ? '' : 's') + ' ' +
-                            duration.days() + ' day' + (duration.days() == 1 ? '' : 's') + ' ' +
-                            duration.hours() + ' hour' + (duration.hours() == 1 ? '' : 's') + ' ' +
-                            duration.minutes() + ' minute' + (duration.minutes() == 1 ? '' : 's') + ' ';
+                        return (
+                            duration.weeks() +
+                            ' week' +
+                            (duration.weeks() == 1 ? '' : 's') +
+                            ' ' +
+                            duration.days() +
+                            ' day' +
+                            (duration.days() == 1 ? '' : 's') +
+                            ' ' +
+                            duration.hours() +
+                            ' hour' +
+                            (duration.hours() == 1 ? '' : 's') +
+                            ' ' +
+                            duration.minutes() +
+                            ' minute' +
+                            (duration.minutes() == 1 ? '' : 's') +
+                            ' '
+                        );
                     }
 
                     if (duration.days() > 0) {
-                        return duration.days() + ' day' + (duration.days() == 1 ? '' : 's') + ' ' +
-                            duration.hours() + ' hour' + (duration.hours() == 1 ? '' : 's') + ' ' +
-                            duration.minutes() + ' minute' + (duration.minutes() == 1 ? '' : 's') + ' ';
+                        return (
+                            duration.days() +
+                            ' day' +
+                            (duration.days() == 1 ? '' : 's') +
+                            ' ' +
+                            duration.hours() +
+                            ' hour' +
+                            (duration.hours() == 1 ? '' : 's') +
+                            ' ' +
+                            duration.minutes() +
+                            ' minute' +
+                            (duration.minutes() == 1 ? '' : 's') +
+                            ' '
+                        );
                     }
 
                     if (duration.hours() > 0) {
-                        return duration.hours() + ' hour' + (duration.hours() == 1 ? '' : 's') + ' ' +
-                            duration.minutes() + ' minute' + (duration.minutes() == 1 ? '' : 's') + ' ';
+                        return (
+                            duration.hours() +
+                            ' hour' +
+                            (duration.hours() == 1 ? '' : 's') +
+                            ' ' +
+                            duration.minutes() +
+                            ' minute' +
+                            (duration.minutes() == 1 ? '' : 's') +
+                            ' '
+                        );
                     }
 
-                    return duration.minutes() + ' minute' + (duration.minutes() == 1 ? '' : 's') + ' ';
+                    return (
+                        duration.minutes() +
+                        ' minute' +
+                        (duration.minutes() == 1 ? '' : 's') +
+                        ' '
+                    );
                 }
-            },
+            }
         },
         {
             sequelize,

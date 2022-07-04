@@ -2,7 +2,7 @@ const moment = require('moment');
 
 const twig = require('twig');
 
-twig.extendFilter('noscript', value => {
+twig.extendFilter('noscript', (value) => {
     if (!value) {
         return value;
     }
@@ -11,11 +11,9 @@ twig.extendFilter('noscript', value => {
 });
 
 module.exports = {
-
     starts_with(string, path) {
         let pattern = new RegExp('^' + path.replace('/', '\\/'));
 
         return pattern.test(string);
     }
-
 };

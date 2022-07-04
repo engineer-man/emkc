@@ -1,5 +1,4 @@
 module.exports = {
-
     handle_err(res, err) {
         console.log(err, '\n\n');
 
@@ -16,5 +15,4 @@ module.exports = {
             });
         }
     }
-
 };

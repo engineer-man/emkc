@@ -1,7 +1,6 @@
 const moment = require('moment');
 
 module.exports = {
-
     stickers(req, res) {
         return res.view({
             options: [
@@ -17,41 +16,34 @@ module.exports = {
         const { tx, quantity, name, email, address, coupon } = req.body;
 
         if (!coupon && !tx) {
-            return res
-                .status(400)
-                .send();
+            return res.status(400).send();
         }
 
-        let order = await db.sticker_orders
-            .create({
-                tx,
-                coupon,
-                quantity,
-                cost: {
-                    2: null,
-                    3: 2.40,
-                    5: 3.50,
-                    10: 6.00
-                }[quantity],
-                name,
-                email,
-                address,
-                created_at: moment()
-            });
+        let order = await db.sticker_orders.create({
+            tx,
+            coupon,
+            quantity,
+            cost: {
+                2: null,
+                3: 2.4,
+                5: 3.5,
+                10: 6.0
+            }[quantity],
+            name,
+            email,
+            address,
+            created_at: moment()
+        });
 
-        return res
-            .status(200)
-            .send({
-                order_id: order.sticker_order_id
-            });
+        return res.status(200).send({
+            order_id: order.sticker_order_id
+        });
     },
 
     check_code(req, res) {
-        return res
-            .status(200)
-            .send({
-                valid: req.params.code.to_upper_case() === sails.config.paypal.coupon
-            });
+        return res.status(200).send({
+            valid:
+                req.params.code.to_upper_case() === sails.config.paypal.coupon
+        });
     }
-
 };

@@ -1,32 +1,29 @@
 module.exports = {
-
     async view(req, res) {
         const { hash } = req.params;
 
-        let snippet = await db.snippets
-            .find_one({
-                where: {
-                    hash
-                }
-            });
+        let snippet = await db.snippets.find_one({
+            where: {
+                hash
+            }
+        });
 
         try {
             if (!snippet) {
                 throw null;
             }
 
-            if (req.headers.accept === 'text/plain' || req.path.match(/\/raw$/)) {
+            if (
+                req.headers.accept === 'text/plain' ||
+                req.path.match(/\/raw$/)
+            ) {
                 res.set('content-type', 'text/plain');
 
-                return res
-                    .status(200)
-                    .send(snippet.snip);
+                return res.status(200).send(snippet.snip);
             }
 
             if (req.headers.accept === 'application/json') {
-                return res
-                    .status(200)
-                    .send(snippet);
+                return res.status(200).send(snippet);
             }
 
             return res.view('snippets/edit', {
@@ -39,15 +36,12 @@ module.exports = {
     },
 
     async mine(req, res) {
-        let snippets = await db.snippets
-            .find_all({
-                where: {
-                    user_id: req.local.user_id
-                },
-                order: [
-                    ['snippet_id', 'desc']
-                ]
-            });
+        let snippets = await db.snippets.find_all({
+            where: {
+                user_id: req.local.user_id
+            },
+            order: [['snippet_id', 'desc']]
+        });
 
         return res.view({
             snippets
@@ -63,24 +57,19 @@ module.exports = {
                     throw new Error('Please supply some code');
                 }
 
-                let snippet = await db.snippets
-                    .create({
-                        user_id: req.local.user_id,
-                        language,
-                        snip
-                    });
+                let snippet = await db.snippets.create({
+                    user_id: req.local.user_id,
+                    language,
+                    snip
+                });
 
-                return res
-                    .status(200)
-                    .send({
-                        url: snippet.url
-                    });
+                return res.status(200).send({
+                    url: snippet.url
+                });
             } catch (e) {
-                return res
-                    .status(400)
-                    .send({
-                        message: e.message
-                    });
+                return res.status(400).send({
+                    message: e.message
+                });
             }
         }
 
@@ -97,47 +86,40 @@ module.exports = {
     async delete(req, res) {
         const { hash } = req.params;
 
-
-        let snippet = await db.snippets
-            .find_one({
-                where: {
-                    hash,
-                    user_id: req.local.user_id
-                }
-            });
+        let snippet = await db.snippets.find_one({
+            where: {
+                hash,
+                user_id: req.local.user_id
+            }
+        });
 
         if (snippet) {
             await snippet.destroy();
         }
 
-        return res
-            .status(snippet ? 200 : 400)
-            .send({
-                url: '/snippets/mine'
-            });
+        return res.status(snippet ? 200 : 400).send({
+            url: '/snippets/mine'
+        });
     },
 
     async edit(req, res) {
-        const { hash }  = req.params;
+        const { hash } = req.params;
 
-        let snippet = await db.snippets
-            .find_one({
-                where: {
-                    hash,
-                    user_id: req.local.user_id
-                }
-            });
+        let snippet = await db.snippets.find_one({
+            where: {
+                hash,
+                user_id: req.local.user_id
+            }
+        });
 
         if (req.method === 'POST') {
             const { language, snip } = req.body;
 
             try {
                 if (!snippet) {
-                    return res
-                        .status(400)
-                        .send({
-                            url: '/snippets'
-                        });
+                    return res.status(400).send({
+                        url: '/snippets'
+                    });
                 }
 
                 if (!snip) {
@@ -148,17 +130,13 @@ module.exports = {
                 snippet.snip = snip;
                 await snippet.save();
 
-                return res
-                    .status(200)
-                    .send({
-                        url: snippet.url
-                    });
+                return res.status(200).send({
+                    url: snippet.url
+                });
             } catch (e) {
-                return res
-                    .status(400)
-                    .send({
-                        message: e.message
-                    });
+                return res.status(400).send({
+                    message: e.message
+                });
             }
         }
 
@@ -170,5 +148,5 @@ module.exports = {
             mode: 'update',
             snippet
         });
-    },
+    }
 };

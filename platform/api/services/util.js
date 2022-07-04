@@ -2,7 +2,6 @@ const fs = require('fs');
 const moment = require('moment');
 
 module.exports = {
-
     now() {
         return moment().format('YYYY-MM-DD HH:mm:ss');
     },
@@ -27,20 +26,40 @@ module.exports = {
 
         var time, unit;
 
-        for (; ;) {
-            if (hours >= 24) { time = Math.round(days); break; }
-            if (minutes >= 60) { time = Math.round(hours); break; }
-            if (seconds >= 60) { time = Math.round(minutes); break; }
+        for (;;) {
+            if (hours >= 24) {
+                time = Math.round(days);
+                break;
+            }
+            if (minutes >= 60) {
+                time = Math.round(hours);
+                break;
+            }
+            if (seconds >= 60) {
+                time = Math.round(minutes);
+                break;
+            }
 
-            time = seconds >= 0 ? seconds : 0; break;
+            time = seconds >= 0 ? seconds : 0;
+            break;
         }
 
-        for (; ;) {
-            if (hours >= 24) { unit = 'days'; break; }
-            if (minutes >= 60) { unit = 'hours'; break; }
-            if (seconds >= 60) { unit = 'minutes'; break; }
+        for (;;) {
+            if (hours >= 24) {
+                unit = 'days';
+                break;
+            }
+            if (minutes >= 60) {
+                unit = 'hours';
+                break;
+            }
+            if (seconds >= 60) {
+                unit = 'minutes';
+                break;
+            }
 
-            unit = 'seconds'; break;
+            unit = 'seconds';
+            break;
         }
 
         if (unit === 'days' && time > 30) {
@@ -69,12 +88,10 @@ module.exports = {
     bury_upload(file) {
         if (!file) return null;
 
-        file
-            .upload({dirname: '/tmp'}, (err, files) => {
-                files.for_each(file => {
-                    fs.unlink(file.fd);
-                });
+        file.upload({ dirname: '/tmp' }, (err, files) => {
+            files.for_each((file) => {
+                fs.unlink(file.fd);
             });
+        });
     }
-
 };

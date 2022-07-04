@@ -5,7 +5,6 @@ import axios from 'axios';
 import Util from 'js/util';
 
 class Stickers extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -29,8 +28,8 @@ class Stickers extends React.Component {
     }
 
     componentDidMount() {
-        paypal.Button
-            .render({
+        paypal.Button.render(
+            {
                 env: this.props.env,
                 client: {
                     sandbox: this.props.paypal_id,
@@ -46,62 +45,80 @@ class Stickers extends React.Component {
                 commit: true,
                 payment: (data, actions) => {
                     return actions.payment.create({
-                        transactions: [{
-                            amount: {
-                                total: this.props.options.find(option => option.quantity === this.state.quantity).cost,
-                                currency: 'USD'
-                            },
-                            description: this.state.quantity + ' 2" x 2" Engineer Man Stickers'
-                        }]
+                        transactions: [
+                            {
+                                amount: {
+                                    total: this.props.options.find(
+                                        (option) =>
+                                            option.quantity ===
+                                            this.state.quantity
+                                    ).cost,
+                                    currency: 'USD'
+                                },
+                                description:
+                                    this.state.quantity +
+                                    ' 2" x 2" Engineer Man Stickers'
+                            }
+                        ]
                     });
                 },
                 onAuthorize: async (data, actions) => {
-                    return actions.payment
-                        .execute()
-                        .then(async details => {
-                            let res = await axios
-                                .post('/stickers/order', {
-                                    tx: details.transactions[0].related_resources[0].sale.id,
-                                    quantity: this.state.quantity,
-                                    name: this.state.name,
-                                    email: this.state.email,
-                                    address: this.state.address,
-                                    coupon: null
-                                });
-
-                            return bootbox
-                                .alert(
-                                    'Your order was placed successfully, thanks. Please '+
-                                    'reference Order ID #' + res.data.order_id + ' if necessary.',
-                                    () => { location = location }
-                                );
+                    return actions.payment.execute().then(async (details) => {
+                        let res = await axios.post('/stickers/order', {
+                            tx: details.transactions[0].related_resources[0]
+                                .sale.id,
+                            quantity: this.state.quantity,
+                            name: this.state.name,
+                            email: this.state.email,
+                            address: this.state.address,
+                            coupon: null
                         });
+
+                        return bootbox.alert(
+                            'Your order was placed successfully, thanks. Please ' +
+                                'reference Order ID #' +
+                                res.data.order_id +
+                                ' if necessary.',
+                            () => {
+                                location = location;
+                            }
+                        );
+                    });
                 }
-            }, '#paypal-button');
+            },
+            '#paypal-button'
+        );
     }
 
     handle_update(e) {
         e.persist();
 
-        this.setState({
-            [e.target.id]: e.target.value
-        }, () => {
-            if (e.target.id === 'coupon') {
-                this.check_coupon();
-            }
+        this.setState(
+            {
+                [e.target.id]: e.target.value
+            },
+            () => {
+                if (e.target.id === 'coupon') {
+                    this.check_coupon();
+                }
 
-            this.setState({
-                valid: this.state.name && this.state.email && this.state.address
-            });
-        });
+                this.setState({
+                    valid:
+                        this.state.name &&
+                        this.state.email &&
+                        this.state.address
+                });
+            }
+        );
     }
 
     check_coupon() {
         clearInterval(this.check_coupon_timer);
 
         this.check_coupon_timer = setTimeout(async () => {
-            let res = await axios
-                .get('/stickers/check_code/' + this.state.coupon)
+            let res = await axios.get(
+                '/stickers/check_code/' + this.state.coupon
+            );
 
             let valid = res.data.valid;
 
@@ -124,52 +141,70 @@ class Stickers extends React.Component {
                 address: this.state.address,
                 coupon: this.state.valid ? this.state.coupon : null
             })
-            .then(res => {
+            .then((res) => {
                 if (res.status >= 300) {
-                    return bootbox.alert('There was a problem submitting your order');
+                    return bootbox.alert(
+                        'There was a problem submitting your order'
+                    );
                 }
 
-                return bootbox
-                    .alert(
-                        'Your order was placed successfully, thanks. Please '+
-                        'reference Order ID #' + res.data.order_id + ' if necessary.',
-                        () => { location = location }
-                    );
+                return bootbox.alert(
+                    'Your order was placed successfully, thanks. Please ' +
+                        'reference Order ID #' +
+                        res.data.order_id +
+                        ' if necessary.',
+                    () => {
+                        location = location;
+                    }
+                );
             });
     }
 
     render() {
         return (
             <>
-                <h4 class="f300">
-                    Engineer Man Stickers 2" x 2"
-                </h4>
+                <h4 class="f300">Engineer Man Stickers 2" x 2"</h4>
 
                 <img src="/images/sticker_2019.png" class="sticker" />
 
                 <p>
-                    Stickers are made with vinyl making them weatherproof and resistant to
-                    scratching and fading. Stickers cannot be removed and reapplied.
+                    Stickers are made with vinyl making them weatherproof and
+                    resistant to scratching and fading. Stickers cannot be
+                    removed and reapplied.
                 </p>
 
                 <form>
                     <div class="form-group">
                         <label class="f700">Quantity</label>
                         <br />
-                        {this.state.discounted && (
+                        {(this.state.discounted && (
                             <div class="quantity_option active">2 for FREE</div>
-                        ) || (
-                            this.props.options.filter(option => option.cost !== 'FREE').map(option => {
-                                return (
-                                    <>
-                                        <div
-                                            class={'quantity_option ' + (this.state.quantity === option.quantity && 'active')}
-                                            onClick={() => this.setState({ quantity: option.quantity })}>{option.quantity} for ${option.cost}</div>
-                                        {' '}
-                                    </>
-                                )
-                            })
-                        )}
+                        )) ||
+                            this.props.options
+                                .filter((option) => option.cost !== 'FREE')
+                                .map((option) => {
+                                    return (
+                                        <>
+                                            <div
+                                                class={
+                                                    'quantity_option ' +
+                                                    (this.state.quantity ===
+                                                        option.quantity &&
+                                                        'active')
+                                                }
+                                                onClick={() =>
+                                                    this.setState({
+                                                        quantity:
+                                                            option.quantity
+                                                    })
+                                                }
+                                            >
+                                                {option.quantity} for $
+                                                {option.cost}
+                                            </div>{' '}
+                                        </>
+                                    );
+                                })}
                     </div>
                     <div class="form-group">
                         <label class="f700">Name</label>
@@ -180,7 +215,8 @@ class Stickers extends React.Component {
                             class="form-control"
                             placeholder="Enter your name here"
                             autocomplete="off"
-                            onChange={this.handle_update} />
+                            onChange={this.handle_update}
+                        />
                     </div>
 
                     <div class="form-group">
@@ -192,11 +228,14 @@ class Stickers extends React.Component {
                             class="form-control"
                             placeholder="Enter your email here"
                             autocomplete="off"
-                            onChange={this.handle_update} />
+                            onChange={this.handle_update}
+                        />
                     </div>
 
                     <div class="form-group">
-                        <label class="f700">Address (anywhere in the world)</label>
+                        <label class="f700">
+                            Address (anywhere in the world)
+                        </label>
                         <textarea
                             type="text"
                             id="address"
@@ -205,8 +244,8 @@ class Stickers extends React.Component {
                             placeholder="Please enter exactly what should appear on an envelope"
                             autocomplete="off"
                             rows="5"
-                            onChange={this.handle_update}>
-                        </textarea>
+                            onChange={this.handle_update}
+                        ></textarea>
                     </div>
 
                     <div class="form-group">
@@ -219,27 +258,36 @@ class Stickers extends React.Component {
                             placeholder="If you have a coupon, enter it here"
                             autocomplete="off"
                             disabled={this.state.discounted}
-                            onChange={this.handle_update} />
-                        {this.state.coupon && (
-                            this.state.discounted && (
-                                <small class="text-success">Coupon valid</small>
-                            )
+                            onChange={this.handle_update}
+                        />
+                        {this.state.coupon && this.state.discounted && (
+                            <small class="text-success">Coupon valid</small>
                         )}
                     </div>
                 </form>
-                {this.state.discounted && (
+                {(this.state.discounted && (
                     <button
                         type="button"
                         class="btn btn-success"
                         disabled={!this.state.valid}
-                        onClick={this.submit}>Submit</button>
-                ) || (
-                    <div id="paypal-button" style={{ visibility: !this.state.discounted && this.state.valid ? 'visible' : 'hidden' }}></div>
+                        onClick={this.submit}
+                    >
+                        Submit
+                    </button>
+                )) || (
+                    <div
+                        id="paypal-button"
+                        style={{
+                            visibility:
+                                !this.state.discounted && this.state.valid
+                                    ? 'visible'
+                                    : 'hidden'
+                        }}
+                    ></div>
                 )}
             </>
-        )
+        );
     }
-
 }
 
 Util.try_render('react_stickers', Stickers);

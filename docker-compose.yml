@@ -4,11 +4,11 @@ services:
         container_name: emkc
         build: .
         ports:
-            - "2005:2727"
+            - '2005:2727'
         volumes:
             - ./:/opt/emkc
         environment:
-            APPENV: "${APPENV}"
+            APPENV: '${APPENV}'
         restart: always
         depends_on:
             - redis

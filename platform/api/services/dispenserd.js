@@ -1,7 +1,6 @@
 const request = require('request-promise');
 
 module.exports = {
-
     lane_main: 'main',
 
     job_test: 'test',
@@ -16,7 +15,8 @@ module.exports = {
 
         request
             .post({
-                url: 'http://' + sails.config.dispenserd.host + ':8282/schedule',
+                url:
+                    'http://' + sails.config.dispenserd.host + ':8282/schedule',
                 body: JSON.stringify({
                     lane: options.lane || dispenserd.lane_main,
                     priority: options.priority || 10000,
@@ -25,9 +25,8 @@ module.exports = {
                 resolveWithFullResponse: true,
                 simple: false
             })
-            .catch(err => {
+            .catch((err) => {
                 console.log('job failed to schedule');
             });
     }
-
 };

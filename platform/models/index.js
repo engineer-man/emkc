@@ -13,10 +13,12 @@ const sequelize = new Sequelize(
 
 require('fs')
     .readdir_sync(__dirname)
-    .filter(file => {
-        return file.indexOf('.') !== 0 && file !== basename && file.match(/\.js$/);
+    .filter((file) => {
+        return (
+            file.indexOf('.') !== 0 && file !== basename && file.match(/\.js$/)
+        );
     })
-    .for_each(file => {
+    .for_each((file) => {
         //let model = sequelize.import(path.join(__dirname, file));
         let model = require(path.join(__dirname, file))(sequelize, DataTypes);
         db[model.name] = model;
@@ -49,18 +51,45 @@ $lte = Sequelize.Op.lte;
 $in = Sequelize.Op.in;
 $not_in = Sequelize.Op.notIn;
 
-db.challenges.has_one(db.user_challenges, { as: 'solution', foreignKey: 'challenge_id' });
-db.challenges.has_many(db.user_challenges, { as: 'solutions', foreignKey: 'challenge_id' });
-db.challenges.has_many(db.challenge_tests, { as: 'tests', foreignKey: 'challenge_id' });
+db.challenges.has_one(db.user_challenges, {
+    as: 'solution',
+    foreignKey: 'challenge_id'
+});
+db.challenges.has_many(db.user_challenges, {
+    as: 'solutions',
+    foreignKey: 'challenge_id'
+});
+db.challenges.has_many(db.challenge_tests, {
+    as: 'tests',
+    foreignKey: 'challenge_id'
+});
 
-db.contests.has_many(db.contest_submissions, { as: 'submissions', foreignKey: 'contest_id' });
+db.contests.has_many(db.contest_submissions, {
+    as: 'submissions',
+    foreignKey: 'contest_id'
+});
 
-db.users.has_many(db.contest_submissions, { as: 'submissions', foreignKey: 'user_id' });
+db.users.has_many(db.contest_submissions, {
+    as: 'submissions',
+    foreignKey: 'user_id'
+});
 
-db.user_challenges.belongs_to(db.challenges, { as: 'challenge', foreignKey: 'challenge_id' });
+db.user_challenges.belongs_to(db.challenges, {
+    as: 'challenge',
+    foreignKey: 'challenge_id'
+});
 db.user_challenges.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
-db.challenge_tests.belongs_to(db.challenges, { as: 'challenge', foreignKey: 'challenge_id' });
-db.contest_submissions.belongs_to(db.contests, { as: 'contest', foreignKey: 'contest_id' });
-db.contest_submissions.belongs_to(db.users, { as: 'user', foreignKey: 'user_id' });
+db.challenge_tests.belongs_to(db.challenges, {
+    as: 'challenge',
+    foreignKey: 'challenge_id'
+});
+db.contest_submissions.belongs_to(db.contests, {
+    as: 'contest',
+    foreignKey: 'contest_id'
+});
+db.contest_submissions.belongs_to(db.users, {
+    as: 'user',
+    foreignKey: 'user_id'
+});
 
 module.exports = db;
