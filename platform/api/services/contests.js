@@ -1,5 +1,3 @@
-const timeout = (ms) => new Promise((res) => set_timeout(res, ms));
-
 module.exports = {
     get_cases(contest, redact = false) {
         let inputs = contest.input.split('\n').map((input) => input.split('|'));
@@ -54,8 +52,6 @@ module.exports = {
         let counter = 0;
 
         while (counter < test_cases.length) {
-            await timeout(constant.is_prod ? 0 : 500);
-
             let current_test_case = test_cases[counter];
 
             try {
