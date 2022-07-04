@@ -117,9 +117,7 @@ class Manage extends React.Component {
 
         const description = JSON.stringify(this.quill.getContents());
 
-        let test_cases = input.split('\n');
-
-        if (test_cases.length !== output.split('\n').length) {
+        if (!Util.are_test_cases_valid({ input, output })) {
             return bootbox.alert(
                 'The number of test cases do not match the number of expected results'
             );

@@ -213,9 +213,7 @@ class ManageChallenge extends React.Component {
             return bootbox.alert('Please provide all data.');
         }
 
-        let inputs_arr = editing_test.input.split('\n');
-
-        if (inputs_arr.length !== editing_test.output.split('\n').length) {
+        if (!Util.are_test_cases_valid(editing_test)) {
             return bootbox.alert(
                 'The number of inputs do not match the number of outputs.'
             );
