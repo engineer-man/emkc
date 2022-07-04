@@ -1,0 +1,13 @@
+platform/config/local.js
+platform/migrations/config.json
+platform/public/css/*.css
+platform/public/lib
+cdn/avatars/*
+var/docker/mysql/*
+var/docker/redis/*
+var/docker/logs/*
+node_modules
+package-lock.json
+.env
+.DS_STORE
+.vscode
