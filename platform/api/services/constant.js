@@ -82,16 +82,10 @@ let constant = {
         this.base_url = sails.config.base_url;
         this.cdn_url = this.base_url + '/cdn';
         this.is_prod = sails.config.environment === 'production';
-    },
-
-    get_piston_url() {
-        // Use the public api if the public API if the environment is development
-        // or the local host if the environment is production
-        let url =
+        this.piston_url =
             sails.config.environment === 'production'
                 ? 'http://' + sails.config.piston.host + '/api/v2'
                 : 'https://emkc.org/api/v2/piston';
-        return url;
     }
 };
 

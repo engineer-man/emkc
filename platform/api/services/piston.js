@@ -30,20 +30,20 @@ module.exports = {
     },
 
     async runtimes() {
-        let result = await axios.get(constant.get_piston_url() + '/runtimes');
+        let result = await axios.get(constant.piston_url + '/runtimes');
 
         return result.data;
     },
 
     async packages() {
-        let result = await axios.get(constant.get_piston_url() + '/packages');
+        let result = await axios.get(constant.piston_url + '/packages');
 
         return result.data;
     },
 
     async install(language, version) {
         let result = await axios.post(
-            constant.get_piston_url() + `/packages/${language}/${version}`
+            constant.piston_url + `/packages/${language}/${version}`
         );
 
         return result.data;
@@ -51,7 +51,7 @@ module.exports = {
 
     async uninstall(language, version) {
         let result = await axios.delete(
-            constant.get_piston_url() + `/packages/${language}/${version}`
+            constant.piston_url + `/packages/${language}/${version}`
         );
 
         return result.data;
@@ -99,7 +99,7 @@ module.exports = {
 
         let result = await axios({
             method: 'post',
-            url: constant.get_piston_url() + '/execute',
+            url: constant.piston_url + '/execute',
             data: {
                 language,
                 version,
