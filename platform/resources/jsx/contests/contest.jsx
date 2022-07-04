@@ -211,7 +211,7 @@ class Contest extends React.Component {
         });
 
         if (result.status >= 400) {
-            return bootbox.alert(result.data.error_message);
+            return bootbox.alert('An error has occurred');
         }
 
         if (result.data.passed) {

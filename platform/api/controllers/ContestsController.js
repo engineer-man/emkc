@@ -214,8 +214,7 @@ module.exports = {
             !languages.length
         ) {
             return res.status(400).send({
-                error_message:
-                    'An error has occurred while submitting your solution'
+                message: 'An error has occurred while submitting your solution'
             });
         }
 
