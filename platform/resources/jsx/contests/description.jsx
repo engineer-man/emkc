@@ -1,7 +1,7 @@
 import React from 'react';
 import Quill from 'quill';
 
-class Description extends React.Component {
+class Description extends React.PureComponent {
 
     ops_to_html(ops) {
         try {
