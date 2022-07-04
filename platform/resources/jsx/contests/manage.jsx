@@ -125,36 +125,10 @@ class Manage extends React.Component {
             );
         }
 
-        let first_case_inputs = test_cases[0].split('|');
-        let number_of_parameters =
-            first_case_inputs.length - (first_case_inputs[0] == '' ? 2 : 0); // if first case is blank, next arg is options
-        let valid = true;
-
-        test_cases.forEach((test_case) => {
-            let case_inputs = test_case.split('|');
-            if (
-                case_inputs.length - (case_inputs[0] == '' ? 2 : 0) !==
-                number_of_parameters
-            ) {
-                valid = false;
-            }
-        });
-
-        if (!valid) {
-            return bootbox.alert(
-                'Two or more test cases have a different number of parameters (inputs)'
-            );
-        }
-
-        let url;
-
-        if (this.props.mode === 'create') {
-            url = '/admin/contests/create';
-        }
-
-        if (this.props.mode === 'update') {
-            url = '/admin/contests/update/' + this.props.contest_id;
-        }
+        const url =
+            this.props.mode === 'update'
+                ? '/admin/contests/update/' + this.props.contest_id
+                : '/admin/contests/create';
 
         disallowed_languages = this.state.languages
             .filter((language) => !language.enabled)
@@ -162,7 +136,7 @@ class Manage extends React.Component {
             .concat(this.props.languages.disallowed_languages)
             .join(',');
 
-        let res = await axios.post(url, {
+        await axios.post(url, {
             name,
             description,
             start_date,

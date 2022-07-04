@@ -221,19 +221,6 @@ class ManageChallenge extends React.Component {
             );
         }
 
-        let arguments_number = inputs_arr[0].split('|').length;
-
-        let valid = true;
-        inputs_arr.forEach((input) => {
-            if (input.split('|').length !== arguments_number) {
-                valid = false;
-            }
-        });
-
-        if (!valid) {
-            return bootbox.alert('Number of arguments do not match in inputs.');
-        }
-
         // Handles newly created tests
         if (editing_test.challenge_test_id === this.state.current_test_id) {
             current_tests.push(editing_test);
