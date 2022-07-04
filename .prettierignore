@@ -2,10 +2,9 @@ platform/config/local.js
 platform/migrations/config.json
 platform/public/css/*.css
 platform/public/lib
+platform/resources/challenges/templates
 cdn/avatars/*
-var/docker/mysql/*
-var/docker/redis/*
-var/docker/logs/*
+var/
 node_modules
 package-lock.json
 .env
