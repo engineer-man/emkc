@@ -23,7 +23,11 @@ module.exports = {
                 disallowed_languages
             } = req.body;
 
-            let contest = await db.contests.create({
+            if (!contests.are_test_cases_valid({ input, output })) {
+                return res.status(400).send({ message: 'Invalid test cases' });
+            }
+
+            await db.contests.create({
                 name,
                 description,
                 start_date,
@@ -77,6 +81,10 @@ module.exports = {
                 output,
                 disallowed_languages
             } = req.body;
+
+            if (!contests.are_test_cases_valid({ input, output })) {
+                return res.status(400).send({ message: 'Invalid test cases' });
+            }
 
             contest.name = name;
             contest.description = description;

@@ -48,6 +48,7 @@ module.exports = {
 
         return cases;
     },
+
     async check_submission_validity(test_cases, solution, language, version) {
         let counter = 0;
 
@@ -76,5 +77,12 @@ module.exports = {
         }
 
         return true;
+    },
+
+    are_test_cases_valid(test_object) {
+        return (
+            test_object.input.split('\n').length ===
+            test_object.output.split('\n').length
+        );
     }
 };

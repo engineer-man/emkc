@@ -134,7 +134,7 @@ class Manage extends React.Component {
             .concat(this.props.languages.disallowed_languages)
             .join(',');
 
-        await axios.post(url, {
+        const res = await axios.post(url, {
             name,
             description,
             start_date,
@@ -143,6 +143,14 @@ class Manage extends React.Component {
             output,
             disallowed_languages
         });
+
+        if (res.status === 400) {
+            return bootbox.alert(res.data.message);
+        }
+
+        if (res.status >= 400) {
+            return bootbox.alert('An error has occurred');
+        }
 
         location = '/admin/contests';
     };
