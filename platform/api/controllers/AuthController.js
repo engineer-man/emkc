@@ -24,8 +24,6 @@ module.exports = {
     async discord_cb(req, res) {
         let code = req.query.code;
 
-        let discord_user;
-
         try {
             // get an access token from the code returned from the authorization phase
             let auth_result = await request({
@@ -97,6 +95,11 @@ module.exports = {
 
                 // save the new username
                 user.username = username + (ext === null ? '' : ext);
+                await user.save();
+            }
+
+            if (user.display_name !== discord_user.username) {
+                user.display_name = discord_user.username;
                 await user.save();
             }
 
