@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true
             },
             challenge_id: DataTypes.INTEGER,
-            official: DataTypes.BOOLEAN,
             name: DataTypes.STRING,
             input: DataTypes.TEXT,
             output: DataTypes.TEXT

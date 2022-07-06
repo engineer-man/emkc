@@ -253,7 +253,6 @@ class ManageChallenge extends React.Component {
                                 onClick={() =>
                                     this.manage_test({
                                         challenge_id: this.state.challenge_id,
-                                        official: false,
                                         name: '',
                                         input: '',
                                         output: '',
