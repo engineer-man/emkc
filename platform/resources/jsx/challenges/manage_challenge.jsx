@@ -201,20 +201,24 @@ class ManageChallenge extends React.Component {
 
                 <div class="form-group">
                     <label>
-                        Difficulty (1: easy, 2: medium, 3: hard)
-                        <input
+                        Difficulty
+                        <select
                             type="text"
                             id="difficulty"
                             class="form-control"
                             value={this.state.difficulty}
                             onChange={this.handle_change}
-                        />
+                        >
+                            <option value="1">Easy</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Hard</option>
+                        </select>
                     </label>
                 </div>
 
                 <div class="form-group">
                     <label>
-                        Points (the standard is easy: 10, medium: 30, hard: 50)
+                        Points (the standard is: easy: 10, medium: 30, hard: 50)
                         <input
                             type="text"
                             id="points"
