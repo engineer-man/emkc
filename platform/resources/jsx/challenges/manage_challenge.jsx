@@ -8,15 +8,13 @@ class ManageChallenge extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = props.challenge;
         this.state = {
             ...props.challenge,
-            mode: props.mode,
             challenge_id:
-                this.state.mode === 'create' ? -1 : this.state.challenge_id,
-            editing_test: {}, // The test being edited (to show edit section)
-            current_test_id: -1, // IDs for newly created tests
-            deleted_tests: [] // IDs of deleted tests
+                this.props.mode === 'create'
+                    ? -1
+                    : this.props.challenge.challenge_id,
+            editing_test: {} // The test being edited (to show edit section)
         };
 
         this.handle_change = this.handle_change.bind(this);
@@ -63,7 +61,7 @@ class ManageChallenge extends React.Component {
             });
         });
 
-        if (this.state.mode === 'update') {
+        if (this.props.mode === 'update') {
             quill.clipboard.dangerouslyPasteHTML(this.state.html);
         }
     }
@@ -73,7 +71,7 @@ class ManageChallenge extends React.Component {
         let value = e.target.value;
 
         // Handles changes in challenge data
-        if (id.indexOf('test-') == -1) {
+        if (id.indexOf('test-') === -1) {
             if (id === 'draft') {
                 value = this.state.draft ? 0 : 1;
             }
@@ -84,31 +82,19 @@ class ManageChallenge extends React.Component {
         }
 
         // Handles changes in tests data
-        let { challenge_test_id, challenge_id, official, name, input, output } =
-            this.state.editing_test;
+        const editing_test = this.state.editing_test;
+        editing_test[id.replace('test-', '')] = value;
 
-        return this.setState({
-            editing_test: {
-                challenge_test_id,
-                challenge_id,
-                official,
-                name,
-                input,
-                output,
-                [id.replace('test-', '')]: value
-            }
-        });
+        return this.setState({ editing_test });
     }
 
     async save() {
-        // Check if there are tests
         if (this.state.tests.length === 0) {
             return bootbox.alert('Please add at least one test.');
         }
 
-        // Create/update challenge
         let url =
-            this.state.mode === 'create'
+            this.props.mode === 'create'
                 ? '/admin/challenges/create'
                 : '/admin/challenges/update/' + this.state.challenge_id;
 
@@ -119,90 +105,25 @@ class ManageChallenge extends React.Component {
             folder: 'N/A',
             name: this.state.name,
             description: this.state.description,
-            html: this.state.html
+            html: this.state.html,
+            tests: this.state.tests
         });
 
-        if (res.status === 400) {
-            return bootbox.alert('An error has occurred.');
-        }
-
-        // Create/update tests
-        let valid = true;
-
-        for (let test of this.state.tests) {
-            test.challenge_id =
-                this.state.mode === 'create'
-                    ? res.data.challenge_id
-                    : test.challenge_id;
-
-            let test_url =
-                test.challenge_test_id < 0
-                    ? '/admin/tests/create'
-                    : '/admin/tests/update/' + test.challenge_test_id;
-
-            let test_res = await axios.post(test_url, test);
-
-            if (test_res.status === 400) {
-                valid = false;
-            }
-        }
-
-        if (!valid) {
-            bootbox.alert(
-                'An error has occurred while saving one or more tests'
-            );
-        }
-
-        // Delete tests
-        for (const id of this.state.deleted_tests) {
-            await axios.post('/admin/tests/delete/' + id);
+        if (res.status >= 400) {
+            return bootbox.alert('An error has occurred');
         }
 
         location = '/admin/challenges';
     }
 
-    manage_test(test_to_manage) {
-        this.setState({
-            editing_test: this.state.editing_test.challenge_test_id
-                ? {}
-                : test_to_manage
-        });
+    manage_test(editing_test) {
+        this.setState({ editing_test });
     }
 
-    async delete_test(id_to_delete) {
-        bootbox.confirm({
-            message: 'Are you sure you want to delete this test?',
-            buttons: {
-                confirm: {
-                    label: 'Delete',
-                    className: 'btn-danger'
-                },
-                cancel: {
-                    label: 'Cancel',
-                    className: 'btn-secondary'
-                }
-            },
-            callback: async (result) => {
-                if (!result) {
-                    return;
-                }
-
-                let current_tests = this.state.tests;
-
-                let test_to_delete = current_tests.find(
-                    (test) => test.challenge_test_id === id_to_delete
-                );
-                current_tests.splice(current_tests.indexOf(test_to_delete), 1);
-
-                let current_deleted_tests = this.state.deleted_tests;
-                current_deleted_tests.push(id_to_delete);
-
-                this.setState({
-                    tests: current_tests,
-                    deleted_tests: current_deleted_tests
-                });
-            }
-        });
+    async delete_test(index_to_delete) {
+        let current_tests = this.state.tests;
+        current_tests.splice(index_to_delete, 1);
+        this.setState({ tests: current_tests, editing_test: {} });
     }
 
     async save_test() {
@@ -219,23 +140,16 @@ class ManageChallenge extends React.Component {
             );
         }
 
-        // Handles newly created tests
-        if (editing_test.challenge_test_id === this.state.current_test_id) {
+        if (editing_test.index === -1) {
             current_tests.push(editing_test);
-
-            let new_test_id = this.state.current_test_id - 1;
 
             return this.setState({
                 tests: current_tests,
-                editing_test: {},
-                current_test_id: new_test_id
+                editing_test: {}
             });
         }
 
-        // Handles edited tests
-        let test_to_edit = current_tests.find(
-            (test) => test.challenge_test_id === editing_test.challenge_test_id
-        );
+        let test_to_edit = current_tests[editing_test.index];
 
         current_tests.splice(
             current_tests.indexOf(test_to_edit),
@@ -335,13 +249,12 @@ class ManageChallenge extends React.Component {
                                 class="pointer"
                                 onClick={() =>
                                     this.manage_test({
-                                        challenge_test_id:
-                                            this.state.current_test_id,
                                         challenge_id: this.state.challenge_id,
                                         official: false,
                                         name: '',
                                         input: '',
-                                        output: ''
+                                        output: '',
+                                        index: -1
                                     })
                                 }
                             >
@@ -408,27 +321,24 @@ class ManageChallenge extends React.Component {
                         </thead>
                         <tbody>
                             {!!this.state.tests.length &&
-                                this.state.tests.map((test) => {
+                                this.state.tests.map((test, index) => {
+                                    test.index = index;
                                     return (
-                                        <tr key={test.challenge_test_id}>
+                                        <tr key={index}>
                                             <td class="actions">
                                                 <a
-                                                    href="#"
                                                     onClick={() =>
                                                         this.manage_test(test)
                                                     }
                                                 >
-                                                    <i class="fa fa-pen"></i>
+                                                    <i class="fa fa-pen green pointer"></i>
                                                 </a>{' '}
                                                 <a
-                                                    href="#"
                                                     onClick={() =>
-                                                        this.delete_test(
-                                                            test.challenge_test_id
-                                                        )
+                                                        this.delete_test(index)
                                                     }
                                                 >
-                                                    <i class="fa fa-trash text-danger"></i>
+                                                    <i class="fa fa-trash text-danger pointer"></i>
                                                 </a>
                                             </td>
                                             <td>{test.name}</td>

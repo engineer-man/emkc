@@ -52,11 +52,6 @@ module.exports.routes = {
         'admin/ChallengesController.update',
     'GET /admin/challenges/create': 'admin/ChallengesController.create',
     'POST /admin/challenges/create': 'admin/ChallengesController.create',
-    'POST /admin/tests/create': 'admin/ChallengesController.create_test',
-    'POST /admin/tests/update/:challenge_test_id':
-        'admin/ChallengesController.update_test',
-    'POST /admin/tests/delete/:challenge_test_id':
-        'admin/ChallengesController.delete_test',
     'GET /admin/contests/all': 'admin/ContestsController.view_all',
     'GET /admin/contests/create': 'admin/ContestsController.create',
     'POST /admin/contests/create': 'admin/ContestsController.create',

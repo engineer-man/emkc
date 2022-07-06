@@ -1,3 +1,10 @@
+const create_tests = async (tests) => {
+    for (const test of tests) {
+        const { challenge_id, name, input, output } = test;
+        await db.challenge_tests.create({ challenge_id, name, input, output });
+    }
+};
+
 module.exports = {
     async view_all(req, res) {
         let challenges = await db.challenges.find_all({
@@ -11,12 +18,39 @@ module.exports = {
 
     async create(req, res) {
         if (req.method === 'POST') {
-            const challenge = req.body;
             try {
-                let created_challenge = await db.challenges.create(challenge);
-                return res.status(200).send({
-                    challenge_id: created_challenge.challenge_id
+                const {
+                    draft,
+                    difficulty,
+                    folder,
+                    points,
+                    name,
+                    description,
+                    html,
+                    tests
+                } = req.body;
+
+                const created_challenge = await db.challenges.create({
+                    draft,
+                    difficulty,
+                    folder,
+                    points,
+                    name,
+                    description,
+                    html
                 });
+
+                for (const test of tests) {
+                    test.challenge_id = created_challenge.challenge_id;
+                    if (!contests.are_test_cases_valid(test)) {
+                        return res.status(400).send({
+                            message: `Invalid test cases in ${test.name}`
+                        });
+                    }
+                }
+
+                create_tests(tests);
+                return res.status(200).send();
             } catch (e) {
                 return res.status(400).send();
             }
@@ -38,7 +72,7 @@ module.exports = {
     async update(req, res) {
         const { challenge_id } = req.params;
 
-        let challenge = await db.challenges.find_one({
+        let existing_challenge = await db.challenges.find_one({
             where: {
                 challenge_id
             },
@@ -51,17 +85,46 @@ module.exports = {
             ]
         });
 
-        if (!challenge) {
+        if (!existing_challenge) {
             return res.redirect('back');
         }
 
         if (req.method === 'POST') {
-            const challenge_to_edit = req.body;
-            for (i in challenge_to_edit) {
-                challenge[i] = challenge_to_edit[i];
+            const {
+                draft,
+                difficulty,
+                points,
+                folder,
+                name,
+                description,
+                html,
+                tests
+            } = req.body;
+            const challenge = {
+                draft,
+                difficulty,
+                points,
+                folder,
+                name,
+                description,
+                html
+            };
+            for (const attr in challenge) {
+                existing_challenge[attr] = challenge[attr];
             }
             try {
-                await challenge.save();
+                await db.challenge_tests.destroy({
+                    where: { challenge_id: existing_challenge.challenge_id }
+                });
+                await existing_challenge.save();
+                for (const test of tests) {
+                    if (!contests.are_test_cases_valid(test)) {
+                        return res.status(400).send({
+                            message: `Invalid test cases in ${test.name}`
+                        });
+                    }
+                }
+                create_tests(tests);
                 return res.status(200).send();
             } catch (e) {
                 return res.status(400).send();
@@ -70,58 +133,7 @@ module.exports = {
 
         return res.view({
             mode: 'update',
-            challenge
+            challenge: existing_challenge
         });
-    },
-
-    async create_test(req, res) {
-        const { challenge_id, official, name, input, output } = req.body;
-        try {
-            await db.challenge_tests.create({
-                challenge_id,
-                official,
-                name,
-                input,
-                output
-            });
-            return res.status(200).send();
-        } catch (e) {
-            return res.status(400).send();
-        }
-    },
-
-    async update_test(req, res) {
-        const test = req.body;
-        let challenge_test_id = test.challenge_test_id;
-        let test_to_update = await db.challenge_tests.find_one({
-            where: {
-                challenge_test_id
-            }
-        });
-        if (!test_to_update) {
-            return res.status(400).send();
-        }
-        for (i in test) {
-            test_to_update[i] = test[i];
-        }
-        try {
-            await test_to_update.save();
-            return res.status(200).send();
-        } catch (e) {
-            return res.status(400).send();
-        }
-    },
-
-    async delete_test(req, res) {
-        const { challenge_test_id } = req.params;
-        let test = await db.challenge_tests.find_one({
-            where: {
-                challenge_test_id
-            }
-        });
-        if (test) {
-            await test.destroy();
-        }
-        return res.status(200).send();
     }
 };
