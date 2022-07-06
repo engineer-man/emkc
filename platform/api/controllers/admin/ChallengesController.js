@@ -22,7 +22,6 @@ module.exports = {
                 const {
                     draft,
                     difficulty,
-                    folder,
                     points,
                     name,
                     description,
@@ -33,7 +32,6 @@ module.exports = {
                 const created_challenge = await db.challenges.create({
                     draft,
                     difficulty,
-                    folder,
                     points,
                     name,
                     description,
@@ -95,7 +93,6 @@ module.exports = {
                 draft,
                 difficulty,
                 points,
-                folder,
                 name,
                 description,
                 html,
@@ -105,7 +102,6 @@ module.exports = {
                 draft,
                 difficulty,
                 points,
-                folder,
                 name,
                 description,
                 html

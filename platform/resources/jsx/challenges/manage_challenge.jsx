@@ -102,7 +102,6 @@ class ManageChallenge extends React.Component {
             draft: this.state.draft,
             difficulty: this.state.difficulty,
             points: this.state.points,
-            folder: 'N/A',
             name: this.state.name,
             description: this.state.description,
             html: this.state.html,

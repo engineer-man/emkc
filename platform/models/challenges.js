@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
             draft: DataTypes.INTEGER,
             difficulty: DataTypes.INTEGER,
             points: DataTypes.INTEGER,
-            folder: DataTypes.STRING,
             name: DataTypes.STRING,
             description: DataTypes.STRING,
             html: DataTypes.TEXT('medium'),
