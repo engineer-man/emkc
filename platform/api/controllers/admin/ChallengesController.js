@@ -60,6 +60,7 @@ module.exports = {
             mode: 'create',
             challenge: {
                 difficulty: 1,
+                draft: true,
                 points: 10,
                 name: '',
                 description: '',
