@@ -204,6 +204,12 @@ module.exports = {
         });
 
         let test_cases = contests.get_cases(contest);
+        if (test_cases.length === 0) {
+            return res.status(400).send({
+                message:
+                    'No test cases exit for this contest, please contact an administrator'
+            });
+        }
         let languages = await piston.runtimes();
 
         languages = languages.filter((lang) => lang.language === language);

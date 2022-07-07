@@ -1,5 +1,8 @@
 module.exports = {
     get_cases(contest, redact = false) {
+        if (contest.input === '' || contest.output === '') {
+            return [];
+        }
         let inputs = contest.input.split('\n').map((input) => input.split('|'));
         let outputs = contest.output.split('\n');
 
