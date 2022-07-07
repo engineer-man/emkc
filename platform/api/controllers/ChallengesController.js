@@ -454,11 +454,12 @@ module.exports = {
         });
 
         if (challenge) {
-            return res.view('snippets/view', {
+            return res.view('snippets/edit', {
                 snippet: {
                     language,
                     snip: challenge.solution
-                }
+                },
+                mode: 'view'
             });
         }
 
