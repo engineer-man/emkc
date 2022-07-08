@@ -342,7 +342,7 @@ module.exports = {
             return res.status(400).send();
         }
 
-        var results = [];
+        const results = [];
 
         for (const test of challenge.tests) {
             const { inputs, outputs } = test_cases.get_inputs_and_outputs(test);
@@ -357,39 +357,20 @@ module.exports = {
             );
             const compile_output = result.compile && result.compile.output;
             const run_error = result.run.stderr;
-            result = result.run.stdout.trim();
+            const run_output = result.run.stdout.trim();
 
             results.push({
                 name: test.name,
+                passed: run_output === outputs[test_idx],
                 input: inputs[test_idx],
                 expected: outputs[test_idx],
-                result,
+                actual: run_output,
                 compile_output,
                 run_error
             });
         }
 
-        let promise_outputs = await Promise.all(
-            results.map((result) => result.result)
-        );
-
-        promise_outputs.for_each((output, i) => {
-            results[i].result = output;
-        });
-
-        results = results.map((result, i) => {
-            return {
-                name: result.name,
-                passed: result.result === result.expected,
-                input: result.input,
-                expected: result.expected,
-                actual: result.result,
-                compile_output: result.compile_output,
-                run_error: result.run_error
-            };
-        });
-
-        var passed = results.filter((r) => !r.passed).length === 0;
+        const passed = results.filter((r) => !r.passed).length === 0;
 
         if (passed && req.local.user_id && !challenge.draft) {
             set_immediate(async () => {
