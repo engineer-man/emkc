@@ -143,27 +143,30 @@ module.exports = {
             }
 
             // parse the input according to rules and return the first to determine template types
-            let input = challenge.tests[0].input
-                .split('\n')
-                .map((input_line) => {
-                    return input_line.split('|').map((value) => {
-                        if (value.match(/^[0-9]+$/)) {
-                            return parse_int(value);
-                        }
+            const { inputs } = test_cases.get_inputs_and_outputs(
+                challenge.tests[0]
+            );
+            let parsed_inputs = inputs.map((test_case) => {
+                return test_case.map((value) => {
+                    if (value.match(/^[0-9]+$/)) {
+                        return parse_int(value);
+                    }
 
-                        if (value.match(/^[0-9]+\.[0-9]+$/)) {
-                            return parse_float(value);
-                        }
+                    if (value.match(/^[0-9]+\.[0-9]+$/)) {
+                        return parse_float(value);
+                    }
 
-                        return value;
-                    });
-                })[0];
+                    return value;
+                });
+            })[0];
 
             if (line.match(/^\s*%%_IMPORTS_%%/gi)) {
-                let has_string = input.some(
+                let has_string = parsed_inputs.some(
                     (input) => typeof input === 'string'
                 );
-                let has_int = input.some((input) => typeof input === 'number');
+                let has_int = parsed_inputs.some(
+                    (input) => typeof input === 'number'
+                );
 
                 switch (language) {
                     case 'go':
@@ -181,7 +184,7 @@ module.exports = {
                 continue;
             }
 
-            input.for_each((input, i) => {
+            parsed_inputs.for_each((input, i) => {
                 ++i;
                 switch (language) {
                     case 'c':
