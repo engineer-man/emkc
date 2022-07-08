@@ -40,7 +40,7 @@ module.exports = {
 
                 for (const test of tests) {
                     test.challenge_id = created_challenge.challenge_id;
-                    if (!contests.are_test_cases_valid(test)) {
+                    if (!test_cases.are_valid(test)) {
                         return res.status(400).send({
                             message: `Invalid test cases in ${test.name}`
                         });
@@ -115,7 +115,7 @@ module.exports = {
                 });
                 await existing_challenge.save();
                 for (const test of tests) {
-                    if (!contests.are_test_cases_valid(test)) {
+                    if (!test_cases.are_valid(test)) {
                         return res.status(400).send({
                             message: `Invalid test cases in ${test.name}`
                         });

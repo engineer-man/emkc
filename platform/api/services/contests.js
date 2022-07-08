@@ -3,9 +3,8 @@ module.exports = {
         if (contest.input === '' || contest.output === '') {
             return [];
         }
-        let inputs = contest.input.split('\n').map((input) => input.split('|'));
-        let outputs = contest.output.split('\n');
 
+        const { inputs, outputs } = test_cases.get_inputs_and_outputs(contest);
         let cases = [];
 
         for (let i = 0; i < inputs.length; ++i) {
@@ -80,12 +79,5 @@ module.exports = {
         }
 
         return true;
-    },
-
-    are_test_cases_valid(test_object) {
-        return (
-            test_object.input.split('\n').length ===
-            test_object.output.split('\n').length
-        );
     }
 };

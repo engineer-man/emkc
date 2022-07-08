@@ -23,7 +23,7 @@ module.exports = {
                 disallowed_languages
             } = req.body;
 
-            if (!contests.are_test_cases_valid({ input, output })) {
+            if (!test_cases.are_valid({ input, output })) {
                 return res.status(400).send({ message: 'Invalid test cases' });
             }
 
@@ -82,7 +82,7 @@ module.exports = {
                 disallowed_languages
             } = req.body;
 
-            if (!contests.are_test_cases_valid({ input, output })) {
+            if (!test_cases.are_valid({ input, output })) {
                 return res.status(400).send({ message: 'Invalid test cases' });
             }
 
