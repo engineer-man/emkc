@@ -177,7 +177,7 @@ class Challenge extends React.Component {
                                     {result.passed ? 'passed' : 'failed'}
                                 </span>
                                 <br />
-                                {result.input.split('|').map((input, i) => {
+                                {result.input.map((input, i) => {
                                     return (
                                         <React.Fragment key={i}>
                                             <span class="badge badge-info">

@@ -345,14 +345,13 @@ module.exports = {
         var results = [];
 
         for (const test of challenge.tests) {
-            let inputs = test.input.split('\n'); // We still have the arguments separated by |
+            const { inputs, outputs } = test_cases.get_inputs_and_outputs(test);
             let test_idx = Math.floor(Math.random() * inputs.length);
-            let outputs = test.output.split('\n');
 
             let result = await piston.execute(
                 language,
                 source,
-                inputs[test_idx].split('|'),
+                inputs[test_idx],
                 '',
                 '*'
             );
