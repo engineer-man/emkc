@@ -110,10 +110,6 @@ module.exports = {
                 existing_challenge[attr] = challenge[attr];
             }
             try {
-                await db.challenge_tests.destroy({
-                    where: { challenge_id: existing_challenge.challenge_id }
-                });
-                await existing_challenge.save();
                 for (const test of tests) {
                     if (!test_cases.are_valid(test)) {
                         return res.status(400).send({
@@ -121,6 +117,10 @@ module.exports = {
                         });
                     }
                 }
+                await db.challenge_tests.destroy({
+                    where: { challenge_id: existing_challenge.challenge_id }
+                });
+                await existing_challenge.save();
                 create_tests(tests);
                 return res.status(200).send();
             } catch (e) {
