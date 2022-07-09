@@ -5,6 +5,21 @@ const create_tests = async (tests) => {
     }
 };
 
+const unify_tests_challenge_id = async (tests, challenge_id) => {
+    for (const test of tests) {
+        test.challenge_id = challenge_id;
+    }
+};
+
+const find_invalid_test = (tests) => {
+    for (const test of tests) {
+        if (!test_cases.are_valid(test)) {
+            return test.name;
+        }
+    }
+    return null;
+};
+
 module.exports = {
     async view_all(req, res) {
         let challenges = await db.challenges.find_all({
@@ -38,15 +53,14 @@ module.exports = {
                     html
                 });
 
-                for (const test of tests) {
-                    test.challenge_id = created_challenge.challenge_id;
-                    if (!test_cases.are_valid(test)) {
-                        return res.status(400).send({
-                            message: `Invalid test cases in ${test.name}`
-                        });
-                    }
+                unify_tests_challenge_id(tests, created_challenge.challenge_id);
+                const invalid_test = find_invalid_test(tests);
+                if (invalid_test !== null) {
+                    await created_challenge.destroy();
+                    return res.status(400).send({
+                        message: `The number of inputs does not match the number of outputs in ${invalid_test}`
+                    });
                 }
-
                 create_tests(tests);
                 return res.status(200).send();
             } catch (e) {
@@ -110,17 +124,20 @@ module.exports = {
                 existing_challenge[attr] = challenge[attr];
             }
             try {
-                for (const test of tests) {
-                    if (!test_cases.are_valid(test)) {
-                        return res.status(400).send({
-                            message: `Invalid test cases in ${test.name}`
-                        });
-                    }
+                unify_tests_challenge_id(
+                    tests,
+                    existing_challenge.challenge_id
+                );
+                const invalid_test = find_invalid_test(tests);
+                if (invalid_test !== null) {
+                    return res.status(400).send({
+                        message: `The number of inputs does not match the number of outputs in ${invalid_test}`
+                    });
                 }
+                await existing_challenge.save();
                 await db.challenge_tests.destroy({
                     where: { challenge_id: existing_challenge.challenge_id }
                 });
-                await existing_challenge.save();
                 create_tests(tests);
                 return res.status(200).send();
             } catch (e) {
