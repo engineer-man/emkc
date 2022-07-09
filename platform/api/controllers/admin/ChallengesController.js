@@ -5,7 +5,7 @@ const create_tests = async (tests) => {
     }
 };
 
-const unify_tests_challenge_id = async (tests, challenge_id) => {
+const unify_tests_challenge_id = (tests, challenge_id) => {
     for (const test of tests) {
         test.challenge_id = challenge_id;
     }
@@ -14,8 +14,19 @@ const unify_tests_challenge_id = async (tests, challenge_id) => {
 const find_invalid_test = (tests) => {
     for (const test of tests) {
         if (!test_cases.are_valid(test)) {
-            return test.name;
+            return test;
         }
+    }
+    return null;
+};
+
+const get_tests_errors = (tests) => {
+    if (tests.length === 0) {
+        return 'The challenge tests can not be empty';
+    }
+    const invalid_test = find_invalid_test(tests);
+    if (invalid_test !== null) {
+        return `The number of inputs does not match the number of outputs in ${invalid_test.name} test`;
     }
     return null;
 };
@@ -54,11 +65,11 @@ module.exports = {
                 });
 
                 unify_tests_challenge_id(tests, created_challenge.challenge_id);
-                const invalid_test = find_invalid_test(tests);
-                if (invalid_test !== null) {
+                const error_message = get_tests_errors(tests);
+                if (error_message !== null) {
                     await created_challenge.destroy();
                     return res.status(400).send({
-                        message: `The number of inputs does not match the number of outputs in ${invalid_test}`
+                        message: error_message
                     });
                 }
                 create_tests(tests);
@@ -128,10 +139,10 @@ module.exports = {
                     tests,
                     existing_challenge.challenge_id
                 );
-                const invalid_test = find_invalid_test(tests);
-                if (invalid_test !== null) {
+                const error_message = get_tests_errors(tests);
+                if (error_message !== null) {
                     return res.status(400).send({
-                        message: `The number of inputs does not match the number of outputs in ${invalid_test}`
+                        message: error_message
                     });
                 }
                 await existing_challenge.save();
