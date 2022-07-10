@@ -26,7 +26,7 @@ const get_tests_errors = (tests) => {
     }
     const invalid_test = find_invalid_test(tests);
     if (invalid_test !== null) {
-        return `The number of inputs does not match the number of outputs in ${invalid_test.name} test`;
+        return `Invalid test cases in ${invalid_test.name} test`;
     }
     return null;
 };

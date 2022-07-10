@@ -134,9 +134,7 @@ class ManageChallenge extends React.Component {
         }
 
         if (!Util.are_test_cases_valid(editing_test)) {
-            return bootbox.alert(
-                'The number of inputs do not match the number of outputs.'
-            );
+            return bootbox.alert('Invalid test cases');
         }
 
         if (editing_test.index === -1) {

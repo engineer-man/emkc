@@ -31,8 +31,10 @@ class Util {
 
     static are_test_cases_valid(test_object) {
         return (
+            test_object.input !== '' &&
+            test_object.output !== '' &&
             test_object.input.split('\n').length ===
-            test_object.output.split('\n').length
+                test_object.output.split('\n').length
         );
     }
 }
