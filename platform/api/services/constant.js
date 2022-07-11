@@ -54,7 +54,7 @@ let constant = {
     },
 
     channels: {
-        emkc: '991583386290356275',
+        emkc: '483979558249562112', // emkc-felix-piston
         python: '483980259239264256', // python
         js: '483977935225749504', // js-ts-node
         go: '484027805605298197', // other-languages
