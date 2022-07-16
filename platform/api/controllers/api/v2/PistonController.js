@@ -51,7 +51,9 @@ module.exports = {
             stdin,
             version,
             run_timeout,
-            compile_timeout
+            compile_timeout,
+            run_memory_limit,
+            compile_memory_limit
         } = req.body;
 
         let log = null;
@@ -74,6 +76,10 @@ module.exports = {
                 {
                     run: run_timeout,
                     compile: compile_timeout
+                },
+                {
+                    run: run_memory_limit,
+                    compile: compile_memory_limit
                 }
             );
 

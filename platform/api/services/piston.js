@@ -64,7 +64,8 @@ module.exports = {
         stdin,
         version,
         log_message = emkc_internal_log_message,
-        timeouts = {}
+        timeouts = {},
+        memory_limits = {}
     ) {
         if (!Array.is_array(args)) {
             args = [];
@@ -81,10 +82,19 @@ module.exports = {
 
         await timeout(constant.is_prod ? 0 : 500); // Delay by 0.5 seconds when using the public api
 
-        let compile_timeout = sails.config.piston.timeouts.compile;
-        let run_timeout = sails.config.piston.timeouts.run;
+        const compile_timeout = constant.piston.timeouts.compile;
+        const run_timeout = constant.piston.timeouts.run;
+        const compile_memory_limit = constant.piston.memory_limits.compile;
+        const run_memory_limit = constant.piston.memory_limits.run;
 
-        const request_timeouts = {};
+        const request_timeouts = {
+            run_timeout,
+            compile_timeout
+        };
+        const request_memory_limits = {
+            run_memory_limit,
+            compile_memory_limit
+        };
 
         if (timeouts.compile) {
             request_timeouts.compile_timeout = Math.min(
@@ -97,6 +107,20 @@ module.exports = {
             request_timeouts.run_timeout = Math.min(run_timeout, timeouts.run);
         }
 
+        if (memory_limits.compile) {
+            request_memory_limits.compile_memory_limit =
+                compile_memory_limit === -1
+                    ? memory_limits.compile
+                    : Math.min(compile_memory_limit, memory_limits.compile);
+        }
+
+        if (memory_limits.run) {
+            request_memory_limits.run_memory_limit =
+                run_memory_limit === -1
+                    ? memory_limits.run
+                    : Math.min(run_memory_limit, memory_limits.run);
+        }
+
         let result = await axios({
             method: 'post',
             url: constant.piston_url + '/execute',
@@ -106,7 +130,8 @@ module.exports = {
                 files,
                 args,
                 stdin,
-                ...request_timeouts
+                ...request_timeouts,
+                ...request_memory_limits
             }
         });
 

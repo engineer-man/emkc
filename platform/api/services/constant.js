@@ -78,6 +78,17 @@ let constant = {
 
     server_id: '473161189120147456',
 
+    piston: {
+        timeouts: {
+            compile: 10000,
+            run: 3000
+        },
+        memory_limits: {
+            compile: -1,
+            run: -1
+        }
+    },
+
     set_dynamic() {
         this.base_url = sails.config.base_url;
         this.cdn_url = this.base_url + '/cdn';
