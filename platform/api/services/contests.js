@@ -51,31 +51,18 @@ module.exports = {
         return cases;
     },
 
-    async check_submission_validity(test_cases, solution, language, version) {
-        let counter = 0;
-
-        while (counter < test_cases.length) {
-            let current_test_case = test_cases[counter];
-
-            try {
-                let test_result = await piston.execute(
-                    language,
-                    solution,
-                    current_test_case.args,
-                    current_test_case.stdin,
-                    version
-                );
-                if (
-                    test_result.run.stdout.trim() !==
-                    current_test_case.output.trim()
-                ) {
-                    return false;
-                }
-            } catch (e) {
+    async validate_submission(test_cases, solution, language, version) {
+        for (const test_case of test_cases) {
+            let test_result = await piston.execute(
+                language,
+                solution,
+                test_case.args,
+                test_case.stdin,
+                version
+            );
+            if (test_result.run.stdout.trim() !== test_case.output.trim()) {
                 return false;
             }
-
-            ++counter;
         }
 
         return true;

@@ -224,7 +224,7 @@ module.exports = {
             });
         }
 
-        let is_valid = await contests.check_submission_validity(
+        let is_valid = await contests.validate_submission(
             test_cases,
             solution,
             language,

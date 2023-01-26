@@ -149,19 +149,17 @@ module.exports = {
         let test_cases = contests.get_cases(contest);
 
         let invalids = [];
-
-        for (let submission of contest.submissions) {
-            let is_valid = await contests.check_submission_validity(
-                test_cases,
-                submission.solution,
-                submission.language,
-                submission.language_version || '*' // Default to latest, just incase its blank
-            );
-
-            if (!is_valid) {
-                invalids.push(submission);
-            }
-        }
+        await Promise.all(
+            contest.submissions.map(async (s) => {
+                const valid = await contests.validate_submission(
+                    test_cases,
+                    s.solution,
+                    s.language,
+                    s.language_version || '*'
+                );
+                if (!valid) invalids.push(s);
+            })
+        );
 
         return res.status(200).send({
             invalids
