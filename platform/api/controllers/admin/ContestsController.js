@@ -149,17 +149,30 @@ module.exports = {
         let test_cases = contests.get_cases(contest);
 
         let invalids = [];
-        await Promise.all(
-            contest.submissions.map(async (s) => {
-                const valid = await contests.validate_submission(
-                    test_cases,
-                    s.solution,
-                    s.language,
-                    s.language_version || '*'
-                );
-                if (!valid) invalids.push(s);
-            })
-        );
+        const CHUNK_SIZE = 5;
+        let validation_ops = [];
+        for (let count = 1; count <= contest.submissions.length; ++count) {
+            const submission = contest.submissions[count - 1];
+            validation_ops.push(
+                contests
+                    .validate_submission(
+                        test_cases,
+                        submission.solution,
+                        submission.language,
+                        submission.language_version || '*'
+                    )
+                    .then((valid) => {
+                        if (!valid) invalids.push(submission);
+                    })
+            );
+            if (
+                count % CHUNK_SIZE === 0 ||
+                count === contest.submissions.length
+            ) {
+                await Promise.all(validation_ops);
+                validation_ops = [];
+            }
+        }
 
         return res.status(200).send({
             invalids
