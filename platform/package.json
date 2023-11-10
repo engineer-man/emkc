@@ -15,7 +15,7 @@
         "@babel/preset-env": "7.7.4",
         "@babel/preset-react": "7.7.4",
         "@google-cloud/storage": "2.0.0",
-        "axios": "0.19.0",
+        "axios": "1.6.0",
         "babel-loader": "8.0.6",
         "bluebird": "3.5.1",
         "connect-redis": "3.3.0",
