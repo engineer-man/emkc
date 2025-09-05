@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
     // get the logged in user
     let user = await db.users.find_one({
         where: {
-            user_id: req.session.user_id || null
+            user_id: req.session?.user_id || null
         }
     });
 

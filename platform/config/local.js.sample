@@ -52,7 +52,13 @@ module.exports = {
     },
     session: {
         host: 'redis',
-        secret: ''
+        secret: '',
+        routesDisabled: [
+            'ALL /api/v1/piston/versions',
+            'ALL /api/v1/piston/execute',
+            'ALL /api/v2/piston/runtimes',
+            'ALL /api/v2/piston/execute',
+        ]
     },
     sockets: {
         host: 'redis'
